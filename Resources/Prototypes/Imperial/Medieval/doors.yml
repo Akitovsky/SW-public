@@ -544,6 +544,90 @@
     maxNumber: 6
     numberCount: 3
 
+- type: entity
+  id: MedievalDoorUniversal
+  parent: BaseStructure
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      sprite: Imperial/Medieval/Walls/medieval_door.rsi
+      snapCardinals: true
+      layers:
+      - state: closed
+        map: ["enum.DoorVisualLayers.Base"]
+    - type: AnimationPlayer
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,0.49"
+          density: 100
+          mask:
+          - FullTileMask
+          layer:
+          - AirlockLayer
+    - type: ExplosionResistance
+      damageCoefficient: 3
+    - type: DoorBolt
+      #boltsDown: True
+      boltUpSound:
+        path: /Audio/Imperial/Medieval/door_lock1.ogg
+      boltDownSound:
+        path: /Audio/Imperial/Medieval/door_lock2.ogg
+    - type: Door
+      performCollisionCheck: false
+      bumpOpen: false
+      clickOpen: true
+      canCrush: false
+      closeTimeOne: 0.2
+      closeTimeTwo: 0.6
+      openTimeOne: 0.6
+      openTimeTwo: 0.2
+      openingAnimationTime: 1.2
+      closingAnimationTime: 1.2
+      openSound:
+        path: /Audio/Imperial/Medieval/derevyannuyu-dver-zakryili.ogg
+      closeSound:
+        path: /Audio/Imperial/Medieval/otkryili-steklyannuyu-dver.ogg
+      denySound:
+        path: /Audio/Imperial/Medieval/lyazg-visyaschego-zamka-na-zakryitoy-dveri.ogg
+    - type: Appearance
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Imperial/Medieval/zvuk-vyibivaniya-dveri-24274.ogg
+    - type: IconSmooth
+      key: walls
+      mode: NoSprite
+    - type: Occluder
+    - type: Construction
+      graph: MedievalAirlock
+      node: medievalairlock
+    - type: UniversalLockable
+    - type: ItemSlots
+      slots:
+        lockSlot:
+          name: Lock
+          insertSound: /Audio/Effects/buckle.ogg
+          ejectSound: /Audio/Effects/unbuckle.ogg
+          whitelist: 
+            components: 
+            - UniversalLock
+
 - type: construction
   id: MedievalAirlock
   name: деревянная дверь
@@ -1229,12 +1313,20 @@
   description: gol
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Misc/respawn_key.rsi
-    state: gray
-  - type: CustomDoorKey
+    sprite: Imperial/Medieval/Misc/universalKey.rsi
+    layers: 
+    - state: key_unready
+      map: ["enum.MedievalDoorKeyCheckVisual.State"]
+  - type: UniversalKey
+  - type: Appearance
   - type: Tag
     tags:
     - MedievalKey
+  - type: GenericVisualizer
+    visuals:
+      enum.MedievalDoorKeyCheckVisual.State:
+        enum.MedievalDoorKeyCheckVisual.State:
+          key_ready: {state: key_ready}
 
 # Rich house doors (reinforced)
 

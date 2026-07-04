@@ -18,16 +18,13 @@ public sealed class MedievalAnchorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MedievalAnchorComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<MedievalAnchorComponent, InteractUsingEvent>(OnInteractUsing);
-    }
-
-    private void OnInteractUsing(EntityUid uid, MedievalAnchorComponent component, InteractUsingEvent args)
-    {
-        Use(args.User, args.Target, component);
     }
 
     private void OnActivate(EntityUid uid, MedievalAnchorComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
         Use(args.User, args.Target, component);
     }
 

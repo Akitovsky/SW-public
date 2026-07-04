@@ -1912,8 +1912,13 @@
   #    - Prying
   #  useSound:
   #    path: /Audio/Items/crowbar.ogg
-  - type: DoorHackLockpick
-    useCount: 8
+  # - type: DoorHackLockpick
+  #   useCount: 8
+  - type: UniversalLockpick
+  - type: UserInterface
+    interfaces:
+      enum.UniversalLockUiKey.Lockpick:
+        type: UniversalLockpickBoundUserInterface      
 
 - type: inventoryTemplate
   id: goblin
@@ -7351,7 +7356,13 @@
     state: lock
   - type: Item
     size: Tiny
-  - type: DoorNewLock
+  - type: UniversalLock
+    length: 4
+    maxValue: 9
+  - type: UserInterface
+    interfaces:
+      enum.UniversalLockUiKey.Key:
+        type: UniversalLockBoundUserInterface
 
 - type: dungeonRoom
   id: MedievalSteroid9x9a
