@@ -1917,8 +1917,8 @@
   - type: UniversalLockpick
   - type: UserInterface
     interfaces:
-      enum.UniversalLockUiKey.Lockpick:
-        type: UniversalLockpickBoundUserInterface      
+      enum.UniversalSecurityUiKey.Lockpick:
+        type: UniversalLockpickBoundUserInterface
 
 - type: inventoryTemplate
   id: goblin
@@ -7361,7 +7361,7 @@
     maxValue: 9
   - type: UserInterface
     interfaces:
-      enum.UniversalLockUiKey.Key:
+      enum.UniversalSecurityUiKey.Lock:
         type: UniversalLockBoundUserInterface
 
 - type: dungeonRoom

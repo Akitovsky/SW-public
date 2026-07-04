@@ -3,10 +3,13 @@ using Content.Server.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Random;
 
 public sealed partial class UniversalLockpickServerSystem : EntitySystem
 {
@@ -16,6 +19,7 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
     [Dependency] private readonly UniversalLockableSharedSystem _lockableSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -56,8 +60,8 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         lockpickEntity.Comp.User = args.User;
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, new int[lockComponent.Length]);
-        _uiSystem.SetUiState(lockpickEntity.Owner, UniversalLockUiKey.Lockpick, state);
-        _uiSystem.TryOpenUi(lockpickEntity.Owner, UniversalLockUiKey.Lockpick, args.User);
+        _uiSystem.SetUiState(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick, state);
+        _uiSystem.TryOpenUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick, args.User);
 
         args.Handled = true;
     }
@@ -69,10 +73,11 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             lockpickEntity.Comp.User is not { } user || !Exists(user) ||
             !TryComp<UniversalLockComponent>(lockUid, out var lockComponent) ||
             !TryComp<UniversalLockableComponent>(lockableUid, out var lockableComponent) ||
+            !TryComp<SkillsComponent>(user, out var skillComponent) ||
             !lockComponent.IsSetuped ||
             !_itemSlots.TryGetSlot(lockableUid, "lockSlot", out var slot))
         {
-            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalLockUiKey.Lockpick);
+            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
             return;
         }
 
@@ -81,7 +86,9 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             NewCode = args.NewCode
         };
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(lockpickEntity.Comp.HackTime), ev, lockpickEntity)
+        var doAfterTime = lockpickEntity.Comp.HackTime / (skillComponent.Levels["Agility"] / 5f);
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(doAfterTime), ev, lockpickEntity)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -93,19 +100,38 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnNext), lockableUid);
     }
 
     private void OnHackDoAfter(Entity<UniversalLockpickComponent> lockpickEntity, ref UniversalLockpickHackDoAfterEvent args)
     {
+        if (args.Cancelled || args.Handled)
+        {
+            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
+            args.Handled = true;
+            return;
+        }
+
         if (lockpickEntity.Comp.LockUid is not { } lockUid || !Exists(lockUid) ||
             lockpickEntity.Comp.LockableUid is not { } lockableUid || !Exists(lockableUid) ||
             lockpickEntity.Comp.User is not { } user || !Exists(user) ||
             !TryComp<UniversalLockComponent>(lockUid, out var lockComponent) ||
             !TryComp<UniversalLockableComponent>(lockableUid, out var lockableComponent) ||
+            !TryComp<SkillsComponent>(user, out var skillComponent) ||
             !lockComponent.IsSetuped ||
             !_itemSlots.TryGetSlot(lockableUid, "lockSlot", out var slot))
         {
-            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalLockUiKey.Lockpick);
+            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
+            args.Handled = true;
+            return;
+        }
+
+
+        var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, skillComponent.Levels["Agility"] / 5f), 0.01f, 0.75f);
+        if (_random.Prob(breakChance))
+        {
+            OnLockpickBreak(lockpickEntity);
+            args.Handled = true;
             return;
         }
 
@@ -124,7 +150,8 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         }
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, stateCode);
-        _uiSystem.SetUiState(lockpickEntity.Owner, UniversalLockUiKey.Lockpick, state);
+        _uiSystem.SetUiState(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick, state);
+        _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnNext), lockpickEntity);
 
         if (args.NewCode.SequenceEqual(lockComponent.Code))
         {
@@ -132,5 +159,16 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             lockpickEntity.Comp.LockableUid = null;
             lockpickEntity.Comp.User = null;
         }
+    }
+
+    private void OnLockpickBreak(Entity<UniversalLockpickComponent> lockpickEntity)
+    {
+        AudioParams audioParams = new AudioParams()
+        {
+            Volume = -15
+        };
+
+        _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnBreak), Transform(lockpickEntity).Coordinates);
+        QueueDel(lockpickEntity);
     }
 }

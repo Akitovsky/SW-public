@@ -18,6 +18,7 @@ public sealed class UniversalLockBoundUserInterface : BoundUserInterface
         _window.OpenCentered();
 
         _window.OnSetCode += code => SendMessage(new UniversalLockSetCodeMessage(code));
+        _window.OnClose += Close;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -20,6 +20,7 @@ public sealed class UniversalLockpickBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
 
         _window.OnSetCode += code => SendMessage(new UniversalLockpickSetCodeMessage(code));
+        _window.OnClose += Close;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

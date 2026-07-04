@@ -53,19 +53,19 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
             if (codeState[i] == 255)
             {
                 color = Color.Green;
-                arrowText = "✓"; // Можно оставить галочку, если угадано
+                arrowText = "✓";
             }
             else if (codeState[i] == 0)
             {
                 color = Color.FromHex("#ffffff00");
-                arrowText = ""; // Код еще не отправлялся
+                arrowText = "";
             }
-            else if (codeState[i] == 1) // Надо брать ВЫШЕ
+            else if (codeState[i] == 1)
             {
                 color = Color.FromHex("#df8f1789");
                 arrowText = "↑";
             }
-            else if (codeState[i] == -1) // Надо брать НИЖЕ
+            else if (codeState[i] == -1)
             {
                 color = Color.FromHex("#0864d594");
                 arrowText = "↓";
@@ -93,7 +93,6 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
                 Disabled = disableControl
             };
 
-            // Чистый инпутфилд, в котором ВСЕГДА только число для безопасного парсинга
             var input = new LineEdit
             {
                 MinWidth = 45,
@@ -103,7 +102,6 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
                 StyleBoxOverride = backgroundStyle
             };
 
-            // Создаем отдельный лейбл для стрелочки справа от инпута
             var arrowLabel = new Label
             {
                 MinWidth = 15,
@@ -132,7 +130,7 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
             _sliders.Add(slider);
             _inputs.Add(input);
 
-            // Порядок добавления: Слайдер -> Поле Ввода -> Стрелочка подсказки
+
             rowContainer.AddChild(slider);
             rowContainer.AddChild(input);
             rowContainer.AddChild(arrowLabel); 

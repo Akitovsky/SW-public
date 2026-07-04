@@ -624,8 +624,8 @@
           name: Lock
           insertSound: /Audio/Effects/buckle.ogg
           ejectSound: /Audio/Effects/unbuckle.ogg
-          whitelist: 
-            components: 
+          whitelist:
+            components:
             - UniversalLock
 
 - type: construction
@@ -1314,7 +1314,7 @@
   components:
   - type: Sprite
     sprite: Imperial/Medieval/Misc/universalKey.rsi
-    layers: 
+    layers:
     - state: key_unready
       map: ["enum.MedievalDoorKeyCheckVisual.State"]
   - type: UniversalKey
@@ -1327,6 +1327,10 @@
       enum.MedievalDoorKeyCheckVisual.State:
         enum.MedievalDoorKeyCheckVisual.State:
           key_ready: {state: key_ready}
+  - type: UserInterface
+    interfaces:
+      enum.UniversalSecurityUiKey.Key:
+        type: UniversalKeyBoundUserInterface
 
 # Rich house doors (reinforced)
 

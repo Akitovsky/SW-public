@@ -19,10 +19,6 @@ public sealed partial class UniversalLockComponent : Component
 
     [DataField]
     public SoundPathSpecifier LockSetupSound = new SoundPathSpecifier("/Audio/Imperial/Medieval/lockpick_next.ogg");
-    [DataField]
-    public SoundPathSpecifier KeySetupSound = new SoundPathSpecifier("/Audio/Imperial/Medieval/lockpick_next.ogg");
-
-
 
     // Hack
     [DataField]
