@@ -219,6 +219,8 @@
     areaName: area-map1-mine
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/mineshaft.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerMine
 
 - type: entity
   id: AreaMarkerChapel
@@ -325,6 +327,8 @@
     areaName: area-map1-merc
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerMerc
 
 - type: entity
   id: AreaMarkerVillage
@@ -338,6 +342,8 @@
     areaName: area-map1-village
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerVillage
 
 - type: entity
   id: AreaMarkerTribe
