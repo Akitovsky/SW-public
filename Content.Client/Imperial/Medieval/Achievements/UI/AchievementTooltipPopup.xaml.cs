@@ -27,7 +27,7 @@ public sealed partial class AchievementTooltipPopup : PanelContainer
                 iconStyle.BorderColor = Color.FromHex("#4a3a28");
 
             AchievementIcon.Visible = false;
-            HiddenLabel.Visible     = true;
+            HiddenLabel.Visible = true;
 
             NameLabel.Text = "???";
             NameLabel.FontColorOverride = Color.FromHex("#5a4830");
@@ -49,19 +49,19 @@ public sealed partial class AchievementTooltipPopup : PanelContainer
                 AchievementIcon.ModulateSelfOverride = Color.FromHex("#665533");
 
             AchievementIcon.Visible = true;
-            HiddenLabel.Visible     = false;
+            HiddenLabel.Visible = false;
         }
         else
         {
             AchievementIcon.Visible = false;
-            HiddenLabel.Visible     = true;
+            HiddenLabel.Visible = true;
         }
 
         var nameText = isHidden
             ? AchievementTreeMenuWindow.BlurText(Loc.GetString(proto.Name ?? proto.ID))
             : Loc.GetString(proto.Name ?? proto.ID);
 
-        NameLabel.Text            = nameText;
+        NameLabel.Text = nameText;
         NameLabel.FontColorOverride = unlocked ? Color.FromHex("#d3bc8e") : Color.FromHex("#9e8c78");
 
         if (!string.IsNullOrEmpty(proto.Description))
