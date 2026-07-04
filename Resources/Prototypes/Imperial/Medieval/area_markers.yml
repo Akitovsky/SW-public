@@ -310,6 +310,8 @@
     areaName: area-map1-band
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general2.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerBand
 
 - type: entity
   id: AreaMarkerMerc
