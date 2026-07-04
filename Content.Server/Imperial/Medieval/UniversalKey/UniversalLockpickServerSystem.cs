@@ -6,6 +6,7 @@ using Content.Shared.Imperial.Medieval.Ships.Anchor;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
+using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

@@ -7,6 +7,7 @@ using Content.Shared.Imperial.Medieval.Ships.Anchor;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Tag;
+using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;

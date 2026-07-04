@@ -1,17 +1,23 @@
 using Content.Shared.Movement.Pulling.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-[RegisterComponent]
+
+namespace Imperial.Medieval.UniversalSecurity;
+
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class UniversalLockComponent : Component
 {
 
     [DataField]
+    [AutoNetworkedField]
     public bool IsLocked = false;
 
     [DataField]
-    public bool IsSetuped = false;
+    public bool IsSetuped { get; set; } = false;
 
 
 

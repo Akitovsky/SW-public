@@ -4,6 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.Ships.Anchor;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 
