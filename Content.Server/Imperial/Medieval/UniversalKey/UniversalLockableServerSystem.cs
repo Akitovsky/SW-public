@@ -17,6 +17,9 @@ using Content.Shared.Imperial.Medieval.Ships.Anchor;
 using Robust.Shared.Random;
 using Content.Shared.Imperial.LockDoor.Components;
 using Content.Server.Imperial.Medieval.UniversalLock;
+using Robust.Shared.Timing;
+using Content.Server.Administration.Commands;
+using Robust.Shared.Audio;
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -49,27 +52,36 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
     private void OnMapInit(Entity<UniversalLockableComponent> lockableEntity, ref MapInitEvent args)
     {
-        if (!TryComp<LockDoorComponent>(lockableEntity, out var lockDoorComponent))
-            return;
+        Timer.Spawn(0, () =>
+        {
+            if (!TryComp<LockDoorComponent>(lockableEntity, out var lockDoorComponent))
+                return;
 
-        if (lockDoorComponent.AccessLists[0] is not { } accessId)
-            return;
+            if (lockDoorComponent.AccessLists[0] is not { } accessId)
+                return;
 
-        if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
-            return;
+            if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
+                return;
 
-        int randomCode = Math.Abs(HashCode.Combine(accessId, RandomedSeed));
+            if (slot.Item is not { } lockUid)
+                return;
 
-        EntityUid lockUid = Spawn("MedievalDoorLock");
+            if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
+                return;
 
-        if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
-            return;
+            if (!TryComp<DoorBoltComponent>(lockableEntity, out var doorBoltComponent))
+                return;
 
-        int[] newCode = GenerateFactionArray(accessId, RandomedSeed, 16, 9);
+            int[] newCode = GenerateFactionArray(accessId, RandomedSeed, 16, 9);
 
-        _lockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
-        _itemSlots.TryInsert(lockableEntity, slot, lockUid, null);
-        OnUsedKeySuccess((lockUid, lockComponent), lockableEntity, slot, null);
+            _lockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
+            _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
+
+            if (doorBoltComponent.BoltsDown)
+                OnFractionLockSpawn((lockUid, lockComponent), lockableEntity, slot);
+
+            RemComp(lockableEntity, doorBoltComponent);
+        });
     }
 
     public static int[] GenerateFactionArray(string factionId, int randomNumber, int maxValue, int length)
@@ -107,7 +119,11 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         if (IsLocked(entity))
         {
-            _audioSystem.PlayPvs(entity.Comp.ActivateInWorldDenySound, entity);
+            AudioParams audioParams = new AudioParams()
+            {
+                Volume = -10,
+            };
+            _audioSystem.PlayPvs(entity.Comp.ActivateInWorldDenySound, entity, audioParams);
             args.Handled = true;
         }
     }
@@ -132,7 +148,11 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         if (IsLocked(entity))
         {
-            _audioSystem.PlayPvs(entity.Comp.InteractUsingDenySound, entity);
+            AudioParams audioParams = new AudioParams()
+            {
+                Volume = -10,
+            };
+            _audioSystem.PlayPvs(entity.Comp.InteractUsingDenySound, entity, audioParams);
             args.Handled = true;
         }
     }
@@ -277,6 +297,13 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             _audioSystem.PlayPvs(lockableEnitity.Comp.LockLockedSound, lockableEnitity);
             _popupSystem.PopupClient(Loc.GetString("universal-lock-locked-popup"), user);
         }
+    }
+
+    public void OnFractionLockSpawn(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEnitity, ItemSlot slot)
+    {
+        lockEntity.Comp.IsLocked = !lockEntity.Comp.IsLocked;
+
+        _itemSlots.SetLock(lockableEnitity, slot, true);
     }
 
     private void OnUsedKeyFail()
