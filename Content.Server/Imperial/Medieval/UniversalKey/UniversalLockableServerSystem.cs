@@ -20,6 +20,7 @@ using Content.Server.Imperial.Medieval.UniversalLock;
 using Robust.Shared.Timing;
 using Content.Server.Administration.Commands;
 using Robust.Shared.Audio;
+using Content.Shared.Lock;
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -29,7 +30,8 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly UniversalLockServerSystem _lockSystem = default!;
+    [Dependency] private readonly UniversalLockServerSystem _universalLockSystem = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
 
     public int RandomedSeed;
 
@@ -74,7 +76,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
             int[] newCode = GenerateFactionArray(accessId, RandomedSeed, 16, 9);
 
-            _lockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
+            _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
             _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
 
             if (doorBoltComponent.BoltsDown)
@@ -297,6 +299,11 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             _audioSystem.PlayPvs(lockableEnitity.Comp.LockLockedSound, lockableEnitity);
             _popupSystem.PopupClient(Loc.GetString("universal-lock-locked-popup"), user);
         }
+
+        if (!TryComp<LockComponent>(lockableEnitity, out var lockComponent))
+            return;
+
+        _lockSystem.ToggleLock(lockableEnitity, null, lockComponent);
     }
 
     public void OnFractionLockSpawn(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEnitity, ItemSlot slot)
