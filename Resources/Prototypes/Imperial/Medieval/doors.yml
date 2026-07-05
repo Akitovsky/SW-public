@@ -470,12 +470,6 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  - type: DoorBolt
-    #boltsDown: True
-    boltUpSound:
-      path: /Audio/Imperial/Medieval/door_lock1.ogg
-    boltDownSound:
-      path: /Audio/Imperial/Medieval/door_lock2.ogg
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -539,10 +533,16 @@
   - type: Construction
     graph: MedievalAirlock
     node: medievalairlock
-  - type: DoorHackable
-    minNumber: 0
-    maxNumber: 6
-    numberCount: 3
+  - type: UniversalLockable
+  - type: ItemSlots
+    slots:
+      lockSlot:
+        name: Lock
+        insertSound: /Audio/Effects/buckle.ogg
+        ejectSound: /Audio/Effects/unbuckle.ogg
+        whitelist:
+          components:
+          - UniversalLock
 
 - type: entity
   id: MedievalDoorUniversal

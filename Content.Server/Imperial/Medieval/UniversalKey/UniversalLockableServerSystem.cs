@@ -14,7 +14,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Imperial.Medieval.Ships.Anchor;
-
+using Robust.Shared.Random;
+using Content.Shared.Imperial.LockDoor.Components;
+using Content.Server.Imperial.Medieval.UniversalLock;
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -23,7 +25,10 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly UniversalLockServerSystem _lockSystem = default!;
+
+    public int RandomedSeed;
 
     public override void Initialize()
     {
@@ -36,6 +41,63 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalLockableComponent, UniversalLockableDoAfterEvent>(OnLockableDoAfter);
 
         SubscribeLocalEvent<UniversalLockableComponent, ExaminedEvent>(OnExamine);
+
+        SubscribeLocalEvent<UniversalLockableComponent, MapInitEvent>(OnMapInit);
+
+        RandomedSeed = _random.Next(1000000000);
+    }
+
+    private void OnMapInit(Entity<UniversalLockableComponent> lockableEntity, ref MapInitEvent args)
+    {
+        if (!TryComp<LockDoorComponent>(lockableEntity, out var lockDoorComponent))
+            return;
+
+        if (lockDoorComponent.AccessLists[0] is not { } accessId)
+            return;
+
+        if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
+            return;
+
+        int randomCode = Math.Abs(HashCode.Combine(accessId, RandomedSeed));
+
+        EntityUid lockUid = Spawn("MedievalDoorLock");
+
+        if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
+            return;
+
+        int[] newCode = GenerateFactionArray(accessId, RandomedSeed, 16, 9);
+
+        _lockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
+        _itemSlots.TryInsert(lockableEntity, slot, lockUid, null);
+        OnUsedKeySuccess((lockUid, lockComponent), lockableEntity, slot, null);
+    }
+
+    public static int[] GenerateFactionArray(string factionId, int randomNumber, int maxValue, int length)
+    {
+        // Защита от некорректной длины
+        if (length <= 0)
+            return Array.Empty<int>();
+
+        // Защита от некорректного максимума
+        if (maxValue < 0)
+            maxValue = 0;
+
+        int[] result = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            // Комбинируем фракцию, число и текущий индекс, чтобы элементы отличались друг от друга
+            int hash = HashCode.Combine(factionId, randomNumber, i);
+
+            // Убираем знак минус (делаем число строго положительным)
+            int positiveHash = hash & int.MaxValue;
+
+            // Ограничиваем число до maxValue включительно.
+            // Например, если maxValue = 9, то % 10 вернет значение от 0 до 9.
+            result[i] = positiveHash % (maxValue + 1);
+        }
+
+        return result;
     }
 
     private void OnActivate(Entity<UniversalLockableComponent> entity, ref ActivateInWorldEvent args)
@@ -94,7 +156,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         AlternativeVerb verb = new()
         {
-            Text = Loc.GetString("toggle-item-slot-locked"),
+            Text = Loc.GetString("universal-security-eject-lock"),
             Act = () =>
             {
                 var doAfterArgs = new DoAfterArgs(
@@ -147,12 +209,12 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         FormattedMessage msg = new FormattedMessage();
         msg.PushColor(Color.Yellow);
+        msg.AddText(Name(item) + " ");
         if (lockComponent.IsLocked)
             msg.AddText(Loc.GetString("universal-lock-examine-is-locked"));
         else
             msg.AddText(Loc.GetString("universal-lock-examine-is-unlocked"));
 
-        msg.AddText(Name(item));
         msg.Pop();
 
         args.AddMessage(msg);
@@ -197,19 +259,13 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             OnUsedKeyFail();
     }
 
-    public void OnUsedKeySuccess(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEnitity, ItemSlot slot, EntityUid user)
+    public void OnUsedKeySuccess(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEnitity, ItemSlot slot, EntityUid? user)
     {
         lockEntity.Comp.IsLocked = !lockEntity.Comp.IsLocked;
 
         _itemSlots.SetLock(lockableEnitity, slot, true);
 
         _adminLogger.Add(Content.Shared.Database.LogType.Action, Content.Shared.Database.LogImpact.Low, $"{ToPrettyString(user):user} used key, lock is locked = {lockEntity.Comp.IsLocked} {ToPrettyString(user):lockEntity}");
-
-        if (TryComp<DoorBoltComponent>(lockableEnitity, out var doorBoltComponent))
-        {
-            _doorSystem.SetBoltsDown((lockableEnitity, doorBoltComponent), lockEntity.Comp.IsLocked, user, true);
-            Dirty(lockableEnitity, doorBoltComponent);
-        }
 
         if (!lockEntity.Comp.IsLocked)
         {
@@ -221,9 +277,6 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             _audioSystem.PlayPvs(lockableEnitity.Comp.LockLockedSound, lockableEnitity);
             _popupSystem.PopupClient(Loc.GetString("universal-lock-locked-popup"), user);
         }
-
-        if (!_containerSystem.TryGetContainer(lockableEnitity, "lockSlot", out var container))
-            return;
     }
 
     private void OnUsedKeyFail()

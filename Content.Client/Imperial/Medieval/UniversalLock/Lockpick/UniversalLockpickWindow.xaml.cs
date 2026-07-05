@@ -133,8 +133,8 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
 
             rowContainer.AddChild(slider);
             rowContainer.AddChild(input);
-            rowContainer.AddChild(arrowLabel); 
-            
+            rowContainer.AddChild(arrowLabel);
+
             InputsContainer.AddChild(rowContainer);
         }
     }

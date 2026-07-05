@@ -1,12 +1,16 @@
+using System.Linq;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Imperial.LockDoor.Components;
 using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 public sealed class UniversalKeyServerSystem : EntitySystem
 {
@@ -18,6 +22,8 @@ public sealed class UniversalKeyServerSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly UniversalLockableServerSystem _lockableServerSystem = default!;
 
     public override void Initialize()
     {
@@ -30,6 +36,51 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalLockComponent, InteractUsingEvent>(OnInteractUsing);
 
         SubscribeLocalEvent<UniversalLockComponent, UniversalKeySetupDoAfterEvent>(OnKeySetupDoAfterEvent);
+
+        SubscribeLocalEvent<UniversalKeyComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<UniversalKeyComponent> keyEntity, ref MapInitEvent args)
+    {
+        var randomValue = _lockableServerSystem.RandomedSeed;
+
+        if (!TryComp<KeyComponent>(keyEntity, out var keyComponent))
+            return;
+
+        if (keyComponent.Accesses[0] is not { } accessId)
+            return;
+
+        int[] newCode = GenerateFactionArray(accessId, _lockableServerSystem.RandomedSeed, 16, 9);
+
+        SetupKeyFraction(keyEntity, newCode, 9);
+    }
+
+    public static int[] GenerateFactionArray(string factionId, int randomNumber, int maxValue, int length)
+    {
+        // Защита от некорректной длины
+        if (length <= 0)
+            return Array.Empty<int>();
+
+        // Защита от некорректного максимума
+        if (maxValue < 0)
+            maxValue = 0;
+
+        int[] result = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            // Комбинируем фракцию, число и текущий индекс, чтобы элементы отличались друг от друга
+            int hash = HashCode.Combine(factionId, randomNumber, i);
+
+            // Убираем знак минус (делаем число строго положительным)
+            int positiveHash = hash & int.MaxValue;
+
+            // Ограничиваем число до maxValue включительно.
+            // Например, если maxValue = 9, то % 10 вернет значение от 0 до 9.
+            result[i] = positiveHash % (maxValue + 1);
+        }
+
+        return result;
     }
 
     private void OnInteractUsing(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)
@@ -68,7 +119,7 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         if (universalKeyComponent.IsSetuped)
             return;
 
-        SetupKey((used, universalKeyComponent), lockEntity.Comp.Code);
+        SetupKey((used, universalKeyComponent), lockEntity.Comp.Code, lockEntity.Comp.MaxValue);
     }
 
     private void OnAfterInteractUsing(Entity<UniversalKeyComponent> keyEntity, ref InteractUsingEvent args)
@@ -108,15 +159,25 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         }
 
         keyEntity.Comp.Name = args.Name;
-        SetupKey(keyEntity, args.NewCode);
+        SetupKey(keyEntity, args.NewCode, args.NewCode.Max());
     }
 
-    public void SetupKey(Entity<UniversalKeyComponent> keyEntity, int[] code)
+    public void SetupKey(Entity<UniversalKeyComponent> keyEntity, int[] code, int maxValue)
     {
         keyEntity.Comp.Code = code;
         keyEntity.Comp.IsSetuped = true;
+        keyEntity.Comp.MaxToothValue = maxValue;
+        keyEntity.Comp.MaxTeethCount = code.Length;
         _appearanceSystem.SetData(keyEntity, MedievalDoorKeyCheckVisual.State, "key_ready");
         _audioSystem.PlayPvs(keyEntity.Comp.KeySetupSound, keyEntity);
         _metaDataSystem.SetEntityName(keyEntity, keyEntity.Comp.Name + " " + Name(keyEntity));
+    }
+
+    public void SetupKeyFraction(Entity<UniversalKeyComponent> keyEntity, int[] code, int maxValue)
+    {
+        keyEntity.Comp.Code = code;
+        keyEntity.Comp.IsSetuped = true;
+        keyEntity.Comp.MaxToothValue = maxValue;
+        keyEntity.Comp.MaxTeethCount = code.Length;
     }
 }

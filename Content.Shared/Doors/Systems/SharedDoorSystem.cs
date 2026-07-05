@@ -373,6 +373,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
         else if (_net.IsServer)
             Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
 
+        // Imperial Medieval Universable Security start
+        if (_net.IsClient)
+            if (TryComp<UniversalLockableComponent>(uid, out _))
+                return; //Need to fix client prediction
+        // Imperial Medieval Universable Security end
+
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
     }
@@ -471,6 +477,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         if (!Resolve(uid, ref door))
             return;
+
+        // Imperial Medieval Universable Security start
+        if (_net.IsClient)
+            if (TryComp<UniversalLockableComponent>(uid, out _))
+                return; //Need to fix client prediction
+        // Imperial Medieval Universable Security end
 
         if (!SetState(uid, DoorState.Closing, door))
             return;

@@ -9,7 +9,7 @@ namespace Imperial.Medieval.UniversalLock.Lock;
 public sealed partial class UniversalLockWindow : DefaultWindow
 {
     // Сигнатура изменена для передачи названия (string) и кода (int[])
-    public Action<string, int[]>? OnSetCode;
+    public Action<string, int[], int>? OnSetCode;
     private List<LineEdit> _inputs = new();
     private List<Slider> _sliders = new();
     private int _maxValue;
@@ -120,6 +120,6 @@ public sealed partial class UniversalLockWindow : DefaultWindow
         }
         SetCodeButton.Disabled = true;
 
-        OnSetCode?.Invoke(lockName, code);
+        OnSetCode?.Invoke(lockName, code, _maxValue);
     }
 }

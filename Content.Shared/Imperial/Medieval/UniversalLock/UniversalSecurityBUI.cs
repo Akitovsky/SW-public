@@ -49,11 +49,12 @@ public sealed class UniversalLockSetCodeMessage : BoundUserInterfaceMessage
 {
     public string Name;
     public int[] NewCode;
-
-    public UniversalLockSetCodeMessage(string name,int[] newCode)
+    public int MaxValue;
+    public UniversalLockSetCodeMessage(string name, int[] newCode, int maxValue)
     {
         Name = name;
         NewCode = newCode;
+        MaxValue = maxValue;
     }
 }
 

@@ -18,7 +18,7 @@ public sealed class UniversalLockBoundUserInterface : BoundUserInterface
         _window.OpenCentered();
 
         // Теперь передаем в сообщение и имя, и код
-        _window.OnSetCode += (name, code) => SendMessage(new UniversalLockSetCodeMessage(name, code));
+        _window.OnSetCode += (name, code, maxValue) => SendMessage(new UniversalLockSetCodeMessage(name, code, maxValue));
         _window.OnClose += Close;
     }
 

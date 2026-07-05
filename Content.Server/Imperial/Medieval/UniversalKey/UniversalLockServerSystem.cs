@@ -1,6 +1,3 @@
-using System.Threading;
-using Content.Server.DoAfter;
-using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -12,10 +9,7 @@ namespace Content.Server.Imperial.Medieval.UniversalLock;
 public sealed class UniversalLockServerSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly UniversalKeyServerSystem _keySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
@@ -59,11 +53,27 @@ public sealed class UniversalLockServerSystem : EntitySystem
                 return;
         }
 
-        _metaDataSystem.SetEntityName(lockEntity, args.Name + " " + Name(lockEntity));
+        SetLockCode(lockEntity, args.NewCode, args.MaxValue, args.Name);
+    }
 
-        lockEntity.Comp.Code = args.NewCode;
+    public void SetLockCode(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue, string name = "")
+    {
+        if (name != "")
+            _metaDataSystem.SetEntityName(lockEntity, name + " " + Name(lockEntity));
+
+        lockEntity.Comp.Code = code;
         lockEntity.Comp.IsSetuped = true;
-        lockEntity.Comp.Name = args.Name;
+        lockEntity.Comp.Name = name;
+        lockEntity.Comp.Length = code.Length;
+        lockEntity.Comp.MaxValue = maxValue;
         _audioSystem.PlayPvs(lockEntity.Comp.LockSetupSound, lockEntity);
+    }
+
+    public void SetLockCodeFraction(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
+    {
+        lockEntity.Comp.Code = code;
+        lockEntity.Comp.IsSetuped = true;
+        lockEntity.Comp.Length = code.Length;
+        lockEntity.Comp.MaxValue = maxValue;
     }
 }
