@@ -22,6 +22,9 @@ public sealed partial class UniversalKeyComponent : Component
     public int MaxTeethCount = 100;
 
     [DataField]
+    public String Name = String.Empty;
+
+    [DataField]
     public EntityUid? User;
     public EntityUid? Knife;
 

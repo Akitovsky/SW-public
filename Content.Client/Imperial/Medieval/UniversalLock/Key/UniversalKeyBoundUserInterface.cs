@@ -1,4 +1,4 @@
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 
 namespace Imperial.Medieval.UniversalLock.Lock;
 
@@ -16,8 +16,8 @@ public sealed class UniversalKeyBoundUserInterface : BoundUserInterface
         _window = new UniversalKeyWindow();
         _window.OpenCentered();
 
-        // Отправляем сообщение ковки ключа на сервер
-        _window.OnSetCode += code => SendMessage(new UniversalKeySetCodeMessage(code));
+        // Изменено: лямбда-выражение теперь принимает и отправляет (name, code)
+        _window.OnSetCode += (name, code) => SendMessage(new UniversalKeySetCodeMessage(code, name));
         _window.OnClose += Close;
     }
 

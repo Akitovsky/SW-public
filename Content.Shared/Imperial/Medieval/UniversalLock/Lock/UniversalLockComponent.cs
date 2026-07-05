@@ -5,20 +5,20 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 
-namespace Imperial.Medieval.UniversalSecurity;
+namespace Content.Shared.Imperial.Medieval.UniversalSecurity;
 
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class UniversalLockComponent : Component
 {
 
     [DataField]
-    [AutoNetworkedField]
     public bool IsLocked = false;
 
     [DataField]
     public bool IsSetuped { get; set; } = false;
 
+    [DataField]
+    public String Name = String.Empty;
 
 
     // Sound

@@ -1,4 +1,4 @@
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 
 namespace Imperial.Medieval.UniversalLock.Lock;
 
@@ -17,7 +17,8 @@ public sealed class UniversalLockBoundUserInterface : BoundUserInterface
 
         _window.OpenCentered();
 
-        _window.OnSetCode += code => SendMessage(new UniversalLockSetCodeMessage(code));
+        // Теперь передаем в сообщение и имя, и код
+        _window.OnSetCode += (name, code) => SendMessage(new UniversalLockSetCodeMessage(name, code));
         _window.OnClose += Close;
     }
 

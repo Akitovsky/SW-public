@@ -9,6 +9,8 @@
 
         <Label Name="InfoLabel" Text="Допустимые значения: от 0 до X" HorizontalAlignment="Center"/>
 
+        <LineEdit Name="LockNameInput" PlaceHolder="Введите название замка..." HorizontalExpand="True"/>
+
         <ScrollContainer VerticalExpand="True" MinHeight="150" HorizontalExpand="True">
             <BoxContainer Name="InputsContainer" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8" Margin="5"/>
         </ScrollContainer>

@@ -1,4 +1,4 @@
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 
 namespace Imperial.Medieval.UniversalLock.Lockpick;
 

@@ -8,7 +8,8 @@ namespace Imperial.Medieval.UniversalLock.Lock;
 [GenerateTypedNameReferences]
 public sealed partial class UniversalLockWindow : DefaultWindow
 {
-    public Action<int[]>? OnSetCode;
+    // Сигнатура изменена для передачи названия (string) и кода (int[])
+    public Action<string, int[]>? OnSetCode;
     private List<LineEdit> _inputs = new();
     private List<Slider> _sliders = new();
     private int _maxValue;
@@ -87,6 +88,7 @@ public sealed partial class UniversalLockWindow : DefaultWindow
 
     private void SubmitCode()
     {
+        var lockName = LockNameInput.Text;
         var code = new int[_inputs.Count];
 
         for (int i = 0; i < _inputs.Count; i++)
@@ -105,6 +107,9 @@ public sealed partial class UniversalLockWindow : DefaultWindow
             }
         }
 
+        // Блокируем поле названия вместе с остальными элементами UI
+        LockNameInput.Editable = false;
+
         foreach (var slider in _sliders)
         {
             slider.Disabled = true;
@@ -115,6 +120,6 @@ public sealed partial class UniversalLockWindow : DefaultWindow
         }
         SetCodeButton.Disabled = true;
 
-        OnSetCode?.Invoke(code);
+        OnSetCode?.Invoke(lockName, code);
     }
 }

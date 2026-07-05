@@ -2,11 +2,10 @@ using System.Linq;
 using Content.Server.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
-using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -17,10 +16,11 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
 
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly UniversalLockableSharedSystem _lockableSystem = default!;
+    [Dependency] private readonly UniversalLockableServerSystem _lockableSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -82,6 +82,12 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             return;
         }
 
+        if (!_interactionSystem.InRangeUnobstructed(args.Actor, lockableUid))
+        {
+            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
+            return;
+        }
+
         var ev = new UniversalLockpickHackDoAfterEvent
         {
             NewCode = args.NewCode
@@ -127,15 +133,6 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             return;
         }
 
-
-        var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, skillComponent.Levels["Agility"] / 5f), 0.01f, 0.75f);
-        if (_random.Prob(breakChance))
-        {
-            OnLockpickBreak(lockpickEntity);
-            args.Handled = true;
-            return;
-        }
-
         if (args.NewCode.SequenceEqual(lockComponent.Code))
         {
             _lockableSystem.OnUsedKeySuccess((lockUid, lockComponent), (lockableUid, lockableComponent), slot, user);
@@ -159,6 +156,15 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             lockpickEntity.Comp.LockUid = null;
             lockpickEntity.Comp.LockableUid = null;
             lockpickEntity.Comp.User = null;
+            return;
+        }
+
+        var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, skillComponent.Levels["Agility"] / 10f), 0.05f, 0.75f);
+        if (_random.Prob(breakChance))
+        {
+            OnLockpickBreak(lockpickEntity);
+            args.Handled = true;
+            return;
         }
     }
 

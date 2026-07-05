@@ -4,19 +4,18 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Interaction;
-using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
-using Imperial.Medieval.UniversalSecurity;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Imperial.Medieval.Ships.Anchor;
 
-public sealed class UniversalLockableSharedSystem : EntitySystem
+public sealed class UniversalLockableServerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -84,35 +83,38 @@ public sealed class UniversalLockableSharedSystem : EntitySystem
         if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
             return;
 
-        if (!IsLocked(lockableEntity))
+        if (slot.Item is null)
+            return;
+
+        if (IsLocked(lockableEntity))
+            return;
+
+        var user = args.User;
+        var time = slot.Locked ? lockableEntity.Comp.ToggleItemSlotLockedDoAfterTime : 0.1f;
+
+        AlternativeVerb verb = new()
         {
-            var user = args.User;
-            var time = slot.Locked ? lockableEntity.Comp.ToggleItemSlotLockedDoAfterTime : 0.1f;
-
-            AlternativeVerb verb = new()
+            Text = Loc.GetString("toggle-item-slot-locked"),
+            Act = () =>
             {
-                Text = Loc.GetString("toggle-item-slot-locked"),
-                Act = () =>
+                var doAfterArgs = new DoAfterArgs(
+                EntityManager,
+                user,
+                TimeSpan.FromSeconds(time),
+                new UniversalLockableDoAfterEvent(),
+                lockableEntity)
                 {
-                    var doAfterArgs = new DoAfterArgs(
-                    EntityManager,
-                    user,
-                    TimeSpan.FromSeconds(time),
-                    new UniversalLockableDoAfterEvent(),
-                    lockableEntity)
-                    {
-                        BreakOnMove = true,
-                        BreakOnDamage = true,
-                        NeedHand = true,
-                        BlockDuplicate = true,
-                    };
+                    BreakOnMove = true,
+                    BreakOnDamage = true,
+                    NeedHand = true,
+                    BlockDuplicate = true,
+                };
 
-                    _doAfterSystem.TryStartDoAfter(doAfterArgs);
-                }
-            };
+                _doAfterSystem.TryStartDoAfter(doAfterArgs);
+            }
+        };
 
-            args.Verbs.Add(verb);
-        }
+        args.Verbs.Add(verb);
     }
 
     private void OnLockableDoAfter(Entity<UniversalLockableComponent> lockableEntity, ref UniversalLockableDoAfterEvent args)
@@ -123,7 +125,13 @@ public sealed class UniversalLockableSharedSystem : EntitySystem
         if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
             return;
 
+        if (slot.Item is not { } lockUid)
+            return;
+
         _itemSlots.SetLock(lockableEntity, slot, !slot.Locked);
+
+        if (!slot.Locked)
+            _itemSlots.TryEjectToHands(lockUid, slot, args.User);
     }
 
     private void OnExamine(Entity<UniversalLockableComponent> lockableEntity, ref ExaminedEvent args)
@@ -134,15 +142,15 @@ public sealed class UniversalLockableSharedSystem : EntitySystem
         if (slot.Item is not { } item)
             return;
 
-        if (!TryComp<UniversalLockComponent>(item, out var lockComp))
+        if (!TryComp<UniversalLockComponent>(item, out var lockComponent))
             return;
 
         FormattedMessage msg = new FormattedMessage();
-
-        if (slot.Locked)
-            msg.PushColor(Color.Red);
+        msg.PushColor(Color.Yellow);
+        if (lockComponent.IsLocked)
+            msg.AddText(Loc.GetString("universal-lock-examine-is-locked"));
         else
-            msg.PushColor(Color.YellowGreen);
+            msg.AddText(Loc.GetString("universal-lock-examine-is-unlocked"));
 
         msg.AddText(Name(item));
         msg.Pop();
@@ -216,10 +224,6 @@ public sealed class UniversalLockableSharedSystem : EntitySystem
 
         if (!_containerSystem.TryGetContainer(lockableEnitity, "lockSlot", out var container))
             return;
-
-        container.ShowContents = true;
-
-        Dirty(lockEntity);
     }
 
     private void OnUsedKeyFail()

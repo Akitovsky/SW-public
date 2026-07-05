@@ -1,10 +1,9 @@
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 
@@ -17,6 +16,8 @@ public sealed class UniversalLockServerSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly UniversalKeyServerSystem _keySystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -43,6 +44,8 @@ public sealed class UniversalLockServerSystem : EntitySystem
 
     private void OnSetCodeReceived(Entity<UniversalLockComponent> lockEntity, ref UniversalLockSetCodeMessage args)
     {
+        if (!_interactionSystem.InRangeUnobstructed(args.Actor, lockEntity.Owner))
+            return;
         if (lockEntity.Comp.IsSetuped)
             return;
         if (args.NewCode.Length != lockEntity.Comp.Length)
@@ -56,8 +59,11 @@ public sealed class UniversalLockServerSystem : EntitySystem
                 return;
         }
 
+        _metaDataSystem.SetEntityName(lockEntity, args.Name + " " + Name(lockEntity));
+
         lockEntity.Comp.Code = args.NewCode;
         lockEntity.Comp.IsSetuped = true;
+        lockEntity.Comp.Name = args.Name;
         _audioSystem.PlayPvs(lockEntity.Comp.LockSetupSound, lockEntity);
     }
 }

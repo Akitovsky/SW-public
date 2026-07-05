@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Imperial.Medieval.Ships.Anchor;
+namespace Content.Shared.Imperial.Medieval.UniversalSecurity;
 
 [Serializable, NetSerializable]
 public enum UniversalSecurityUiKey : byte
@@ -47,10 +47,12 @@ public sealed class UniversalLockpickBuiState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class UniversalLockSetCodeMessage : BoundUserInterfaceMessage
 {
+    public string Name;
     public int[] NewCode;
 
-    public UniversalLockSetCodeMessage(int[] newCode)
+    public UniversalLockSetCodeMessage(string name,int[] newCode)
     {
+        Name = name;
         NewCode = newCode;
     }
 }
@@ -69,9 +71,11 @@ public sealed class UniversalLockpickSetCodeMessage : BoundUserInterfaceMessage
 public sealed class UniversalKeySetCodeMessage : BoundUserInterfaceMessage
 {
     public int[] NewCode;
-    public UniversalKeySetCodeMessage(int[] newCode)
+    public string Name;
+    public UniversalKeySetCodeMessage(int[] newCode, string name)
     {
         NewCode = newCode;
+        Name = name;
     }
 }
 

@@ -8,7 +8,8 @@ namespace Imperial.Medieval.UniversalLock.Lock;
 [GenerateTypedNameReferences]
 public sealed partial class UniversalKeyWindow : DefaultWindow
 {
-    public Action<int[]>? OnSetCode;
+    // Изменено: теперь передает название (string) и код (int[])
+    public Action<string, int[]>? OnSetCode;
     private List<LineEdit> _inputs = new();
     private List<Slider> _sliders = new();
     private const int MaxToothValue = 32;
@@ -25,6 +26,9 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
         SetCodeButton.Text = Loc.GetString("UniversalKey-ui-forge-button");
         Title = Loc.GetString("UniversalKey-ui-title");
+
+        // Добавили локализацию текста-подсказки для инпута названия
+        KeyNameInput.PlaceHolder = Loc.GetString("UniversalKey-ui-name-placeholder");
     }
 
     public void UpdateState()
@@ -154,6 +158,8 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
     private void SubmitCode()
     {
+        // Считываем имя из инпута
+        var keyName = KeyNameInput.Text;
         var code = new int[_inputs.Count];
 
         for (int i = 0; i < _inputs.Count; i++)
@@ -173,11 +179,13 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
         LengthSlider.Disabled = true;
         LengthInput.Editable = false;
+        KeyNameInput.Editable = false; // Блокируем инпут названия после отправки
 
         foreach (var slider in _sliders) slider.Disabled = true;
         foreach (var input in _inputs) input.Editable = false;
         SetCodeButton.Disabled = true;
 
-        OnSetCode?.Invoke(code);
+        // Передаем строку названия вместе с массивом кода
+        OnSetCode?.Invoke(keyName, code);
     }
 }

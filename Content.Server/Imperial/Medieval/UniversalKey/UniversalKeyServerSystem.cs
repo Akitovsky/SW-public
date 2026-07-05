@@ -1,13 +1,9 @@
 using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
-using Content.Server.Imperial.Medieval.UniversalLock;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands.Components;
-using Content.Shared.Imperial.Medieval.Ships.Anchor;
+using Content.Shared.Imperial.Medieval.UniversalSecurity;
 using Content.Shared.Interaction;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Tag;
-using Imperial.Medieval.UniversalSecurity;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -20,6 +16,9 @@ public sealed class UniversalKeyServerSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,7 +32,7 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalLockComponent, UniversalKeySetupDoAfterEvent>(OnKeySetupDoAfterEvent);
     }
 
-    private void OnInteractUsing(Entity<UniversalLockComponent> entity, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)
     {
         if (!TryComp<UniversalKeyComponent>(args.Used, out var universalKeyComponent))
             return;
@@ -41,7 +40,7 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         if (universalKeyComponent.IsSetuped)
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), entity, used: args.Used)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), lockEntity, used: args.Used)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -51,6 +50,7 @@ public sealed class UniversalKeyServerSystem : EntitySystem
             BreakOnHandChange = true
         };
 
+        universalKeyComponent.Name = lockEntity.Comp.Name;
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
@@ -101,6 +101,13 @@ public sealed class UniversalKeyServerSystem : EntitySystem
             return;
         }
 
+        if (!_interactionSystem.InRangeUnobstructed(args.Actor, keyEntity.Owner))
+        {
+            _uiSystem.CloseUi(keyEntity.Owner, UniversalSecurityUiKey.Key);
+            return;
+        }
+
+        keyEntity.Comp.Name = args.Name;
         SetupKey(keyEntity, args.NewCode);
     }
 
@@ -110,5 +117,6 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         keyEntity.Comp.IsSetuped = true;
         _appearanceSystem.SetData(keyEntity, MedievalDoorKeyCheckVisual.State, "key_ready");
         _audioSystem.PlayPvs(keyEntity.Comp.KeySetupSound, keyEntity);
+        _metaDataSystem.SetEntityName(keyEntity, keyEntity.Comp.Name + " " + Name(keyEntity));
     }
 }
