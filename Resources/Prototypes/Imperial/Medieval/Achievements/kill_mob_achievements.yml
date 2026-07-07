@@ -5,8 +5,8 @@
   id: AchievementKillFirstMob
   priority: 100
   rarity: Common
-  name: "Первая кровь!""
-  description: "Совершите убийство одного из агрессивных существ"
+  name: achievement-name-kill-first-mob
+  description: achievement-desc-kill-first-mob
   icon:
     sprite: /Textures/Imperial/Medieval/Melee/iron_sword.rsi
     state: icon
@@ -56,8 +56,8 @@
   id: AchievementKillSkeletWeak1
   priority: 101
   rarity: Common
-  name: "Ветхие кости"
-  description: "Убейте слабого скелета"
+  name: achievement-name-kill-skelet-weak-1
+  description: achievement-desc-kill-skelet-weak-1
   icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -76,8 +76,8 @@
   id: AchievementKillSkeletWeak25
   priority: 101
   rarity: Common
-  name: "Ветхие кости (25)""
-  description: "Убейте 25 слабых скелетов"
+  name: achievement-name-kill-skelet-weak-25
+  description: achievement-desc-kill-skelet-weak-25
   icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -96,8 +96,8 @@
   id: AchievementKillSkeletWeak75
   priority: 101
   rarity: Common
-  name: "Ветхие кости (75)""
-  description: "Убейте 75 слабых скелетов"
+  name: achievement-name-kill-skelet-weak-75
+  description: achievement-desc-kill-skelet-weak-75
   icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -116,8 +116,8 @@
   id: AchievementKillSkeletWeak150
   priority: 101
   rarity: Common
-  name: "Ветхие кости (150)""
-  description: "Убейте 150 слабых скелетов"
+  name: achievement-name-kill-skelet-weak-150
+  description: achievement-desc-kill-skelet-weak-150
   icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -136,8 +136,8 @@
   id: AchievementKillSkeletWeak500
   priority: 101
   rarity: Common
-  name: "Ветхие кости (500)"
-  description: "Убейте 500 слабых скелетов!"
+  name: achievement-name-kill-skelet-weak-500
+  description: achievement-desc-kill-skelet-weak-500
   icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -159,8 +159,8 @@
   id: AchievementKillSkeletMeat1
   priority: 102
   rarity: Common
-  name: "Рагу из мяса на кости"
-  description: "Убейте мясного скелета"
+  name: achievement-name-kill-skelet-meat-1
+  description: achievement-desc-kill-skelet-meat-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_meat.rsi
     state: base
@@ -179,8 +179,8 @@
   id: AchievementKillSkeletMeat25
   priority: 102
   rarity: Common
-  name: "Рагу из мяса на кости (25)"
-  description: "Убейте 25 мясных скелетов"
+  name: achievement-name-kill-skelet-meat-25
+  description: achievement-desc-kill-skelet-meat-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_meat.rsi
     state: base
@@ -199,8 +199,8 @@
   id: AchievementKillSkeletMeat50
   priority: 102
   rarity: Common
-  name: "Рагу из мяса на кости (50)"
-  description: "Убейте 50 мясных скелетов"
+  name: achievement-name-kill-skelet-meat-50
+  description: achievement-desc-kill-skelet-meat-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_meat.rsi
     state: base
@@ -219,8 +219,8 @@
   id: AchievementKillSkeletMeat150
   priority: 102
   rarity: Common
-  name: "Рагу из мяса на кости (150)"
-  description: "Убейте 150 мясных скелетов"
+  name: achievement-name-kill-skelet-meat-150
+  description: achievement-desc-kill-skelet-meat-150
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_meat.rsi
     state: base
@@ -242,8 +242,8 @@
   id: AchievementKillSkeletFighter1
   priority: 103
   rarity: Common
-  name: "Костлявый легион"
-  description: "Убейте скелета-легионера"
+  name: achievement-name-kill-skelet-fighter-1
+  description: achievement-desc-kill-skelet-fighter-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_fighter.rsi
     state: base
@@ -262,8 +262,8 @@
   id: AchievementKillSkeletFighter25
   priority: 103
   rarity: Common
-  name: "Костлявый легион (25)"
-  description: "Убейте 25 скелетов-легионеров"
+  name: achievement-name-kill-skelet-fighter-25
+  description: achievement-desc-kill-skelet-fighter-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_fighter.rsi
     state: base
@@ -282,8 +282,8 @@
   id: AchievementKillSkeletFighter50
   priority: 103
   rarity: Common
-  name: "Костлявый легион (50)"
-  description: "Убейте 50 скелетов-легионеров"
+  name: achievement-name-kill-skelet-fighter-50
+  description: achievement-desc-kill-skelet-fighter-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_fighter.rsi
     state: base
@@ -302,8 +302,8 @@
   id: AchievementKillSkeletFighter150
   priority: 103
   rarity: Common
-  name: "Костлявый легион (150)"
-  description: "Убейте 150 скелетов-легионеров"
+  name: achievement-name-kill-skelet-fighter-150
+  description: achievement-desc-kill-skelet-fighter-150
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_fighter.rsi
     state: base
@@ -325,8 +325,8 @@
   id: AchievementKillSkeletArcher1
   priority: 104
   rarity: Common
-  name: "Стрела сквозь черепушку!"
-  description: "Убейте скелета-лучника"
+  name: achievement-name-kill-skelet-archer-1
+  description: achievement-desc-kill-skelet-archer-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_bow.rsi
     state: base
@@ -344,8 +344,8 @@
   id: AchievementKillSkeletArcher25
   priority: 104
   rarity: Common
-  name: "Стрела сквозь черепушку! (25)"
-  description: "Убейте 25 скелетов-лучников"
+  name: achievement-name-kill-skelet-archer-25
+  description: achievement-desc-kill-skelet-archer-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_bow.rsi
     state: base
@@ -363,8 +363,8 @@
   id: AchievementKillSkeletArcher50
   priority: 104
   rarity: Common
-  name: "Стрела сквозь черепушку! (50)"
-  description: "Убейте 50 скелетов-лучников"
+  name: achievement-name-kill-skelet-archer-50
+  description: achievement-desc-kill-skelet-archer-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_bow.rsi
     state: base
@@ -382,8 +382,8 @@
   id: AchievementKillSkeletArcher150
   priority: 104
   rarity: Common
-  name: "Стрела сквозь черепушку! (150)"
-  description: "Убейте 150 скелетов-лучников"
+  name: achievement-name-kill-skelet-archer-150
+  description: achievement-desc-kill-skelet-archer-150
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_bow.rsi
     state: base
@@ -404,8 +404,8 @@
   id: AchievementKillSkeletCrossbow1
   priority: 105
   rarity: Common
-  name: "Арбалет или скелет?"
-  description: "Убейте скелета-арбалетчика"
+  name: achievement-name-kill-skelet-crossbow-1
+  description: achievement-desc-kill-skelet-crossbow-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_crossbow.rsi
     state: base
@@ -423,8 +423,8 @@
   id: AchievementKillSkeletCrossbow25
   priority: 105
   rarity: Common
-  name: "Арбалет или скелет? (25)"
-  description: "Убейте 25 скелетов-арбалетчиков"
+  name: achievement-name-kill-skelet-crossbow-25
+  description: achievement-desc-kill-skelet-crossbow-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_crossbow.rsi
     state: base
@@ -442,8 +442,8 @@
   id: AchievementKillSkeletCrossbow50
   priority: 105
   rarity: Common
-  name: "Арбалет или скелет? (50)"
-  description: "Убейте 50 скелетов-арбалетчиков"
+  name: achievement-name-kill-skelet-crossbow-50
+  description: achievement-desc-kill-skelet-crossbow-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_crossbow.rsi
     state: base
@@ -461,8 +461,8 @@
   id: AchievementKillSkeletCrossbow100
   priority: 105
   rarity: Common
-  name: "Арбалет или скелет? (100)"
-  description: "Убейте 100 скелетов-арбалетчиков"
+  name: achievement-name-kill-skelet-crossbow-100
+  description: achievement-desc-kill-skelet-crossbow-100
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_crossbow.rsi
     state: base
@@ -483,8 +483,8 @@
   id: AchievementKillSkeletHalberd1
   priority: 106
   rarity: Common
-  name: "Алебардой по хребту!"
-  description: "Убейте скелета с алебардой"
+  name: achievement-name-kill-skelet-halberd-1
+  description: achievement-desc-kill-skelet-halberd-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_halberd.rsi
     state: base
@@ -503,8 +503,8 @@
   id: AchievementKillSkeletHalberd25
   priority: 106
   rarity: Common
-  name: "Алебардой по хребту! (25)"
-  description: "Убейте 25 скелетов с алебардой"
+  name: achievement-name-kill-skelet-halberd-25
+  description: achievement-desc-kill-skelet-halberd-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_halberd.rsi
     state: base
@@ -523,8 +523,8 @@
   id: AchievementKillSkeletHalberd50
   priority: 106
   rarity: Common
-  name: "Алебардой по хребту! (50)"
-  description: "Убейте 50 скелетов с алебардой"
+  name: achievement-name-kill-skelet-halberd-50
+  description: achievement-desc-kill-skelet-halberd-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_halberd.rsi
     state: base
@@ -543,8 +543,8 @@
   id: AchievementKillSkeletHalberd100
   priority: 106
   rarity: Common
-  name: "Алебардой по хребту! (100)"
-  description: "Убейте 100 скелетов с алебардой"
+  name: achievement-name-kill-skelet-halberd-100
+  description: achievement-desc-kill-skelet-halberd-100
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_halberd.rsi
     state: base
@@ -566,8 +566,8 @@
   id: AchievementKillSkeletMace1
   priority: 107
   rarity: Common
-  name: "Щит и кость"
-  description: "Убить скелета со щитом и булавой"
+  name: achievement-name-kill-skelet-mace-1
+  description: achievement-desc-kill-skelet-mace-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_mace.rsi
     state: base
@@ -586,8 +586,8 @@
   id: AchievementKillSkeletMace25
   priority: 107
   rarity: Common
-  name: "Щит и кость (25)"
-  description: "Убить 25 скелетов со щитом и булавой"
+  name: achievement-name-kill-skelet-mace-25
+  description: achievement-desc-kill-skelet-mace-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_mace.rsi
     state: base
@@ -606,8 +606,8 @@
   id: AchievementKillSkeletMace50
   priority: 107
   rarity: Common
-  name: "Щит и кость (50)"
-  description: "Убить 50 скелетов со щитом и булавой"
+  name: achievement-name-kill-skelet-mace-50
+  description: achievement-desc-kill-skelet-mace-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_mace.rsi
     state: base
@@ -626,8 +626,8 @@
   id: AchievementKillSkeletMace100
   priority: 107
   rarity: Common
-  name: "Щит и кость (100)"
-  description: "Убить 100 скелетов со щитом и булавой"
+  name: achievement-name-kill-skelet-mace-100
+  description: achievement-desc-kill-skelet-mace-100
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_mace.rsi
     state: base
@@ -649,8 +649,8 @@
   id: AchievementKillSkeletDagger1
   priority: 108
   rarity: Common
-  name: "Перо под костлявое ребро"
-  description: "Убить скелета с кинжалами"
+  name: achievement-name-kill-skelet-dagger-1
+  description: achievement-desc-kill-skelet-dagger-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_dagger.rsi
     state: base
@@ -669,8 +669,8 @@
   id: AchievementKillSkeletDagger25
   priority: 108
   rarity: Common
-  name: "Перо под костлявое ребро (25)"
-  description: "Убить 25 скелетов с кинжалами"
+  name: achievement-name-kill-skelet-dagger-25
+  description: achievement-desc-kill-skelet-dagger-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_dagger.rsi
     state: base
@@ -689,8 +689,8 @@
   id: AchievementKillSkeletDagger50
   priority: 108
   rarity: Common
-  name: "Перо под костлявое ребро (50)"
-  description: "Убить 50 скелетов с кинжалами"
+  name: achievement-name-kill-skelet-dagger-50
+  description: achievement-desc-kill-skelet-dagger-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_dagger.rsi
     state: base
@@ -709,8 +709,8 @@
   id: AchievementKillSkeletDagger100
   priority: 108
   rarity: Common
-  name: "Перо под костлявое ребро (100)"
-  description: "Убить 100 скелетов с кинжалами"
+  name: achievement-name-kill-skelet-dagger-100
+  description: achievement-desc-kill-skelet-dagger-100
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_dagger.rsi
     state: base
@@ -732,8 +732,8 @@
   id: AchievementKillSkeletSpear1
   priority: 109
   rarity: Common
-  name: "Бить копьем, греметь костями!"
-  description: "Убить скелета-копейщика"
+  name: achievement-name-kill-skelet-spear-1
+  description: achievement-desc-kill-skelet-spear-1
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_spear.rsi
     state: base
@@ -752,8 +752,8 @@
   id: AchievementKillSkeletSpear25
   priority: 109
   rarity: Common
-  name: "Бить копьем, греметь костями! (25)"
-  description: "Убить 25 скелетов-копейщиков"
+  name: achievement-name-kill-skelet-spear-25
+  description: achievement-desc-kill-skelet-spear-25
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_spear.rsi
     state: base
@@ -772,8 +772,8 @@
   id: AchievementKillSkeletSpear50
   priority: 109
   rarity: Common
-  name: "Бить копьем, греметь костями! (50)"
-  description: "Убить 50 скелетов-копейщиков"
+  name: achievement-name-kill-skelet-spear-50
+  description: achievement-desc-kill-skelet-spear-50
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_spear.rsi
     state: base
@@ -792,8 +792,8 @@
   id: AchievementKillSkeletSpear100
   priority: 109
   rarity: Common
-  name: "Бить копьем, греметь костями! (100)"
-  description: "Убить 100 скелетов-копейщиков"
+  name: achievement-name-kill-skelet-spear-100
+  description: achievement-desc-kill-skelet-spear-100
   icon:
     sprite: Imperial/Medieval/Mobs/skelet_spear.rsi
     state: base
@@ -815,8 +815,8 @@
   id: AchievementKillWolf1
   priority: 1010
   rarity: Common
-  name: "Одинокий волк"
-  description: "Убить волка!"
+  name: achievement-name-kill-wolf-1
+  description: achievement-desc-kill-wolf-1
   icon:
     sprite: Imperial/Medieval/Mobs/wolf.rsi
     state: wolf
@@ -835,8 +835,8 @@
   id: AchievementKillWolf25
   priority: 1010
   rarity: Common
-  name: "Волчье семейство"
-  description: "Убить 25 волков"
+  name: achievement-name-kill-wolf-25
+  description: achievement-desc-kill-wolf-25
   icon:
     sprite: Imperial/Medieval/Mobs/wolf.rsi
     state: wolf
@@ -855,8 +855,8 @@
   id: AchievementKillWolf75
   priority: 1010
   rarity: Common
-  name: "Волчья стая"
-  description: "Убить 75 волков"
+  name: achievement-name-kill-wolf-75
+  description: achievement-desc-kill-wolf-75
   icon:
     sprite: Imperial/Medieval/Mobs/wolf.rsi
     state: wolf
@@ -875,8 +875,8 @@
   id: AchievementKillWolf150
   priority: 1010
   rarity: Common
-  name: "Волчье войско"
-  description: "Убить 150 волков"
+  name: achievement-name-kill-wolf-150
+  description: achievement-desc-kill-wolf-150
   icon:
     sprite: Imperial/Medieval/Mobs/wolf.rsi
     state: wolf
@@ -895,8 +895,8 @@
   id: AchievementKillWolf300
   priority: 1010
   rarity: Common
-  name: "Гроза волков"
-  description: "Стать тем, от кого волки будут в ужасе... Убить 300 волков"
+  name: achievement-name-kill-wolf-300
+  description: achievement-desc-kill-wolf-300
   icon:
     sprite: Imperial/Medieval/Mobs/wolf.rsi
     state: wolf
@@ -918,8 +918,8 @@
   id: AchievementKillHog1
   priority: 1011
   rarity: Common
-  name: "Охота за кабаном"
-  description: "Убить кабана"
+  name: achievement-name-kill-hog-1
+  description: achievement-desc-kill-hog-1
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi
     state: bear
@@ -937,8 +937,8 @@
   id: AchievementKillHog15
   priority: 1011
   rarity: Common
-  name: "Бегущий за ветчиной"
-  description: "Убить 15 кабанов"
+name: achievement-name-kill-hog-15
+  description: achievement-desc-kill-hog-15
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi
     state: bear
@@ -956,8 +956,8 @@
   id: AchievementKillHog25
   priority: 1011
   rarity: Common
-  name: "Бекон во снах нам только снится"
-  description: "Убить 25 кабанов"
+  name: achievement-name-kill-hog-25
+  description: achievement-desc-kill-hog-25
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi
     state: bear
@@ -975,8 +975,8 @@
   id: AchievementKillHog50
   priority: 1011
   rarity: Common
-  name: "Гроза свиных ребрышек"
-  description: "Убить 50 кабанов"
+  name: achievement-name-kill-hog-50
+  description: achievement-desc-kill-hog-50
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi
     state: bear
@@ -994,8 +994,8 @@
   id: AchievementKillHog75
   priority: 1011
   rarity: Common
-  name: "Потомок Обеликса"
-  description: "Любитель жареных кабанов Обеликс вами бы гордился! Убить 75 кабанов"
+  name: achievement-name-kill-hog-75
+  description: achievement-desc-kill-hog-75
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi
     state: bear
@@ -1016,8 +1016,8 @@
   id: AchievementKillBear1
   priority: 1012
   rarity: Common
-  name: "Бурый хозяин леса"
-  description: "Убить медведя"
+  name: achievement-name-kill-bear-1
+  description: achievement-desc-kill-bear-1
   icon:
     sprite: Imperial/Medieval/Mobs/brown_bear.rsi
     state: bear
@@ -1035,8 +1035,8 @@
   id: AchievementKillBear10
   priority: 1012
   rarity: Common
-  name: "Сезон охоты на медведя"
-  description: "Убить 10 медведей"
+  name: achievement-name-kill-bear-10
+  description: achievement-desc-kill-bear-10
   icon:
     sprite: Imperial/Medieval/Mobs/brown_bear.rsi
     state: bear
@@ -1054,8 +1054,8 @@
   id: AchievementKillBear25
   priority: 1012
   rarity: Common
-  name: "Медвежья услуга"
-  description: "Убить 25 медведей"
+  name: achievement-name-kill-bear-25
+  description: achievement-desc-kill-bear-25
   icon:
     sprite: Imperial/Medieval/Mobs/brown_bear.rsi
     state: bear
@@ -1073,8 +1073,8 @@
   id: AchievementKillBear50
   priority: 1012
   rarity: Common
-  name: "Бьорн великий!""
-  description: "Станьте тем, о ком будут слагать легенды среди охотников на медведей! Убить 50 медведей!""
+  name: achievement-name-kill-bear-50
+  description: achievement-desc-kill-bear-50
   icon:
     sprite: Imperial/Medieval/Mobs/brown_bear.rsi
     state: bear
@@ -1095,8 +1095,8 @@
   id: AchievementKillIceDragon
   priority: 1013
   rarity: Epic
-  name: "Повелитель льдов"
-  description: "Убить ледяного дракона"
+  name: achievement-name-kill-ice-dragon
+  description: achievement-desc-kill-ice-dragon
   icon:
     sprite: Imperial/Medieval/Mobs/Bosses/Dragons/icedragon.rsi
     state: alive
@@ -1117,8 +1117,8 @@
   id: AchievementKillFireDragon
   priority: 1014
   rarity: Epic
-  name: "Хозяин пламени"
-  description: "Убить огненного дракона"
+  name: achievement-name-kill-fire-dragon
+  description: achievement-desc-kill-fire-dragon
   icon:
     sprite: Imperial/Medieval/Mobs/Bosses/Dragons/firedragon.rsi
     state: alive
@@ -1139,8 +1139,8 @@
   id: AchievementKillAcidDragon
   priority: 1015
   rarity: Epic
-  name: "Кислотный властелин"
-  description: "Убить кислотного дракона"
+  name: achievement-name-kill-acid-dragon
+  description: achievement-desc-kill-acid-dragon
   icon:
     sprite: Imperial/Medieval/Mobs/Bosses/Dragons/aciddragon.rsi
     state: alive
@@ -1161,8 +1161,8 @@
   id: AchievementKillThunderDragon
   priority: 1016
   rarity: Epic
-  name: "Гроза небес"
-  description: "Убить грозового дракона"
+  name: achievement-name-kill-thunder-dragon
+  description: achievement-desc-kill-thunder-dragon
   icon:
     sprite: Imperial/Medieval/Mobs/Bosses/Dragons/thunderdragon.rsi
     state: alive
@@ -1183,8 +1183,8 @@
   id: AchievementKillAllDragonsSlayer
   priority: 1017
   rarity: Epic
-  name: "Драконоборец"
-  description: "Убить драконов четырех стихий"
+  name: achievement-name-dragon-slayer
+  description: achievement-desc-dragon-slayer
   icon:
     sprite: Imperial/Medieval/Mobs/Bosses/Dragons/necrodragon.rsi
     state: dead
@@ -1223,8 +1223,8 @@
   id: AchievementKillCrab1
   priority: 1018
   rarity: Common
-  name: "Крабовая палочка"
-  description: "Убить краба"
+  name: achievement-name-kill-crab-1
+  description: achievement-desc-kill-crab-1
   icon:
     sprite: Imperial/Medieval/Mobs/crab_mdv.rsi
     state: base
@@ -1242,8 +1242,8 @@
   id: AchievementKillCrab15
   priority: 1018
   rarity: Common
-  name: "Коллекция крабсбургеров"
-  description: "Убить 15 крабов"
+  name: achievement-name-kill-crab-15
+  description: achievement-desc-kill-crab-15
   icon:
     sprite: Imperial/Medieval/Mobs/crab_mdv.rsi
     state: base
@@ -1261,8 +1261,8 @@
   id: AchievementKillCrab50
   priority: 1018
   rarity: Common
-  name: "Крабовый салат!"
-  description: "Убить 50 крабов"
+  name: achievement-name-kill-crab-50
+  description: achievement-desc-kill-crab-50
   icon:
     sprite: Imperial/Medieval/Mobs/crab_mdv.rsi
     state: base
@@ -1280,8 +1280,8 @@
   id: AchievementKillCrab100
   priority: 1018
   rarity: Common
-  name: "Крабовая аннигиляция"
-  description: "Убить 100 крабов"
+  name: achievement-name-kill-crab-100
+  description: achievement-desc-kill-crab-100
   icon:
     sprite: Imperial/Medieval/Mobs/crab_mdv.rsi
     state: base
@@ -1302,8 +1302,8 @@
   id: AchievementKillCrabDevil1
   priority: 1019
   rarity: Common
-  name: "Дьявольская крабовая палочка"
-  description: "Убить дьявольского краба"
+  name: achievement-name-kill-crab-devil-1
+  description: achievement-desc-kill-crab-devil-1
   icon:
     sprite: Imperial/Medieval/Mobs/crab_devil.rsi
     state: base
@@ -1321,8 +1321,8 @@
   id: AchievementKillCrabDevil3
   priority: 1019
   rarity: Common
-  name: "Дьявольски крабовая тройка!"
-  description: "Убить три дьявольских краба"
+  name: achievement-name-kill-crab-devil-3
+  description: achievement-desc-kill-crab-devil-3
   icon:
     sprite: Imperial/Medieval/Mobs/crab_devil.rsi
     state: base
@@ -1340,8 +1340,8 @@
   id: AchievementKillCrabDevil7
   priority: 1019
   rarity: Common
-  name: "Счастливый дьявольский краб"
-  description: "Убить 7 дьявольских крабов"
+  name: achievement-name-kill-crab-devil-7
+  description: achievement-desc-kill-crab-devil-7
   icon:
     sprite: Imperial/Medieval/Mobs/crab_devil.rsi
     state: base
@@ -1359,8 +1359,8 @@
   id: AchievementKillCrabDevil15
   priority: 1019
   rarity: Common
-  name: "Смерть дьявольским крабам!"
-  description: "Убить 15 дьявольских крабов"
+  name: achievement-name-kill-crab-devil-15
+  description: achievement-desc-kill-crab-devil-15
   icon:
     sprite: Imperial/Medieval/Mobs/crab_devil.rsi
     state: base
@@ -1381,8 +1381,8 @@
   id: AchievementKillHunterGhost1
   priority: 1020
   rarity: Common
-  name: "Хозяин болот"
-  description: "Убить хантера"
+  name: achievement-name-kill-hunter-ghost-1
+  description: achievement-desc-kill-hunter-ghost-1
   icon:
     sprite: Imperial/Medieval/Mobs/hunter.rsi
     state: base
@@ -1400,8 +1400,8 @@
   id: AchievementKillHunterGhost15
   priority: 1020
   rarity: Common
-  name: "Семейство хантеров"
-  description: "Убить 15 хантеров"
+  name: achievement-name-kill-hunter-ghost-15
+  description: achievement-desc-kill-hunter-ghost-15
   icon:
     sprite: Imperial/Medieval/Mobs/hunter.rsi
     state: base
@@ -1419,8 +1419,8 @@
   id: AchievementKillHunterGhost50
   priority: 1020
   rarity: Common
-  name: "Незримая болотная смерть"
-  description: "Убить 50 хантеров"
+  name: achievement-name-kill-hunter-ghost-50
+  description: achievement-desc-kill-hunter-ghost-50
   icon:
     sprite: Imperial/Medieval/Mobs/hunter.rsi
     state: base
@@ -1441,8 +1441,8 @@
   id: AchievementKillSpiderCave1
   priority: 1021
   rarity: Common
-  name: "Паучья пещера"
-  description: "Убить пещерного паука"
+  name: achievement-name-kill-spider-cave-1
+  description: achievement-desc-kill-spider-cave-1
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider.rsi
     state: base
@@ -1460,8 +1460,8 @@
   id: AchievementKillSpiderCave15
   priority: 1021
   rarity: Common
-  name: "Чутье пауков"
-  description: "Убить 15 пауков"
+  name: achievement-name-kill-spider-cave-15
+  description: achievement-desc-kill-spider-cave-15
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider.rsi
     state: base
@@ -1479,8 +1479,8 @@
   id: AchievementKillSpiderCave25
   priority: 1021
   rarity: Common
-  name: "Каждый паук вам не друг..."
-  description: "Убить 25 пауков"
+  name: achievement-name-kill-spider-cave-25
+  description: achievement-desc-kill-spider-cave-25
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider.rsi
     state: base
@@ -1498,8 +1498,8 @@
   id: AchievementKillSpiderCave50
   priority: 1021
   rarity: Common
-  name: "Всемирная паутина"
-  description: "Убить 50 пауков"
+  name: achievement-name-kill-spider-cave-50
+  description: achievement-desc-kill-spider-cave-50
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider.rsi
     state: base
@@ -1517,8 +1517,8 @@
   id: AchievementEquipSpiderBoots
   priority: 1021
   rarity: Common
-  name: "Паучьи лапки"
-  description: "Станьте тихим и ловким! Обуться в обувь из паучьих волосков"
+  name: achievement-name-equip-spider-boots
+  description: achievement-desc-equip-spider-boots
   icon:
     sprite: Imperial/Medieval/Clothing/Shoes/spider_shoes.rsi
     state: icon
@@ -1539,8 +1539,8 @@
   id: AchievementKillSpiderStrongCave1
   priority: 1022
   rarity: Epic
-  name: "Смертельный кокон"
-  description: "Убить сильного пещерного паука"
+  name: achievement-name-kill-spider-strong-cave-1
+  description: achievement-desc-kill-spider-strong-cave-1
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider_strong.rsi
     state: base
@@ -1558,8 +1558,8 @@
   id: AchievementKillSpiderStrongCave5
   priority: 1022
   rarity: Epic
-  name: "Пасьянс-Паук"
-  description: "Убить 5 сильных пауков"
+  name: achievement-name-kill-spider-strong-cave-5
+  description: achievement-desc-kill-spider-strong-cave-5
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider_strong.rsi
     state: base
@@ -1577,8 +1577,8 @@
   id: AchievementKillSpiderStrongCave10
   priority: 1022
   rarity: Epic
-  name: "Ядовитая десятина, липкая паутина"
-  description: "Убить 10 сильных пауков"
+  name: achievement-name-kill-spider-strong-cave-10
+  description: achievement-desc-kill-spider-strong-cave-10
   icon:
     sprite: Imperial/Medieval/Mobs/cave_spider_strong.rsi
     state: base
@@ -1599,8 +1599,8 @@
   id: AchievementKillGoblin1
   priority: 1023
   rarity: Common
-  name: "Зеленое недоразумение"
-  description: "Убить гоблина"
+  name: achievement-name-kill-goblin-1
+  description: achievement-desc-kill-goblin-1
   icon:
     sprite: Imperial/Medieval/Mobs/goblin.rsi
     state: monkey
@@ -1618,8 +1618,8 @@
   id: AchievementKillGoblin5
   priority: 1023
   rarity: Common
-  name: "Охота на гоблинов"
-  description: "Убить 5 гоблинов"
+  name: achievement-name-kill-goblin-5
+  description: achievement-desc-kill-goblin-5
   icon:
     sprite: Imperial/Medieval/Mobs/goblin.rsi
     state: monkey
@@ -1637,8 +1637,8 @@
   id: AchievementKillGoblin15
   priority: 1023
   rarity: Common
-  name: "Легенда об убийце гоблинов"
-  description: "Станьте той самой легендой об убийце гоблинов! Убейте 15 гоблинов!"
+  name: achievement-name-kill-goblin-15
+  description: achievement-desc-kill-goblin-15
   icon:
     sprite: Imperial/Medieval/Clothing/Head/goblin_slayer_helmet.rsi
     state: icon
@@ -1656,8 +1656,8 @@
   id: AchievementEquipGoblinNecklace
   priority: 1023
   rarity: Common
-  name: "Зеленые ушки на макушке!"
-  description: "Ого, вот это трофей! Наденьте на себя ожерелье из ушей гоблинов"
+  name: achievement-name-equip-goblin-necklace
+  description: achievement-desc-equip-goblin-necklace
   icon:
     sprite: Imperial/Medieval/Clothing/Cloaks/goblin.rsi
     state: icon
@@ -1678,8 +1678,8 @@
   id: AchievementKillPlagueSlime1
   priority: 1024
   rarity: Common
-  name: "Булькающая чума"
-  description: "Убейте чумного слизня"
+  name: achievement-name-kill-plague-slime-1
+  description: achievement-desc-kill-plague-slime-1
   icon:
     sprite: Imperial/Medieval/Mobs/plague_slime.rsi
     state: slime
@@ -1700,8 +1700,8 @@
   id: AchievementKillPlagueMouse1
   priority: 1025
   rarity: Common
-  name: "Хвостатая хворь"
-  description: "Убить чумную крысу"
+  name: achievement-name-kill-plague-mouse-1
+  description: achievement-desc-kill-plague-mouse-1
   icon:
     sprite: Imperial/Medieval/Mobs/plague_rat.rsi
     state: mouse
