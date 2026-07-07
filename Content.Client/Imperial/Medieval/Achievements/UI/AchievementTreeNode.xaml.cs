@@ -63,6 +63,13 @@ public sealed partial class AchievementTreeNode : PanelContainer
     private static readonly Color LockedIconTint   = Color.FromHex("#55443388");
     private static readonly Color QuestionIconTint = Color.FromHex("#7a6040cc");
 
+    private const float BaseBorderThickness = 2f;
+    private const float BaseContentMargin   = 4f;
+    private const float MinBorderThickness  = 1f;
+    private const float MinContentMargin    = 1f;
+
+    private float _zoom = 1f;
+
     public AchievementTreeNode(
         AchievementPrototype proto,
         bool unlocked,
@@ -114,18 +121,25 @@ public sealed partial class AchievementTreeNode : PanelContainer
     private void ApplyVisuals(SpriteSystem spriteSystem)
     {
         ApplyIcon(spriteSystem);
+        ApplyStyle();
+    }
 
+    private void ApplyStyle()
+    {
         var palette = GetPalette();
+
+        var border = Math.Clamp(MathF.Round(BaseBorderThickness * _zoom), MinBorderThickness, BaseBorderThickness * 2f);
+        var margin = Math.Clamp(MathF.Round(BaseContentMargin * _zoom),   MinContentMargin,   BaseContentMargin * 2f);
 
         BorderPanel.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor             = palette.Background,
             BorderColor                 = palette.Border,
-            BorderThickness             = new Thickness(2),
-            ContentMarginLeftOverride   = 4,
-            ContentMarginRightOverride  = 4,
-            ContentMarginTopOverride    = 4,
-            ContentMarginBottomOverride = 4,
+            BorderThickness             = new Thickness(border),
+            ContentMarginLeftOverride   = margin,
+            ContentMarginRightOverride  = margin,
+            ContentMarginTopOverride    = margin,
+            ContentMarginBottomOverride = margin,
         };
     }
 
@@ -178,6 +192,11 @@ public sealed partial class AchievementTreeNode : PanelContainer
 
     public void ApplyZoom(float zoom)
     {
+        if (MathF.Abs(zoom - _zoom) < 0.001f)
+            return;
+
+        _zoom = zoom;
+        ApplyStyle();
     }
 
     private bool _attemptingSelect;
