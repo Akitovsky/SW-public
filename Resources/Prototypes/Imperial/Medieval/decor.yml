@@ -4781,6 +4781,8 @@
   name: nanotrasen banner
   description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerCultAltar
   - type: Sprite
     sprite: Imperial/Medieval/Misc/cult.rsi
     state: cutlaltar2

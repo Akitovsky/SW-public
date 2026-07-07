@@ -141,6 +141,8 @@
     areaName: area-map1-collegium
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/college.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerCollegium
 
 - type: entity
   id: AreaMarkerSwamp
@@ -206,6 +208,8 @@
     areaName: area-map1-cult
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/cult.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerCult
 
 - type: entity
   id: AreaMarkerMine
