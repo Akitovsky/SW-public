@@ -1,0 +1,35 @@
+# ЭТО ВСЕГО ЛИШЬ ПРИМЕР. СНЕСИТЕ, КОГДА ПОЙМЕТЕ ЧЕ КАК
+
+- type: achievementTab
+  id: AchievementTabCombatExample
+  name: "Бой"
+  priority: 0
+  icon:
+    sprite: /Textures/Imperial/Medieval/Melee/iron_sword.rsi
+    state: icon
+
+- type: achievementTab
+  id: AchievementTabMagicExample
+  name: "Магия"
+  priority: 10
+  icon:
+    sprite: Imperial/Medieval/Misc/glowstone.rsi
+    state: glowstick_lit
+
+- type: achievementTab
+  id: AchievementTabMagicExample222
+  name: "22222"
+  priority: 20
+  icon:
+    sprite: Imperial/Medieval/Misc/glowstone.rsi
+    state: glowstick_lit
+
+- type: achievement
+  id: AchievementKillFirstMobExamle
+  priority: 100
+  rarity: Common
+  tab: AchievementTabMagicExample222
+  name: "achievement-name-kill-first-mob"
+  description: "achievement-desc-kill-first-mob"
+  icon: { sprite: /Textures/Imperial/Medieval/Interface/faction_relations.rsi, state: union }
+  visibility: Visible
