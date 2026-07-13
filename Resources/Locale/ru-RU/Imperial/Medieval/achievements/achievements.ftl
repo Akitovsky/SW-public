@@ -85,3 +85,7 @@ achievement-condition-kill-faction-single-prefix = Убейте { $count } бо�
 achievement-condition-kill-faction-multi-header = Убейте { $count } бойцов следующих фракций:
 
 achievement-condition-complete-contract = Выполните контракт наемников { $count } раз
+
+achievement-tab-default-name = Дефолт
+
+achievement-tab-legion-insurgency-name = Команда синих и красных

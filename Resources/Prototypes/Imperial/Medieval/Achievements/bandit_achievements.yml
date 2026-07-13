@@ -4,6 +4,7 @@
 - type: achievement
   id: AchievementBanditCollect100Revents
   priority: 10
+  tab: AchievementTabBanditos
   rarity: Common
   name: achievement-bandit-collect-100-revents-name
   description: achievement-bandit-collect-100-revents-desc

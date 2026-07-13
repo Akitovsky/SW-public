@@ -3,6 +3,7 @@
   priority: 20
   rarity: Common
   name: "Лук да стрелы"
+  tab: AchievementTabLegionInsurgency
   description: "Приправьте ядом"
   icon: { sprite: /Textures/Imperial/Medieval/Interface/faction_relations.rsi, state: union }
   visibility: Visible

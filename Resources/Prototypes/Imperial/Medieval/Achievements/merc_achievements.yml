@@ -6,6 +6,7 @@
   id: AchievementMercBecomeMerc
   priority: 10
   rarity: Common
+  tab: AchievementTabMerc
   name: achievement-merc-become-merc-name
   description: achievement-merc-become-merc-desc
   icon:

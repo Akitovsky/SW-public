@@ -6,6 +6,7 @@
   priority: 10
   rarity: Common
   name: "Команда синих"
+  tab: AchievementTabLegionInsurgency
   description: "Начните свой славный (и, вероятно, короткий) путь."
   icon:
     sprite: Imperial/Medieval/Clothing/Cloaks/clan_eagle.rsi

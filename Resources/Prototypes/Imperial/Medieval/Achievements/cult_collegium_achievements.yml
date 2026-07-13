@@ -6,6 +6,7 @@
   priority: 10
   rarity: Common
   name: achievement-cultcollegium-join-name
+  tab: AchievementTabCollegiumCult
   description: achievement-cultcollegium-join-desc
   icon:
     sprite: Imperial/Medieval/Misc/job_icons.rsi
