@@ -9,7 +9,7 @@
   priority: 10
   rarity: Common
   name: achievement-miner-join-name
-  tab: AchievementTabOtherFractions
+  tab: AchievementTabMine
   description: achievement-miner-join-desc
   icon:
     sprite: Imperial/Medieval/Interface/factions.rsi

@@ -165,7 +165,7 @@
   visibility: Visible
   prerequisites:
   - AchievementWarGeneralBallistica
-  - AchievementInsurgencyOpcioGetMedal
+  - AchievementInsurgencyOpcionGetMedal
   conditions:
   - !type:LocationCondition
     progressKey: locationInsurgencyTribunVisitInsurgencyProgression

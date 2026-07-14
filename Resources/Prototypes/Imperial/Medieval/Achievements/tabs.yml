@@ -1,4 +1,3 @@
-# ЭТО ВСЕГО ЛИШЬ ПРИМЕР. СНЕСИТЕ, КОГДА ПОЙМЕТЕ ЧЕ КАК
 - type: achievementTab
   id: AchievementTabDefault
   name: achievement-tab-default-name
@@ -48,17 +47,25 @@
     state: glowstick_lit
 
 - type: achievementTab
-  id: AchievementTabKillMob
-  name: achievement-tab-kill-mob-name
+  id: AchievementTabMine
+  name: achievement-tab-mine-name
   priority: 6
   icon:
     sprite: Imperial/Medieval/Misc/glowstone.rsi
     state: glowstick_lit
 
 - type: achievementTab
-  id: AchievementTabForged
-  name: achievement-tab-magic-name
+  id: AchievementTabKillMob
+  name: achievement-tab-kill-mob-name
   priority: 7
+  icon:
+    sprite: Imperial/Medieval/Misc/glowstone.rsi
+    state: glowstick_lit
+
+- type: achievementTab
+  id: AchievementTabMagicForge
+  name: achievement-tab-magic-forge-name
+  priority: 8
   icon:
     sprite: Imperial/Medieval/Misc/glowstone.rsi
     state: glowstick_lit

@@ -25,6 +25,7 @@
   priority: 10
   rarity: Common
   name: achievement-bandit-get-lockpick-pack-name
+  tab: AchievementTabBanditos
   description: achievement-bandit-get-lockpick-pack-desc
   icon:
     sprite: Imperial/Medieval/Misc/lockpick.rsi
@@ -230,6 +231,7 @@
   priority: 19
   rarity: Rare
   name: achievement-bandit-get-steel-maces-name
+  tab: AchievementTabBanditos
   description: achievement-bandit-get-steel-maces-desc
   icon:
     sprite: Imperial/Medieval/Melee/iron_mace.rsi

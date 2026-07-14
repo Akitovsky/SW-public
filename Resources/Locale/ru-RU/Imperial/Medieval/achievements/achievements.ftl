@@ -88,4 +88,12 @@ achievement-condition-complete-contract = Выполните контракт н
 
 achievement-tab-default-name = Дефолт
 
-achievement-tab-legion-insurgency-name = Команда синих и красных
+achievement-tab-default-name = Общие
+achievement-tab-legion-insurgency-name = Красные против синих
+achievement-tab-magic-name = Магическая битва
+achievement-tab-merc-name = Наёмники
+achievement-tab-banditos-name = Гильдя воров
+achievement-tab-village-name = Деревня
+achievement-tab-mine-name = Шахта
+achievement-tab-kill-mob-name = Охота на монстров
+achievement-tab-magic-forge-name = Магическая кузня
