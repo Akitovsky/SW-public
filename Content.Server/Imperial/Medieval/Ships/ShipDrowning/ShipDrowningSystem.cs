@@ -66,7 +66,7 @@ public sealed class ShipDrowningSystem : EntitySystem
             var weight = _rdWeight.GetTotalOnGrid(uid);
             float maxWeight = ShipWeightHelper.GetMaxWeight(uid, mapGrid, _map, EntityManager, _cfg);
 
-            if (weight * 3 > maxWeight)
+            if (weight > maxWeight * 3)
                 drowning.DrownLevel += _cfg.GetCVar(ShipsCCVars.OverloadDrownRate) * frameTime;
 
             drowning.DrownMaxLevel = totalTiles * drowning.MaxFloodPerTile;

@@ -44,8 +44,12 @@ public sealed class ServerMedievalAnchorSystem : EntitySystem
 
     private void OnUseAnchor(EntityUid uid, MedievalAnchorComponent component, UseAnchorEvent args)
     {
-        if (args.Target == null || args.Cancelled)
+        if (args.Target == null || args.Cancelled || args.Handled)
+        {
+            component.User = null;
+            Dirty(uid, component);
             return;
+        }
 
         if (!_skills.HasSkill(args.User, SharedSkillsSystem.StrengthId))
             return;
@@ -92,6 +96,8 @@ public sealed class ServerMedievalAnchorSystem : EntitySystem
         UpdateAnchorVisuals(uid, component);
         _audio.PlayPvs(MedievalShipSounds.AnchorUse, uid);
         args.Handled = true;
+        component.User = null;
+        Dirty(uid, component);
     }
 
     private void UpdateAnchorVisuals(EntityUid uid, MedievalAnchorComponent component)
