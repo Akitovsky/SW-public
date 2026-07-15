@@ -1,4 +1,3 @@
-
 # Кузнечное дело / Кованные (для всех — без фильтра фракции)
 
 # Получить магический порошок (пыль)
@@ -6,6 +5,7 @@
   id: AchievementForgedMagicDust
   priority: 40
   rarity: Common
+  tab: AchievementTabForged
   name: achievement-forged-magic-dust-name
   description: achievement-forged-magic-dust-desc
   icon:
@@ -13,10 +13,11 @@
     state: magicGlina
   visibility: Visible
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedMagicDustProgression
-    itemPrototypes:
-      MedievalMagicDust: 1
+    requiredCount: 1
+    targetItems:
+    - MedievalMagicDust
 
 # Получить магическую глину
 - type: achievement
@@ -32,10 +33,11 @@
   prerequisites:
   - AchievementForgedMagicDust
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedMagicGlinaProgression
-    itemPrototypes:
-      MedievalMagicGlina: 1
+    requiredCount: 1
+    targetItems:
+    - MedievalMagicGlina
 
 # Создать все модули кованного деревянного
 - type: achievement
@@ -51,15 +53,30 @@
   prerequisites:
   - AchievementForgedMagicGlina
   conditions:
-  - !type:CollectAllItemsCondition
-    progressKey: forgedWoodenModulesProgression
-    itemPrototypes:
-      ForgedWoodenHead: 1
-      ForgedWoodenTorso: 1
-      ForgedWoodenRArm: 1
-      ForgedWoodenLArm: 1
-      ForgedWoodenRLeg: 1
-      ForgedWoodenLLeg: 1
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenHeadProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenHead ]
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenTorsoProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenTorso ]
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenRArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenRArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenLArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenLArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenRLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenRLeg ]
+  - !type:CraftItemCondition
+    progressKey: forgedWoodenLLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedWoodenLLeg ]
 
 # Создать все модули кованного железного
 - type: achievement
@@ -75,15 +92,30 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAllItemsCondition
-    progressKey: forgedIronModulesProgression
-    itemPrototypes:
-      ForgedIronHead: 1
-      ForgedIronTorso: 1
-      ForgedIronRArm: 1
-      ForgedIronLArm: 1
-      ForgedIronRLeg: 1
-      ForgedIronLLeg: 1
+  - !type:CraftItemCondition
+    progressKey: forgedIronHeadProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronHead ]
+  - !type:CraftItemCondition
+    progressKey: forgedIronTorsoProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronTorso ]
+  - !type:CraftItemCondition
+    progressKey: forgedIronRArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronRArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedIronLArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronLArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedIronRLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronRLeg ]
+  - !type:CraftItemCondition
+    progressKey: forgedIronLLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedIronLLeg ]
 
 # Создать все модули кованного золотого
 - type: achievement
@@ -99,15 +131,30 @@
   prerequisites:
   - AchievementForgedIronModules
   conditions:
-  - !type:CollectAllItemsCondition
-    progressKey: forgedGoldenModulesProgression
-    itemPrototypes:
-      ForgedGoldenHead: 1
-      ForgedGoldenTorso: 1
-      ForgedGoldenRArm: 1
-      ForgedGoldenLArm: 1
-      ForgedGoldenRLeg: 1
-      ForgedGoldenLLeg: 1
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenHeadProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenHead ]
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenTorsoProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenTorso ]
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenRArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenRArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenLArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenLArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenRLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenRLeg ]
+  - !type:CraftItemCondition
+    progressKey: forgedGoldenLLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedGoldenLLeg ]
 
 # Создать все модули кованного форстоуновые
 - type: achievement
@@ -123,15 +170,30 @@
   prerequisites:
   - AchievementForgedGoldenModules
   conditions:
-  - !type:CollectAllItemsCondition
-    progressKey: forgedForstoneModulesProgression
-    itemPrototypes:
-      ForgedForstoneHead: 1
-      ForgedForstoneTorso: 1
-      ForgedForstoneRArm: 1
-      ForgedForstoneLArm: 1
-      ForgedForstoneRLeg: 1
-      ForgedForstoneLLeg: 1
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneHeadProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneHead ]
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneTorsoProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneTorso ]
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneRArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneRArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneLArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneLArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneRLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneRLeg ]
+  - !type:CraftItemCondition
+    progressKey: forgedForstoneLLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedForstoneLLeg ]
 
 # Создать все модули кованного эбонитовые
 - type: achievement
@@ -147,15 +209,30 @@
   prerequisites:
   - AchievementForgedGoldenModules
   conditions:
-  - !type:CollectAllItemsCondition
-    progressKey: forgedEboniteModulesProgression
-    itemPrototypes:
-      ForgedEbonitHead: 1
-      ForgedEbonitTorso: 1
-      ForgedEbonitRArm: 1
-      ForgedEbonitLArm: 1
-      ForgedEbonitRLeg: 1
-      ForgedEbonitLLeg: 1
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitHeadProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitHead ]
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitTorsoProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitTorso ]
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitRArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitRArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitLArmProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitLArm ]
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitRLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitRLeg ]
+  - !type:CraftItemCondition
+    progressKey: forgedEbonitLLegProgression
+    requiredCount: 1
+    targetItems: [ ForgedEbonitLLeg ]
 
 # Создать пушку кованного 1
 - type: achievement
@@ -171,10 +248,10 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCannon1Progression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCannon1
     - ForgedRHandCannon1
     - ForgedLHandCannon1
@@ -193,10 +270,10 @@
   prerequisites:
   - AchievementForgedCannon1
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCannon2Progression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCannon2
     - ForgedRHandCannon2
     - ForgedLHandCannon2
@@ -215,10 +292,10 @@
   prerequisites:
   - AchievementForgedCannon2
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCannon3Progression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCannon3
     - ForgedRHandCannon3
     - ForgedLHandCannon3
@@ -237,10 +314,10 @@
   prerequisites:
   - AchievementForgedCannon3
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCannon4Progression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCannon4
     - ForgedRHandCannon4
     - ForgedLHandCannon4
@@ -259,10 +336,10 @@
   prerequisites:
   - AchievementForgedCannon4
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCannon5Progression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCannon5
     - ForgedRHandCannon5
     - ForgedLHandCannon5
@@ -281,10 +358,10 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedBladeProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmBlade
     - ForgedLHandBlade
     - ForgedRHandBlade
@@ -303,10 +380,10 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCrossbowProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedArmCrossbow
     - ForgedCrossbowRHand
     - ForgedCrossbowLHand
@@ -325,10 +402,11 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedNimbusProgression
-    itemPrototypes:
-      ForgedInvisibilityNimbus: 1
+    requiredCount: 1
+    targetItems:
+    - ForgedInvisibilityNimbus
 
 # Создать самовзрыватель кованного
 - type: achievement
@@ -344,10 +422,11 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedExplosiveProgression
-    itemPrototypes:
-      ForgedTorsoExplosive: 1
+    requiredCount: 1
+    targetItems:
+    - ForgedTorsoExplosive
 
 # Создать любое ядро кованного
 - type: achievement
@@ -363,10 +442,10 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedCoreProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedCoreSerdolic
     - ForgedCoreAdam
     - ForgedCoreTopaz
@@ -386,10 +465,10 @@
   prerequisites:
   - AchievementForgedWoodenModules
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedEyesProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - ForgedTopazEyes
     - ForgedAdamEyes
     - ForgedSerdolickEyes
@@ -409,10 +488,11 @@
   prerequisites:
   - AchievementForgedMagicGlina
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedGlowStoneProgression
-    itemPrototypes:
-      MedievalGlowStone: 1
+    requiredCount: 1
+    targetItems:
+    - MedievalGlowStone
 
 # Создать ошейник антимагии
 - type: achievement
@@ -428,10 +508,11 @@
   prerequisites:
   - AchievementForgedGlowStone
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedAntiManaCollarProgression
-    itemPrototypes:
-      MedaljonAntiMana: 1
+    requiredCount: 1
+    targetItems:
+    - MedaljonAntiMana
 
 # Создать свиток призыва оружия
 - type: achievement
@@ -447,10 +528,10 @@
   prerequisites:
   - AchievementForgedGlowStone
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedWeaponScrollProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - MedievalScrollsBow
     - MedievalScrollsCrossbow
     - MedievalScrollsFalshion
@@ -471,10 +552,10 @@
   prerequisites:
   - AchievementForgedGlowStone
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedMobScrollProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - MedievalScrollsPetSlime
     - MedievalScrollsPnya
     - MedievalScrollsFire
@@ -494,10 +575,11 @@
   prerequisites:
   - AchievementForgedGlowStone
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedSpeedShoesProgression
-    itemPrototypes:
-      MedievalShoesSpeed: 1
+    requiredCount: 1
+    targetItems:
+    - MedievalShoesSpeed
 
 # Создать любой амулет
 - type: achievement
@@ -513,10 +595,10 @@
   prerequisites:
   - AchievementForgedGlowStone
   conditions:
-  - !type:CollectAnyItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedAnyAmuletProgression
     requiredCount: 1
-    itemPrototypes:
+    targetItems:
     - MedaljonSpeed
     - MedaljonMana
     - MedaljonDark
@@ -540,7 +622,8 @@
   prerequisites:
   - AchievementForgedAnyAmulet
   conditions:
-  - !type:CollectAllItemsCondition
+  - !type:CraftItemCondition
     progressKey: forgedQuantEssenceProgression
-    itemPrototypes:
-      MedievalDragonQuantEssence: 1
+    requiredCount: 1
+    targetItems:
+    - MedievalDragonQuantEssence

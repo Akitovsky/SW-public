@@ -85,3 +85,15 @@ achievement-condition-kill-faction-single-prefix = Убейте { $count } бо�
 achievement-condition-kill-faction-multi-header = Убейте { $count } бойцов следующих фракций:
 
 achievement-condition-complete-contract = Выполните контракт наемников { $count } раз
+
+achievement-tab-default-name = Дефолт
+
+achievement-tab-default-name = Общие
+achievement-tab-legion-insurgency-name = Красные против синих
+achievement-tab-magic-name = Магическая битва
+achievement-tab-merc-name = Наёмники
+achievement-tab-banditos-name = Гильдя воров
+achievement-tab-village-name = Деревня
+achievement-tab-mine-name = Шахта
+achievement-tab-kill-mob-name = Охота на монстров
+achievement-tab-magic-forge-name = Магическая кузня

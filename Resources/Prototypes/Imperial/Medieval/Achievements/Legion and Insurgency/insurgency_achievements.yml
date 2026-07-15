@@ -5,6 +5,7 @@
   id: AchievementInsurgencyJoin
   priority: 30
   rarity: Common
+  tab: AchievementTabLegionInsurgency
   name: "Команда красных"
   description: "Начните свой славный (и, вероятно, короткий) путь в рядах мятежников."
   icon:
@@ -164,7 +165,7 @@
   visibility: Visible
   prerequisites:
   - AchievementWarGeneralBallistica
-  - AchievementInsurgencyOpcioGetMedal
+  - AchievementInsurgencyOpcionGetMedal
   conditions:
   - !type:LocationCondition
     progressKey: locationInsurgencyTribunVisitInsurgencyProgression
