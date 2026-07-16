@@ -22,7 +22,6 @@ public sealed class SailMenuBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-        _menu.Track(Owner);
         _menu.SetButtons([
             new RadialMenuActionOption<SailMenuAction>(SendAction, SailMenuAction.RotateLeft)
             {
