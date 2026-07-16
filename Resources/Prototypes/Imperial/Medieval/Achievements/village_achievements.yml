@@ -10,8 +10,8 @@
   tab: AchievementTabVillage
   description: achievement-village-join-desc
   icon:
-    sprite: Imperial/Medieval/Chem/Garden/vetr.rsi
-    state: produce
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: plain-slice
   visibility: Visible
   roundOnly: true
   conditions:
@@ -33,8 +33,8 @@
   name: achievement-village-peasant-spear-name
   description: achievement-village-peasant-spear-desc
   icon:
-    sprite: /Textures/Imperial/Medieval/Melee/iron_sword.rsi
-    state: icon
+    sprite: /Textures/Imperial/Medieval/Melee/iron_spear.rsi
+    state: spear
   visibility: Visible
   prerequisites:
   - AchievementVillageJoin
@@ -56,7 +56,7 @@
   name: achievement-village-kill-dragon-name
   description: achievement-village-kill-dragon-desc
   icon:
-    sprite: Imperial/Medieval/Mobs/Bosses/Dragons/icedragon.rsi
+    sprite: Imperial/Medieval/Mobs/Bosses/Dragons/firedragon.rsi
     state: alive
   visibility: Visible
   prerequisites:
@@ -83,9 +83,7 @@
   rarity: Common
   name: achievement-village-harvest-name
   description: achievement-village-harvest-desc
-  icon:
-    sprite: Imperial/Medieval/Chem/Garden/vetr.rsi
-    state: produce
+  icon: Imperial/Medieval/GuildsIcons/FoodGuild6.png
   visibility: Visible
   prerequisites:
   - AchievementVillageJoin
@@ -109,8 +107,8 @@
   name: achievement-village-15bread-name
   description: achievement-village-15bread-desc
   icon:
-    sprite: Imperial/Medieval/Chem/Garden/vetr.rsi
-    state: produce
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: two-slice
   visibility: Visible
   prerequisites:
   - AchievementVillagePeasantHarvest
@@ -132,8 +130,8 @@
   name: achievement-village-become-elder-name
   description: achievement-village-become-elder-desc
   icon:
-    sprite: Imperial/Medieval/Chem/Garden/vetr.rsi
-    state: produce
+    sprite: Imperial/Medieval/Decor/medieval_decor.rsi
+    state: sign_4
   visibility: Visible
   prerequisites:
   - AchievementVillagePeasant15Bread
@@ -205,7 +203,7 @@
   description: achievement-village-elder-500revents-desc
   icon:
     sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    state: revent_8
   visibility: Visible
   prerequisites:
   - AchievementVillageBecomeElder
@@ -227,8 +225,8 @@
   name: achievement-village-30roots-name
   description: achievement-village-30roots-desc
   icon:
-    sprite: Imperial/Medieval/Chem/Garden/vetr.rsi
-    state: produce
+    sprite: Imperial/Medieval/Chem/Garden/root.rsi
+    state: icon
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -284,8 +282,8 @@
   name: achievement-village-militia-steelspear-name
   description: achievement-village-militia-steelspear-desc
   icon:
-    sprite: /Textures/Imperial/Medieval/Melee/iron_sword.rsi
-    state: icon
+    sprite: /Textures/Imperial/Medieval/Melee/iron_spear.rsi
+    state: spear
   visibility: Visible
   prerequisites:
   - AchievementVillageJoin
@@ -406,8 +404,8 @@
   name: achievement-village-militia-werewolf-name
   description: achievement-village-militia-werewolf-desc
   icon:
-    sprite: Imperial/Medieval/Mobs/wolf.rsi
-    state: wolf
+    sprite: Imperial/Medieval/Mobs/werwolf.rsi
+    state: black
   visibility: Visible
   prerequisites:
   - AchievementVillageMilitiaKillWolf

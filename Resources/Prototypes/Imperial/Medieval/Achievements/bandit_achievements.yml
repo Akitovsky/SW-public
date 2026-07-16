@@ -10,7 +10,7 @@
   description: achievement-bandit-collect-100-revents-desc
   icon:
     sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    state: revent_4
   visibility: Visible
   conditions:
   - !type:CollectAllItemsCondition
@@ -91,7 +91,7 @@
   description: achievement-bandit-collect-250-revents-desc
   icon:
     sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    state: revent_6
   visibility: Visible
   prerequisites:
   - AchievementBanditBecomeRegular
@@ -200,8 +200,8 @@
   name: achievement-bandit-raid-treasury-name
   description: achievement-bandit-raid-treasury-desc
   icon:
-    sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    sprite: Imperial/Medieval/Decor/chest3.rsi
+    state: base
   visibility: Visible
   roundOnly: true
   prerequisites:

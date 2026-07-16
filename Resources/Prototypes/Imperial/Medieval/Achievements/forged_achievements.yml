@@ -10,7 +10,7 @@
   description: achievement-forged-magic-dust-desc
   icon:
     sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    state: magicDust
   visibility: Visible
   conditions:
   - !type:CraftItemCondition
@@ -47,8 +47,8 @@
   name: achievement-forged-wooden-modules-name
   description: achievement-forged-wooden-modules-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/wooden.rsi
+    state: wooden_head_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedMagicGlina
@@ -86,8 +86,8 @@
   name: achievement-forged-iron-modules-name
   description: achievement-forged-iron-modules-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/iron.rsi
+    state: iron_head_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -125,8 +125,8 @@
   name: achievement-forged-golden-modules-name
   description: achievement-forged-golden-modules-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/golden.rsi
+    state: golden_head_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedIronModules
@@ -164,8 +164,8 @@
   name: achievement-forged-forstone-modules-name
   description: achievement-forged-forstone-modules-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/forstone.rsi
+    state: forstone_head_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedGoldenModules
@@ -203,8 +203,8 @@
   name: achievement-forged-ebonite-modules-name
   description: achievement-forged-ebonite-modules-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/ebonit.rsi
+    state: ebonit_head_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedGoldenModules
@@ -242,8 +242,8 @@
   name: achievement-forged-cannon1-name
   description: achievement-forged-cannon1-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: magic_gun_1_item
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -264,8 +264,8 @@
   name: achievement-forged-cannon2-name
   description: achievement-forged-cannon2-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: magic_gun_2_item
   visibility: Visible
   prerequisites:
   - AchievementForgedCannon1
@@ -286,8 +286,8 @@
   name: achievement-forged-cannon3-name
   description: achievement-forged-cannon3-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: magic_gun_3_item
   visibility: Visible
   prerequisites:
   - AchievementForgedCannon2
@@ -308,8 +308,8 @@
   name: achievement-forged-cannon4-name
   description: achievement-forged-cannon4-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: magic_gun_4_item
   visibility: Visible
   prerequisites:
   - AchievementForgedCannon3
@@ -330,8 +330,8 @@
   name: achievement-forged-cannon5-name
   description: achievement-forged-cannon5-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: magic_gun_5_item
   visibility: Visible
   prerequisites:
   - AchievementForgedCannon4
@@ -352,8 +352,8 @@
   name: achievement-forged-blade-name
   description: achievement-forged-blade-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: iron_arm_blade_item
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -374,8 +374,8 @@
   name: achievement-forged-crossbow-name
   description: achievement-forged-crossbow-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: iron_arm_crossbow_item
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -396,8 +396,8 @@
   name: achievement-forged-nimbus-name
   description: achievement-forged-nimbus-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: invisibility_nimbus
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -416,8 +416,8 @@
   name: achievement-forged-explosive-name
   description: achievement-forged-explosive-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/upgrades.rsi
+    state: self_destruction_item
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -436,8 +436,8 @@
   name: achievement-forged-core-name
   description: achievement-forged-core-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/cores.rsi
+    state: serdolic_core_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -459,8 +459,8 @@
   name: achievement-forged-eyes-name
   description: achievement-forged-eyes-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Forged/eyes.rsi
+    state: serdolick_eyes_icon
   visibility: Visible
   prerequisites:
   - AchievementForgedWoodenModules
@@ -482,8 +482,8 @@
   name: achievement-forged-glowstone-name
   description: achievement-forged-glowstone-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Misc/glowstone.rsi
+    state: glowstick_glow
   visibility: Visible
   prerequisites:
   - AchievementForgedMagicGlina
@@ -502,8 +502,8 @@
   name: achievement-forged-antimana-collar-name
   description: achievement-forged-antimana-collar-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Clothing/Medaljons/medaljon_antimag.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementForgedGlowStone
@@ -522,8 +522,8 @@
   name: achievement-forged-weapon-scroll-name
   description: achievement-forged-weapon-scroll-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/scrolls.rsi
+    state: sword
   visibility: Visible
   prerequisites:
   - AchievementForgedGlowStone
@@ -546,8 +546,8 @@
   name: achievement-forged-mob-scroll-name
   description: achievement-forged-mob-scroll-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/scrolls.rsi
+    state: murlo
   visibility: Visible
   prerequisites:
   - AchievementForgedGlowStone
@@ -589,8 +589,8 @@
   name: achievement-forged-any-amulet-name
   description: achievement-forged-any-amulet-desc
   icon:
-    sprite: Imperial/Medieval/Forged/items.rsi
-    state: magicGlina
+    sprite: Imperial/Medieval/Clothing/Medaljons/medaljon_dark.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementForgedGlowStone
