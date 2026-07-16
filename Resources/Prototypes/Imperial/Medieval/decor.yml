@@ -5402,6 +5402,12 @@
         - WallLayer
   - type: InteractionOutline
   - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.SailUiKey.Key:
+        type: SailMenuBoundUserInterface
+  - type: ActivatableUI
+    key: enum.SailUiKey.Key
   - type: Sail
     SailSize: 10
 
