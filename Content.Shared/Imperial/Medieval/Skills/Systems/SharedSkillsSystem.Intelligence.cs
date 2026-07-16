@@ -68,10 +68,20 @@ public abstract partial class SharedSkillsSystem
                         message.AddText($"{Loc.GetString($"skill-{level.Key.ToLower()}-name")}: ");
 
                         string hex = GetColorForDiff(0);
-                        if (!TryComp<SkillsComponent>(user, out var examinerComp))
-                            break;
 
-                        var diff = component.Levels[level.Key] - examinerComp.Levels[level.Key];
+                        Dictionary<string, int> levels = new()
+                        {
+                            ["Agility"] = 10,
+                            ["Strength"] = 10,
+                            ["Vitality"] = 10,
+                            ["Endurance"] = 10,
+                            ["Intelligence"] = 10
+                        };
+
+                        if (TryComp<SkillsComponent>(user, out var examinerComp))
+                            levels = examinerComp.Levels;
+
+                        var diff = component.Levels[level.Key] - levels[level.Key];
 
                         hex = GetColorForDiff(diff);
                         message.PushColor(Color.FromHex(hex));

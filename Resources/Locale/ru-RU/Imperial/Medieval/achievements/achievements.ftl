@@ -86,8 +86,6 @@ achievement-condition-kill-faction-multi-header = Убейте { $count } бой
 
 achievement-condition-complete-contract = Выполните контракт наемников { $count } раз
 
-achievement-tab-default-name = Дефолт
-
 achievement-tab-default-name = Общие
 achievement-tab-legion-insurgency-name = Красные против синих
 achievement-tab-magic-name = Магическая битва
