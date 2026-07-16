@@ -3,8 +3,8 @@
   name: achievement-tab-default-name
   priority: 0
   icon:
-    sprite: /Textures/Imperial/Medieval/Melee/iron_sword.rsi
-    state: icon
+    sprite: /Textures/Imperial/Medieval/Decor/medieval_decor.rsi
+    state: map
 
 - type: achievementTab
   id: AchievementTabLegionInsurgency
@@ -19,53 +19,53 @@
   name: achievement-tab-magic-name
   priority: 2
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: Imperial/Medieval/Decor/barrier.rsi
+    state: barrier
 
 - type: achievementTab
   id: AchievementTabMerc
   name: achievement-tab-merc-name
   priority: 3
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: /Textures/Imperial/Medieval/Interface/Actions/faction-menu.rsi
+    state: merc
 
 - type: achievementTab
   id: AchievementTabBanditos
   name: achievement-tab-banditos-name
   priority: 4
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: /Textures/Imperial/Medieval/Interface/Actions/faction-menu.rsi
+    state: bandit
 
 - type: achievementTab
   id: AchievementTabVillage
   name: achievement-tab-village-name
   priority: 5
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: /Textures/Imperial/Medieval/Interface/Actions/faction-menu.rsi
+    state: village
 
 - type: achievementTab
   id: AchievementTabMine
   name: achievement-tab-mine-name
   priority: 6
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: /Textures/Imperial/Medieval/Interface/Actions/faction-menu.rsi
+    state: miner
 
 - type: achievementTab
   id: AchievementTabKillMob
   name: achievement-tab-kill-mob-name
   priority: 7
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: /Textures/Imperial/Medieval/Mobs/skelet_weak.rsi
+    state: dead
 
 - type: achievementTab
   id: AchievementTabMagicForge
   name: achievement-tab-magic-forge-name
   priority: 8
   icon:
-    sprite: Imperial/Medieval/Misc/glowstone.rsi
-    state: glowstick_lit
+    sprite: Imperial/Medieval/Lathe/wizard_blacksmith.rsi
+    state: icon

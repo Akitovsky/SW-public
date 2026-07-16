@@ -5,7 +5,7 @@
   id: AchievementForgedMagicDust
   priority: 40
   rarity: Common
-  tab: AchievementTabForged
+  tab: AchievementTabMagicForge
   name: achievement-forged-magic-dust-name
   description: achievement-forged-magic-dust-desc
   icon:
