@@ -9,8 +9,8 @@
   name: achievement-merc-become-merc-name
   description: achievement-merc-become-merc-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: merc
+    sprite: Imperial/Medieval/Clothing/Cloaks/clan_merc.rsi
+    state: icon
   visibility: Visible
   conditions:
   - !type:LocationCondition
@@ -62,8 +62,8 @@
   name: achievement-merc-contract1-name
   description: achievement-merc-contract1-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: merc
+    sprite: Imperial/Medieval/Objects/Envelope/merc.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMercBecomeMerc
@@ -82,8 +82,8 @@
   name: achievement-merc-zweihander-name
   description: achievement-merc-zweihander-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: merc
+    sprite: Imperial/Medieval/Melee/zweihander.rsi
+    state: icon
   visibility: Hidden
   prerequisites:
   - AchievementMercBecomeMerc
@@ -106,7 +106,7 @@
   description: achievement-merc-contract2-round-desc
   icon:
     sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    state: revent_6
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -243,8 +243,8 @@
   name: achievement-merc-contract10-name
   description: achievement-merc-contract10-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: merc
+    sprite: Imperial/Medieval/Objects/Envelope/merc.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMercBecomeLeader
@@ -266,7 +266,7 @@
   description: achievement-merc-2000-round-desc
   icon:
     sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: revent
+    state: revent_8
   visibility: Visible
   roundOnly: true
   prerequisites:

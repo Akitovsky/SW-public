@@ -11,8 +11,8 @@
   name: achievement-miner-join-name
   description: achievement-miner-join-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
   visibility: Visible
   roundOnly: true
   conditions:
@@ -33,8 +33,8 @@
   name: achievement-miner-30iron-name
   description: achievement-miner-30iron-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: iron_ingot
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -55,8 +55,8 @@
   name: achievement-miner-15steel-name
   description: achievement-miner-15steel-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: steel_ingot
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -77,8 +77,8 @@
   name: achievement-miner-5ebonite-name
   description: achievement-miner-5ebonite-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: ebonit_ingot
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -99,7 +99,7 @@
   name: achievement-miner-ebonite-armor-name
   description: achievement-miner-ebonite-armor-desc
   icon:
-    sprite: Imperial/Medieval/Clothing/Armor/iron_armor_cuirass.rsi
+    sprite: Imperial/Medieval/Clothing/Head/ebonit2.rsi
     state: icon
   visibility: Visible
   prerequisites:
@@ -128,14 +128,15 @@
   name: achievement-miner-full-ebonite-name
   description: achievement-miner-full-ebonite-desc
   icon:
-    sprite: Imperial/Medieval/Clothing/Armor/iron_armor_cuirass.rsi
+    sprite: Imperial/Medieval/Clothing/Armor/ebonit_armor2.rsi
     state: icon
   visibility: Visible
   roundOnly: true
   prerequisites:
   - AchievementMinerEboniteArmor
   conditions:
-  - !type:CollectAnyItemsCondition # шлем
+  # шлем
+  - !type:CollectAnyItemsCondition
     progressKey: minerFullEboniteHeadProgression
     requiredCount: 1
     requiredFactions:
@@ -143,7 +144,8 @@
     itemPrototypes:
     - MedievalClothingHeadHelmetEbonit
     - MedievalClothingHeadHelmetEbonit2
-  - !type:CollectAnyItemsCondition # доспех
+  # доспех
+  - !type:CollectAnyItemsCondition
     progressKey: minerFullEboniteChestProgression
     requiredCount: 1
     requiredFactions:
@@ -151,7 +153,8 @@
     itemPrototypes:
     - MedievalClothingOuterArmorEbonit
     - MedievalClothingOuterArmorEbonit2
-  - !type:CollectAnyItemsCondition # перчатки
+  # перчатки
+  - !type:CollectAnyItemsCondition
     progressKey: minerFullEboniteGlovesProgression
     requiredCount: 1
     requiredFactions:
@@ -159,7 +162,8 @@
     itemPrototypes:
     - MedievalEbonitGloves
     - MedievalEbonitGloves2
-  - !type:CollectAnyItemsCondition # сапоги
+  # сапоги
+  - !type:CollectAnyItemsCondition
     progressKey: minerFullEboniteFeetProgression
     requiredCount: 1
     requiredFactions:
@@ -176,8 +180,8 @@
   name: achievement-miner-steel-zweihander-name
   description: achievement-miner-steel-zweihander-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Melee/zweihander.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMiner15Steel
@@ -197,8 +201,8 @@
   name: achievement-miner-10gold-name
   description: achievement-miner-10gold-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/ingots.rsi
+    state: gold
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -219,8 +223,8 @@
   name: achievement-miner-5forstone-name
   description: achievement-miner-5forstone-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: forstone_ingot
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -241,7 +245,7 @@
   name: achievement-miner-forstone-armor-name
   description: achievement-miner-forstone-armor-desc
   icon:
-    sprite: Imperial/Medieval/Clothing/Armor/iron_armor_cuirass.rsi
+    sprite: Imperial/Medieval/Clothing/Head/forstone.rsi
     state: icon
   visibility: Visible
   prerequisites:
@@ -266,7 +270,7 @@
   name: achievement-miner-full-forstone-name
   description: achievement-miner-full-forstone-desc
   icon:
-    sprite: Imperial/Medieval/Clothing/Armor/iron_armor_cuirass.rsi
+    sprite: Imperial/Medieval/Clothing/Armor/forstone_armor.rsi
     state: icon
   visibility: Visible
   roundOnly: true
@@ -291,8 +295,8 @@
   name: achievement-miner-pickaxe-name
   description: achievement-miner-pickaxe-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Melee/ebonit_pickaxe.rsi
+    state: pickaxe
   visibility: Visible
   prerequisites:
   - AchievementMiner5Forstone
@@ -315,8 +319,8 @@
   name: achievement-miner-become-leader-name
   description: achievement-miner-become-leader-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Clothing/Cloaks/clan_mine.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMinerPickaxe
@@ -361,8 +365,8 @@
   name: achievement-miner-leader-60gold-name
   description: achievement-miner-leader-60gold-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/ingots.rsi
+    state: gold_3
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -385,8 +389,8 @@
   name: achievement-miner-woodcoal30-name
   description: achievement-miner-woodcoal30-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: coal
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -407,8 +411,8 @@
   name: achievement-miner-two-axes-name
   description: achievement-miner-two-axes-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Melee/medieval_hatchet.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMinerWoodCoal30
@@ -428,8 +432,8 @@
   name: achievement-miner-250coal-name
   description: achievement-miner-250coal-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: coal
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -450,8 +454,8 @@
   name: achievement-miner-30molds-name
   description: achievement-miner-30molds-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: glina_forma
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -472,8 +476,8 @@
   name: achievement-miner-250molds-name
   description: achievement-miner-250molds-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: glina_forma
   visibility: Visible
   roundOnly: true
   prerequisites:
@@ -494,8 +498,8 @@
   name: achievement-miner-15magic-stones-name
   description: achievement-miner-15magic-stones-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: serdolick
   visibility: Visible
   prerequisites:
   - AchievementMinerJoin
@@ -515,8 +519,8 @@
   name: achievement-miner-amulet-def-name
   description: achievement-miner-amulet-def-desc
   icon:
-    sprite: Imperial/Medieval/Interface/factions.rsi
-    state: miner
+    sprite: Imperial/Medieval/Clothing/Medaljons/medaljon.rsi
+    state: icon
   visibility: Visible
   prerequisites:
   - AchievementMiner15MagicStones
