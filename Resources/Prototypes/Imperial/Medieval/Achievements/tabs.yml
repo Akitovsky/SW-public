@@ -58,6 +58,7 @@
   id: AchievementTabKillMob
   name: achievement-tab-kill-mob-name
   priority: 7
+  layout: Radial
   icon:
     sprite: /Textures/Imperial/Medieval/Mobs/skelet_weak.rsi
     state: dead

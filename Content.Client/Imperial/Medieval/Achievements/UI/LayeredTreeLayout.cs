@@ -107,6 +107,92 @@ internal static class LayeredTreeLayout
         var ids = nodes.Select(n => n.Id).ToHashSet();
         var validEdges = edges.Where(e => ids.Contains(e.FromId) && ids.Contains(e.ToId)).ToList();
 
+        var offsetY = 0f;
+        var componentGap = settings.NodeSize + settings.NodeSeparation * 2f;
+
+        foreach (var (compNodes, compEdges) in SplitComponents(nodes, validEdges))
+        {
+            var (compPositions, compCurves) = ComputeComponent(compNodes, compEdges, settings);
+
+            var minY = float.MaxValue;
+            var maxY = float.MinValue;
+
+            foreach (var pos in compPositions.Values)
+            {
+                minY = Math.Min(minY, pos.Y);
+                maxY = Math.Max(maxY, pos.Y + settings.NodeSize);
+            }
+
+            if (minY > maxY)
+                continue;
+
+            var shift = new Vector2(0f, offsetY - minY);
+
+            foreach (var (id, pos) in compPositions)
+                positions[id] = pos + shift;
+
+            foreach (var (key, points) in compCurves)
+                edgeCurves[key] = points.Select(p => p + shift).ToList();
+
+            offsetY += maxY - minY + componentGap;
+        }
+
+        return new Result(positions, edgeCurves);
+    }
+
+    private static List<(List<Node> Nodes, List<Edge> Edges)> SplitComponents(
+        IReadOnlyList<Node> nodes,
+        List<Edge> edges)
+    {
+        var parent = nodes.ToDictionary(n => n.Id, n => n.Id);
+
+        string Find(string x)
+        {
+            while (parent[x] != x)
+            {
+                parent[x] = parent[parent[x]];
+                x = parent[x];
+            }
+            return x;
+        }
+
+        foreach (var e in edges)
+        {
+            var a = Find(e.FromId);
+            var b = Find(e.ToId);
+            if (a != b)
+                parent[a] = b;
+        }
+
+        var groups = new List<(List<Node> Nodes, List<Edge> Edges)>();
+        var indexByRoot = new Dictionary<string, int>();
+
+        foreach (var n in nodes)
+        {
+            var root = Find(n.Id);
+            if (!indexByRoot.TryGetValue(root, out var idx))
+            {
+                idx = groups.Count;
+                indexByRoot[root] = idx;
+                groups.Add((new List<Node>(), new List<Edge>()));
+            }
+            groups[idx].Nodes.Add(n);
+        }
+
+        foreach (var e in edges)
+            groups[indexByRoot[Find(e.FromId)]].Edges.Add(e);
+
+        return groups;
+    }
+
+    private static (Dictionary<string, Vector2> Positions, Dictionary<(string From, string To), List<Vector2>> EdgeCurves) ComputeComponent(
+        List<Node> nodes,
+        List<Edge> validEdges,
+        Settings settings)
+    {
+        var positions = new Dictionary<string, Vector2>();
+        var edgeCurves = new Dictionary<(string From, string To), List<Vector2>>();
+
         var layer = ComputeLongestPathLayers(nodes, validEdges);
 
         var (allNodes, chainEdges) = BuildProperGraph(nodes, validEdges, layer);
@@ -147,7 +233,7 @@ internal static class LayeredTreeLayout
             edgeCurves[key] = points;
         }
 
-        return new Result(positions, edgeCurves);
+        return (positions, edgeCurves);
     }
 
     private static Dictionary<string, int> ComputeLongestPathLayers(

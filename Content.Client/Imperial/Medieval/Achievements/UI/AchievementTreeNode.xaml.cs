@@ -69,6 +69,7 @@ public sealed partial class AchievementTreeNode : PanelContainer
     private const float MinContentMargin    = 1f;
 
     private float _zoom = 1f;
+    private float _appliedUiScale;
 
     public AchievementTreeNode(
         AchievementPrototype proto,
@@ -87,7 +88,7 @@ public sealed partial class AchievementTreeNode : PanelContainer
         var inert = proto.Visibility == AchievementVisibility.Hidden && !unlocked && !questionMark;
         MouseFilter = inert ? MouseFilterMode.Ignore : MouseFilterMode.Stop;
 
-        TooltipSupplier = _ => new AchievementTooltipPopup(Proto, Unlocked, spriteSystem, IsQuestionMark);
+        TooltipSupplier = _ => new AchievementTooltipPopup(Proto, Unlocked, spriteSystem, IsQuestionMark, _rarity);
         ApplyVisuals(spriteSystem);
     }
 
@@ -128,8 +129,14 @@ public sealed partial class AchievementTreeNode : PanelContainer
     {
         var palette = GetPalette();
 
-        var border = Math.Clamp(MathF.Round(BaseBorderThickness * _zoom), MinBorderThickness, BaseBorderThickness * 2f);
-        var margin = Math.Clamp(MathF.Round(BaseContentMargin * _zoom),   MinContentMargin,   BaseContentMargin * 2f);
+        var ui = UIScale;
+        var borderPhys = Math.Clamp(MathF.Round(BaseBorderThickness * _zoom * ui),
+            MinBorderThickness, MathF.Round(BaseBorderThickness * 2f * ui));
+        var marginPhys = Math.Clamp(MathF.Round(BaseContentMargin * _zoom * ui),
+            MinContentMargin, MathF.Round(BaseContentMargin * 2f * ui));
+
+        var border = borderPhys / ui;
+        var margin = marginPhys / ui;
 
         BorderPanel.PanelOverride = new StyleBoxFlat
         {
@@ -192,10 +199,12 @@ public sealed partial class AchievementTreeNode : PanelContainer
 
     public void ApplyZoom(float zoom)
     {
-        if (MathF.Abs(zoom - _zoom) < 0.001f)
+        var ui = UIScale;
+        if (MathF.Abs(zoom - _zoom) < 0.001f && MathF.Abs(ui - _appliedUiScale) < 0.001f)
             return;
 
         _zoom = zoom;
+        _appliedUiScale = ui;
         ApplyStyle();
     }
 
