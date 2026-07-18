@@ -107,6 +107,44 @@ internal static class RadialTreeLayout
             }
         }
 
+        var parentsOf = new Dictionary<string, List<string>>();
+        foreach (var e in validEdges)
+        {
+            if (e.FromId == e.ToId)
+                continue;
+
+            if (!parentsOf.TryGetValue(e.ToId, out var list))
+                parentsOf[e.ToId] = list = new List<string>();
+            list.Add(e.FromId);
+        }
+
+        void RotateSubtree(string id, float delta)
+        {
+            angle[id] += delta;
+            foreach (var c in children[id])
+                RotateSubtree(c, delta);
+        }
+
+        foreach (var n in nodes.OrderBy(n => depthOf[n.Id]))
+        {
+            if (!parentsOf.TryGetValue(n.Id, out var ps) || ps.Count <= 1)
+                continue;
+
+            var sum = Vector2.Zero;
+            foreach (var p in ps)
+                sum += new Vector2(MathF.Cos(angle[p]), MathF.Sin(angle[p]));
+
+            if (sum.LengthSquared() < 1e-6f)
+                continue;
+
+            var delta = MathF.Atan2(sum.Y, sum.X) - angle[n.Id];
+            delta = MathF.Atan2(MathF.Sin(delta), MathF.Cos(delta));
+            RotateSubtree(n.Id, delta);
+        }
+
+        foreach (var key in angle.Keys.ToList())
+            angle[key] = ((angle[key] % Tau) + Tau) % Tau;
+
         var maxDepth = depthOf.Values.Max();
         var radii = new float[maxDepth + 1];
         var minDist = settings.NodeSize + settings.NodeSeparation;

@@ -67,6 +67,7 @@
   id: AchievementTabMagicForge
   name: achievement-tab-magic-forge-name
   priority: 8
+  layout: Radial
   icon:
     sprite: Imperial/Medieval/Lathe/wizard_blacksmith.rsi
     state: icon

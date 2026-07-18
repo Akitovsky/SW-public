@@ -57,7 +57,7 @@ internal static class LayeredTreeLayout
         /// <summary>
         /// Maximum iteration count for coordinate assignment processes.
         /// </summary>
-        public int AlignmentIterations = 4;
+        public int AlignmentIterations = 8;
     }
 
     /// <summary>
@@ -515,21 +515,33 @@ internal static class LayeredTreeLayout
 
         for (var iter = 0; iter < settings.AlignmentIterations; iter++)
         {
-            var forward = iter % 2 == 0;
-            var order = forward ? Enumerable.Range(0, layers.Count) : Enumerable.Range(0, layers.Count).Reverse();
+            var order = iter % 2 == 0
+                ? Enumerable.Range(0, layers.Count)
+                : Enumerable.Range(0, layers.Count).Reverse();
 
             foreach (var li in order)
             {
                 var layer = layers[li];
-                var neighbors = forward ? above : below;
 
                 foreach (var n in layer)
                 {
-                    if (neighbors.TryGetValue(n, out var adj) && adj.Count > 0)
+                    var target = 0f;
+                    var sides = 0;
+
+                    if (above.TryGetValue(n, out var up) && up.Count > 0)
                     {
-                        var sorted = adj.Select(a => a.CrossPos).OrderBy(v => v).ToList();
-                        n.CrossPos = Median(sorted);
+                        target += Median(up.Select(a => a.CrossPos).OrderBy(v => v).ToList());
+                        sides++;
                     }
+
+                    if (below.TryGetValue(n, out var down) && down.Count > 0)
+                    {
+                        target += Median(down.Select(a => a.CrossPos).OrderBy(v => v).ToList());
+                        sides++;
+                    }
+
+                    if (sides > 0)
+                        n.CrossPos = target / sides;
                 }
 
                 CompactLayer(layer, sep);
@@ -556,11 +568,29 @@ internal static class LayeredTreeLayout
 
         var byOrder = layer.OrderBy(n => n.Order).ToList();
 
-        for (var i = 1; i < byOrder.Count; i++)
+        var sums = new List<float>(byOrder.Count);
+        var counts = new List<int>(byOrder.Count);
+
+        for (var i = 0; i < byOrder.Count; i++)
         {
-            var minAllowed = byOrder[i - 1].CrossPos + minSep;
-            if (byOrder[i].CrossPos < minAllowed)
-                byOrder[i].CrossPos = minAllowed;
+            sums.Add(byOrder[i].CrossPos - i * minSep);
+            counts.Add(1);
+
+            while (sums.Count > 1 && sums[^2] / counts[^2] > sums[^1] / counts[^1])
+            {
+                sums[^2] += sums[^1];
+                counts[^2] += counts[^1];
+                sums.RemoveAt(sums.Count - 1);
+                counts.RemoveAt(counts.Count - 1);
+            }
+        }
+
+        var idx = 0;
+        foreach (var (sum, count) in sums.Zip(counts))
+        {
+            var avg = sum / count;
+            for (var k = 0; k < count; k++, idx++)
+                byOrder[idx].CrossPos = avg + idx * minSep;
         }
     }
 

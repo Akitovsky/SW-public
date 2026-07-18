@@ -57,18 +57,22 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
 
     private Dictionary<string, string?> _tabByAchievement = new();
     private string? _currentTab;
+    private readonly AchievementTreeViewState _viewState;
 
     private AchievementDetailWindow? _detailWindow;
 
     public AchievementTreeMenuWindow(
         IPrototypeManager proto,
         IResourceCache cache,
-        SpriteSystem spriteSystem)
+        SpriteSystem spriteSystem,
+        AchievementTreeViewState? viewState = null)
     {
         RobustXamlLoader.Load(this);
         _proto = proto;
         _cache = cache;
         _spriteSystem = spriteSystem;
+        _viewState = viewState ?? new AchievementTreeViewState();
+        _currentTab = _viewState.CurrentTab;
 
         _treeLayout = new AchievementTreeLayout
         {
@@ -111,6 +115,10 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         var protos = _proto.EnumeratePrototypes<AchievementPrototype>().ToList();
         _tabByAchievement = ResolveTabs(protos);
         RebuildTabBar();
+
+        // Restore the camera saved for this tab (or defaults for a fresh one).
+        _viewState.CurrentTab = _currentTab;
+        RestoreView();
 
         var (visibleIds, questionMarkIds) = GetVisibleIds(protos);
         var shownIds = visibleIds.Union(questionMarkIds).ToHashSet();
@@ -239,6 +247,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
                 if (!args.Pressed || _currentTab == tabId)
                     return;
 
+                SaveView();
                 _currentTab = tabId;
                 BuildTree();
             };
@@ -415,6 +424,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         _zoom = newZoom;
         _panOffset = cursorInTree - worldPoint * _zoom;
 
+        SaveView();
         ApplyTransform();
     }
 
@@ -426,6 +436,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
             return;
 
         _panOffset += args.Relative;
+        SaveView();
         ApplyTransform();
     }
 
@@ -450,7 +461,32 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
     {
         _zoom = 1f;
         _panOffset = Vector2.Zero;
+        SaveView();
         ApplyTransform();
+    }
+
+    private void SaveView()
+    {
+        var key = _currentTab ?? string.Empty;
+        if (!_viewState.Views.TryGetValue(key, out var view))
+            _viewState.Views[key] = view = new AchievementTreeViewState.TabView();
+
+        view.Pan = _panOffset;
+        view.Zoom = _zoom;
+    }
+
+    private void RestoreView()
+    {
+        if (_viewState.Views.TryGetValue(_currentTab ?? string.Empty, out var view))
+        {
+            _panOffset = view.Pan;
+            _zoom = view.Zoom;
+        }
+        else
+        {
+            _panOffset = Vector2.Zero;
+            _zoom = 1f;
+        }
     }
 
     private void OnNodeSelected(AchievementPrototype proto)
