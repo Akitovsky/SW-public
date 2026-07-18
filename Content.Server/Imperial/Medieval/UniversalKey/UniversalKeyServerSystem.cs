@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
@@ -42,44 +44,37 @@ public sealed class UniversalKeyServerSystem : EntitySystem
 
     private void OnMapInit(Entity<UniversalKeyComponent> keyEntity, ref MapInitEvent args)
     {
-        var randomValue = _lockableServerSystem.RandomedSeed;
-
         if (!TryComp<KeyComponent>(keyEntity, out var keyComponent))
             return;
 
         if (keyComponent.Accesses[0] is not { } accessId)
             return;
 
-        int[] newCode = GenerateFactionArray(accessId, _lockableServerSystem.RandomedSeed, 16, 9);
+        int[] newCode = GenerateSecureDeterministicArray(accessId, _lockableServerSystem.SecretKey, 32, 16);
 
         SetupKeyFraction(keyEntity, newCode, 9);
     }
 
-    public static int[] GenerateFactionArray(string factionId, int randomNumber, int maxValue, int length)
+    public static int[] GenerateSecureDeterministicArray(string factionId, string secretServerKey, int maxValue, int length)
     {
-        // Защита от некорректной длины
-        if (length <= 0)
-            return Array.Empty<int>();
-
-        // Защита от некорректного максимума
-        if (maxValue < 0)
-            maxValue = 0;
+        if (length <= 0) return Array.Empty<int>();
+        if (maxValue < 0) maxValue = 0;
 
         int[] result = new int[length];
 
-        for (int i = 0; i < length; i++)
+        byte[] password = Encoding.UTF8.GetBytes(secretServerKey);
+        byte[] salt = Encoding.UTF8.GetBytes(factionId);
+
+        using (var kdf = new Rfc2898DeriveBytes(password, salt, iterations: 1, HashAlgorithmName.SHA256))
         {
-            // Комбинируем фракцию, число и текущий индекс, чтобы элементы отличались друг от друга
-            int hash = HashCode.Combine(factionId, randomNumber, i);
+            byte[] buffer = kdf.GetBytes(length * 4);
 
-            // Убираем знак минус (делаем число строго положительным)
-            int positiveHash = hash & int.MaxValue;
-
-            // Ограничиваем число до maxValue включительно.
-            // Например, если maxValue = 9, то % 10 вернет значение от 0 до 9.
-            result[i] = positiveHash % (maxValue + 1);
+            for (int i = 0; i < length; i++)
+            {
+                int rawRandom = BitConverter.ToInt32(buffer, i * 4) & int.MaxValue;
+                result[i] = rawRandom % (maxValue + 1);
+            }
         }
-
         return result;
     }
 
@@ -91,9 +86,13 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         if (universalKeyComponent.IsSetuped)
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), lockEntity, used: args.Used)
+        if (!lockEntity.Comp.IsSetuped)
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), lockEntity, lockEntity, args.Used)
         {
             BreakOnMove = true,
+            DistanceThreshold = 2.0f,
             BreakOnDamage = true,
             NeedHand = true,
             BlockDuplicate = true,
@@ -101,7 +100,6 @@ public sealed class UniversalKeyServerSystem : EntitySystem
             BreakOnHandChange = true
         };
 
-        universalKeyComponent.Name = lockEntity.Comp.Name;
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
@@ -118,6 +116,11 @@ public sealed class UniversalKeyServerSystem : EntitySystem
 
         if (universalKeyComponent.IsSetuped)
             return;
+
+        if (!lockEntity.Comp.IsSetuped)
+            return;
+
+        universalKeyComponent.Name = lockEntity.Comp.Name;
 
         SetupKey((used, universalKeyComponent), lockEntity.Comp.Code, lockEntity.Comp.MaxValue);
     }

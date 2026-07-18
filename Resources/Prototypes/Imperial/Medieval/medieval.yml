@@ -7349,7 +7349,8 @@
 - type: entity
   name: lol
   parent: BaseItem
-  id: MedievalDoorLock
+  abstract: true
+  id: MedievalDoorLockBase
   description: MedievalLoot
   components:
   - type: Sprite
@@ -7364,6 +7365,42 @@
     interfaces:
       enum.UniversalSecurityUiKey.Lock:
         type: UniversalLockBoundUserInterface
+
+- type: entity
+  parent: MedievalDoorLockBase
+  id: MedievalDoorLockT1
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: lock
+  - type: UniversalLock
+    length: 4
+    maxValue: 8
+    timeToEject: 16
+
+- type: entity
+  parent: MedievalDoorLockBase
+  id: MedievalDoorLockT2
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: lock
+  - type: UniversalLock
+    length: 8
+    maxValue: 16
+    timeToEject: 32
+
+- type: entity
+  parent: MedievalDoorLockBase
+  id: MedievalDoorLockT3
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: lock
+  - type: UniversalLock
+    length: 16
+    maxValue: 32
+    timeToEject: 64
 
 - type: dungeonRoom
   id: MedievalSteroid9x9a

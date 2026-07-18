@@ -71,8 +71,10 @@ public sealed class UniversalLockServerSystem : EntitySystem
 
     public void SetLockCodeFraction(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
     {
+        _metaDataSystem.SetEntityName(lockEntity, Name(lockEntity));
         lockEntity.Comp.Code = code;
         lockEntity.Comp.IsSetuped = true;
+        lockEntity.Comp.Name = "";
         lockEntity.Comp.Length = code.Length;
         lockEntity.Comp.MaxValue = maxValue;
     }

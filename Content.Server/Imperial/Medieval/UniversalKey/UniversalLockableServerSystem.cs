@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Imperial.Medieval.Ships.Anchor;
@@ -18,9 +17,11 @@ using Robust.Shared.Random;
 using Content.Shared.Imperial.LockDoor.Components;
 using Content.Server.Imperial.Medieval.UniversalLock;
 using Robust.Shared.Timing;
-using Content.Server.Administration.Commands;
 using Robust.Shared.Audio;
 using Content.Shared.Lock;
+using System.Text;
+using System.Security.Cryptography;
+using Content.Shared.Imperial.Medieval.Skills;
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -33,7 +34,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly UniversalLockServerSystem _universalLockSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
 
-    public int RandomedSeed;
+    public string SecretKey = Guid.NewGuid().ToString();
 
     public override void Initialize()
     {
@@ -48,24 +49,25 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalLockableComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<UniversalLockableComponent, MapInitEvent>(OnMapInit);
-
-        RandomedSeed = _random.Next(1000000000);
     }
 
     private void OnMapInit(Entity<UniversalLockableComponent> lockableEntity, ref MapInitEvent args)
     {
         Timer.Spawn(0, () =>
         {
-            if (!TryComp<LockDoorComponent>(lockableEntity, out var lockDoorComponent))
-                return;
-
-            if (lockDoorComponent.AccessLists[0] is not { } accessId)
-                return;
-
             if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
                 return;
 
             if (slot.Item is not { } lockUid)
+                return;
+
+            if (!TryComp<LockDoorComponent>(lockableEntity, out var lockDoorComponent))
+            {
+                QueueDel(lockUid);
+                return;
+            }
+
+            if (lockDoorComponent.AccessLists[0] is not { } accessId)
                 return;
 
             if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
@@ -74,7 +76,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             if (!TryComp<DoorBoltComponent>(lockableEntity, out var doorBoltComponent))
                 return;
 
-            int[] newCode = GenerateFactionArray(accessId, RandomedSeed, 16, 9);
+            int[] newCode = GenerateSecureDeterministicArray(accessId, SecretKey, 32, 16);
 
             _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
             _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
@@ -86,31 +88,27 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         });
     }
 
-    public static int[] GenerateFactionArray(string factionId, int randomNumber, int maxValue, int length)
-    {
-        // Защита от некорректной длины
-        if (length <= 0)
-            return Array.Empty<int>();
 
-        // Защита от некорректного максимума
-        if (maxValue < 0)
-            maxValue = 0;
+    public static int[] GenerateSecureDeterministicArray(string factionId, string secretServerKey, int maxValue, int length)
+    {
+        if (length <= 0) return Array.Empty<int>();
+        if (maxValue < 0) maxValue = 0;
 
         int[] result = new int[length];
 
-        for (int i = 0; i < length; i++)
+        byte[] password = Encoding.UTF8.GetBytes(secretServerKey);
+        byte[] salt = Encoding.UTF8.GetBytes(factionId);
+
+        using (var kdf = new Rfc2898DeriveBytes(password, salt, iterations: 1, HashAlgorithmName.SHA256))
         {
-            // Комбинируем фракцию, число и текущий индекс, чтобы элементы отличались друг от друга
-            int hash = HashCode.Combine(factionId, randomNumber, i);
+            byte[] buffer = kdf.GetBytes(length * 4);
 
-            // Убираем знак минус (делаем число строго положительным)
-            int positiveHash = hash & int.MaxValue;
-
-            // Ограничиваем число до maxValue включительно.
-            // Например, если maxValue = 9, то % 10 вернет значение от 0 до 9.
-            result[i] = positiveHash % (maxValue + 1);
+            for (int i = 0; i < length; i++)
+            {
+                int rawRandom = BitConverter.ToInt32(buffer, i * 4) & int.MaxValue;
+                result[i] = rawRandom % (maxValue + 1);
+            }
         }
-
         return result;
     }
 
@@ -130,7 +128,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         }
     }
 
-    private void OnInteractUsing(Entity<UniversalLockableComponent> entity, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<UniversalLockableComponent> lockableEntity, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -140,7 +138,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             if (!universalKeyComponent.IsSetuped)
                 return;
 
-            OnUsedKey((args.Used, universalKeyComponent), entity, args.User);
+            OnUsedKey((args.Used, universalKeyComponent), lockableEntity, args.User);
             args.Handled = true;
             return;
         }
@@ -148,13 +146,13 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (TryComp<UniversalLockpickComponent>(args.Used, out var lockpickComponent))
             return;
 
-        if (IsLocked(entity))
+        if (IsLocked(lockableEntity))
         {
             AudioParams audioParams = new AudioParams()
             {
                 Volume = -10,
             };
-            _audioSystem.PlayPvs(entity.Comp.InteractUsingDenySound, entity, audioParams);
+            _audioSystem.PlayPvs(lockableEntity.Comp.InteractUsingDenySound, lockableEntity, audioParams);
             args.Handled = true;
         }
     }
@@ -167,14 +165,22 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot))
             return;
 
-        if (slot.Item is null)
+        if (slot.Item is not { } lockUid)
+            return;
+
+        if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
+            return;
+
+        if (!TryComp<SkillsComponent>(args.User, out var skillsComponent))
             return;
 
         if (IsLocked(lockableEntity))
             return;
 
         var user = args.User;
-        var time = slot.Locked ? lockableEntity.Comp.ToggleItemSlotLockedDoAfterTime : 0.1f;
+        var time = slot.Locked ? (lockComponent.TimeToEject * (10f / skillsComponent.Levels["Agility"])) : 0.1f;
+
+        time = Math.Clamp(time, 0.1f, 64f);
 
         AlternativeVerb verb = new()
         {

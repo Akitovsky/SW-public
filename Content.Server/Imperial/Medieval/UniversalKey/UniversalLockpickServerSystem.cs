@@ -95,7 +95,7 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
 
         var doAfterTime = lockpickEntity.Comp.HackTime / (skillComponent.Levels["Agility"] / 5f);
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(doAfterTime), ev, lockpickEntity)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(doAfterTime), ev, lockpickEntity, lockpickEntity, lockableUid)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -103,7 +103,7 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             BlockDuplicate = true,
             BreakOnDropItem = true,
             BreakOnHandChange = true,
-            DistanceThreshold = 0.5f
+            DistanceThreshold = 2.0f
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -172,10 +172,10 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
     {
         AudioParams audioParams = new AudioParams()
         {
-            Volume = -15
+            Volume = -5
         };
 
-        _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnBreak), Transform(lockpickEntity).Coordinates);
+        _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnBreak), Transform(lockpickEntity).Coordinates, audioParams);
         QueueDel(lockpickEntity);
     }
 }

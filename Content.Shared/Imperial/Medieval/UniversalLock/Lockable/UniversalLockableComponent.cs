@@ -4,13 +4,6 @@ using Robust.Shared.Audio;
 [RegisterComponent]
 public sealed partial class UniversalLockableComponent : Component
 {
-    [DataField]
-    public float ToggleItemSlotLockedDoAfterTime = 10;
-
-
-
-
-
     // Sounds
     [DataField]
     public SoundPathSpecifier? ActivateInWorldDenySound = new SoundPathSpecifier("/Audio/Imperial/Medieval/lyazg-visyaschego-zamka-na-zakryitoy-dveri.ogg");

@@ -20,24 +20,20 @@ public sealed partial class UniversalLockComponent : Component
     [DataField]
     public String Name = String.Empty;
 
+    [DataField]
+    public float TimeToEject = 10f;
+
 
     // Sound
-
     [DataField]
     public SoundPathSpecifier LockSetupSound = new SoundPathSpecifier("/Audio/Imperial/Medieval/lockpick_next.ogg");
 
     // Hack
     [DataField]
-    public int MaxValue = 5;
+    public int MaxValue = 8;
 
     [DataField]
     public int[] Code = new int[3];
     [DataField]
-    public int Length = 3;
-
-    [DataField]
-    public int HackProgress = 0;
-
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadOnly)]
-    public string EffectSoundOnNewLock = "/Audio/Imperial/Medieval/new_lock.ogg";
+    public int Length = 4;
 }
