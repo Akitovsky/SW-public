@@ -50,22 +50,29 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
     private readonly Dictionary<string, AchievementTreeNode> _nodes = new();
     private readonly Dictionary<string, Vector2> _basePositions = new();
     private readonly Dictionary<(string From, string To), List<Vector2>> _edgeCurves = new();
+    private readonly HashSet<string> _rootIds = new();
     private const float NodeSize = 72f;
+
+    private const float RootNodeScale = 1.35f;
 
     private Dictionary<string, string?> _tabByAchievement = new();
     private string? _currentTab;
+    private readonly AchievementTreeViewState _viewState;
 
     private AchievementDetailWindow? _detailWindow;
 
     public AchievementTreeMenuWindow(
         IPrototypeManager proto,
         IResourceCache cache,
-        SpriteSystem spriteSystem)
+        SpriteSystem spriteSystem,
+        AchievementTreeViewState? viewState = null)
     {
         RobustXamlLoader.Load(this);
         _proto = proto;
         _cache = cache;
         _spriteSystem = spriteSystem;
+        _viewState = viewState ?? new AchievementTreeViewState();
+        _currentTab = _viewState.CurrentTab;
 
         _treeLayout = new AchievementTreeLayout
         {
@@ -109,6 +116,10 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         _tabByAchievement = ResolveTabs(protos);
         RebuildTabBar();
 
+        // Restore the camera saved for this tab (or defaults for a fresh one).
+        _viewState.CurrentTab = _currentTab;
+        RestoreView();
+
         var (visibleIds, questionMarkIds) = GetVisibleIds(protos);
         var shownIds = visibleIds.Union(questionMarkIds).ToHashSet();
 
@@ -120,6 +131,14 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         }
 
         var visibleProtos = protos.Where(p => shownIds.Contains(p.ID)).ToList();
+
+        _rootIds.Clear();
+        foreach (var proto in visibleProtos)
+        {
+            if (!proto.Prerequisites.Any(req => shownIds.Contains(req.Id)))
+                _rootIds.Add(proto.ID);
+        }
+
         var (positions, edgeCurves) = ComputePositions(visibleProtos);
 
         foreach (var (id, pos) in positions)
@@ -228,6 +247,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
                 if (!args.Pressed || _currentTab == tabId)
                     return;
 
+                SaveView();
                 _currentTab = tabId;
                 BuildTree();
             };
@@ -266,29 +286,52 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
             var rarity = AchievementRarityHelper.Resolve(node.Proto, _percents.GetValueOrDefault(id, 0f), _proto);
             node.Refresh(unlocked, prereqsMet, isQuestion, _spriteSystem, rarity);
         }
+
+        ApplyTransform();
     }
 
     private void ApplyTransform()
     {
-        var scaledNodeSize = MathF.Round(NodeSize * _zoom);
-        var nodeSizeVec = new Vector2(scaledNodeSize, scaledNodeSize);
+        var uiScale = UIScale;
+        var halfBase = new Vector2(NodeSize / 2f, NodeSize / 2f);
+        var halos = new List<AchievementTreeLayout.RootHalo>();
+
+        var panPhys = new Vector2(
+            MathF.Round(_panOffset.X * uiScale),
+            MathF.Round(_panOffset.Y * uiScale));
+
+        float ToVirtual(float phys) => (phys + 0.01f) / uiScale;
 
         foreach (var (id, node) in _nodes)
         {
             if (!_basePositions.TryGetValue(id, out var basePos))
                 continue;
 
-            var screenPos = basePos * _zoom + _panOffset;
-            screenPos = new Vector2(MathF.Round(screenPos.X), MathF.Round(screenPos.Y));
+            var isRoot = _rootIds.Contains(id);
+            var scale = isRoot ? RootNodeScale : 1f;
 
-            LayoutContainer.SetPosition(node, screenPos);
-            node.SetSize = nodeSizeVec;
-            node.ApplyZoom(_zoom);
+            var baseCenter = basePos + halfBase;
+            var sizePhys = MathF.Round(NodeSize * scale * _zoom * uiScale);
+            var centerPhys = baseCenter * _zoom * uiScale;
+            var posPhys = new Vector2(
+                MathF.Round(centerPhys.X - sizePhys / 2f),
+                MathF.Round(centerPhys.Y - sizePhys / 2f)) + panPhys;
+
+            LayoutContainer.SetPosition(node, new Vector2(ToVirtual(posPhys.X), ToVirtual(posPhys.Y)));
+            node.SetSize = new Vector2(ToVirtual(sizePhys), ToVirtual(sizePhys));
+            node.ApplyZoom(_zoom * scale);
+
+            if (isRoot)
+            {
+                var haloHalfSize = NodeSize * RootNodeScale / 2f;
+                halos.Add(new AchievementTreeLayout.RootHalo(baseCenter, haloHalfSize, _unlocked.Contains(id)));
+            }
         }
 
         _treeLayout.Zoom = _zoom;
-        _treeLayout.PanOffset = _panOffset;
+        _treeLayout.PanOffset = panPhys / uiScale;
         _treeLayout.EdgeCurves = _edgeCurves;
+        _treeLayout.RootHalos = halos;
     }
 
     private (Dictionary<string, Vector2> positions, Dictionary<(string From, string To), List<Vector2>> edgeCurves) ComputePositions(
@@ -297,26 +340,53 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         const float StartX = 70f;
         const float StartY = 70f;
 
-        var ids = protos.Select(p => p.ID).ToHashSet();
+        var ordered = protos.ToList();
+        ordered.Sort((a, b) =>
+        {
+            var byPriority = a.Priority.CompareTo(b.Priority);
+            return byPriority != 0 ? byPriority : string.CompareOrdinal(a.ID, b.ID);
+        });
 
-        var nodes = protos
+        var ids = ordered.Select(p => p.ID).ToHashSet();
+
+        var nodes = ordered
             .Select(p => new LayeredTreeLayout.Node(p.ID))
             .ToList();
 
-        var edges = protos
+        var edges = ordered
             .SelectMany(p => p.Prerequisites
                 .Where(req => ids.Contains(req.Id))
                 .Select(req => new LayeredTreeLayout.Edge(req.Id, p.ID)))
             .ToList();
 
-        var settings = new LayeredTreeLayout.Settings
-        {
-            LayerSeparation = 160f,
-            NodeSeparation = 60f,
-            NodeSize = NodeSize,
-        };
+        var layoutMode = AchievementTabLayout.Tree;
+        if (_currentTab != null && _proto.TryIndex<AchievementTabPrototype>(_currentTab, out var tabProto))
+            layoutMode = tabProto.Layout;
 
-        var result = LayeredTreeLayout.Compute(nodes, edges, settings);
+        LayeredTreeLayout.Result result;
+
+        if (layoutMode == AchievementTabLayout.Radial)
+        {
+            var settings = new RadialTreeLayout.Settings
+            {
+                RingStep = 150f,
+                NodeSeparation = 40f,
+                NodeSize = NodeSize,
+            };
+
+            result = RadialTreeLayout.Compute(nodes, edges, settings);
+        }
+        else
+        {
+            var settings = new LayeredTreeLayout.Settings
+            {
+                LayerSeparation = 160f,
+                NodeSeparation = 60f,
+                NodeSize = NodeSize,
+            };
+
+            result = LayeredTreeLayout.Compute(nodes, edges, settings);
+        }
 
         var minX = result.Positions.Count > 0 ? result.Positions.Values.Min(p => p.X) : 0f;
         var minY = result.Positions.Count > 0 ? result.Positions.Values.Min(p => p.Y) : 0f;
@@ -354,6 +424,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
         _zoom = newZoom;
         _panOffset = cursorInTree - worldPoint * _zoom;
 
+        SaveView();
         ApplyTransform();
     }
 
@@ -365,6 +436,7 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
             return;
 
         _panOffset += args.Relative;
+        SaveView();
         ApplyTransform();
     }
 
@@ -389,7 +461,32 @@ public sealed partial class AchievementTreeMenuWindow : MedievalWindow
     {
         _zoom = 1f;
         _panOffset = Vector2.Zero;
+        SaveView();
         ApplyTransform();
+    }
+
+    private void SaveView()
+    {
+        var key = _currentTab ?? string.Empty;
+        if (!_viewState.Views.TryGetValue(key, out var view))
+            _viewState.Views[key] = view = new AchievementTreeViewState.TabView();
+
+        view.Pan = _panOffset;
+        view.Zoom = _zoom;
+    }
+
+    private void RestoreView()
+    {
+        if (_viewState.Views.TryGetValue(_currentTab ?? string.Empty, out var view))
+        {
+            _panOffset = view.Pan;
+            _zoom = view.Zoom;
+        }
+        else
+        {
+            _panOffset = Vector2.Zero;
+            _zoom = 1f;
+        }
     }
 
     private void OnNodeSelected(AchievementPrototype proto)

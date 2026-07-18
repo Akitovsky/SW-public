@@ -53,6 +53,8 @@ achievement-visit-barrier-location = барьер в подвале коллег
 
 achievement-tree-recenter = Центрировать
 achievement-tooltip-completed = Выполнено
+achievement-tooltip-locked = Не получено
+achievement-tooltip-secret = Секретное достижение
 achievement-detail-window-title = Детали достижения
 achievement-detail-completed = Получено
 achievement-detail-requires-header = Требуемые достижения:

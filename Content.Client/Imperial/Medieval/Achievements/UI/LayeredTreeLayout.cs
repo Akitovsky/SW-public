@@ -57,7 +57,7 @@ internal static class LayeredTreeLayout
         /// <summary>
         /// Maximum iteration count for coordinate assignment processes.
         /// </summary>
-        public int AlignmentIterations = 4;
+        public int AlignmentIterations = 8;
     }
 
     /// <summary>
@@ -107,6 +107,92 @@ internal static class LayeredTreeLayout
         var ids = nodes.Select(n => n.Id).ToHashSet();
         var validEdges = edges.Where(e => ids.Contains(e.FromId) && ids.Contains(e.ToId)).ToList();
 
+        var offsetY = 0f;
+        var componentGap = settings.NodeSize + settings.NodeSeparation * 2f;
+
+        foreach (var (compNodes, compEdges) in SplitComponents(nodes, validEdges))
+        {
+            var (compPositions, compCurves) = ComputeComponent(compNodes, compEdges, settings);
+
+            var minY = float.MaxValue;
+            var maxY = float.MinValue;
+
+            foreach (var pos in compPositions.Values)
+            {
+                minY = Math.Min(minY, pos.Y);
+                maxY = Math.Max(maxY, pos.Y + settings.NodeSize);
+            }
+
+            if (minY > maxY)
+                continue;
+
+            var shift = new Vector2(0f, offsetY - minY);
+
+            foreach (var (id, pos) in compPositions)
+                positions[id] = pos + shift;
+
+            foreach (var (key, points) in compCurves)
+                edgeCurves[key] = points.Select(p => p + shift).ToList();
+
+            offsetY += maxY - minY + componentGap;
+        }
+
+        return new Result(positions, edgeCurves);
+    }
+
+    private static List<(List<Node> Nodes, List<Edge> Edges)> SplitComponents(
+        IReadOnlyList<Node> nodes,
+        List<Edge> edges)
+    {
+        var parent = nodes.ToDictionary(n => n.Id, n => n.Id);
+
+        string Find(string x)
+        {
+            while (parent[x] != x)
+            {
+                parent[x] = parent[parent[x]];
+                x = parent[x];
+            }
+            return x;
+        }
+
+        foreach (var e in edges)
+        {
+            var a = Find(e.FromId);
+            var b = Find(e.ToId);
+            if (a != b)
+                parent[a] = b;
+        }
+
+        var groups = new List<(List<Node> Nodes, List<Edge> Edges)>();
+        var indexByRoot = new Dictionary<string, int>();
+
+        foreach (var n in nodes)
+        {
+            var root = Find(n.Id);
+            if (!indexByRoot.TryGetValue(root, out var idx))
+            {
+                idx = groups.Count;
+                indexByRoot[root] = idx;
+                groups.Add((new List<Node>(), new List<Edge>()));
+            }
+            groups[idx].Nodes.Add(n);
+        }
+
+        foreach (var e in edges)
+            groups[indexByRoot[Find(e.FromId)]].Edges.Add(e);
+
+        return groups;
+    }
+
+    private static (Dictionary<string, Vector2> Positions, Dictionary<(string From, string To), List<Vector2>> EdgeCurves) ComputeComponent(
+        List<Node> nodes,
+        List<Edge> validEdges,
+        Settings settings)
+    {
+        var positions = new Dictionary<string, Vector2>();
+        var edgeCurves = new Dictionary<(string From, string To), List<Vector2>>();
+
         var layer = ComputeLongestPathLayers(nodes, validEdges);
 
         var (allNodes, chainEdges) = BuildProperGraph(nodes, validEdges, layer);
@@ -147,7 +233,7 @@ internal static class LayeredTreeLayout
             edgeCurves[key] = points;
         }
 
-        return new Result(positions, edgeCurves);
+        return (positions, edgeCurves);
     }
 
     private static Dictionary<string, int> ComputeLongestPathLayers(
@@ -429,21 +515,33 @@ internal static class LayeredTreeLayout
 
         for (var iter = 0; iter < settings.AlignmentIterations; iter++)
         {
-            var forward = iter % 2 == 0;
-            var order = forward ? Enumerable.Range(0, layers.Count) : Enumerable.Range(0, layers.Count).Reverse();
+            var order = iter % 2 == 0
+                ? Enumerable.Range(0, layers.Count)
+                : Enumerable.Range(0, layers.Count).Reverse();
 
             foreach (var li in order)
             {
                 var layer = layers[li];
-                var neighbors = forward ? above : below;
 
                 foreach (var n in layer)
                 {
-                    if (neighbors.TryGetValue(n, out var adj) && adj.Count > 0)
+                    var target = 0f;
+                    var sides = 0;
+
+                    if (above.TryGetValue(n, out var up) && up.Count > 0)
                     {
-                        var sorted = adj.Select(a => a.CrossPos).OrderBy(v => v).ToList();
-                        n.CrossPos = Median(sorted);
+                        target += Median(up.Select(a => a.CrossPos).OrderBy(v => v).ToList());
+                        sides++;
                     }
+
+                    if (below.TryGetValue(n, out var down) && down.Count > 0)
+                    {
+                        target += Median(down.Select(a => a.CrossPos).OrderBy(v => v).ToList());
+                        sides++;
+                    }
+
+                    if (sides > 0)
+                        n.CrossPos = target / sides;
                 }
 
                 CompactLayer(layer, sep);
@@ -470,11 +568,29 @@ internal static class LayeredTreeLayout
 
         var byOrder = layer.OrderBy(n => n.Order).ToList();
 
-        for (var i = 1; i < byOrder.Count; i++)
+        var sums = new List<float>(byOrder.Count);
+        var counts = new List<int>(byOrder.Count);
+
+        for (var i = 0; i < byOrder.Count; i++)
         {
-            var minAllowed = byOrder[i - 1].CrossPos + minSep;
-            if (byOrder[i].CrossPos < minAllowed)
-                byOrder[i].CrossPos = minAllowed;
+            sums.Add(byOrder[i].CrossPos - i * minSep);
+            counts.Add(1);
+
+            while (sums.Count > 1 && sums[^2] / counts[^2] > sums[^1] / counts[^1])
+            {
+                sums[^2] += sums[^1];
+                counts[^2] += counts[^1];
+                sums.RemoveAt(sums.Count - 1);
+                counts.RemoveAt(counts.Count - 1);
+            }
+        }
+
+        var idx = 0;
+        foreach (var (sum, count) in sums.Zip(counts))
+        {
+            var avg = sum / count;
+            for (var k = 0; k < count; k++, idx++)
+                byOrder[idx].CrossPos = avg + idx * minSep;
         }
     }
 

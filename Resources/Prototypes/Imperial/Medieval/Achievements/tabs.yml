@@ -58,6 +58,7 @@
   id: AchievementTabKillMob
   name: achievement-tab-kill-mob-name
   priority: 7
+  layout: Radial
   icon:
     sprite: /Textures/Imperial/Medieval/Mobs/skelet_weak.rsi
     state: dead
@@ -66,6 +67,7 @@
   id: AchievementTabMagicForge
   name: achievement-tab-magic-forge-name
   priority: 8
+  layout: Radial
   icon:
     sprite: Imperial/Medieval/Lathe/wizard_blacksmith.rsi
     state: icon
