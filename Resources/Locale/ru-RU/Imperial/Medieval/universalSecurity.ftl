@@ -4,6 +4,14 @@ ent-MedievalDoorUniversal = деревянная дверь
 ent-MedievalDoorReinforcedUniversal = укрепленная дверь
     .desc = На неё можно навесить замок
 
+ent-MedievalDoorKeySuperKey = Божественный ключ
+    .desc = Если вы это читаете, то передайте ключ игроку с сикеем Zakvielian
+
+universal-security-eject-lock = Отцепить замок
+
+universal-lock-examine-is-locked = закреплен
+universal-lock-examine-is-unlocked = не закреплен
+
 UniversalKey-ui-title = Настройка ключа
 UniversalKey-ui-name-placeholder = Задать название
 UniversalKey-ui-allowed-leght = Длина кода:

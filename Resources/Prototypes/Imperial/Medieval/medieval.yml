@@ -7378,8 +7378,8 @@
   id: MedievalDoorLockT1
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: lock
+    sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
+    state: MedievalLockT1
   - type: UniversalLock
     length: 4
     maxValue: 8
@@ -7390,8 +7390,8 @@
   id: MedievalDoorLockT2
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: lock
+    sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
+    state: MedievalLockT2
   - type: UniversalLock
     length: 8
     maxValue: 16
@@ -7402,8 +7402,8 @@
   id: MedievalDoorLockT3
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Materials/mdv.rsi
-    state: lock
+    sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
+    state: MedievalLockT3
   - type: UniversalLock
     length: 16
     maxValue: 32

@@ -573,7 +573,7 @@
           layer:
           - AirlockLayer
     - type: ExplosionResistance
-      damageCoefficient: 3
+      damageCoefficient: 10
     - type: DoorBolt
       #boltsDown: True
       boltUpSound:
@@ -671,7 +671,7 @@
               amount: 10
           steps:
             - tool: MedievalBlacksmithing
-              doAfter: 150
+              doAfter: 90
 
 - type: entity
   id: MedievalDoorReinforcedUniversal
@@ -688,7 +688,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 2000
+          damage: 1500
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
@@ -710,6 +710,9 @@
             - material: WoodPlank
               amount: 30
               doAfter: 25
+            - material: MedievalIronPlateSmall
+              amount: 4
+              doAfter: 25
     - node: medievalDoorReinforcedUniversal
       entity: MedievalDoorReinforcedUniversal
       edges:
@@ -717,10 +720,13 @@
           completed:
             - !type:SpawnPrototype
               prototype: MaterialWoodPlank
-              amount: 10
+              amount: 30
+            - !type:SpawnPrototype
+              prototype: MedievalIronPlateSmall
+              amount: 4
           steps:
             - tool: MedievalBlacksmithing
-              doAfter: 150
+              doAfter: 120
 
 - type: construction
   id: MedievalDoorReinforcedUniversal
@@ -1440,7 +1446,7 @@
   id: MedievalDoorKeyCheck
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Misc/universalKey.rsi
+    sprite: Imperial/Medieval/UniversalSecurity/keys.rsi
     layers:
     - state: key_unready
       map: ["enum.MedievalDoorKeyCheckVisual.State"]
@@ -1464,7 +1470,7 @@
   id: MedievalDoorKeySuperKey
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Misc/universalKey.rsi
+    sprite: Imperial/Medieval/UniversalSecurity/keys.rsi
     layers:
     - state: admin_key
       map: ["enum.MedievalDoorKeyCheckVisual.State"]
