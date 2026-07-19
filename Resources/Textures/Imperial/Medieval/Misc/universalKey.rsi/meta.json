@@ -12,6 +12,9 @@
     },
     {
       "name": "key_unready"
+    },
+    {
+      "name": "admin_key"
     }
   ]
 }

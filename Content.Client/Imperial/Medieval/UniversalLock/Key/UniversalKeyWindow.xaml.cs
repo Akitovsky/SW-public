@@ -8,7 +8,6 @@ namespace Imperial.Medieval.UniversalLock.Lock;
 [GenerateTypedNameReferences]
 public sealed partial class UniversalKeyWindow : DefaultWindow
 {
-    // Изменено: теперь передает название (string) и код (int[])
     public Action<string, int[]>? OnSetCode;
     private List<LineEdit> _inputs = new();
     private List<Slider> _sliders = new();
@@ -23,18 +22,10 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
         LengthSlider.OnValueChanged += args => OnLengthSliderChanged((int)args.Value);
         LengthInput.OnTextChanged += args => OnLengthInputChanged(args.Text);
-
-        SetCodeButton.Text = Loc.GetString("UniversalKey-ui-forge-button");
-        Title = Loc.GetString("UniversalKey-ui-title");
-
-        // Добавили локализацию текста-подсказки для инпута названия
-        KeyNameInput.PlaceHolder = Loc.GetString("UniversalKey-ui-name-placeholder");
     }
 
     public void UpdateState()
     {
-        InfoLabel.Text = $"{Loc.GetString("UniversalLock-ui-setup-allowed-value-from")} 0 - {MaxToothValue}";
-
         LengthSlider.MaxValue = MaxPossibleLength;
 
         if (LengthSlider.Value < 1)
@@ -77,7 +68,6 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
     {
         int currentLength = _sliders.Count;
 
-        // Сценарий 1: Игрок увеличил количество зубцов — ДОБАВЛЯЕМ новые в конец
         if (length > currentLength)
         {
             for (int i = currentLength; i < length; i++)
@@ -106,7 +96,6 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
                     HorizontalAlignment = HAlignment.Center
                 };
 
-                // Локальные переменные для безопасного захвата в лямбда-выражениях
                 var currentSlider = slider;
                 var currentInput = input;
 
@@ -134,7 +123,6 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
                 InputsContainer.AddChild(rowContainer);
             }
         }
-        // Сценарий 2: Игрок уменьшил количество зубцов — УДАЛЯЕМ лишние с конца
         else if (length < currentLength)
         {
             for (int i = currentLength - 1; i >= length; i--)
@@ -142,12 +130,11 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
                 var slider = _sliders[i];
                 var input = _inputs[i];
 
-                // Находим родительский горизонтальный BoxContainer (строку) этого зуба
                 var rowContainer = slider.Parent;
                 if (rowContainer != null)
                 {
                     InputsContainer.RemoveChild(rowContainer);
-                    rowContainer.Dispose(); // Это автоматически удалит и очистит slider и input внутри него
+                    rowContainer.Dispose();
                 }
 
                 _sliders.RemoveAt(i);
@@ -158,7 +145,6 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
     private void SubmitCode()
     {
-        // Считываем имя из инпута
         var keyName = KeyNameInput.Text;
         var code = new int[_inputs.Count];
 
@@ -179,13 +165,12 @@ public sealed partial class UniversalKeyWindow : DefaultWindow
 
         LengthSlider.Disabled = true;
         LengthInput.Editable = false;
-        KeyNameInput.Editable = false; // Блокируем инпут названия после отправки
+        KeyNameInput.Editable = false;
 
         foreach (var slider in _sliders) slider.Disabled = true;
         foreach (var input in _inputs) input.Editable = false;
         SetCodeButton.Disabled = true;
 
-        // Передаем строку названия вместе с массивом кода
         OnSetCode?.Invoke(keyName, code);
     }
 }

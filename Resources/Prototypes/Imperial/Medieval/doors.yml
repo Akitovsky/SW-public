@@ -1436,10 +1436,8 @@
               doAfter: 150
 
 - type: entity
-  name: gol
   parent: BaseItem
   id: MedievalDoorKeyCheck
-  description: gol
   components:
   - type: Sprite
     sprite: Imperial/Medieval/Misc/universalKey.rsi
@@ -1461,6 +1459,18 @@
       enum.UniversalSecurityUiKey.Key:
         type: UniversalKeyBoundUserInterface
 
+- type: entity
+  parent: BaseItem
+  id: MedievalDoorKeySuperKey
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Misc/universalKey.rsi
+    layers:
+    - state: admin_key
+      map: ["enum.MedievalDoorKeyCheckVisual.State"]
+  - type: UniversalKey
+    isSuperKey: true
+    isSetuped: true
 # Rich house doors (reinforced)
 
 - type: entity

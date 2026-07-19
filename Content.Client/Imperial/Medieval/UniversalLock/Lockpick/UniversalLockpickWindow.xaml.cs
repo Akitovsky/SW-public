@@ -23,7 +23,6 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
 
         SetCodeButton.OnPressed += _ => SubmitCode();
         SetCodeButton.Text = Loc.GetString("UniversalLockpick-ui-setup-setcodebutton");
-        Title = Loc.GetString("UniversalLockpick-ui-setup-title");
     }
 
     public void UpdateState(int maxValue, int length, int[] codeState)

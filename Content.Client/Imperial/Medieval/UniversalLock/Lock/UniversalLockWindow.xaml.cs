@@ -19,8 +19,6 @@ public sealed partial class UniversalLockWindow : DefaultWindow
         RobustXamlLoader.Load(this);
 
         SetCodeButton.OnPressed += _ => SubmitCode();
-        SetCodeButton.Text = Loc.GetString("UniversalLock-ui-setup-setcodebutton");
-        Title = Loc.GetString("UniversalLock-ui-setup-title");
     }
 
     public void UpdateState(int maxValue, int length)

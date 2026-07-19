@@ -1,7 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                x:Class="Imperial.Medieval.UniversalLock.Lockpick.UniversalLockpickWindow"
-               Title="Универсальный замок"
+               Title="{Loc 'UniversalLockpick-ui-setup-title'}"
                MinWidth="350"
                MinHeight="500">
 
@@ -13,7 +13,7 @@
             <BoxContainer Name="InputsContainer" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="8" Margin="5"/>
         </ScrollContainer>
 
-        <Button Name="SetCodeButton" Text="Задать код" HorizontalAlignment="Center"/>
+        <Button Name="SetCodeButton" Text="{Loc 'UniversalLockpick-ui-setup-setcodebutton'}" HorizontalAlignment="Center"/>
 
     </BoxContainer>
 

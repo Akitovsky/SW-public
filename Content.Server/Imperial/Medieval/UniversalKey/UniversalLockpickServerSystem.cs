@@ -10,6 +10,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
+using Content.Server.CustomDoorKey.Components;
 
 public sealed partial class UniversalLockpickServerSystem : EntitySystem
 {
@@ -143,8 +144,8 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         for (var i = 0; i < args.NewCode.Length; i++)
         {
             if (lockComponent.Code[i] == args.NewCode[i]) stateCode[i] = 255;
-            else if (lockComponent.Code[i] > args.NewCode[i]) stateCode[i] = 1;
-            else if (lockComponent.Code[i] < args.NewCode[i]) stateCode[i] = -1;
+            else if (lockComponent.Code[i] > args.NewCode[i] && TryComp<DoorHackerComponent>(args.User, out _)) stateCode[i] = 1;
+            else if (lockComponent.Code[i] < args.NewCode[i] && TryComp<DoorHackerComponent>(args.User, out _)) stateCode[i] = -1;
         }
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, stateCode);
@@ -159,7 +160,7 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             return;
         }
 
-        var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, skillComponent.Levels["Agility"] / 10f), 0.05f, 0.75f);
+        var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, skillComponent.Levels["Agility"] / 10f), 0.01f, 0.75f);
         if (_random.Prob(breakChance))
         {
             OnLockpickBreak(lockpickEntity);

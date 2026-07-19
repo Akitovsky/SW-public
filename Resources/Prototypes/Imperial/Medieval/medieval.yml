@@ -1885,8 +1885,13 @@
   #    - Prying
   #  useSound:
   #    path: /Audio/Items/crowbar.ogg
-  - type: DoorHackLockpick
-    useCount: 52
+  - type: UniversalLockpick
+    breakChance: 0.04
+    hackTime: 0.5
+  - type: UserInterface
+    interfaces:
+      enum.UniversalSecurityUiKey.Lockpick:
+        type: UniversalLockpickBoundUserInterface
 
 - type: entity
   name: MedievalLockpick
@@ -1916,6 +1921,8 @@
   # - type: DoorHackLockpick
   #   useCount: 8
   - type: UniversalLockpick
+    breakChance: 0.2
+    hackTime: 2
   - type: UserInterface
     interfaces:
       enum.UniversalSecurityUiKey.Lockpick:

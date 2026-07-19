@@ -31,11 +31,11 @@ public sealed class UniversalKeyServerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<UniversalKeyComponent, InteractUsingEvent>(OnAfterInteractUsing);
+        SubscribeLocalEvent<UniversalKeyComponent, InteractUsingEvent>(OnKnifeUsingOnKey);
 
         SubscribeLocalEvent<UniversalKeyComponent, UniversalKeySetCodeMessage>(OnSetCodeReceived);
 
-        SubscribeLocalEvent<UniversalLockComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<UniversalLockComponent, InteractUsingEvent>(OnKeyUsedOnLock);
 
         SubscribeLocalEvent<UniversalLockComponent, UniversalKeySetupDoAfterEvent>(OnKeySetupDoAfterEvent);
 
@@ -78,7 +78,7 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         return result;
     }
 
-    private void OnInteractUsing(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)
+    private void OnKeyUsedOnLock(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)
     {
         if (!TryComp<UniversalKeyComponent>(args.Used, out var universalKeyComponent))
             return;
@@ -125,10 +125,13 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         SetupKey((used, universalKeyComponent), lockEntity.Comp.Code, lockEntity.Comp.MaxValue);
     }
 
-    private void OnAfterInteractUsing(Entity<UniversalKeyComponent> keyEntity, ref InteractUsingEvent args)
+    private void OnKnifeUsingOnKey(Entity<UniversalKeyComponent> keyEntity, ref InteractUsingEvent args)
     {
         if (_tags.HasTag(args.Used, (ProtoId<TagPrototype>)"Knife"))
         {
+            if (keyEntity.Comp.IsSetuped)
+                return;
+
             OnKnifeUsed(keyEntity, args.User, args.Used);
             args.Handled = true;
         }
