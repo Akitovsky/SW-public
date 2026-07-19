@@ -150,11 +150,20 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         for (var i = 0; i < args.NewCode.Length; i++)
         {
             if (lockComponent.Code[i] == args.NewCode[i])
+            {
                 stateCode[i] = 255;
-            else if (isHacker && lockComponent.Code[i] > args.NewCode[i])
-                stateCode[i] = 1;
-            else if (isHacker && lockComponent.Code[i] < args.NewCode[i])
-                stateCode[i] = -1;
+                continue;
+            }
+
+            if (isHacker)
+            {
+                int diff = Math.Abs(lockComponent.Code[i] - args.NewCode[i]);
+                int direction = Math.Sign(lockComponent.Code[i] - args.NewCode[i]);
+
+                stateCode[i] = diff <= 3 ? direction : direction * 2;
+            }
+            else
+                stateCode[i] = 0;
         }
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, stateCode);
@@ -162,13 +171,12 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
         _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnNext), lockpickEntity);
 
         float agility = skillComponent.Levels["Agility"];
-        if (agility <= 0) agility = 1f;
+        if (agility <= 0)
+            agility = 1f;
 
         var breakChance = Math.Clamp(lockpickEntity.Comp.BreakChance / MathF.Max(0.1f, agility / 10f), 0.01f, 0.75f);
         if (_random.Prob(breakChance))
-        {
             OnLockpickBreak(lockpickEntity);
-        }
 
         args.Handled = true;
     }

@@ -46,28 +46,35 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
             bool disableControl = isGuessed || _isLockpicking;
 
             Color color = Color.Transparent;
-
-            // Создаем текст для стрелочки-подсказки
             string arrowText = "";
-            if (codeState[i] == 255)
+
+            switch (codeState[i])
             {
-                color = Color.Green;
-                arrowText = "✓";
-            }
-            else if (codeState[i] == 0)
-            {
-                color = Color.FromHex("#ffffff00");
-                arrowText = "";
-            }
-            else if (codeState[i] == 1)
-            {
-                color = Color.FromHex("#df8f1789");
-                arrowText = "↑";
-            }
-            else if (codeState[i] == -1)
-            {
-                color = Color.FromHex("#0864d594");
-                arrowText = "↓";
+                case 255:
+                    color = Color.Green;
+                    arrowText = "✓";
+                    break;
+                case 1:
+                    color = Color.FromHex("#d37e00a4");
+                    arrowText = "▲";
+                    break;
+                case -1:
+                    color = Color.FromHex("#d37e00a4");
+                    arrowText = "▼";
+                    break;
+                case 2:
+                    color = Color.FromHex("#003cd570");
+                    arrowText = "▲▲";
+                    break;
+                case -2:
+                    color = Color.FromHex("#003cd570");
+                    arrowText = "▼▼";
+                    break;
+                case 0:
+                default:
+                    color = Color.FromHex("#ffffff00");
+                    arrowText = "";
+                    break;
             }
 
             var backgroundStyle = new StyleBoxFlat
@@ -103,8 +110,8 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
 
             var arrowLabel = new Label
             {
-                MinWidth = 15,
-                MaxWidth = 15,
+                MinWidth = 25, // Увеличено под двойные стрелки "↑↑"
+                MaxWidth = 25,
                 Text = arrowText,
                 Align = Label.AlignMode.Center,
                 FontColorOverride = color != Color.Transparent ? Color.White : Color.Gray
@@ -128,7 +135,6 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
 
             _sliders.Add(slider);
             _inputs.Add(input);
-
 
             rowContainer.AddChild(slider);
             rowContainer.AddChild(input);
