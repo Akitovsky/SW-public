@@ -42,14 +42,16 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         if (string.IsNullOrEmpty(accessId))
             return;
 
+        int length = 16;
+        int maxValue = 32;
         int[] newCode = UniversalLockableServerSystem.GenerateSecureDeterministicArray(
             accessId,
             UniversalLockableServerSystem.SecretServerKeyBytes,
-            32,
-            16
+            maxValue,
+            length
         );
 
-        SetupKeyFraction(keyEntity, newCode, 9);
+        SetupKeyFraction(keyEntity, newCode, maxValue);
     }
 
     private void OnKeyUsedOnLock(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)

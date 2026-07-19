@@ -65,9 +65,11 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
             return;
 
-        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, 32, 16);
+        int length = 16;
+        int maxValue = 32;
+        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, maxValue, length);
 
-        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, 16);
+        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, maxValue);
         _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
 
         if (TryComp<DoorBoltComponent>(lockableEntity, out var doorBoltComponent))
@@ -218,7 +220,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         msg.Pop();
         msg.AddText("\n");
-        
+
         args.AddMessage(msg);
     }
 
