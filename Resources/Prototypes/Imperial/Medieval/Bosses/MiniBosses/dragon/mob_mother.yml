@@ -1,17 +1,8 @@
-- type: speechSounds
-  id: MedievalDragon
-  saySound:
-    path: /Audio/Imperial/Medieval/dragon_say.ogg
-  askSound:
-    path: /Audio/Imperial/Medieval/dragon_ask.ogg
-  exclaimSound:
-    path: /Audio/Imperial/Medieval/dragon_exclaim.ogg
-
 - type: entity
   name: dragon
   abstract: true
   parent: SimpleMobBaseNoFood
-  id: MedievalBossBaseDragon
+  id: MedievalMotherBossBaseDragon
   description: big dragon
   components:
     - type: Hands
@@ -20,13 +11,12 @@
           location: left
       showInHands: false
       emptyRepresentative: []
-    - type: MedievalSpellCaster
     - type: Mana
-      maxMana: 100
-      regen: 4
-    - type: AddActionOnSpawn
-      actions:
-        - MedievalActionBlinkDragon
+      maxMana: 10000
+      regen: 100
+    - type: MedievalSpellCaster
+    - type: Sprite
+      scale: 2.5, 2.5
     - type: Destructible
       thresholds:
       - trigger:
@@ -37,21 +27,24 @@
         - !type:GoSSDBehavior { }
         - !type:GibBehavior { }
     - type: Flammable
-      firestackFade: -1
+      firestackFade: -3
       canResistFire: true
+    - type: ContentEye
+      targetZoom: 1.8, 1.8
+      maxZoom: 1.8, 1.8
     - type: Fixtures
       fixtures:
         fix1:
           shape: !type:PhysShapeCircle
-            radius: 1.2
-          density: 50
+            radius: 1.45
+          density: 60
           mask:
           - MobMask
           layer:
           - MobLayer
     - type: LocalLight
-      energy: 1
-      radius: 5
+      energy: 2
+      radius: 12
     - type: PointLight
       netsync: false
       enabled: false
@@ -64,12 +57,12 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        1250: Dead
+        15000: Dead
     - type: SlowOnDamage
       speedModifierThresholds:
-        400: 0.9
-        850: 0.8
-        1150: 0.7
+        5500: 0.9
+        9000: 0.8
+        12500: 0.7
     - type: Tag
       tags:
       - FootstepSound
@@ -103,31 +96,38 @@
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:
         groups:
-          Brute: 48
+          Brute: 148
         types:
-          Structural: 600
-      range: 2.5
+          Structural: 8600
+      range: 5.5
       attackRate: 0.5
     - type: StaminaDamageOnHit
-      damage: 70
+      damage: 570
     - type: Stamina
-      critThreshold: 1000
+      critThreshold: 10000
     - type: MedievalUnthrowable
     - type: MeleeThrowOnHit
-      distance: 7
-      speed: 12
+      distance: 15
+      speed: 15
     - type: FootstepModifier
       footstepSoundCollection:
         path: /Audio/Imperial/Witchers/FootstepWitchersVendigo.ogg
         params:
-          volume: -4
+          volume: 30
     - type: NoSlip
     - type: Speech
       speechVerb: LargeMob
       speechSounds: MedievalDragon
     - type: MovementSpeedModifier
-      baseWalkSpeed: 3.4
-      baseSprintSpeed: 2.2
+      baseWalkSpeed: 3.3
+      baseSprintSpeed: 2.1
+    - type: AnnounceOnSpawn
+      message: dragon-mother-spawn-announcement
+      color: "yellow"
+      sender: ancient-entity
+      sound:
+        path: /Audio/Imperial/Medieval/dragon_summon.ogg
+        volume: 8
     - type: GhostTakeoverAvailable
     - type: GhostRole
       makeSentient: true
@@ -146,19 +146,18 @@
         components:
         - MobState
       chemical: Ichor
-      healRate: 5
+      healRate: 35
       whitelist:
         components:
         - MobState
         #- Door
         #tags:
         #- Wall
-    - type: AchievementTarget
 
 - type: entity
   name: dragon
-  parent: MedievalBossBaseDragon
-  id: MedievalBossIceDragonNoAnnouncement
+  parent: MedievalMotherBossBaseDragon
+  id: MedievalMotherBossIceDragon
   description: big dragon
   components:
     - type: Sprite
@@ -168,50 +167,52 @@
         state: alive
       sprite: Imperial/Medieval/Mobs/Bosses/Dragons/icedragon.rsi
     - type: HitscanBatteryAmmoProvider
-      proto: MedievalProjectileWaterSphereBeginner
+      proto: MedievalProjectileWaterSphereBeginnerSS
       fireCost: 1
     - type: Battery
       maxCharge: 10000
       startingCharge: 10000
     - type: Gun
       projectileSpeed: 8
-      fireRate: 1.3
+      fireRate: 1
       useKey: false
-      selectedMode: SemiAuto
+      selectedMode: FullAuto
       availableModes:
-      - SemiAuto
+      - FullAuto
       soundGunshot: /Audio/Imperial/Medieval/icebeam_shot.ogg
     - type: Butcherable
       spawned:
       - id: MedievalDragonLootIcescale
-        amount: 8
+        amount: 32
       - id: MedievalDragonLootBones
-        amount: 5
+        amount: 20
       - id: FoodMeat
-        amount: 5
+        amount: 20
       - id: MedievalLeather1
-        amount: 3
-      - id: MedievalDragonLootTrueWaterEssence
+        amount: 40
+      - id: MedievalDragonQuantEssence
         amount: 1
 
-- type: entity
-  name: dragon
-  parent: MedievalBossIceDragonNoAnnouncement
-  id: MedievalBossIceDragon
-  description: big dragon
-  components:
-    - type: AnnounceOnSpawn
-      message: dragon-spawn-announcement
-      color: "yellow"
-      sender: ancient-entity
-      sound:
-        path: /Audio/Imperial/Medieval/dragon_summon.ogg
-        volume: -2
+- type: hitscan
+  id: MedievalProjectileWaterSphereBeginnerSS
+  damage:
+    types:
+      Cold: 28
+      Slash: 48
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
 
 - type: entity
   name: dragon
-  parent: MedievalBossBaseDragon
-  id: MedievalBossFireDragonNoAnnouncement
+  parent: MedievalMotherBossBaseDragon
+  id: MedievalMotherBossFireDragon
   description: big dragon
   components:
     - type: Sprite
@@ -221,7 +222,7 @@
         state: alive
       sprite: Imperial/Medieval/Mobs/Bosses/Dragons/firedragon.rsi
     - type: RechargeBasicEntityAmmo
-      rechargeCooldown: 30
+      rechargeCooldown: 3
       rechargeSound:
         path: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: BasicEntityAmmoProvider
@@ -229,12 +230,12 @@
       capacity: 1
       count: 1
     - type: Gun
-      projectileSpeed: 10
+      projectileSpeed: 15
       fireRate: 1
       useKey: false
-      selectedMode: SemiAuto
+      selectedMode: FullAuto
       availableModes:
-      - SemiAuto
+      - FullAuto
       soundGunshot: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: Damageable
       damageModifierSet: FireDragon
@@ -243,39 +244,20 @@
     - type: Butcherable
       spawned:
       - id: MedievalDragonLootFirescale
-        amount: 8
+        amount: 32
       - id: MedievalDragonLootBones
-        amount: 5
+        amount: 20
       - id: FoodMeat
-        amount: 5
+        amount: 20
       - id: MedievalLeather1
-        amount: 3
-      - id: MedievalDragonLootTrueFireEssence
+        amount: 60
+      - id: MedievalDragonQuantEssence
         amount: 1
 
 - type: entity
   name: dragon
-  parent: MedievalBossFireDragonNoAnnouncement
-  id: MedievalBossFireDragon
-  description: big dragon
-  components:
-    - type: AnnounceOnSpawn
-      message: dragon-spawn-announcement
-      color: "yellow"
-      sender: ancient-entity
-      sound:
-        path: /Audio/Imperial/Medieval/dragon_summon.ogg
-        volume: -2
-
-- type: damageModifierSet
-  id: FireDragon
-  coefficients:
-    Heat: 0
-
-- type: entity
-  name: dragon
-  parent: MedievalBossBaseDragon
-  id: MedievalBossAcidDragonNoAnnouncement
+  parent: MedievalMotherBossBaseDragon
+  id: MedievalMotherBossAcidDragon
   description: big dragon
   components:
     - type: Sprite
@@ -285,7 +267,7 @@
         state: alive
       sprite: Imperial/Medieval/Mobs/Bosses/Dragons/aciddragon.rsi
     - type: RechargeBasicEntityAmmo
-      rechargeCooldown: 6
+      rechargeCooldown: 1
       rechargeSound:
         path: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: BasicEntityAmmoProvider
@@ -293,12 +275,12 @@
       capacity: 1
       count: 1
     - type: Gun
-      projectileSpeed: 14
+      projectileSpeed: 18
       fireRate: 1
       useKey: false
-      selectedMode: SemiAuto
+      selectedMode: FullAuto
       availableModes:
-      - SemiAuto
+      - FullAuto
       soundGunshot: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: Tag
       tags:
@@ -307,34 +289,20 @@
     - type: Butcherable
       spawned:
       - id: MedievalDragonLootAcidscale
-        amount: 8
+        amount: 32
       - id: MedievalDragonLootBones
-        amount: 5
+        amount: 20
       - id: FoodMeat
-        amount: 5
+        amount: 20
       - id: MedievalLeather1
-        amount: 3
-      - id: MedievalDragonLootTrueEarthEssence
+        amount: 60
+      - id: MedievalDragonQuantEssence
         amount: 1
 
 - type: entity
   name: dragon
-  parent: MedievalBossAcidDragonNoAnnouncement
-  id: MedievalBossAcidDragon
-  description: big dragon
-  components:
-    - type: AnnounceOnSpawn
-      message: dragon-spawn-announcement
-      color: "yellow"
-      sender: ancient-entity
-      sound:
-        path: /Audio/Imperial/Medieval/dragon_summon.ogg
-        volume: -2
-
-- type: entity
-  name: dragon
-  parent: MedievalBossBaseDragon
-  id: MedievalBossThunderDragonNoAnnouncement
+  parent: MedievalMotherBossBaseDragon
+  id: MedievalMotherBossThunderDragon
   description: big dragon
   components:
     - type: Sprite
@@ -344,54 +312,67 @@
         state: alive
       sprite: Imperial/Medieval/Mobs/Bosses/Dragons/thunderdragon.rsi
     - type: RechargeBasicEntityAmmo
-      rechargeCooldown: 5
+      rechargeCooldown: 1
       rechargeSound:
         path: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: BasicEntityAmmoProvider
-      proto: MedievalProjectileThunderDragon
+      proto: MedievalProjectileThunderDragonSS
       capacity: 1
       count: 1
     - type: Gun
-      projectileSpeed: 18
+      projectileSpeed: 22
       fireRate: 1
       useKey: false
-      selectedMode: SemiAuto
+      selectedMode: FullAuto
       availableModes:
-      - SemiAuto
+      - FullAuto
       soundGunshot: /Audio/Imperial/Medieval/fireball_blast.ogg
     - type: ExplosionResistance
       damageCoefficient: 0.35
     - type: Butcherable
       spawned:
       - id: MedievalDragonLootThunderscale
-        amount: 8
+        amount: 32
       - id: MedievalDragonLootBones
-        amount: 5
+        amount: 20
       - id: FoodMeat
-        amount: 5
+        amount: 20
       - id: MedievalLeather1
-        amount: 3
-      - id: MedievalDragonLootTrueAirEssence
+        amount: 60
+      - id: MedievalDragonQuantEssence
         amount: 1
 
+
 - type: entity
-  name: dragon
-  parent: MedievalBossThunderDragonNoAnnouncement
-  id: MedievalBossThunderDragon
-  description: big dragon
+  id: MedievalProjectileThunderDragonSS
+  parent: BaseBulletTrigger
+  name: fireball
+  description: You better GITTAH WEIGH.
+  categories: [ HideSpawnMenu ]
   components:
-    - type: AnnounceOnSpawn
-      message: dragon-spawn-announcement
-      color: "yellow"
-      sender: ancient-entity
-      sound:
-        path: /Audio/Imperial/Medieval/dragon_summon.ogg
-        volume: -2
+    - type: Projectile
+      damage:
+        types:
+          Shock: 75
+    - type: Sprite
+      sprite: /Textures/Imperial/Medieval/Myrmex/Structures/Turret/myrmex_acid.rsi
+      layers:
+        - state: myrmex_acid
+    - type: SingularityDistortion
+      falloffPower: 3
+      intensity: 100
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: LightningRune
+    - type: SpawnOnTrigger
+      proto: MedievalLightningEffect
+    - type: Ammo
+      muzzleFlash: null
 
 - type: entity
   name: dragon
-  parent: MedievalBossBaseDragon
-  id: MedievalBossNecroDragonNoAnnouncement
+  parent: MedievalMotherBossBaseDragon
+  id: MedievalMotherBossNecroDragon
   description: big dragon
   components:
     - type: Sprite
@@ -400,6 +381,12 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: alive
       sprite: Imperial/Medieval/Mobs/Bosses/Dragons/necrodragon.rsi
+    - type: Hands
+      hands:
+        hand_left:
+          location: left
+      showInHands: false
+      emptyRepresentative: []
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -411,12 +398,15 @@
       startingCharge: 10000
     - type: Gun
       projectileSpeed: 8
-      fireRate: 1.7
+      fireRate: 3
       useKey: false
-      selectedMode: SemiAuto
+      selectedMode: FullAuto
       availableModes:
-      - SemiAuto
+      - FullAuto
       soundGunshot: /Audio/Imperial/Medieval/icebeam_shot.ogg
+    - type: Mana
+      maxMana: 10000
+      regen: 100
     - type: AddActionOnSpawn
       actions:
         - MedievalActionSpawnSkeletSenior
@@ -430,22 +420,10 @@
     - type: Butcherable
       spawned:
       - id: MedievalDragonLootBonescale
-        amount: 8
+        amount: 32
       - id: MedievalDragonLootBones
-        amount: 8
+        amount: 32
       - id: MedievalLeather1
-        amount: 3
-
-- type: entity
-  name: dragon
-  parent: MedievalBossNecroDragonNoAnnouncement
-  id: MedievalBossNecroDragon
-  description: big dragon
-  components:
-    - type: AnnounceOnSpawn
-      message: dragon-spawn-announcement
-      color: "yellow"
-      sender: ancient-entity
-      sound:
-        path: /Audio/Imperial/Medieval/dragon_summon.ogg
-        volume: -2
+        amount: 60
+      - id: MedievalDragonQuantEssence
+        amount: 1
