@@ -35,8 +35,8 @@ public sealed partial class SkillsSystem
 
     private void OnInit(Entity<SkillsComponent> entity, ref MapInitEvent args)
     {
-        if (entity.Comp.Levels["Intelligence"] >= 12)
-            AddComp<MagicRuneKnowledgeComponent>(entity);
+        if (entity.Comp.Levels["Intelligence"] >= 15)
+            EnsureComp<MagicRuneKnowledgeComponent>(entity);
     }
 
     private void OnGetHealingSpeedModifiers(EntityUid uid, SkillsComponent comp, ref GetHealingSpeedModifiersEvent args)
