@@ -5,7 +5,7 @@
   - type: IsRoof
 
 - type: entity
-  id: MedievalWoodenFloorRoofItem
+  id: MedievalWoodenFloorItem
   parent: BaseItem
   components:
   - type: Item
@@ -25,5 +25,5 @@
   id: MedievalWoodenFloorRoofItem
   craftTime: 0.125
   stacks:
-    WoodPlank: 3
+    WoodPlank: 2
   result: MedievalWoodenFloorRoofItem
