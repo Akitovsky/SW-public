@@ -2367,6 +2367,7 @@
     West: /Textures/Imperial/Medieval/Tiles/Planet/Cave/double-stoneedge-D.png
   baseTurf: Space
   isSubfloor: true
+  weather: true
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 99910000

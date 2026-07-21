@@ -8,6 +8,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Imperial.Medieval.Language;
 using Content.Shared.Imperial.Medieval.Magic.Mana;
+using Content.Shared.Imperial.Medieval.MagicRunes.Components;
 using Content.Shared.Imperial.Medieval.Medical;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Speech;
@@ -27,7 +28,15 @@ public sealed partial class SkillsSystem
         SubscribeLocalEvent<SkillsComponent, CheckWorkbenchCraftSpeedModifiersEvent>(OnGetCraftingSpeedModifiers);
         SubscribeLocalEvent<SkillsComponent, AccentGetEvent>(OnAccent);
 
+        SubscribeLocalEvent<SkillsComponent, MapInitEvent>(OnInit);
+
         SubscribeNetworkEvent<GetEnteredChatTextResponseMessage>(OnGetMessage);
+    }
+
+    private void OnInit(Entity<SkillsComponent> entity, ref MapInitEvent args)
+    {
+        if (entity.Comp.Levels["Intelligence"] >= 12)
+            AddComp<MagicRuneKnowledgeComponent>(entity);
     }
 
     private void OnGetHealingSpeedModifiers(EntityUid uid, SkillsComponent comp, ref GetHealingSpeedModifiersEvent args)

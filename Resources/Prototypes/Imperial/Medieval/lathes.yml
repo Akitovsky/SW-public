@@ -952,6 +952,7 @@
     - MedievalOarCraft
     - SmokingPipeCraft
     - RollingPinCraft
+    - MedievalWoodenFloorRoofItem
 
 - type: entity
   parent: CP14BaseWorkbench
