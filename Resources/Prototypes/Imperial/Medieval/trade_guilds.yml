@@ -1607,14 +1607,14 @@
     # cost: 100
     # reputationForBuying: 2.7
   - productEntity: MedievalDoorLockT1
-    cost: 50
+    cost: 12
     reputationForBuying: 0
   - productEntity: MedievalDoorLockT2
-    cost: 150
+    cost: 45
     minReputation: 10
     reputationForBuying: 10
   - productEntity: MedievalDoorKeyCheck
-    cost: 50
+    cost: 10
     reputationForBuying: 0
   - productEntity: MedievalChest2
     cost: 35

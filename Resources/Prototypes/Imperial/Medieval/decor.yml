@@ -1263,13 +1263,13 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -0.5
-        Burn: -0.5
-        Airloss: -1.6
+        Brute: -0.1
+        Burn: -0.1
+        Airloss: -0.3
       types:
-        Poison: -0.2
-        Caustic: -0.1
-        Radiation: -0.2
+        Poison: -0.04
+        Caustic: -0.02
+        Radiation: -0.04
   - type: MedievalPlagueHealStrapped
 
 - type: entity
@@ -1294,13 +1294,13 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -2.6
-        Burn: -2.8
-        Airloss: -3
+        Brute: -0.52
+        Burn: -0.56
+        Airloss: -0.5
       types:
-        Poison: -1.8
-        Caustic: -0.5
-        Radiation: -0.8
+        Poison: -0.36
+        Caustic: -0.1
+        Radiation: -0.16
   - type: MedievalPlagueHealStrapped
     level: 2
 
@@ -3361,7 +3361,7 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Airloss: 5
+        Airloss: 4
   - type: Destructible
     thresholds:
     - trigger:

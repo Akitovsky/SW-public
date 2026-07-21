@@ -3,7 +3,7 @@
   craftTime: 8
   stacks:
     MedievalIronPlateSmall: 1
-    MedievalGear: 1
+    #MedievalGear: 1
   result: MedievalDoorLockT1
 
 - type: CP14Recipe
@@ -35,18 +35,18 @@
   craftTime: 16
   stacks:
     MedievalRivets: 1
-    MedievalIronPlateSmall: 2
-    MedievalGear: 2
+    MedievalIronPlateSmall: 1
+    #MedievalGear: 2
   result: MedievalDoorLockT2
 
 - type: CP14Recipe
   id: MedievalDoorLockT3
   craftTime: 32
   stacks:
-    MedievalSteelIngot: 1
+    #MedievalSteelIngot: 1
     MedievalRivets: 1
     MedievalIronPlateSmall: 2
-    MedievalGear: 3
+    MedievalGear: 1
   result: MedievalDoorLockT3
 
 - type: CP14Recipe
