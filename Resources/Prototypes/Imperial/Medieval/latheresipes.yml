@@ -7,6 +7,30 @@
   result: MedievalDoorLockT1
 
 - type: CP14Recipe
+  id: RecycleCrystalToEssenceVodka
+  result: MagicMedievalVodka
+  entities:
+    ShardCrystalRed: 1
+
+- type: CP14Recipe
+  id: RecycleCrystalToEssenceFire
+  result: MagicMedievalFire
+  entities:
+    ShardCrystalRed: 1
+
+- type: CP14Recipe
+  id: RecycleCrystalToEssenceLight
+  result: MagicMedievalLight
+  entities:
+    ShardCrystalRed: 1
+
+- type: CP14Recipe
+  id: RecycleCrystalToEssenceEarth
+  result: MagicMedievalEarth
+  entities:
+    ShardCrystalRed: 1
+
+- type: CP14Recipe
   id: MedievalDoorLockT2
   craftTime: 16
   stacks:

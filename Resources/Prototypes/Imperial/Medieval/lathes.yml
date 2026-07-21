@@ -1042,6 +1042,10 @@
   - type: CP14Workbench
     craftSound: "/Audio/Imperial/Medieval/craft_iron.ogg"
     recipes:
+    - RecycleCrystalToEssenceVodka
+    - RecycleCrystalToEssenceFire
+    - RecycleCrystalToEssenceLight
+    - RecycleCrystalToEssenceEarth
     - MedievalManaBurnGrenade
     - MedievalGlowStone
     - MedievalCompactDefibrillator
