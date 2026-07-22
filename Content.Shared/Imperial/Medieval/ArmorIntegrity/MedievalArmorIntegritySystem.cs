@@ -1,20 +1,49 @@
 using Content.Shared.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Examine;
+using Content.Shared.Imperial.Medieval.Skills;
+using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
+using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Imperial.Medieval.ArmorIntegrity;
 
 public sealed class MedievalArmorIntegritySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedSkillsSystem _skills = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<MedievalArmorIntegrityComponent, ExaminedEvent>(OnArmorExamined);
+        SubscribeLocalEvent<InventoryComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
+        SubscribeLocalEvent<InventoryComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnCharacterExamined);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_net.IsServer)
+            return;
+
+        var query = EntityQueryEnumerator<MedievalArmorIntegrityComponent>();
+        while (query.MoveNext(out var uid, out var armorIntegrity))
+        {
+            if (armorIntegrity.BreakPending)
+                FinalizePendingBreak((uid, armorIntegrity));
+        }
     }
 
     private void OnComponentInit(Entity<MedievalArmorIntegrityComponent> ent, ref ComponentInit args)
@@ -22,21 +51,266 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        ent.Comp.MaxArmorHP = ent.Comp.ContainerArmorHP;
-        ent.Comp.CurrentArmorHP = ent.Comp.MaxArmorHP;
-        Dirty(ent);
+        if (TryComp<ArmorComponent>(ent, out var armor) && ent.Comp.UnbrokenResistances.Count == 0)
+            CopyArmorResistances(armor.Modifiers, ent.Comp.UnbrokenResistances);
 
-        if (!TryComp<ArmorComponent>(ent, out var armor))
+        SetContainerArmorHP(ent, ent.Comp.ContainerArmorHP);
+        SetArmorResistances(ent, ent.Comp.IsBroken ? ent.Comp.BrokenResistances : ent.Comp.UnbrokenResistances);
+        Dirty(ent);
+    }
+
+    private void OnBeforeDamageChanged(Entity<InventoryComponent> ent, ref BeforeDamageChangedEvent args)
+    {
+        if (!_net.IsServer || args.Cancelled || !args.Damage.AnyPositive())
             return;
 
-        if (ent.Comp.IntactResistances.Count == 0)
+        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: false);
+
+        if (equippedArmor.Count == 0)
+            return;
+
+        var dividedDamage = args.Damage / equippedArmor.Count;
+        foreach (var armor in equippedArmor)
         {
-            CopyArmorResistances(armor.Modifiers, ent.Comp.IntactResistances);
+            DamageArmor(armor, dividedDamage);
+        }
+    }
+
+    private void OnDamageChanged(Entity<InventoryComponent> ent, ref DamageChangedEvent args)
+    {
+        if (!_net.IsServer || !args.DamageIncreased)
+            return;
+
+        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: true);
+        foreach (var armor in equippedArmor)
+        {
+            if (armor.Comp.BreakPending)
+                FinalizePendingBreak(armor);
+        }
+    }
+
+    private void OnArmorExamined(Entity<MedievalArmorIntegrityComponent> ent, ref ExaminedEvent args)
+    {
+        if (!_net.IsServer)
+            return;
+
+        using (args.PushGroup(nameof(MedievalArmorIntegrityComponent)))
+        {
+            args.PushMarkup(Loc.GetString("armor-integrity-examine-current",
+                ("current", (int) MathF.Round(ent.Comp.CurrentArmorHP)),
+                ("max", (int) MathF.Round(ent.Comp.MaxArmorHP)),
+                ("color", GetIntegrityColor(ent.Comp.CurrentArmorHP, ent.Comp.MaxArmorHP).ToHexNoAlpha())));
+            args.PushMarkup(Loc.GetString("armor-integrity-examine-maximum",
+                ("maximum", MathF.Round(ent.Comp.ContainerArmorHP, 2))));
+        }
+    }
+
+    private void OnCharacterExamined(Entity<InventoryComponent> ent, ref ExaminedEvent args)
+    {
+        var intelligence = _skills.GetSkillLevel(args.Examiner, SharedSkillsSystem.IntelligenceId);
+        if (intelligence <= 8)
+            return;
+
+        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: true);
+        if (equippedArmor.Count == 0)
+            return;
+
+        var currentArmorHp = 0f;
+        var maxArmorHp = 0f;
+
+        foreach (var armor in equippedArmor)
+        {
+            currentArmorHp += armor.Comp.CurrentArmorHP;
+            maxArmorHp += armor.Comp.MaxArmorHP;
+        }
+
+        var percentage = maxArmorHp <= 0f
+            ? 0f
+            : Math.Clamp(currentArmorHp / maxArmorHp * 100f, 0f, 100f);
+
+        if (intelligence >= 20)
+        {
+            args.PushMarkup(Loc.GetString("armor-integrity-exact",
+                ("percentage", (int) MathF.Round(percentage))));
             return;
         }
 
-        armor.Modifiers = CreateModifierSet(ent.Comp.IntactResistances);
-        Dirty(ent.Owner, armor);
+        args.PushMarkup(Loc.GetString(GetArmorIntegrityStatus(percentage)));
+    }
+
+    public void SetContainerArmorHP(Entity<MedievalArmorIntegrityComponent> ent, float value)
+    {
+        ent.Comp.ContainerArmorHP = Math.Max(0f, value);
+        SetMaxArmorHP(ent, ent.Comp.ContainerArmorHP);
+        SetCurrentArmorHP(ent, ent.Comp.ContainerArmorHP);
+    }
+
+    public void ApplyQualityMultiplier(Entity<MedievalArmorIntegrityComponent> ent, ItemQuality quality)
+    {
+        if (ent.Comp.QualityMultiplierApplied)
+            return;
+
+        var qualityIndex = (int) quality;
+        if (qualityIndex < 0 || qualityIndex >= ent.Comp.QualityMultipliers.Count)
+            return;
+
+        var multiplier = ent.Comp.QualityMultipliers[qualityIndex];
+        if (!float.IsFinite(multiplier) || multiplier <= 0f)
+            return;
+
+        ent.Comp.QualityMultiplierApplied = true;
+        SetContainerArmorHP(ent, ent.Comp.ContainerArmorHP * multiplier);
+        Dirty(ent);
+    }
+
+    public static Color GetIntegrityColor(float currentArmorHp, float maxArmorHp)
+    {
+        if (currentArmorHp <= 0f || maxArmorHp <= 0f)
+            return Color.Red;
+
+        return MathHelper.CloseTo(currentArmorHp, maxArmorHp)
+            ? Color.Lime
+            : Color.Gray;
+    }
+
+    public void SetMaxArmorHP(Entity<MedievalArmorIntegrityComponent> ent, float value)
+    {
+        ent.Comp.MaxArmorHP = Math.Max(0f, value);
+        ent.Comp.CurrentArmorHP = Math.Clamp(ent.Comp.CurrentArmorHP, 0f, ent.Comp.MaxArmorHP);
+        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f);
+        Dirty(ent);
+    }
+
+    public void SetCurrentArmorHP(Entity<MedievalArmorIntegrityComponent> ent, float value)
+    {
+        ent.Comp.BreakPending = false;
+        ent.Comp.MaxArmorHP = Math.Max(0f, ent.Comp.MaxArmorHP);
+        ent.Comp.CurrentArmorHP = Math.Clamp(value, 0f, ent.Comp.MaxArmorHP);
+        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f);
+        Dirty(ent);
+    }
+
+    public void SetBroken(Entity<MedievalArmorIntegrityComponent> ent, bool value)
+    {
+        ent.Comp.BreakPending = false;
+
+        if (ent.Comp.IsBroken == value)
+            return;
+
+        ent.Comp.IsBroken = value;
+        SetArmorResistances(ent, value ? ent.Comp.BrokenResistances : ent.Comp.UnbrokenResistances);
+
+        if (value && _net.IsServer)
+        {
+            SpawnArmorBrokenEffect(ent);
+            _popup.PopupEntity(Loc.GetString("armor-integrity-broken-popup",
+                ("armor", MetaData(ent).EntityName)), ent, PopupType.LargeCaution);
+        }
+
+        Dirty(ent);
+    }
+
+    public void DamageArmor(Entity<MedievalArmorIntegrityComponent> ent, DamageSpecifier damage)
+    {
+        if (ent.Comp.IsBroken)
+            return;
+
+        var armorDamage = 0f;
+        foreach (var (damageType, amount) in damage.DamageDict)
+        {
+            if (amount <= 0 || !ent.Comp.BreakageMultipliers.TryGetValue(damageType, out var multiplier))
+                continue;
+
+            armorDamage += amount.Float() * multiplier;
+        }
+
+        if (MathHelper.CloseTo(armorDamage, 0f))
+            return;
+
+        ent.Comp.CurrentArmorHP = Math.Clamp(
+            ent.Comp.CurrentArmorHP - armorDamage,
+            0f,
+            ent.Comp.MaxArmorHP);
+        ent.Comp.BreakPending = ent.Comp.CurrentArmorHP <= 0f;
+        Dirty(ent);
+    }
+
+    public bool HasUnbrokenArmor(InventoryComponent inventory)
+    {
+        var enumerator = new InventorySystem.InventorySlotEnumerator(inventory, SlotFlags.WITHOUT_POCKET);
+
+        while (enumerator.NextItem(out var item))
+        {
+            if (TryComp<MedievalArmorIntegrityComponent>(item, out var armorIntegrity) && !armorIntegrity.IsBroken)
+                return true;
+        }
+
+        return false;
+    }
+
+    private List<Entity<MedievalArmorIntegrityComponent>> GetEquippedArmor(
+        InventoryComponent inventory,
+        bool includeBroken)
+    {
+        var equippedArmor = new List<Entity<MedievalArmorIntegrityComponent>>();
+        var enumerator = new InventorySystem.InventorySlotEnumerator(inventory, SlotFlags.WITHOUT_POCKET);
+
+        while (enumerator.NextItem(out var item))
+        {
+            if (!TryComp<MedievalArmorIntegrityComponent>(item, out var armorIntegrity) ||
+                !includeBroken && armorIntegrity.IsBroken)
+            {
+                continue;
+            }
+
+            equippedArmor.Add((item, armorIntegrity));
+        }
+
+        return equippedArmor;
+    }
+
+    private static string GetArmorIntegrityStatus(float percentage)
+    {
+        return percentage switch
+        {
+            <= 0 => "armor-integrity-broken",
+            <= 25 => "armor-integrity-almost-broken",
+            <= 50 => "armor-integrity-heavy-damaged",
+            <= 75 => "armor-integrity-damaged",
+            < 100 => "armor-integrity-scratched",
+            _ => "armor-integrity-full",
+        };
+    }
+
+    private void SetArmorResistances(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        Dictionary<ProtoId<DamageTypePrototype>, MedievalArmorResistance> resistances)
+    {
+        if (TryComp<ArmorComponent>(ent, out var armor))
+            SetArmorResistances((ent.Owner, armor), resistances);
+    }
+
+    private void SetArmorResistances(
+        Entity<ArmorComponent> ent,
+        Dictionary<ProtoId<DamageTypePrototype>, MedievalArmorResistance> resistances)
+    {
+        ent.Comp.Modifiers = CreateModifierSet(resistances);
+        Dirty(ent);
+    }
+
+    private void SpawnArmorBrokenEffect(Entity<MedievalArmorIntegrityComponent> ent)
+    {
+        if (!_net.IsServer || ent.Comp.ArmorBrokenEffects.Count == 0)
+            return;
+
+        var effect = Spawn(_random.Pick(ent.Comp.ArmorBrokenEffects), Transform(ent).Coordinates);
+        _transform.SetParent(effect, ent);
+    }
+
+    private void FinalizePendingBreak(Entity<MedievalArmorIntegrityComponent> ent)
+    {
+        ent.Comp.BreakPending = false;
+        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f);
     }
 
     private static void CopyArmorResistances(
