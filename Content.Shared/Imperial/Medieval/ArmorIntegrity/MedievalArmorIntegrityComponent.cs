@@ -1,5 +1,6 @@
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -68,6 +69,10 @@ public sealed partial class MedievalArmorIntegrityComponent : Component
         "MedievalArmorCrushEffect2",
         "MedievalArmorCrushEffect3",
     };
+
+    [DataField]
+    public SoundSpecifier BreakSound = new SoundPathSpecifier(
+        "/Audio/Imperial/Medieval/Effects/integrity_break_metal.ogg");
 
     [DataField, AutoNetworkedField]
     public float ContainerArmorHP = 100f;

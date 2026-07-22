@@ -6,6 +6,7 @@ using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -15,6 +16,7 @@ namespace Content.Shared.Imperial.Medieval.ArmorIntegrity;
 public sealed class MedievalArmorIntegritySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSkillsSystem _skills = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -85,7 +87,7 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         foreach (var armor in equippedArmor)
         {
             if (armor.Comp.BreakPending)
-                FinalizePendingBreak(armor);
+                FinalizePendingBreak(armor, ent.Owner);
         }
     }
 
@@ -190,7 +192,10 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         Dirty(ent);
     }
 
-    public void SetBroken(Entity<MedievalArmorIntegrityComponent> ent, bool value)
+    public void SetBroken(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        bool value,
+        EntityUid? effectTarget = null)
     {
         ent.Comp.BreakPending = false;
 
@@ -202,7 +207,8 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
         if (value && _net.IsServer)
         {
-            SpawnArmorBrokenEffect(ent);
+            SpawnArmorBrokenEffect(ent, effectTarget ?? GetBreakEffectTarget(ent));
+            _audio.PlayPvs(ent.Comp.BreakSound, ent);
             _popup.PopupEntity(Loc.GetString("armor-integrity-broken-popup",
                 ("armor", MetaData(ent).EntityName)), ent, PopupType.LargeCaution);
         }
@@ -298,19 +304,31 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         Dirty(ent);
     }
 
-    private void SpawnArmorBrokenEffect(Entity<MedievalArmorIntegrityComponent> ent)
+    private void SpawnArmorBrokenEffect(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        EntityUid effectTarget)
     {
         if (!_net.IsServer || ent.Comp.ArmorBrokenEffects.Count == 0)
             return;
 
-        var effect = Spawn(_random.Pick(ent.Comp.ArmorBrokenEffects), Transform(ent).Coordinates);
-        _transform.SetParent(effect, ent);
+        var effect = Spawn(_random.Pick(ent.Comp.ArmorBrokenEffects), Transform(effectTarget).Coordinates);
+        _transform.SetParent(effect, effectTarget);
     }
 
-    private void FinalizePendingBreak(Entity<MedievalArmorIntegrityComponent> ent)
+    private EntityUid GetBreakEffectTarget(Entity<MedievalArmorIntegrityComponent> ent)
+    {
+        var parent = Transform(ent).ParentUid;
+        return parent.IsValid() && HasComp<InventoryComponent>(parent)
+            ? parent
+            : ent.Owner;
+    }
+
+    private void FinalizePendingBreak(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        EntityUid? effectTarget = null)
     {
         ent.Comp.BreakPending = false;
-        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f);
+        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f, effectTarget);
     }
 
     private static void CopyArmorResistances(

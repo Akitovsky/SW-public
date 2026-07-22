@@ -2,11 +2,16 @@
   parent: MedievalClothingOuterArmorIronCuirass
   id: MedievalArmorIntegritySmithingExample
   name: armor integrity smithing example
-  description: An example of metal armor with configurable integrity.
+  description: Пример железного доспеха
   components:
   - type: MedievalArmorIntegrity
     containerArmorHP: 200
     repairType: Smithing
+    breakageMultipliers:
+      Blunt: 0.5
+      Slash: 1
+      Piercing: 1.5
+      Heat: 0.25
     unbrokenResistances:
       Blunt:
         coefficient: 0.6
@@ -28,10 +33,33 @@
         coefficient: 1
 
 - type: entity
+  id: WorkpieceMedievalArmorIntegritySmithingExample
+  name: workpiece for smithing armor integrity example
+  description: Пример заготовки для железного доспеха
+  parent: BaseArmorWorkpiece
+  components:
+  - type: SmithingWorkpiece
+    finalProductEntity: MedievalArmorIntegritySmithingExample
+
+- type: entity
+  parent: MedievalClothingOuterArmorIronCuirass
+  id: MedievalArmorIntegrityAdditionalBreakageTypesExample
+  name: armor integrity breakage types example
+  description: Пока множитель поломки от типа урона явно не установлен, он будет равен нулю, не считая блант, порез, укол и ожог. В этом случае, броня будет ломаться от яда
+  components:
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 150
+    repairType: Smithing
+    breakageMultipliers:
+      Poison: 1
+      Caustic: 0.75
+      Shock: 1.25
+
+- type: entity
   parent: MedievalClothingOuterArmorLeather
   id: MedievalArmorIntegritySewingExample
   name: armor integrity sewing example
-  description: An example of leather armor with configurable integrity.
+  description: Пример кожанки
   components:
   - type: MedievalArmorIntegrity
     containerArmorHP: 100
@@ -55,3 +83,47 @@
         coefficient: 1
       Heat:
         coefficient: 1
+
+- type: entity
+  parent: BaseItem
+  id: MedievalArmorRepairSmithingExample
+  name: armor repair smithing tool example
+  description: Пример инструмента для ремонта металла
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: tochilo_mini
+  - type: Item
+    size: Tiny
+  - type: MedievalRepairArmor
+    repairType: Smithing
+    repairAmount: 30
+    isSpendable: false
+    repairTime: 10
+    maxArmorRemove: 4
+    skilledCrafterMaxArmorRemovalModifier: 0.5
+    useSound:
+      path: /Audio/Imperial/Medieval/craft_iron.ogg
+
+- type: entity
+  parent: BaseItem
+  id: MedievalArmorRepairSewingExample
+  name: armor repair sewing kit example
+  description: Пример инструмента для ремонта кожи
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Misc/repairkit.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: Imperial/Medieval/Misc/repairkit.rsi
+  - type: MedievalRepairArmor
+    repairType: Sewing
+    repairAmount: 18
+    isSpendable: true
+    repairTime: 8
+    maxArmorRemove: 1
+    skilledCrafterMaxArmorRemovalModifier: 0.5
+    charges: 6
+    useSound:
+      path: /Audio/Imperial/Medieval/craft_cloth.ogg

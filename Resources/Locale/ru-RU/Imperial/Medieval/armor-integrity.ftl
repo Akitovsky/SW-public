@@ -9,3 +9,13 @@ armor-integrity-damaged = [color=lightgreen]Броня помята[/color]
 armor-integrity-scratched = [color=green]Броня поцарапана[/color]
 armor-integrity-full = [color=cyan]Броня цела[/color]
 armor-integrity-broken-popup = {$armor} сломана!
+armor-repair-wrong-tool-popup = Неподходящий инструмент для этой брони.
+armor-repair-fully-repaired-popup = Эта броня уже полностью починена.
+armor-repair-irreparable-popup = Эта броня уже не подлежит ремонту.
+armor-repair-tool-max-durability-cost = Инструмент расходует [color=yellow]{$amount}[/color] максимальной прочности у брони.
+armor-repair-tool-no-max-durability-cost = Этот инструмент не расходует максимальную прочность брони.
+armor-repair-tool-charges = Осталось зарядов: [color=yellow]{$charges}[/color].
+armor-repair-type-sewing = Предназначено для ткани и кожи.
+armor-repair-type-smithing = Предназначено для металлической брони.
+armor-repair-station-speed = Этот верстак ускоряет починку в [color=yellow]{$modifier}[/color] раз.
+armor-repair-station-max-durability-cost = Этот верстак замедляет расход максимальной прочности брони в [color=yellow]{$modifier}[/color] раз.
