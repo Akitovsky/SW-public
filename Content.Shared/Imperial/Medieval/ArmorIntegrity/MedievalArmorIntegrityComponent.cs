@@ -33,7 +33,7 @@ public sealed partial class MedievalArmorIntegrityComponent : Component
     [DataField, AutoNetworkedField]
     public EntProtoId? ArmorBrokenEffect;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ContainerArmorHP = 100f;
 
     [DataField, AutoNetworkedField]

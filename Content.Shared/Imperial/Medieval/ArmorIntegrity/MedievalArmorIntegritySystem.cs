@@ -19,13 +19,19 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
     private void OnComponentInit(Entity<MedievalArmorIntegrityComponent> ent, ref ComponentInit args)
     {
-        if (!_net.IsServer || !TryComp<ArmorComponent>(ent, out var armor))
+        if (!_net.IsServer)
+            return;
+
+        ent.Comp.MaxArmorHP = ent.Comp.ContainerArmorHP;
+        ent.Comp.CurrentArmorHP = ent.Comp.MaxArmorHP;
+        Dirty(ent);
+
+        if (!TryComp<ArmorComponent>(ent, out var armor))
             return;
 
         if (ent.Comp.IntactResistances.Count == 0)
         {
             CopyArmorResistances(armor.Modifiers, ent.Comp.IntactResistances);
-            Dirty(ent);
             return;
         }
 
