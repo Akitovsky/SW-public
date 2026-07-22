@@ -1,9 +1,9 @@
 ent-FogHeavyUnpassable = густой туман (непроходимый)
     .desc = Лучше сюда не лезть
-    .suffix = {"Medieval"}
+    .suffix = { "Средневековье" }
 ent-FogHeavyPassable = густой туман
     .desc = Лучше сюда не лезть
-    .suffix = {"Medieval"}
+    .suffix = { "Средневековье" }
 ent-FogLitePassable = туман
     .desc = Лучше сюда не лезть
-    .suffix = {"Medieval"}
+    .suffix = { "Средневековье" }
