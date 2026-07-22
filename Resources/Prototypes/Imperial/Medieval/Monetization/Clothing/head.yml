@@ -8,9 +8,6 @@
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat1.rsi
   - type: Clothing
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat1.rsi
-    equipDelay: 0.1
-    unequipDelay: 0.1
-    stripDelay: 0.1
   - type: Item
     size: Normal
 
@@ -24,9 +21,6 @@
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat2.rsi
   - type: Clothing
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat2.rsi
-    equipDelay: 0.1
-    unequipDelay: 0.1
-    stripDelay: 0.1
   - type: Item
     size: Normal
 
@@ -40,9 +34,6 @@
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat3.rsi
   - type: Clothing
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat3.rsi
-    equipDelay: 0.1
-    unequipDelay: 0.1
-    stripDelay: 0.1
   - type: Item
     size: Normal
 
@@ -56,8 +47,5 @@
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat4.rsi
   - type: Clothing
     sprite: Imperial/Medieval/Monetization/Clothing/Head/hat4.rsi
-    equipDelay: 0.1
-    unequipDelay: 0.1
-    stripDelay: 0.1
   - type: Item
     size: Normal

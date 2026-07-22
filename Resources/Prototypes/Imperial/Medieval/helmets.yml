@@ -58,6 +58,14 @@
   - type: RDWeight
     value: 1.5
   - type: Tag
+  - type: Clothing
+    equipDelay: 0.05
+    unequipDelay: 0.05
+    stripDelay: 0.05
+    equipSound:
+      path: /Audio/Imperial/Medieval/clothing_equip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/clothing_unequip.ogg
 
 
 # Heavy helmets
