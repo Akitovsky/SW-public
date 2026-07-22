@@ -28,15 +28,7 @@ public sealed partial class SkillsSystem
         SubscribeLocalEvent<SkillsComponent, CheckWorkbenchCraftSpeedModifiersEvent>(OnGetCraftingSpeedModifiers);
         SubscribeLocalEvent<SkillsComponent, AccentGetEvent>(OnAccent);
 
-        SubscribeLocalEvent<SkillsComponent, MapInitEvent>(OnInit);
-
         SubscribeNetworkEvent<GetEnteredChatTextResponseMessage>(OnGetMessage);
-    }
-
-    private void OnInit(Entity<SkillsComponent> entity, ref MapInitEvent args)
-    {
-        if (entity.Comp.Levels["Intelligence"] >= 15)
-            EnsureComp<MagicRuneKnowledgeComponent>(entity);
     }
 
     private void OnGetHealingSpeedModifiers(EntityUid uid, SkillsComponent comp, ref GetHealingSpeedModifiersEvent args)

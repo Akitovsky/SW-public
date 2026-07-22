@@ -1759,6 +1759,21 @@
         params:
           variation: 0.05
 
+- type: entity
+  parent: MedievalSignParent
+  id: MedievalSign10
+  name: sign
+  description: A sign
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Decor/medieval_decor.rsi
+    state: sign_10
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
 
 - type: entity
   id: MedievalDecorBags1

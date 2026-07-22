@@ -31,11 +31,11 @@
   id: MedievalAncientOakClosetAlh
   name: ancient oak closets
   suffix: Alh, Medieval
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: AlchemyCloset
+  #components:
+  # - type: EntityTableContainerFill
+  #   containers:
+  #     entity_storage: !type:NestedSelector
+  #       tableId: AlchemyCloset  Если это находится в привате, то увы - выносите в паблик, у меня крашится из-за этого игра
 
 - type: entityTable
   id: MedievalAlchemyCloset

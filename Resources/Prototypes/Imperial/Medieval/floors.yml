@@ -5,7 +5,7 @@
   - type: IsRoof
 
 - type: entity
-  id: MedievalWoodenFloorItem
+  id: MedievalWoodenFloorRoofItem
   parent: BaseItem
   components:
   - type: Item
@@ -17,9 +17,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: wood-large
-  - type: Construction
-    graph: TileWoodLarge
-    node: woodtilelarge
 
 - type: CP14Recipe
   id: MedievalWoodenFloorRoofItem
