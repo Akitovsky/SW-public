@@ -33,6 +33,8 @@
     size: Small
   - type: ExplosionResistance
     damageCoefficient: 0.95
+  - type: ManaRegen
+    regen: -0.5
 
 - type: entity
   parent: MedievalClothingOuterArmorStudded
@@ -70,6 +72,8 @@
     equipDelay: 2
     unequipDelay: 2
     sprite: Imperial/Medieval/Clothing/Armor/studder_armor.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -106,6 +110,8 @@
     equipDelay: 2
     unequipDelay: 2
     sprite: Imperial/Medieval/Clothing/Armor/livsey.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -142,6 +148,8 @@
     equipDelay: 2
     unequipDelay: 2
     sprite: Imperial/Medieval/Clothing/Armor/ship_cap.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -182,6 +190,8 @@
     equipDelay: 2.4
     unequipDelay: 2.4
     sprite: Imperial/Medieval/Clothing/Armor/leather_armor.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -221,6 +231,8 @@
     equipDelay: 2.4
     unequipDelay: 2.4
     sprite: Imperial/Medieval/Clothing/Armor/leather_armor2.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -261,6 +273,8 @@
     equipDelay: 2.4
     unequipDelay: 2.4
     sprite: Imperial/Medieval/Clothing/Armor/leather_armor_light.rsi
+  - type: ManaRegen
+    regen: -0.8
   - type: Armor
     modifiers:
       coefficients:
@@ -323,6 +337,8 @@
     equipDelay: 3.5
     unequipDelay: 2.4
     sprite: Imperial/Medieval/Clothing/Armor/chainmail_armor.rsi
+  - type: ManaRegen
+    regen: -0.8
   - type: Armor
     modifiers:
       coefficients:
@@ -354,6 +370,8 @@
     equipDelay: 3.5
     unequipDelay: 2.4
     sprite: Imperial/Medieval/Clothing/Armor/chainmail_armor_light.rsi
+  - type: ManaRegen
+    regen: -0.8
   - type: Armor
     modifiers:
       coefficients:
@@ -396,6 +414,8 @@
     equipDelay: 3
     unequipDelay: 3
     sprite: Imperial/Medieval/Clothing/Armor/leather_armor_heavy.rsi
+  - type: ManaRegen
+    regen: -0.8
   - type: Armor
     modifiers:
       coefficients:
@@ -479,6 +499,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -1.5
   - type: Armor
     modifiers:
       coefficients:
@@ -490,8 +512,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.5
   - type: ClothingSpeedModifier
-    walkModifier: 0.94
-    sprintModifier: 0.94
+    walkModifier: 0.97
+    sprintModifier: 0.97
   - type: Item
     size: Normal
   - type: ExplosionResistance
@@ -549,6 +571,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -1.5
   - type: Armor
     modifiers:
       coefficients:
@@ -560,8 +584,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.75
   - type: ClothingSpeedModifier
-    walkModifier: 0.95
-    sprintModifier: 0.95
+    walkModifier: 0.97
+    sprintModifier: 0.97
   - type: Item
     size: Normal
   - type: ExplosionResistance
@@ -608,6 +632,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -2.2
   - type: Armor
     modifiers:
       coefficients:
@@ -619,8 +645,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
-    walkModifier: 0.87
-    sprintModifier: 0.87
+    walkModifier: 0.93
+    sprintModifier: 0.93
   - type: Item
     size: Huge
   - type: ExplosionResistance
@@ -657,6 +683,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -5
   - type: Armor
     modifiers:
       coefficients:
@@ -668,8 +696,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.25
   - type: ClothingSpeedModifier
-    walkModifier: 0.84
-    sprintModifier: 0.84
+    walkModifier: 0.92
+    sprintModifier: 0.92
   - type: Item
     size: Huge
   - type: ExplosionResistance
@@ -770,6 +798,8 @@
     damage:
       types:
         Blunt: 7.5
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -950,6 +980,8 @@
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
+  - type: ManaRegen
+    regen: -0.5
   - type: Insulated
   - type: Armor
     modifiers:
@@ -1015,9 +1047,9 @@
       collection: MedievalFootstepSteel
       params:
         volume: -8
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
   - type: ProtectedFromStepTriggers
 
 - type: entity
@@ -1046,9 +1078,9 @@
     damage:
       types:
         Caustic: 12
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
 
 - type: entity
   parent: ClothingHandsBase
@@ -1076,9 +1108,9 @@
     damage:
       types:
         Caustic: 7
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
   - type: CurseItem
 
 - type: entity
@@ -1125,6 +1157,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -1.5
   - type: Armor
     modifiers:
       coefficients:
@@ -1139,9 +1173,9 @@
     size: Large
   - type: ExplosionResistance
     damageCoefficient: 0.65
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
   - type: MedievalIronHitSound
 
 - type: entity
@@ -1185,9 +1219,9 @@
     size: Normal
   - type: ExplosionResistance
     damageCoefficient: 0.75
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
   - type: MedievalIronHitSound
   - type: CurseItem
 
@@ -1230,9 +1264,9 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.99
     sprintModifier: 0.99
-  - type: RadiationSource
-    intensity: 0.3
-    slope: 0.2
+  #- type: RadiationSource
+  #  intensity: 0.3
+  #  slope: 0.2
   - type: ProtectedFromStepTriggers
   - type: CurseItem
 
@@ -1864,6 +1898,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -2.5
   - type: Armor
     modifiers:
       coefficients:
@@ -1912,6 +1948,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -10
   - type: Armor
     modifiers:
       coefficients:
@@ -1923,8 +1961,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.15
   - type: ClothingSpeedModifier
-    walkModifier: 0.84
-    sprintModifier: 0.84
+    walkModifier: 0.92
+    sprintModifier: 0.92
   - type: Item
     size: Huge
   - type: ExplosionResistance
@@ -1971,6 +2009,8 @@
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
+  - type: ManaRegen
+    regen: -1
   - type: Insulated
   - type: Armor
     modifiers:
@@ -2039,6 +2079,8 @@
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_shoes_eqiped.ogg
+  - type: ManaRegen
+    regen: -1
   - type: MeleeWeapon
     attackRate: 1
     damage:
@@ -2117,6 +2159,8 @@
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
     unequipSound:
       path: /Audio/Imperial/Medieval/iron_armor_eqiped.ogg
+  - type: ManaRegen
+    regen: -1.5
   - type: Armor
     modifiers:
       coefficients:
@@ -2668,6 +2712,8 @@
     unequipDelay: 1
     slots: [feet]
     sprite: Imperial/Medieval/Clothing/Shoes/northern.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Insulated
   - type: Armor
     modifiers:
@@ -2893,8 +2939,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.92
-    sprintModifier: 0.92
+    walkModifier: 0.96
+    sprintModifier: 0.96
   - type: Item
     size: Normal
   - type: ExplosionResistance
@@ -3001,6 +3047,8 @@
     equipDelay: 2
     unequipDelay: 2
     sprite: Imperial/Medieval/Clothing/Armor/gambeson_armor.rsi
+  - type: ManaRegen
+    regen: -0.5
   - type: Armor
     modifiers:
       coefficients:
