@@ -468,9 +468,9 @@
   - type: Sprite
     layers:
     - state: tail
-      color: red
+      #color: red
     - state: rod
-      color: brown
+      #color: brown
     - state: tip
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]

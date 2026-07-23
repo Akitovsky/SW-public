@@ -2,9 +2,12 @@
   id: AchievementWarGeneralArcher
   priority: 20
   rarity: Common
-  name: "Лук да стрелы"
-  description: "Приправьте ядом"
-  icon: { sprite: /Textures/Imperial/Medieval/Interface/faction_relations.rsi, state: union }
+  name: bow-and-arrows-name
+  tab: AchievementTabLegionInsurgency
+  description: bow-and-arrows-desc
+  icon:
+    sprite: /Textures/Imperial/Medieval/Gun/bowwhois.rsi
+    state: unwielded
   visibility: Visible
   conditions:
   - !type:CollectAllItemsCondition
@@ -17,9 +20,11 @@
   id: AchievementWarGeneralBallistica
   priority: 1
   rarity: Common
-  name: "Баллистика"
-  description: "триста тридцать три"
-  icon: { sprite: /Textures/Imperial/Medieval/Interface/faction_relations.rsi, state: union }
+  name: achive-ballistic-name
+  description: achive-ballistic-desc
+  icon:
+    sprite: Imperial/Medieval/Decor/catapult.rsi
+    state: ready
   visibility: Visible
   prerequisites:
   - AchievementWarGeneralArcher
@@ -28,6 +33,6 @@
     progressKey: collectAllProgression
     itemPrototypes:
       MedievalCatapultCraft: 1
-      MedievalCatapultAmmoBarrelStone : 1
+      MedievalCatapultAmmoBarrelStone: 1
       MedievalCatapultAmmoBarrelAp: 1
       MedievalCatapultAmmoBarrelGunpowder: 1

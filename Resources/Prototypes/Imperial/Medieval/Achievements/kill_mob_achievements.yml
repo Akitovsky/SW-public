@@ -5,6 +5,7 @@
   id: AchievementKillFirstMob
   priority: 100
   rarity: Common
+  tab: AchievementTabKillMob
   name: achievement-name-kill-first-mob
   description: achievement-desc-kill-first-mob
   icon:
@@ -937,7 +938,7 @@
   id: AchievementKillHog15
   priority: 1011
   rarity: Common
-name: achievement-name-kill-hog-15
+  name: achievement-name-kill-hog-15
   description: achievement-desc-kill-hog-15
   icon:
     sprite: Imperial/Medieval/Mobs/hog.rsi

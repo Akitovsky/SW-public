@@ -348,8 +348,7 @@ public sealed class HelmSystem : EntitySystem
         if (!TryGetGrid(helm, helmXform, out var boat) || !TryComp<MapGridComponent>(boat, out var mapGrid))
             return false;
 
-        if (!TryGetOverloadCeil(boat, mapGrid, helmComponent.OverloadCeilPerTile, out overloadCeil))
-            return false;
+        overloadCeil = ShipWeightHelper.GetMaxWeight(boat, mapGrid, _map, EntityManager, _cfg);
 
         weight = _rdWeight.GetTotalOnGrid(boat);
         return true;

@@ -53,6 +53,8 @@ achievement-visit-barrier-location = барьер в подвале коллег
 
 achievement-tree-recenter = Центрировать
 achievement-tooltip-completed = Выполнено
+achievement-tooltip-locked = Не получено
+achievement-tooltip-secret = Секретное достижение
 achievement-detail-window-title = Детали достижения
 achievement-detail-completed = Получено
 achievement-detail-requires-header = Требуемые достижения:
@@ -85,3 +87,13 @@ achievement-condition-kill-faction-single-prefix = Убейте { $count } бо�
 achievement-condition-kill-faction-multi-header = Убейте { $count } бойцов следующих фракций:
 
 achievement-condition-complete-contract = Выполните контракт наемников { $count } раз
+
+achievement-tab-default-name = Общие
+achievement-tab-legion-insurgency-name = Красные против синих
+achievement-tab-magic-name = Магическая битва
+achievement-tab-merc-name = Наёмники
+achievement-tab-banditos-name = Гильдя воров
+achievement-tab-village-name = Деревня
+achievement-tab-mine-name = Шахта
+achievement-tab-kill-mob-name = Охота на монстров
+achievement-tab-magic-forge-name = Магическая кузня
