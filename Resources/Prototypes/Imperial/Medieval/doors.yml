@@ -537,6 +537,7 @@
   - type: ItemSlots
     slots:
       lockSlot:
+        ejectOnBreak: true
         name: Lock
         startingItem: MedievalDoorLockT3
         insertSound: /Audio/Effects/buckle.ogg
@@ -623,6 +624,7 @@
       slots:
         lockSlot:
           name: Lock
+          ejectOnBreak: true
           insertSound: /Audio/Effects/buckle.ogg
           ejectSound: /Audio/Effects/unbuckle.ogg
           whitelist:
@@ -860,6 +862,7 @@
     slots:
       lockSlot:
         name: Lock
+        ejectOnBreak: true
         startingItem: MedievalDoorLockT3
         insertSound: /Audio/Effects/buckle.ogg
         ejectSound: /Audio/Effects/unbuckle.ogg
@@ -1125,6 +1128,7 @@
     slots:
       lockSlot:
         name: Lock
+        ejectOnBreak: true
         startingItem: MedievalDoorLockT3
         insertSound: /Audio/Effects/buckle.ogg
         ejectSound: /Audio/Effects/unbuckle.ogg
@@ -1386,6 +1390,7 @@
     slots:
       lockSlot:
         name: Lock
+        ejectOnBreak: true
         startingItem: MedievalDoorLockT3
         insertSound: /Audio/Effects/buckle.ogg
         ejectSound: /Audio/Effects/unbuckle.ogg
