@@ -4,10 +4,15 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
-    lifetime: 1.4
+    lifetime: 3
   - type: Sprite
     drawdepth: Effects
     noRot: true
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_metal.ogg
+      params:
+        variation: 0.2
 
 - type: entity
   id: MedievalArmorCrushEffect1

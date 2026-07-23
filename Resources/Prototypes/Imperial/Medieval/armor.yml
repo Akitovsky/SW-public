@@ -27,6 +27,36 @@
         Piercing: 0.9
         Heat: 0.6
         Cold: 0.4
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 50
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.6
+      Slash:
+        coefficient: 0.6
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.95
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.35
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.95
   - type: Item
@@ -82,6 +112,36 @@
         Piercing: 0.78
         Heat: 0.7
         Cold: 0.5
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 100
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.6
+      Slash:
+        coefficient: 0.6
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.95
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.35
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.9
   - type: Item
@@ -200,6 +260,36 @@
         Piercing: 0.75
         Heat: 0.65
         Cold: 0.6
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 140
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.17
+      Piercing:
+        coefficient: 0.4
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.78
   - type: Item
@@ -241,6 +331,36 @@
         Piercing: 0.75
         Heat: 0.65
         Cold: 0.6
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 140
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.17
+      Piercing:
+        coefficient: 0.4
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.78
   - type: Item
@@ -283,6 +403,36 @@
         Piercing: 0.71
         Heat: 0.62
         Cold: 0.55
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 180
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.17
+      Piercing:
+        coefficient: 0.4
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.8
   - type: Item
@@ -347,6 +497,32 @@
         Piercing: 0.75
         Heat: 0.78
         Cold: 0.8
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 220
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.45
+      Slash:
+        coefficient: 0.25
+      Piercing:
+        coefficient: 0.65
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.7
   - type: Item
@@ -380,6 +556,32 @@
         Piercing: 0.8
         Heat: 0.8
         Cold: 0.85
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 150
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.4
+      Slash:
+        coefficient: 0.2
+      Piercing:
+        coefficient: 0.6
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.75
   - type: Item
@@ -424,6 +626,36 @@
         Piercing: 0.6
         Heat: 0.5
         Cold: 0.44
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 260
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.17
+      Piercing:
+        coefficient: 0.4
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.7
   - type: Item
@@ -509,6 +741,32 @@
         Piercing: 0.52
         Heat: 0.55
         Cold: 0.7
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 335
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.22
+      Slash:
+        coefficient: 0.16
+      Piercing:
+        coefficient: 0.25
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.8
+      Slash:
+        coefficient: 0.8
+      Piercing:
+        coefficient: 0.8
+      Heat:
+        coefficient: 0.8
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.5
   - type: ClothingSpeedModifier
@@ -581,6 +839,32 @@
         Piercing: 0.58
         Heat: 0.7
         Cold: 0.7
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 210
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.26
+      Slash:
+        coefficient: 0.23
+      Piercing:
+        coefficient: 0.3
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.8
+      Slash:
+        coefficient: 0.8
+      Piercing:
+        coefficient: 0.8
+      Heat:
+        coefficient: 0.8
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.75
   - type: ClothingSpeedModifier
@@ -642,6 +926,32 @@
         Piercing: 0.36
         Heat: 0.45
         Cold: 0.7
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 480
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.19
+      Slash:
+        coefficient: 0.12
+      Piercing:
+        coefficient: 0.19
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.8
+      Slash:
+        coefficient: 0.8
+      Piercing:
+        coefficient: 0.8
+      Heat:
+        coefficient: 0.8
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
@@ -693,6 +1003,32 @@
         Piercing: 0.3
         Heat: 0.25
         Cold: 0.6
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 600
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.17
+      Slash:
+        coefficient: 0.11
+      Piercing:
+        coefficient: 0.18
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.7
+      Slash:
+        coefficient: 0.7
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.25
   - type: ClothingSpeedModifier
@@ -808,6 +1144,32 @@
         Piercing: 0.9
         Heat: 0.9
         Cold: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 50
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.75
+      Slash:
+        coefficient: 0.75
+      Piercing:
+        coefficient: 0.75
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StealTarget # imperial medieval
     stealGroup: MedievalGetMedievalIronGloves # imperial medieval
 
@@ -989,6 +1351,32 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 75
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.85
+      Slash:
+        coefficient: 0.85
+      Piercing:
+        coefficient: 0.85
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: ExplosionResistance
     damageCoefficient: 0.95
   - type: ClothingSpeedModifier
@@ -1037,6 +1425,32 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 75
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.85
+      Slash:
+        coefficient: 0.85
+      Piercing:
+        coefficient: 0.85
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: ExplosionResistance
     damageCoefficient: 0.95
   - type: ClothingSpeedModifier
@@ -1078,6 +1492,32 @@
     damage:
       types:
         Caustic: 12
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 80
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.75
+      Slash:
+        coefficient: 0.75
+      Piercing:
+        coefficient: 0.75
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   #- type: RadiationSource
   #  intensity: 0.3
   #  slope: 0.2
@@ -1108,6 +1548,32 @@
     damage:
       types:
         Caustic: 7
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 60
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.75
+      Slash:
+        coefficient: 0.75
+      Piercing:
+        coefficient: 0.75
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   #- type: RadiationSource
   #  intensity: 0.3
   #  slope: 0.2
@@ -1167,6 +1633,32 @@
         Piercing: 0.48
         Heat: 0.48
         Cold: 0.8
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 560
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.17
+      Slash:
+        coefficient: 0.11
+      Piercing:
+        coefficient: 0.18
+      Heat:
+        coefficient: 0.3
+    brokenResistances:
+      Blunt:
+        coefficient: 0.7
+      Slash:
+        coefficient: 0.7
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.4
   - type: Item
@@ -1213,6 +1705,32 @@
         Piercing: 0.75
         Heat: 0.55
         Cold: 0.75
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 400
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.15
+      Piercing:
+        coefficient: 0.25
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.85
+      Slash:
+        coefficient: 0.85
+      Piercing:
+        coefficient: 0.85
+      Heat:
+        coefficient: 0.85
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.6
   - type: Item
@@ -1259,6 +1777,32 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 60
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.85
+      Slash:
+        coefficient: 0.85
+      Piercing:
+        coefficient: 0.85
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: ExplosionResistance
     damageCoefficient: 0.95
   - type: ClothingSpeedModifier
@@ -1302,6 +1846,36 @@
         Heat: 0.77
         Cold: 0.77
         Bloodloss: 0.77
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 215
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.25
+      Slash:
+        coefficient: 0.17
+      Piercing:
+        coefficient: 0.44
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.75
   - type: Item
@@ -1576,6 +2150,36 @@
         Heat: 0.85
         Cold: 0.85
         Bloodloss: 0.85
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 135
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.3
+      Slash:
+        coefficient: 0.25
+      Piercing:
+        coefficient: 0.55
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.85
   - type: Item
@@ -1796,6 +2400,36 @@
         Heat: 0.87
         Cold: 0.87
         Bloodloss: 0.87
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 110
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.3
+      Slash:
+        coefficient: 0.25
+      Piercing:
+        coefficient: 0.55
+      Heat:
+        coefficient: 0.4
+    brokenResistances:
+      Blunt:
+        coefficient: 0.9
+      Slash:
+        coefficient: 0.9
+      Piercing:
+        coefficient: 0.9
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.25
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.85
   - type: Item
@@ -1908,6 +2542,32 @@
         Piercing: 0.30
         Heat: 0.38
         Cold: 0.6
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 425
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.16
+      Slash:
+        coefficient: 0.13
+      Piercing:
+        coefficient: 0.14
+      Heat:
+        coefficient: 0.3
+    brokenResistances:
+      Blunt:
+        coefficient: 0.7
+      Slash:
+        coefficient: 0.7
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    breakageMultipliers:
+      Piercing: 0.8
+      Blunt: 1.1
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.4
   - type: ClothingSpeedModifier
@@ -1958,6 +2618,32 @@
         Piercing: 0.2
         Heat: 0.18
         Cold: 0.32
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 750
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.1
+      Slash:
+        coefficient: 0.1
+      Piercing:
+        coefficient: 0.1
+      Heat:
+        coefficient: 0.3
+    brokenResistances:
+      Blunt:
+        coefficient: 0.7
+      Slash:
+        coefficient: 0.7
+      Piercing:
+        coefficient: 0.7
+      Heat:
+        coefficient: 0.7
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.15
   - type: ClothingSpeedModifier
@@ -2018,6 +2704,32 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 75
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.75
+      Slash:
+        coefficient: 0.75
+      Piercing:
+        coefficient: 0.75
+      Heat:
+        coefficient: 0.85
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.95
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: ClothingSpeedModifier
@@ -2094,6 +2806,32 @@
         Piercing: 0.84
         Heat: 0.84
         Cold: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 75
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.75
+      Slash:
+        coefficient: 0.75
+      Piercing:
+        coefficient: 0.75
+      Heat:
+        coefficient: 0.85
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.95
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StealTarget # imperial medieval
     stealGroup: MedievalGetMedievalIronGloves # imperial medieval
 
@@ -2169,6 +2907,32 @@
         Piercing: 0.48
         Heat: 0.4
         Cold: 0.8
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 290
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.25
+      Slash:
+        coefficient: 0.18
+      Piercing:
+        coefficient: 0.2
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.8
+      Slash:
+        coefficient: 0.8
+      Piercing:
+        coefficient: 0.8
+      Heat:
+        coefficient: 0.8
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.5
   - type: ClothingSpeedModifier
@@ -2721,6 +3485,32 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 75
+    repairType: Smithing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.85
+      Slash:
+        coefficient: 0.85
+      Piercing:
+        coefficient: 0.85
+      Heat:
+        coefficient: 0.9
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: ExplosionResistance
     damageCoefficient: 0.95
   - type: ClothingSpeedModifier
@@ -2849,6 +3639,36 @@
         Piercing: 0.8
         Heat: 0.6
         Cold: 0.3
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 65
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.3
+      Slash:
+        coefficient: 0.4
+      Piercing:
+        coefficient: 0.3
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.8
   - type: Tag
@@ -2891,6 +3711,36 @@
         Piercing: 0.62
         Heat: 0.7
         Cold: 0.54
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 100
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.3
+      Slash:
+        coefficient: 0.2
+      Piercing:
+        coefficient: 0.4
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.3
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.7
   - type: Item
@@ -2936,6 +3786,32 @@
         Piercing: 0.43
         Heat: 0.5
         Cold: 0.7
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 180
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.2
+      Slash:
+        coefficient: 0.15
+      Piercing:
+        coefficient: 0.2
+      Heat:
+        coefficient: 0.5
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 1.2
+      Slash: 0.8
+      Heat: 1
   - type: StaminaResistance
     damageCoefficient: 0.4
   - type: ClothingSpeedModifier
@@ -3057,6 +3933,36 @@
         Piercing: 0.85
         Heat: 0.75
         Cold: 0.5
+  - type: MedievalArmorIntegrity
+    containerArmorHP: 100
+    repairType: Sewing
+    unbrokenResistances:
+      Blunt:
+        coefficient: 0.52
+      Slash:
+        coefficient: 0.6
+      Piercing:
+        coefficient: 0.65
+      Heat:
+        coefficient: 0.6
+    brokenResistances:
+      Blunt:
+        coefficient: 0.95
+      Slash:
+        coefficient: 0.95
+      Piercing:
+        coefficient: 0.95
+      Heat:
+        coefficient: 0.9
+    breakageMultipliers:
+      Piercing: 1
+      Blunt: 0.8
+      Slash: 1.3
+      Heat: 1
+    breakSound:
+      path: /Audio/Imperial/Medieval/Armor/integrity_break_leather.ogg
+      params:
+        variation: 0.2
   - type: StaminaResistance
     damageCoefficient: 0.9
   - type: Item
