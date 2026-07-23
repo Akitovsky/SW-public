@@ -1445,6 +1445,11 @@
   parent: BaseItem
   id: MedievalDoorKeyCheck
   components:
+  - type: Clothing
+    slots:
+    - idcard
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Imperial/Medieval/UniversalSecurity/keys.rsi
     layers:

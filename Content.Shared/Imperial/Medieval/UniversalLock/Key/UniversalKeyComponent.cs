@@ -16,10 +16,10 @@ public sealed partial class UniversalKeyComponent : Component
     public bool IsSuperKey = false;
 
     [DataField]
-    public int MaxToothValue = 100;
+    public int MaxToothValue = 8;
 
     [DataField]
-    public int MaxTeethCount = 100;
+    public int MaxTeethCount = 4;
 
     [DataField]
     public String Name = String.Empty;
