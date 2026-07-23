@@ -55,13 +55,13 @@
     repairType: Sewing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.3
+        coefficient: 0.15
       Slash:
-        coefficient: 0.25
+        coefficient: 0.125
       Piercing:
-        coefficient: 0.55
+        coefficient: 0.275
       Heat:
-        coefficient: 0.4
+        coefficient: 0.2
     brokenResistances:
       Blunt:
         coefficient: 0.9
@@ -127,11 +127,11 @@
     repairType: Sewing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.3
+        coefficient: 0.15
       Slash:
-        coefficient: 0.25
+        coefficient: 0.125
       Piercing:
-        coefficient: 0.55
+        coefficient: 0.275
       Heat:
         coefficient: 0.4
     brokenResistances:
@@ -202,13 +202,13 @@
     repairType: Smithing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.19
+        coefficient: 0.095
       Slash:
-        coefficient: 0.12
+        coefficient: 0.06
       Piercing:
-        coefficient: 0.19
+        coefficient: 0.095
       Heat:
-        coefficient: 0.6
+        coefficient: 0.3
     brokenResistances:
       Blunt:
         coefficient: 0.8
@@ -272,13 +272,13 @@
     repairType: Sewing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.25
+        coefficient: 0.125
       Slash:
-        coefficient: 0.17
+        coefficient: 0.085
       Piercing:
-        coefficient: 0.44
+        coefficient: 0.22
       Heat:
-        coefficient: 0.4
+        coefficient: 0.2
     brokenResistances:
       Blunt:
         coefficient: 0.9
