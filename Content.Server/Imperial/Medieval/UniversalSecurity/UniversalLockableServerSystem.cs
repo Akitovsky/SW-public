@@ -33,6 +33,9 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly LockSystem _lockSystem = default!;
     public static readonly byte[] SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
 
+    public static int Factionlength = 6;
+    public static int FactionmaxValue = 32;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -63,11 +66,9 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
             return;
 
-        int length = 16;
-        int maxValue = 32;
-        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, maxValue, length);
+        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, FactionmaxValue, Factionlength);
 
-        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, maxValue);
+        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, FactionmaxValue);
         _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
 
         if (TryComp<DoorBoltComponent>(lockableEntity, out var doorBoltComponent))
