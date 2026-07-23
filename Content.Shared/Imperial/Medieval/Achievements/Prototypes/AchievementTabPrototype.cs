@@ -17,4 +17,20 @@ public sealed partial class AchievementTabPrototype : IPrototype
 
     [DataField]
     public int Priority = 0;
+
+    [DataField]
+    public AchievementTabLayout Layout = AchievementTabLayout.Tree;
+}
+
+public enum AchievementTabLayout : byte
+{
+    /// <summary>
+    /// Layered left-to-right tree (Sugiyama)
+    /// </summary>
+    Tree = 0,
+
+    /// <summary>
+    /// Radial web
+    /// </summary>
+    Radial = 1,
 }

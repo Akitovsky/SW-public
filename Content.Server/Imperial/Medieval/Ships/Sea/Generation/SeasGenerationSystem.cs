@@ -5,6 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Imperial.Medieval.Ships.Sea;
 using Content.Shared.Parallax;
+using Content.Shared.Light.Components;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -73,6 +74,7 @@ public sealed class SeasGenerationSystem : EntitySystem
                 light.AmbientLightColor = Color.FromHex("#D8B059");
                 Dirty(mapUid, light);
 
+                EnsureComp<LightCycleComponent>(mapUid);
                 var moles = new float[Atmospherics.AdjustedNumberOfGases];
                 moles[(int) Gas.Oxygen] = 21.824779f;
                 moles[(int) Gas.Nitrogen] = 82.10312f;

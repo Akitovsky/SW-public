@@ -819,6 +819,8 @@
   name: LeatherWorkingPlace
   description: It produces armor and weapon using leather wood and steel.
   components:
+  - type: MedievalRepairStation
+    repairType: Sewing
   - type: Sprite
     sprite: Imperial/Medieval/Lathe/leather.rsi
     state: icon
@@ -952,6 +954,7 @@
     - MedievalOarCraft
     - SmokingPipeCraft
     - RollingPinCraft
+    - MedievalWoodenFloorRoofItem
 
 - type: entity
   parent: CP14BaseWorkbench
@@ -1042,6 +1045,10 @@
   - type: CP14Workbench
     craftSound: "/Audio/Imperial/Medieval/craft_iron.ogg"
     recipes:
+    - RecycleCrystalToEssenceVodka
+    - RecycleCrystalToEssenceFire
+    - RecycleCrystalToEssenceLight
+    - RecycleCrystalToEssenceEarth
     - MedievalManaBurnGrenade
     - MedievalGlowStone
     - MedievalCompactDefibrillator
@@ -1135,6 +1142,7 @@
   name: BlackSmith
   description: It produces armor and weapon using steel and wood.
   components:
+  - type: MedievalRepairStation
   - type: Sprite
     sprite: Imperial/Medieval/Lathe/wood_worker.rsi
     state: icon

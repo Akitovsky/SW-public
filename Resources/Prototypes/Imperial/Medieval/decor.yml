@@ -1263,13 +1263,13 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -0.5
-        Burn: -0.5
-        Airloss: -1.6
+        Brute: -0.1
+        Burn: -0.1
+        Airloss: -0.3
       types:
-        Poison: -0.2
-        Caustic: -0.1
-        Radiation: -0.2
+        Poison: -0.04
+        Caustic: -0.02
+        Radiation: -0.04
   - type: MedievalPlagueHealStrapped
 
 - type: entity
@@ -1294,13 +1294,13 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Brute: -2.6
-        Burn: -2.8
-        Airloss: -3
+        Brute: -0.52
+        Burn: -0.56
+        Airloss: -0.5
       types:
-        Poison: -1.8
-        Caustic: -0.5
-        Radiation: -0.8
+        Poison: -0.36
+        Caustic: -0.1
+        Radiation: -0.16
   - type: MedievalPlagueHealStrapped
     level: 2
 
@@ -1759,6 +1759,21 @@
         params:
           variation: 0.05
 
+- type: entity
+  parent: MedievalSignParent
+  id: MedievalSign10
+  name: sign
+  description: A sign
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Decor/medieval_decor.rsi
+    state: sign_10
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
 
 - type: entity
   id: MedievalDecorBags1
@@ -2367,6 +2382,7 @@
     West: /Textures/Imperial/Medieval/Tiles/Planet/Cave/double-stoneedge-D.png
   baseTurf: Space
   isSubfloor: true
+  weather: true
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 99910000
@@ -3361,7 +3377,7 @@
   - type: HealOnBuckle
     damage:
       groups:
-        Airloss: 5
+        Airloss: 4
   - type: Destructible
     thresholds:
     - trigger:
@@ -5402,6 +5418,12 @@
         - WallLayer
   - type: InteractionOutline
   - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.SailUiKey.Key:
+        type: SailMenuBoundUserInterface
+  - type: ActivatableUI
+    key: enum.SailUiKey.Key
   - type: Sail
     SailSize: 10
 

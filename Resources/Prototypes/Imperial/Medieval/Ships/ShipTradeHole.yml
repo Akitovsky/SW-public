@@ -17,7 +17,7 @@
     singleUser: true
     key: enum.ShipBuyTerminalUiKey.Key
   - type: ShipBuyTerminal
-    balance: 10000
+    balance: 0
     globalOffset: 1
     globalOffsetAngle: 0
     globalGridAngle: 0

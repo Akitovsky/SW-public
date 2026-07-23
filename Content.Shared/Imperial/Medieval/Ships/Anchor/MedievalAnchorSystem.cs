@@ -36,6 +36,9 @@ public sealed class MedievalAnchorSystem : EntitySystem
         var time = component.BaseUseTime - _skills.GetSkillLevel(playerEntity, "Strength") * component.StrengthUseTimeModifier;
         time = Math.Max(1.0f, time);
 
+        if (!component.Enabled)
+            time = time / 10;
+
         var doAfter = new DoAfterArgs(EntityManager,
             playerEntity,
             time,
@@ -54,7 +57,16 @@ public sealed class MedievalAnchorSystem : EntitySystem
             NeedHand = true,
         };
 
+        if (component.User is not null)
+            return;
+
         if (_doAfter.TryStartDoAfter(doAfter) && _net.IsServer)
+        {
             _audio.PlayPvs(MedievalShipSounds.AnchorUse, target);
+            component.User = playerEntity;
+            Dirty(target, component);
+        }
+        else
+            component.User = null;
     }
 }
