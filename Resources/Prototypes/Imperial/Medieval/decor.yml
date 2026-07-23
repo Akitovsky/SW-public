@@ -1759,6 +1759,21 @@
         params:
           variation: 0.05
 
+- type: entity
+  parent: MedievalSignParent
+  id: MedievalSign10
+  name: sign
+  description: A sign
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Decor/medieval_decor.rsi
+    state: sign_10
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
 
 - type: entity
   id: MedievalDecorBags1
@@ -2367,6 +2382,7 @@
     West: /Textures/Imperial/Medieval/Tiles/Planet/Cave/double-stoneedge-D.png
   baseTurf: Space
   isSubfloor: true
+  weather: true
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 99910000
