@@ -152,7 +152,7 @@ public sealed partial class SkillsSystem : SharedSkillsSystem
         if (!TryComp<SkillsComponent>(uid, out var comp))
             return;
 
-        if (comp.Levels["Intelligence"] >= 10)
+        if (comp.Levels["Intelligence"] >= 15)
             EnsureComp<MagicRuneKnowledgeComponent>(uid);
     }
 }
