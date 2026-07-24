@@ -372,18 +372,6 @@
     - id: MedievalSecretLootBoxSpawner
 
 - type: entity
-  name: Message
-  parent: MedievalPaper
-  id: MedievalJailPosxalka
-  description: Idk
-  components:
-    - type: Paper
-      content: >-
-       [italic]
-        Вам не повезло для вас ничего не осталось, простите.
-        С уважением: Ф.Б!
-
-- type: entity
   id: MedievalSecretLootBoxSpawner
   categories: [ HideSpawnMenu ]
   components:
@@ -406,6 +394,18 @@
     deleteSpawnerAfterSpawn: true
     table: !type:NestedSelector
       tableId: SecretLootBoxLootTable
+
+- type: entity
+  name: Message
+  parent: MedievalPaper
+  id: MedievalJailPosxalka
+  description: Idk
+  components:
+    - type: Paper
+      content: >-
+       [italic]
+        Вам не повезло для вас ничего не осталось, простите.
+        С уважением: Ф.Б!
 
 - type: entityTable
   id: SecretLootBoxLootTable
