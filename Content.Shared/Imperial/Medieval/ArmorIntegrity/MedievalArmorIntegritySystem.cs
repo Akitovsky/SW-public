@@ -28,24 +28,25 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ExaminedEvent>(OnArmorExamined);
-        SubscribeLocalEvent<InventoryComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
-        SubscribeLocalEvent<InventoryComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<DamageableComponent, DamageModifyEvent>(OnDamageModify,
+            after: [typeof(InventorySystem)]);
         SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnCharacterExamined);
     }
 
-    public override void Update(float frameTime)
+    private void OnDamageModify(Entity<DamageableComponent> ent, ref DamageModifyEvent args)
     {
-        base.Update(frameTime);
-
-        if (!_net.IsServer)
+        if (!_net.IsServer ||
+            !args.OriginalDamage.AnyPositive() ||
+            !TryComp<InventoryComponent>(ent, out var inventory))
             return;
 
-        var query = EntityQueryEnumerator<MedievalArmorIntegrityComponent>();
-        while (query.MoveNext(out var uid, out var armorIntegrity))
-        {
-            if (armorIntegrity.BreakPending)
-                FinalizePendingBreak((uid, armorIntegrity));
-        }
+        var equippedArmor = GetEquippedArmor(inventory, includeBroken: false);
+        if (equippedArmor.Count == 0)
+            return;
+
+        var dividedDamage = args.OriginalDamage / equippedArmor.Count;
+        foreach (var armor in equippedArmor)
+            DamageArmor(armor, dividedDamage, ent.Owner);
     }
 
     private void OnComponentInit(Entity<MedievalArmorIntegrityComponent> ent, ref ComponentInit args)
@@ -59,36 +60,6 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         SetContainerArmorHP(ent, ent.Comp.ContainerArmorHP);
         SetArmorResistances(ent, ent.Comp.IsBroken ? ent.Comp.BrokenResistances : ent.Comp.UnbrokenResistances);
         Dirty(ent);
-    }
-
-    private void OnBeforeDamageChanged(Entity<InventoryComponent> ent, ref BeforeDamageChangedEvent args)
-    {
-        if (!_net.IsServer || args.Cancelled || !args.Damage.AnyPositive())
-            return;
-
-        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: false);
-
-        if (equippedArmor.Count == 0)
-            return;
-
-        var dividedDamage = args.Damage / equippedArmor.Count;
-        foreach (var armor in equippedArmor)
-        {
-            DamageArmor(armor, dividedDamage);
-        }
-    }
-
-    private void OnDamageChanged(Entity<InventoryComponent> ent, ref DamageChangedEvent args)
-    {
-        if (!_net.IsServer || !args.DamageIncreased)
-            return;
-
-        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: true);
-        foreach (var armor in equippedArmor)
-        {
-            if (armor.Comp.BreakPending)
-                FinalizePendingBreak(armor, ent.Owner);
-        }
     }
 
     private void OnArmorExamined(Entity<MedievalArmorIntegrityComponent> ent, ref ExaminedEvent args)
@@ -185,7 +156,6 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
     public void SetCurrentArmorHP(Entity<MedievalArmorIntegrityComponent> ent, float value)
     {
-        ent.Comp.BreakPending = false;
         ent.Comp.MaxArmorHP = Math.Max(0f, ent.Comp.MaxArmorHP);
         ent.Comp.CurrentArmorHP = Math.Clamp(value, 0f, ent.Comp.MaxArmorHP);
         SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f);
@@ -197,8 +167,6 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         bool value,
         EntityUid? effectTarget = null)
     {
-        ent.Comp.BreakPending = false;
-
         if (ent.Comp.IsBroken == value)
             return;
 
@@ -216,7 +184,10 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         Dirty(ent);
     }
 
-    public void DamageArmor(Entity<MedievalArmorIntegrityComponent> ent, DamageSpecifier damage)
+    public void DamageArmor(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        DamageSpecifier damage,
+        EntityUid? effectTarget = null)
     {
         if (ent.Comp.IsBroken)
             return;
@@ -237,7 +208,7 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
             ent.Comp.CurrentArmorHP - armorDamage,
             0f,
             ent.Comp.MaxArmorHP);
-        ent.Comp.BreakPending = ent.Comp.CurrentArmorHP <= 0f;
+        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f, effectTarget);
         Dirty(ent);
     }
 
@@ -321,14 +292,6 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         return parent.IsValid() && HasComp<InventoryComponent>(parent)
             ? parent
             : ent.Owner;
-    }
-
-    private void FinalizePendingBreak(
-        Entity<MedievalArmorIntegrityComponent> ent,
-        EntityUid? effectTarget = null)
-    {
-        ent.Comp.BreakPending = false;
-        SetBroken(ent, ent.Comp.CurrentArmorHP <= 0f, effectTarget);
     }
 
     private static void CopyArmorResistances(

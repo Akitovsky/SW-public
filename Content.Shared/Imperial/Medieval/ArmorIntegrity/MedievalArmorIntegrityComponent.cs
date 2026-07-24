@@ -82,8 +82,6 @@ public sealed partial class MedievalArmorIntegrityComponent : Component
 
     [DataField, AutoNetworkedField]
     public float CurrentArmorHP = 100f;
-
-    public bool BreakPending;
 }
 
 [DataDefinition, Serializable, NetSerializable]
