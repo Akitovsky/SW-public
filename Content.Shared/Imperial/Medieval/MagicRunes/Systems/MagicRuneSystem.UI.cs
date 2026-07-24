@@ -90,7 +90,7 @@ public partial class MagicRuneSystem
             return;
 
         int index = _random.Next(0, _essences.Count);
-        int count = _random.Next(5, 10);
+        int count = _random.Next(8, 12);
         var essence = Spawn(_essences[index], Transform(user).Coordinates);
         _stacks.SetCount(essence, count);
 
