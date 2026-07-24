@@ -2,13 +2,13 @@ achievement-legion-becomerecruit-name = Команда синих
 achievement-legion-becomerecruit-desc = Начните свой славный (и, вероятно, короткий) путь.
 
 achievement-legion-capture1-name = Пушечное мясо в деле
-achievement-legion-capture1-desc = Захватите 1 контрольную точку, будучи простым рекрутом. Империя гордится тобой!
+achievement-legion-capture1-desc = Захватите 2 контрольные точки, будучи простым рекрутом. Империя гордится тобой!
 
 achievement-legion-becomesoldier-name = Теперь ты в армии
 achievement-legion-becomesoldier-desc = Получите звание легионера. Уже не срочник.
 
 achievement-legion-capture2-name = Имперский блицкриг
-achievement-legion-capture2-desc = Внимание, марш-бросок! Захватите 2 контрольные точки за ОДИН раунд в роли легионера.
+achievement-legion-capture2-desc = Внимание, марш-бросок! Захватите 3 контрольные точки за ОДИН раунд в роли легионера.
 
 achievement-legion-attackbase-name = Сунуть нос в логово врага
 achievement-legion-attackbase-desc = Атакуйте базу мятежников, играя за легионера. Главное теперь — вернутся домой.

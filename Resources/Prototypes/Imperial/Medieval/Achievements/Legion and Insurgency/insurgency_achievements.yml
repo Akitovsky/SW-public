@@ -37,7 +37,7 @@
     progressKey: insurgencyRecruitCapturePoint
     requiredJobs:
     - "MedievalInsurgencyRecruit"
-    requiredCount: 1
+    requiredCount: 2
 
 
 # ==========================================
@@ -82,7 +82,7 @@
     progressKey: insurgencyInsurgencyerCapturePointProgression
     requiredJobs:
     - "MedievalInsurgencyInsurgencyer"
-    requiredCount: 2
+    requiredCount: 3
 
 - type: achievement
   id: AchievementInsurgencyInsurgencyerVisitLegion

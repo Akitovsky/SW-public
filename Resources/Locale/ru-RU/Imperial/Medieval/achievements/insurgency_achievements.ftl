@@ -2,13 +2,13 @@ achievement-insurgency-becomefelag-name = Команда красных
 achievement-insurgency-becomefelag-desc = Начните свой славный (и, вероятно, короткий) путь.
 
 achievement-insurgency-capture1-name = Пушечное мясо в деле
-achievement-insurgency-capture1-desc = Захватите 1 контрольную точку, будучи простым фелагом. Свобода гордится тобой!
+achievement-insurgency-capture1-desc = Захватите 2 контрольные точки, будучи простым фелагом. Свобода гордится тобой!
 
 achievement-insurgency-becomerebel-name = Теперь ты в банде
 achievement-insurgency-becomerebel-desc = Получите звание бойца-мятежника. Уже не новобранец.
 
 achievement-insurgency-capture2-name = Партизанский блицкриг
-achievement-insurgency-capture2-desc = Внимание, марш-бросок! Захватите 2 контрольные точки за ОДИН раунд в роли мятежника.
+achievement-insurgency-capture2-desc = Внимание, марш-бросок! Захватите 3 контрольные точки за ОДИН раунд в роли мятежника.
 
 achievement-insurgency-attackbase-name = Сунуть нос в логово врага
 achievement-insurgency-attackbase-desc = Атакуйте базу легиона, играя за мятежника. Главное теперь — вернуться домой.

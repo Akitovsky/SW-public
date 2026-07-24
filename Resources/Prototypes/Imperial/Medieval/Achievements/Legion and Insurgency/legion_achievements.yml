@@ -37,7 +37,7 @@
     progressKey: legionRecruitCapturePoint
     requiredJobs:
     - "MedievalLegionRecruit"
-    requiredCount: 1
+    requiredCount: 2
 
 
 # ==========================================
@@ -83,7 +83,7 @@
     progressKey: legionLegionerCapturePointProgressiong
     requiredJobs:
     - "MedievalLegionLegioner"
-    requiredCount: 2
+    requiredCount: 3
 
 - type: achievement
   id: AchievementLegionLegionerVisiInsurgency
