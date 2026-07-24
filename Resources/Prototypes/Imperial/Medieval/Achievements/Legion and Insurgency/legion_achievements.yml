@@ -25,7 +25,7 @@
   priority: 10
   rarity: Common
   name: "Пушечное мясо в деле"
-  description: "Захватите 3 контрольные точки, будучи простым рекрутом. Империя гордится тобой!"
+  description: "Захватите 1 контрольную точку, будучи простым рекрутом. Империя гордится тобой!"
   icon:
     sprite: Imperial/Medieval/Clothing/Head/leg1.rsi
     state: icon
@@ -37,7 +37,7 @@
     progressKey: legionRecruitCapturePoint
     requiredJobs:
     - "MedievalLegionRecruit"
-    requiredCount: 3
+    requiredCount: 1
 
 
 # ==========================================
@@ -70,7 +70,7 @@
   priority: 11
   rarity: Common
   name: "Имперский блицкриг"
-  description: "Внимание, марш-бросок! Захватите 4 контрольные точки за ОДИН раунд в роли легионера."
+  description: "Внимание, марш-бросок! Захватите 2 контрольные точки за ОДИН раунд в роли легионера."
   icon:
     sprite: Imperial/Medieval/Decor/medieval_banner.rsi
     state: banner_blul
@@ -83,7 +83,7 @@
     progressKey: legionLegionerCapturePointProgressiong
     requiredJobs:
     - "MedievalLegionLegioner"
-    requiredCount: 4
+    requiredCount: 2
 
 - type: achievement
   id: AchievementLegionLegionerVisiInsurgency
@@ -246,7 +246,7 @@
   priority: 11
   rarity: Epic
   name: "Пришел, увидел, победил"
-  description: "Триумф! За ОДИН раунд в роли легата выполните всё: захватите 5 точек, уничтожьте обелиск и раздобудьте шлем ярла."
+  description: "Триумф! За ОДИН раунд в роли легата выполните всё: захватите 4 точки, уничтожьте обелиск и раздобудьте шлем ярла."
   icon: /Textures/Imperial/Medieval/Interface/faction-leader.png
   visibility: Visible
   roundOnly: true
@@ -262,7 +262,7 @@
       MedievalClothingHeadHelmetFox4: 1
   - !type:CapturePointCondition
     progressKey: legatWinnerCapturePointsProgression
-    requiredCount: 5
+    requiredCount: 4
     requiredJobs:
     - "MedievalLegionLegat"
   - !type:DestroyFactionObeliskCondition
