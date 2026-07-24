@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Imperial.Medieval.SoundOnInteract;
+namespace Content.Shared.Imperial.Medieval.SoundOnInteract;
 
 [RegisterComponent]
 public sealed partial class MedievalSoundOnInteractComponent : Component
@@ -10,4 +10,7 @@ public sealed partial class MedievalSoundOnInteractComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundPathSpecifier? OnPut = null;
+
+    [DataField]
+    public TimeSpan LastInteract = TimeSpan.Zero;
 }

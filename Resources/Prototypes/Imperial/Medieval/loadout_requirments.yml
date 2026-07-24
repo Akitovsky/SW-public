@@ -14,7 +14,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalTraveller
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: BardTimer4hours
@@ -32,7 +32,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalBard
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: BardTimer30hours
@@ -41,7 +41,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalBard
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: BumTimer4hours
@@ -59,7 +59,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalBum
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: BumTimer30hours
@@ -68,7 +68,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalBum
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: InnkeeperTimer4hours
@@ -86,7 +86,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalInnkeeper
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: InnkeeperTimer30hours
@@ -95,7 +95,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalInnkeeper
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: ChaplainTimer4hours
@@ -113,7 +113,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalChaplain
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: ChaplainTimer30hours
@@ -122,7 +122,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalChaplain
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: LegionAndInsurgencyTimer5hours
@@ -145,7 +145,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMedievalTraveller
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: LegionTimer4hours
@@ -154,7 +154,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Legion
-      time: 1440
+      time: 14400
 
 - type: loadoutEffectGroup
   id: LegionTimer10hours
@@ -163,7 +163,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Legion
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: LegionTimer30hours
@@ -172,7 +172,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Legion
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: InsurgencyTimer4hours
@@ -181,7 +181,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Insurgency
-      time: 1440
+      time: 14400
 
 - type: loadoutEffectGroup
   id: InsurgencyTimer10hours
@@ -190,7 +190,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Insurgency
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: InsurgencyTimer30hours
@@ -199,7 +199,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Insurgency
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: BandTimer10hours
@@ -208,7 +208,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Band
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: BandTimer30hours
@@ -217,7 +217,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Band
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: CollegiumTimer10hours
@@ -226,7 +226,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Collegium
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: CollegiumTimer30hours
@@ -235,7 +235,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Collegium
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: TribeTimer10hours
@@ -244,7 +244,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Tribe
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: TribeTimer30hours
@@ -253,7 +253,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Tribe
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: MercTimer10hours
@@ -262,7 +262,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Merc
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: CraftersTimer10hours
@@ -271,7 +271,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Crafters
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: MercTimer30hours
@@ -280,7 +280,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Merc
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: TradersTimer5hours
@@ -298,7 +298,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Traders
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: TradersTimer30hours
@@ -307,7 +307,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Traders
-      time: 10800
+      time: 108000
 
 - type: loadoutEffectGroup
   id: TradersTimer50hours
@@ -324,7 +324,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-      time: 3600
+      time: 36000
 
 - type: loadoutEffectGroup
   id: MedievalTimer4hours
