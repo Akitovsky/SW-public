@@ -3934,15 +3934,15 @@
         Heat: 0.75
         Cold: 0.5
   - type: MedievalArmorIntegrity
-    containerArmorHP: 100
+    containerArmorHP: 65
     repairType: Sewing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.26
+        coefficient: 0.36
       Slash:
-        coefficient: 0.3
+        coefficient: 0.4
       Piercing:
-        coefficient: 0.32
+        coefficient: 0.52
       Heat:
         coefficient: 0.3
     brokenResistances:
