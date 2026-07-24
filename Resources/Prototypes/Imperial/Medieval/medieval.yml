@@ -7407,7 +7407,7 @@
     sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
     state: MedievalLockT2
   - type: UniversalLock
-    length: 8
+    length: 5
     maxValue: 16
     timeToEject: 32
 
@@ -7419,7 +7419,7 @@
     sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
     state: MedievalLockT3
   - type: UniversalLock
-    length: 16
+    length: 6
     maxValue: 32
     timeToEject: 64
 

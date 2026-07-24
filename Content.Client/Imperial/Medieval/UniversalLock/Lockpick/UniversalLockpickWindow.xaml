@@ -3,7 +3,7 @@
                x:Class="Imperial.Medieval.UniversalLock.Lockpick.UniversalLockpickWindow"
                Title="{Loc 'UniversalLockpick-ui-setup-title'}"
                MinWidth="350"
-               MinHeight="500">
+               MinHeight="350">
 
     <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
 
