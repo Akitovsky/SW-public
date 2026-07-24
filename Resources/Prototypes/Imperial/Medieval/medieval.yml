@@ -372,18 +372,6 @@
     - id: MedievalSecretLootBoxSpawner
 
 - type: entity
-  name: Message
-  parent: MedievalPaper
-  id: MedievalJailPosxalka
-  description: Idk
-  components:
-    - type: Paper
-      content: >-
-       [italic]
-        Вам не повезло для вас ничего не осталось, простите.
-        С уважением: Ф.Б!
-
-- type: entity
   id: MedievalSecretLootBoxSpawner
   categories: [ HideSpawnMenu ]
   components:
@@ -406,6 +394,18 @@
     deleteSpawnerAfterSpawn: true
     table: !type:NestedSelector
       tableId: SecretLootBoxLootTable
+
+- type: entity
+  name: Message
+  parent: MedievalPaper
+  id: MedievalJailPosxalka
+  description: Idk
+  components:
+    - type: Paper
+      content: >-
+       [italic]
+        Вам не повезло для вас ничего не осталось, простите.
+        С уважением: Ф.Б!
 
 - type: entityTable
   id: SecretLootBoxLootTable
@@ -7407,7 +7407,7 @@
     sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
     state: MedievalLockT2
   - type: UniversalLock
-    length: 8
+    length: 5
     maxValue: 16
     timeToEject: 32
 
@@ -7419,7 +7419,7 @@
     sprite: Imperial/Medieval/UniversalSecurity/lockes.rsi
     state: MedievalLockT3
   - type: UniversalLock
-    length: 16
+    length: 6
     maxValue: 32
     timeToEject: 64
 
@@ -9018,6 +9018,7 @@
     snap:
       - Wall
   components:
+    - type: Occluder
     - type: MeleeSound
       soundGroups:
         Brute:

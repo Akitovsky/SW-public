@@ -1,4 +1,3 @@
-using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
@@ -13,10 +12,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Imperial.Medieval.Ships.Anchor;
-using Robust.Shared.Random;
 using Content.Shared.Imperial.LockDoor.Components;
 using Content.Server.Imperial.Medieval.UniversalLock;
-using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Content.Shared.Lock;
 using System.Text;
@@ -24,6 +21,7 @@ using System.Security.Cryptography;
 using Content.Shared.Imperial.Medieval.Skills;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using Content.Shared.Storage;
 
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
@@ -34,6 +32,9 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly UniversalLockServerSystem _universalLockSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     public static readonly byte[] SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
+
+    public static int Factionlength = 6;
+    public static int FactionmaxValue = 32;
 
     public override void Initialize()
     {
@@ -65,11 +66,9 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (!TryComp<UniversalLockComponent>(lockUid, out var lockComponent))
             return;
 
-        int length = 16;
-        int maxValue = 32;
-        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, maxValue, length);
+        int[] newCode = GenerateSecureDeterministicArray(accessId, SecretServerKeyBytes, FactionmaxValue, Factionlength);
 
-        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, maxValue);
+        _universalLockSystem.SetLockCodeFraction((lockUid, lockComponent), newCode, FactionmaxValue);
         _itemSlots.TryInsert(lockableEntity, slot, lockUid, null, true);
 
         if (TryComp<DoorBoltComponent>(lockableEntity, out var doorBoltComponent))
@@ -125,10 +124,14 @@ public sealed class UniversalLockableServerSystem : EntitySystem
 
         if (TryComp<UniversalKeyComponent>(args.Used, out var universalKeyComponent))
         {
-            if (!universalKeyComponent.IsSetuped)
-                return;
-
             OnUsedKey((args.Used, universalKeyComponent), lockableEntity, args.User);
+            args.Handled = true;
+            return;
+        }
+
+        if (TryComp<MedievalKeyStorageComponent>(args.Used, out var keyStorageComponent))
+        {
+            OnUsedKeyStorage((args.Used, keyStorageComponent), lockableEntity, args.User);
             args.Handled = true;
             return;
         }
@@ -232,20 +235,52 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         return TryComp<UniversalLockComponent>(lockUid, out var lockComp) && lockComp.IsLocked;
     }
 
-    private void OnUsedKey(Entity<UniversalKeyComponent> keyUsedEntity, Entity<UniversalLockableComponent> lockableEntity, EntityUid user)
+    private bool OnUsedKey(Entity<UniversalKeyComponent> keyUsedEntity, Entity<UniversalLockableComponent> lockableEntity, EntityUid user)
     {
         var keyComp = keyUsedEntity.Comp;
 
+        if (!keyComp.IsSetuped)
+            return false;
+
+        if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot) || slot.Item is not { } lockUid)
+            return false;
+
+        if (!TryComp<UniversalLockComponent>(lockUid, out var lockComp))
+            return false;
+
+        if (keyComp.IsSuperKey || keyComp.Code.SequenceEqual(lockComp.Code))
+        {
+            OnUsedKeySuccess((lockUid, lockComp), lockableEntity, slot, user);
+            return true;
+        }
+        else
+        {
+            OnUsedKeyFail();
+            return false;
+        }
+    }
+
+    private void OnUsedKeyStorage(Entity<MedievalKeyStorageComponent> keyStorageEntity, Entity<UniversalLockableComponent> lockableEntity, EntityUid user)
+    {
         if (!_itemSlots.TryGetSlot(lockableEntity, "lockSlot", out var slot) || slot.Item is not { } lockUid)
             return;
 
         if (!TryComp<UniversalLockComponent>(lockUid, out var lockComp))
             return;
 
-        if (keyComp.IsSuperKey || keyComp.Code.SequenceEqual(lockComp.Code))
-            OnUsedKeySuccess((lockUid, lockComp), lockableEntity, slot, user);
-        else
-            OnUsedKeyFail();
+        if (!TryComp<StorageComponent>(keyStorageEntity, out var storageComp))
+            return;
+
+        var keys = storageComp.Container.ContainedEntities;
+
+        foreach (var key in keys)
+        {
+            if (!TryComp<UniversalKeyComponent>(key, out var keyComp))
+                continue;
+
+            if (OnUsedKey((key, keyComp), lockableEntity, user))
+                return;
+        }
     }
 
     public void OnUsedKeySuccess(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEntity, ItemSlot slot, EntityUid? user)
