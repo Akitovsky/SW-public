@@ -11,9 +11,9 @@
   components:
   - type: ChargedAttack
     maxAttackTime: 3.0
-    staticModifier: 1.4
+    staticModifier: 2.5
     staminaDamage: 10
-    speedModifer: 0.65
+    speedModifer: 0.85
     effectProtoId: AttackEffect3s
   - type: MedievalWeaponSkillCategory
     skill: Spear
@@ -24,9 +24,9 @@
   components:
   - type: ChargedAttack
     maxAttackTime: 2.0
-    staticModifier: 0.55
+    staticModifier: 2
     staminaDamage: 7
-    speedModifer: 0.75
+    speedModifer: 0.9
     effectProtoId: AttackEffect2s
   - type: MedievalWeaponSkillCategory
     skill: OneHandedSlashLarge
@@ -37,9 +37,9 @@
   components:
   - type: ChargedAttack
     maxAttackTime: 1.5
-    staticModifier: 1
+    staticModifier: 3
     staminaDamage: 5
-    speedModifer: 0.8
+    speedModifer: 0.95
     effectProtoId: AttackEffect1dot5s
   - type: MedievalWeaponSkillCategory
     skill: OneHandedSlashSmall
@@ -50,9 +50,9 @@
   components:
   - type: ChargedAttack
     maxAttackTime: 3.0
-    staticModifier: 0.75
+    staticModifier: 2
     staminaDamage: 9
-    speedModifer: 0.7
+    speedModifer: 0.8
     effectProtoId: AttackEffect3s
   - type: MedievalWeaponSkillCategory
     skill: OneHandedBlunt
@@ -63,9 +63,10 @@
   components:
   - type: ChargedAttack
     maxAttackTime: 4.0
-    staticModifier: 1
+    staticModifier: 3
     staminaDamage: 16
-    speedModifer: 0.55
+    speedModifer: 0.4
     effectProtoId: AttackEffect4s
   - type: MedievalWeaponSkillCategory
     skill: TwoHanded
+

@@ -43,6 +43,9 @@ public sealed class SpawnWindWaveSystem : EntitySystem
 
             foreach (var shipComp in ships)
             {
+                if (shipComp.Comp.DisableWavesTime is { } disableTime && disableTime <= _timing.CurTime)
+                    continue;
+
                 var ship = shipComp.Owner;
                 if (!TryComp<MapGridComponent>(ship, out var grid))
                     continue;
@@ -59,9 +62,10 @@ public sealed class SpawnWindWaveSystem : EntitySystem
                     if (offsetLength <= 0f)
                         continue;
 
-                    var direction = waveOffset / offsetLength;
-                    var spawnDistance = shipRadius + offsetLength;
-                    if (!TryFindValidSpawnPosition(seaMapId, shipCenter.Position, direction, spawnDistance, out var waveCoords))
+                    var windDirection = waveOffset / offsetLength;
+                    var spawnDirection = -windDirection;
+                    var spawnDistance = shipRadius + _cfg.GetCVar(ShipsCCVars.WaveMinSpawnDistance) + offsetLength;
+                    if (!TryFindValidSpawnPosition(seaMapId, shipCenter.Position, spawnDirection, spawnDistance, out var waveCoords))
                         continue;
 
                     var wavePosition = waveCoords.Position;

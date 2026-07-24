@@ -2,20 +2,26 @@ using System;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Shared._RD.Weight.Systems;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.Administration.Ships;
 using Content.Shared.Imperial.Medieval.Ships.Islands;
+using Content.Shared.Imperial.Medieval.Ships;
 using Content.Shared.Imperial.Medieval.Ships.Sail;
 using Content.Shared.Imperial.Medieval.Ships.Sea;
 using Content.Shared.Imperial.Medieval.Ships.ShipDrowning;
+using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
+using Content.Shared.Maps;
+using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Imperial.Medieval.Ships.Sail;
@@ -28,15 +34,22 @@ public sealed class SailSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedSkillsSystem _skills = default!;
 
     private TimeSpan _nextCheckTime;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<SailComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<SailComponent, SailFoldEvent>(OnFold);
-        SubscribeLocalEvent<SailComponent, RotateEvent>(OnRotate);
-        SubscribeLocalEvent<SailComponent, ActivateInWorldEvent>(OnInteractHand);
+        SubscribeLocalEvent<SailComponent, SailFoldDoAfterEvent>(OnFold);
+        SubscribeLocalEvent<SailComponent, SailRotateDoAfterEvent>(OnRotate);
+        SubscribeLocalEvent<SailComponent, SailMenuActionMessage>(OnMenuAction);
         SubscribeLocalEvent<SailComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -52,13 +65,68 @@ public sealed class SailSystem : EntitySystem
             RemComp<ImplicitRoofComponent>(boat);
     }
 
-    private void OnInteractHand(EntityUid uid, SailComponent component, ActivateInWorldEvent args)
+    private void OnMenuAction(EntityUid uid, SailComponent component, SailMenuActionMessage args)
     {
-        if (args.Handled || !TryComp(args.User, out ActorComponent? actor))
+        var player = args.Actor;
+        if (!_actionBlocker.CanInteract(player, uid) ||
+            !_interaction.InRangeAndAccessible(player, uid))
             return;
 
-        args.Handled = true;
-        RaiseNetworkEvent(new OpenSailMenuEvent(args.User.Id, uid.Id), actor.PlayerSession);
+        switch (args.Action)
+        {
+            case SailMenuAction.RotateLeft:
+                TryRotate(player, uid, true);
+                break;
+            case SailMenuAction.ToggleFold:
+                TryFold(player, uid);
+                break;
+            case SailMenuAction.RotateRight:
+                TryRotate(player, uid, false);
+                break;
+        }
+    }
+
+    private void TryRotate(EntityUid player, EntityUid sail, bool rotateLeft)
+    {
+        var doAfterArgs = new DoAfterArgs(EntityManager, player, GetInteractionTime(player), new SailRotateDoAfterEvent(rotateLeft), sail, sail)
+        {
+            MovementThreshold = 0.5f,
+            BreakOnMove = true,
+            CancelDuplicate = true,
+            DistanceThreshold = 2,
+            BreakOnDamage = true,
+            RequireCanInteract = false,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true,
+            NeedHand = true,
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void TryFold(EntityUid player, EntityUid sail)
+    {
+        var doAfterArgs = new DoAfterArgs(EntityManager, player, GetInteractionTime(player), new SailFoldDoAfterEvent(), sail, sail)
+        {
+            MovementThreshold = 0.5f,
+            BreakOnMove = true,
+            CancelDuplicate = true,
+            DistanceThreshold = 2,
+            BreakOnDamage = true,
+            RequireCanInteract = false,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true,
+            NeedHand = true,
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private float GetInteractionTime(EntityUid player)
+    {
+        var time = 7f - _skills.GetSkillLevel(player, "Agility") * 0.15f -
+            _skills.GetSkillLevel(player, "Intelligence") * 0.15f;
+        return Math.Max(1f, time);
     }
 
     private void OnExamine(EntityUid uid, SailComponent component, ExaminedEvent args)
@@ -70,7 +138,7 @@ public sealed class SailSystem : EntitySystem
         args.PushMarkup(Loc.GetString("sail-examine-wind-strength", ("strength", FormatEfficiency(_cfg.GetCVar(ShipsCCVars.WindPower)))));
     }
 
-    private void OnRotate(EntityUid uid, SailComponent component, RotateEvent args)
+    private void OnRotate(EntityUid uid, SailComponent component, SailRotateDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -78,9 +146,10 @@ public sealed class SailSystem : EntitySystem
         if (!TryComp<TransformComponent>(uid, out var transformComponent))
             return;
 
-        var delta = args.Direction ? 45f : -45f;
+        var delta = args.RotateLeft ? 45f : -45f;
         var newAngle = transformComponent.LocalRotation + Angle.FromDegrees(delta);
         _transform.SetLocalRotation(uid, newAngle);
+        _audio.PlayPvs(_random.Pick(MedievalShipSounds.SailRotate), uid);
         args.Handled = true;
     }
 
@@ -127,13 +196,19 @@ public sealed class SailSystem : EntitySystem
             }
 
             var mapUid = _transform.GetMap(boat);
-            if (!mapUid.HasValue || !HasComp<SeaComponent>(mapUid.Value))
+            if (!mapUid.HasValue || !TryComp<SeaComponent>(mapUid.Value, out var sea))
             {
                 SetLastSailEfficencyMod(sailEntity, sailComponent, 0f);
                 continue;
             }
 
             EnsureComp<ShipDrowningComponent>(boat);
+
+            if (!sea.WindEnabledLocal)
+            {
+                SetLastSailEfficencyMod(sailEntity, sailComponent, 0f);
+                continue;
+            }
 
             if (!sailComponent.Push)
             {
@@ -156,8 +231,15 @@ public sealed class SailSystem : EntitySystem
             if (MathF.Abs(forceFactor) < 0.001f)
                 continue;
 
-            var weightDivider = GetWeightDivider(boat);
-            var impulseMagnitude = stormLevel * windPower * sailComponent.SailSize / weightDivider;
+            if (!TryComp<MapGridComponent>(boat, out var mapGrid))
+                continue;
+
+            var overloadCeil = ShipWeightHelper.GetMaxWeight(boat, mapGrid, _map, EntityManager, _cfg);
+            if (overloadCeil < 0)
+                continue;
+
+            var weight = _rdWeight.GetTotalOnGrid(boat);
+            var impulseMagnitude = GetImpulseMagnitude(stormLevel * windPower * sailComponent.SailSize, overloadCeil, weight);
             var localImpulse = Vector2.UnitY * (impulseMagnitude * forceFactor);
             var worldImpulse = shipDirection.RotateVec(localImpulse);
 
@@ -197,12 +279,6 @@ public sealed class SailSystem : EntitySystem
         return value.ToString("0.##");
     }
 
-    private float GetWeightDivider(EntityUid boat)
-    {
-        var weight = _rdWeight.GetTotal(boat);
-        return MathF.Max(1f, 1f + weight * 0.01f);
-    }
-
     private static float GetForceFactorByAngle(Angle sailDirection, Angle windDirection)
     {
         var diff = MathF.Abs((float) Angle.ShortestDistance(sailDirection, windDirection).Degrees);
@@ -224,7 +300,15 @@ public sealed class SailSystem : EntitySystem
         return _physics.GetMapLinearVelocity(boat).Length();
     }
 
-    private void OnFold(EntityUid uid, SailComponent component, SailFoldEvent args)
+    private static float GetImpulseMagnitude(float power, float overloadCeil, float weight)
+    {
+        if (weight <= 0f || weight <= overloadCeil)
+            return power;
+
+        return power * overloadCeil / weight;
+    }
+
+    private void OnFold(EntityUid uid, SailComponent component, SailFoldDoAfterEvent args)
     {
         if (args.Cancelled || TerminatingOrDeleted(uid))
             return;
@@ -232,6 +316,7 @@ public sealed class SailSystem : EntitySystem
         component.Folded = !component.Folded;
         Dirty(uid, component);
         UpdateSailVisuals(uid, component);
+        _audio.PlayPvs(component.Folded ? MedievalShipSounds.SailClose : MedievalShipSounds.SailOpen, uid);
         args.Handled = true;
     }
 

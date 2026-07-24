@@ -8,3 +8,17 @@
   thermalConductivity: 0.4
   heatCapacity: 700000
   badSmellMod: 0 # imperial medieval badsmell
+
+- type: tile
+  id: InvisibleFloorSpace
+  name: invisible-floor-space
+  sprite: /Textures/Imperial/Medieval/Tiles/Planet/water-fake2/full.png
+  baseTurf: Space
+  isSubfloor: true
+  weather: true
+  barestepSounds:
+    collection: FootstepWater
+  footstepSounds:
+    collection: FootstepWater
+  heatCapacity: 7000000
+  badSmellMod: 0 # imperial medieval badsmell

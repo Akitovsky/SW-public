@@ -31,7 +31,7 @@
       types:
         Blunt: 6
   - type: Item
-    size: Normal
+    size: Small
   - type: DisarmMalus
   - type: DamageOtherOnHit
     damage:

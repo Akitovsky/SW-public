@@ -8,6 +8,7 @@ using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Imperial.Medieval.MagicRunes.Components;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
@@ -48,8 +49,6 @@ public sealed partial class SkillsSystem : SharedSkillsSystem
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeNetworkEvent<SetSkillLevelMessage>(OnSetSkillLevel);
-
-        SubscribeLocalEvent<SkillsComponent, GetVerbsEvent<Verb>>(OnGetAltVerbs);
     }
     public bool TryGetSkill(EntityUid uid, string skillId, out int level)
     {
@@ -101,6 +100,8 @@ public sealed partial class SkillsSystem : SharedSkillsSystem
         }
 
         SetSkills(args.Mob, args.Profile.Skills);
+
+        TryGetMagicRuneComp(args.Mob);
     }
 
     private void OnSetSkillLevel(SetSkillLevelMessage msg, EntitySessionEventArgs args)
@@ -146,56 +147,12 @@ public sealed partial class SkillsSystem : SharedSkillsSystem
         UpdateVitality(frameTime);
     }
 
-    private void OnGetAltVerbs(Entity<SkillsComponent> entity, ref GetVerbsEvent<Verb> args)
+    private void TryGetMagicRuneComp(EntityUid uid)
     {
-        if (!args.CanInteract)
+        if (!TryComp<SkillsComponent>(uid, out var comp))
             return;
 
-        var user = args.User;
-
-        Verb verb = new()
-        {
-            Text = Loc.GetString("examine-skills-differance"),
-
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
-
-            Priority = 9,
-            Act = () =>
-            {
-                var message = new FormattedMessage();
-
-                foreach (var level in entity.Comp.Levels)
-                {
-                    message.AddText($"{Loc.GetString($"skill-{level.Key.ToLower()}-name")}: ");
-
-                    string hex = GetColorForDiff(0);
-                    if (TryComp<SkillsComponent>(user, out var examinerComp))
-                        hex = GetColorForDiff(entity.Comp.Levels[level.Key] - examinerComp.Levels[level.Key]);
-
-                    message.PushColor(Color.FromHex(hex));
-                    message.AddText($"{entity.Comp.Levels[level.Key]}");
-                    message.Pop();
-                    message.AddText($"\n");
-                }
-
-                _examineSystem.SendExamineTooltip(user, entity, message, false, false);
-            }
-        };
-
-        args.Verbs.Add(verb);
-    }
-
-    private string GetColorForDiff(int diff)
-    {
-        return diff switch
-        {
-            <= -10 => "#0dff00",
-            <= -7 => "#42c0fe",
-            <= -3 => "#7afcd5",
-            <= 2 => "#d1d1d1",
-            >= 10 => "#ff0000",
-            >= 7 => "#ff9100",
-            >= 3 => "#ffea00"
-        };
+        if (comp.Levels["Intelligence"] >= 15)
+            EnsureComp<MagicRuneKnowledgeComponent>(uid);
     }
 }

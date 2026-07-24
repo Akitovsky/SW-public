@@ -104,6 +104,45 @@
       path: /Audio/Imperial/Medieval/area_markers/general.ogg
 
 - type: entity
+  id: AreaMarkerDeepCaves
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-deep-caves
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/mineshaft.ogg
+
+- type: entity
+  id: AreaMarkerCaves
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-caves
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/mineshaft.ogg
+
+- type: entity
+  id: AreaMarkerSecret
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-secret
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/chapel.ogg
+
+- type: entity
   id: AreaMarkerPortLegion
   parent: BaseAreaMarker
   placement:
@@ -115,6 +154,84 @@
     areaName: area-map1-port-legion
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/legbels.ogg
+
+- type: entity
+  id: AreaMarkerPortLegionNorth
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-port-legion-north
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/legbels.ogg
+
+- type: entity
+  id: AreaMarkerPortLegionCastle
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-port-legion-castle
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/legbels.ogg
+
+- type: entity
+  id: AreaMarkerPortLegionGetto
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-port-legion-getto
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/general2.ogg
+
+- type: entity
+  id: AreaMarkerPortLegionUnder
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-port-legion-under
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/mineshaft.ogg
+
+- type: entity
+  id: AreaMarkerPortLegionBand
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-port-legion-band
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/general2.ogg
+
+- type: entity
+  id: AreaMarkerVoolcanIsland
+  parent: BaseAreaMarker
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: AreaMarker
+    areaName: area-map1-voolcan-island
+    audioPath:
+      path: /Audio/Imperial/Medieval/area_markers/general2.ogg
 
 - type: entity
   id: AreaMarkerCollegiumNearby
@@ -141,6 +258,8 @@
     areaName: area-map1-collegium
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/college.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerCollegium
 
 - type: entity
   id: AreaMarkerSwamp
@@ -206,6 +325,8 @@
     areaName: area-map1-cult
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/cult.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerCult
 
 - type: entity
   id: AreaMarkerMine
@@ -219,6 +340,8 @@
     areaName: area-map1-mine
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/mineshaft.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerMine
 
 - type: entity
   id: AreaMarkerChapel
@@ -310,6 +433,8 @@
     areaName: area-map1-band
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general2.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerBand
 
 - type: entity
   id: AreaMarkerMerc
@@ -323,6 +448,8 @@
     areaName: area-map1-merc
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerMerc
 
 - type: entity
   id: AreaMarkerVillage
@@ -336,6 +463,8 @@
     areaName: area-map1-village
     audioPath:
       path: /Audio/Imperial/Medieval/area_markers/general.ogg
+  - type: AchievementLocation #Imperial medieval achievement
+    locationId: AreaMarkerVillage
 
 - type: entity
   id: AreaMarkerTribe

@@ -5,6 +5,7 @@
   groups:
   - TravellerHead
   - TravellerJumpsuit
+  - MedievalArmorTraveller
   - MedievalNeck
   - MedievalBackpack
   #- SecurityOuterClothing
@@ -1095,6 +1096,7 @@
   - TravellerHead
   - MedievalNeck
   - TravellerJumpsuit
+  - MedievalArmorTraveller
   - MedievalBackpack
   #- SecurityOuterClothing
   - MedievalShoes
@@ -2307,6 +2309,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalJumpsuitLegion
+  - MedievalArmorLegionRecruit
 
 - type: loadoutGroup
   id: MedievalBeltLegion
@@ -2414,6 +2417,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalJumpsuitLegion
+  - MedievalArmorLegion
 
 # MEDIEVAL LEGION Gateman
 
@@ -2472,6 +2476,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalJumpsuitLegion
+  - MedievalArmorLegion
 
 # MEDIEVAL LEGION OPCION
 
@@ -2540,6 +2545,7 @@
   - MedievalBeltLegion
   - MedievalTrinkets3
   - MedievalGlovesWithIron
+  - MedievalArmorLegion
 
 # MEDIEVAL LEGION TRIBUN
 
@@ -2607,6 +2613,7 @@
   - MedievalBeltLegion
   - MedievalTrinkets
   - MedievalGlovesWithIron
+  - MedievalArmorLegion
 
 # MEDIEVAL LEGION LEGAT
 
@@ -2683,6 +2690,7 @@
   - MedievalTrinkets
   - MedievalGlovesWithIron
   - MedievalHelmetLegionLegat
+  - MedievalArmorLegion
 
 - type: loadoutGroup
   id: MedievalHelmetLegionLegat
@@ -3032,6 +3040,7 @@
   #- MedievalBeltInsurgency
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalArmorInsurgencyRecruit
 
 - type: loadoutGroup
   id: MedievalBeltInsurgency
@@ -3118,6 +3127,7 @@
   - MedievalBeltInsurgency
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalArmorInsurgency
 
 # MEDIEVAL Insurgency Gateman
 
@@ -3171,6 +3181,7 @@
   - MedievalBeltInsurgency
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalArmorInsurgency
 
 # MEDIEVAL Insurgency OPCION
 
@@ -3235,6 +3246,7 @@
   - MedievalBeltInsurgency
   - MedievalTrinkets3
   - MedievalGlovesWithIron
+  - MedievalArmorInsurgency
 
 # MEDIEVAL Insurgency TRIBUN
 
@@ -3297,6 +3309,7 @@
   - MedievalBeltInsurgency
   - MedievalTrinkets
   - MedievalGlovesWithIron
+  - MedievalArmorInsurgency
 
 # MEDIEVAL Insurgency LEGAT
 
@@ -3373,6 +3386,7 @@
   - MedievalBeltInsurgency
   - MedievalTrinkets
   - MedievalGlovesWithIron
+  - MedievalArmorInsurgency
 
 # MEDIEVAL InsurgencyMAG
 
@@ -4892,7 +4906,7 @@
   - MedievalMotleyHat
   - MedievalWreath
   - MedievalGrayHat
-  - MedievalFeatherHat
+  #- MedievalFeatherHat
   - MedievalWanderHat
   - MedievalGreenHat
   - MedievalTraderLegionHat
@@ -4909,7 +4923,7 @@
   - MedievalMotleyHat
   - MedievalWreath
   - MedievalGrayHat
-  - MedievalFeatherHat
+  #- MedievalFeatherHat
   - MedievalWanderHat
   - MedievalGreenHat
   - MedievalTraderFoxHat
