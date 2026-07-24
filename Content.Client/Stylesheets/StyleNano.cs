@@ -105,7 +105,7 @@ namespace Content.Client.Stylesheets
         public static readonly Color DisabledFore = Color.FromHex("#6B5D57"); // Серо-коричневый, замша
 
         // Основные кнопки (из коры/старого дерева)
-        public static readonly Color ButtonColorDefault = Color.FromHex("#41332F"); // Ваш светлый
+        public static readonly Color ButtonColorDefault = Color.FromHex("#4E3F3A"); // Ваш светлый
         public static readonly Color ButtonColorDefaultRed = Color.FromHex("#B14A3C"); // Терракотовый (опасное действие)
         public static readonly Color ButtonColorHovered = Color.FromHex("#5A4A44"); // Высветленная кора
         public static readonly Color ButtonColorHoveredRed = Color.FromHex("#C96B5D"); // Светлая терракота
@@ -123,7 +123,7 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorGoodHovered = Color.FromHex("#577A4A"); // Лесной зелёный
         public static readonly Color ButtonColorGoodDisabled = Color.FromHex("#2B3626"); // Глухой тёмный мох
         // Imperial Pass Begin
-        public static readonly Color ButtonColorDefaultPass = Color.FromHex("#41332F");
+        public static readonly Color ButtonColorDefaultPass = Color.FromHex("#4E3F3A");
         public static readonly Color ButtonColorHoveredPass = Color.FromHex("#575b7f");
         public static readonly Color ButtonColorPressedPass = Color.FromHex("#3e6c45");
         // Imperial Pass End

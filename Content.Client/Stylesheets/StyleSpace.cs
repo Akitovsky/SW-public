@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets
     {
         public static readonly Color SpaceRed = Color.FromHex("#8B4A3D"); // Тёмный махагон вместо ярко-красного
 
-        public static readonly Color ButtonColorDefault = Color.FromHex("#41332F"); // Светлое дерево (ваш любимый)
+        public static readonly Color ButtonColorDefault = Color.FromHex("#4E3F3A"); // Светлое дерево (ваш любимый)
         public static readonly Color ButtonColorHovered = Color.FromHex("#5A4A44"); // Высветленная кора
         public static readonly Color ButtonColorPressed = Color.FromHex("#577A4A"); // Лесной зелёный
         public static readonly Color ButtonColorDisabled = Color.FromHex("#3A2E29"); // Затенённое дерево
