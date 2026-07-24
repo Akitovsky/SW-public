@@ -32,13 +32,13 @@
     repairType: Sewing
     unbrokenResistances:
       Blunt:
-        coefficient: 0.3
+        coefficient: 0.46
       Slash:
-        coefficient: 0.3
+        coefficient: 0.46
       Piercing:
-        coefficient: 0.35
+        coefficient: 0.65
       Heat:
-        coefficient: 0.35
+        coefficient: 0.55
     brokenResistances:
       Blunt:
         coefficient: 0.9
