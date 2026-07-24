@@ -28,17 +28,19 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ExaminedEvent>(OnArmorExamined);
-        SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify,
+        SubscribeLocalEvent<DamageableComponent, DamageModifyEvent>(OnDamageModify,
             after: [typeof(InventorySystem)]);
         SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnCharacterExamined);
     }
 
-    private void OnDamageModify(Entity<InventoryComponent> ent, ref DamageModifyEvent args)
+    private void OnDamageModify(Entity<DamageableComponent> ent, ref DamageModifyEvent args)
     {
-        if (!_net.IsServer || !args.OriginalDamage.AnyPositive())
+        if (!_net.IsServer ||
+            !args.OriginalDamage.AnyPositive() ||
+            !TryComp<InventoryComponent>(ent, out var inventory))
             return;
 
-        var equippedArmor = GetEquippedArmor(ent.Comp, includeBroken: false);
+        var equippedArmor = GetEquippedArmor(inventory, includeBroken: false);
         if (equippedArmor.Count == 0)
             return;
 
