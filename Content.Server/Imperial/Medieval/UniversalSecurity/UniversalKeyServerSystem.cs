@@ -29,7 +29,9 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalKeyComponent, InteractUsingEvent>(OnKnifeUsingOnKey);
         SubscribeLocalEvent<UniversalKeyComponent, UniversalKeySetCodeMessage>(OnSetCodeReceived);
         SubscribeLocalEvent<UniversalLockComponent, InteractUsingEvent>(OnKeyUsedOnLock);
+        SubscribeLocalEvent<UniversalKeyComponent, AfterInteractUsingEvent>(OnKeyUsedOnKey);
         SubscribeLocalEvent<UniversalLockComponent, UniversalKeySetupDoAfterEvent>(OnKeySetupDoAfterEvent);
+        SubscribeLocalEvent<UniversalKeyComponent, UniversalKeySetupDoAfterEvent>(OnKeySetupDoAfterEvent2);
         SubscribeLocalEvent<UniversalKeyComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -42,16 +44,14 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         if (string.IsNullOrEmpty(accessId))
             return;
 
-        int length = 16;
-        int maxValue = 32;
         int[] newCode = UniversalLockableServerSystem.GenerateSecureDeterministicArray(
             accessId,
             UniversalLockableServerSystem.SecretServerKeyBytes,
-            maxValue,
-            length
+            UniversalLockableServerSystem.FactionmaxValue,
+            UniversalLockableServerSystem.Factionlength
         );
 
-        SetupKeyFraction(keyEntity, newCode, maxValue);
+        SetupKeyFraction(keyEntity, newCode, UniversalLockableServerSystem.FactionmaxValue);
     }
 
     private void OnKeyUsedOnLock(Entity<UniversalLockComponent> lockEntity, ref InteractUsingEvent args)
@@ -66,6 +66,34 @@ public sealed class UniversalKeyServerSystem : EntitySystem
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), lockEntity, lockEntity, args.Used)
+        {
+            BreakOnMove = true,
+            DistanceThreshold = 2.0f,
+            BreakOnDamage = true,
+            NeedHand = true,
+            BlockDuplicate = true,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true
+        };
+
+        if (_doAfterSystem.TryStartDoAfter(doAfterArgs))
+        {
+            args.Handled = true;
+        }
+    }
+
+    private void OnKeyUsedOnKey(Entity<UniversalKeyComponent> keyEntity, ref AfterInteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<UniversalKeyComponent>(args.Used, out var universalKeyComponent))
+            return;
+
+        if (universalKeyComponent.IsSetuped || !keyEntity.Comp.IsSetuped)
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, universalKeyComponent.DoAfterSetupTime, new UniversalKeySetupDoAfterEvent(), keyEntity, keyEntity, args.Used)
         {
             BreakOnMove = true,
             DistanceThreshold = 2.0f,
@@ -97,6 +125,23 @@ public sealed class UniversalKeyServerSystem : EntitySystem
         universalKeyComponent.Name = lockEntity.Comp.Name;
 
         SetupKey((used, universalKeyComponent), lockEntity.Comp.Code, lockEntity.Comp.MaxValue);
+    }
+
+    private void OnKeySetupDoAfterEvent2(Entity<UniversalKeyComponent> targetKeyEntity, ref UniversalKeySetupDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Used is not { } used)
+            return;
+
+        if (!TryComp<UniversalKeyComponent>(used, out var universalKeyComponent))
+            return;
+
+        if (universalKeyComponent.IsSetuped || !targetKeyEntity.Comp.IsSetuped)
+            return;
+
+        args.Handled = true;
+        universalKeyComponent.Name = targetKeyEntity.Comp.Name;
+
+        SetupKey((used, universalKeyComponent), targetKeyEntity.Comp.Code, targetKeyEntity.Comp.MaxToothValue);
     }
 
     private void OnKnifeUsingOnKey(Entity<UniversalKeyComponent> keyEntity, ref InteractUsingEvent args)
