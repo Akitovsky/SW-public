@@ -2841,7 +2841,7 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 10
+          damage: 25
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
@@ -4478,6 +4478,7 @@
   itemDrop: FloorTileItemWoodLarge
   heatCapacity: 99910000
   badSmellMod: 0.75
+  weather: true
 
 - type: tile
   id: MedievalFloorWood2
@@ -4499,6 +4500,7 @@
   itemDrop: FloorTileItemWoodLarge
   heatCapacity: 99910000
   badSmellMod: 0.75
+  weather: true
 
 - type: tile
   id: MedievalFloorWood3
@@ -4520,6 +4522,7 @@
   itemDrop: FloorTileItemWoodLarge
   heatCapacity: 99910000
   badSmellMod: 0.75
+  weather: true
 
 - type: soundCollection
   id: FootstepMedievalStone
@@ -4542,6 +4545,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4561,6 +4565,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4580,6 +4585,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4599,6 +4605,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4618,6 +4625,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4637,6 +4645,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4656,6 +4665,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4675,6 +4685,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4694,6 +4705,7 @@
   - 1.0
   - 1.0
   baseTurf: FloorCave
+  weather: true
   isSubfloor: false
   ##deconstructTools: [ Prying ]
   footstepSounds:
@@ -4714,6 +4726,7 @@
   - 1.0
   baseTurf: FloorCave
   isSubfloor: false
+  weather: true
   ##deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepMedievalStone
@@ -4733,6 +4746,7 @@
   - 1.0
   baseTurf: FloorCave
   isSubfloor: false
+  weather: true
   ##deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepMedievalStone
