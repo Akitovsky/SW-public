@@ -46,12 +46,19 @@
     base: web_
 
 - type: entity
+  id: SpiderWebBlockVision
+  parent: SpiderWeb
+  name: spider web
+  description: It's stringy and sticky.
+  components:
+  - type: Occluder
+
+- type: entity
   id: SpiderWeb
   parent: SpiderWebBase
   name: spider web
   description: It's stringy and sticky.
   components:
-  - type: Occluder
   - type: Sprite
     color: "#ffffffdd"
   - type: Fixtures
