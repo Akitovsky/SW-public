@@ -468,9 +468,9 @@
   - type: Sprite
     layers:
     - state: tail
-      #color: red
+      color: red
     - state: rod
-      #color: brown
+      color: brown
     - state: tip
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -479,6 +479,15 @@
     damage:
       types:
         Piercing: 23
+  - type: MedievalSoundOnInteract
+    onPick:
+      path: /Audio/Imperial/Medieval/Items/Arrows/arrow_pickup1.ogg
+      params:
+        variation: 0.2
+    onPut:
+      path: /Audio/Imperial/Medieval/Items/Arrows/arrow_put1.ogg
+      params:
+        variation: 0.2
 
 - type: entity
   parent: BaseArrow

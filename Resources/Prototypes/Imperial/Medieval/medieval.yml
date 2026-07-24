@@ -6114,7 +6114,7 @@
         enum.MedievalMapUIKey.Key:
           type: MedievalMapBoundUserInterface
     - type: MedievalMap
-      mapTexturePath: /Textures/Imperial/Medieval/Misc/map_tabletop/tabletop.png
+      mapTexturePath: /Textures/Imperial/Medieval/Misc/map_tabletop/tabletopRU.png
 
 - type: entity
   parent: BaseBoardTabletop
@@ -9018,7 +9018,7 @@
     snap:
       - Wall
   components:
-    - type: Occluder
+    #- type: Occluder
     - type: MeleeSound
       soundGroups:
         Brute:
