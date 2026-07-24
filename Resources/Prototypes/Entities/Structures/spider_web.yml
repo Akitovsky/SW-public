@@ -51,6 +51,7 @@
   name: spider web
   description: It's stringy and sticky.
   components:
+  - type: Occluder
   - type: Sprite
     color: "#ffffffdd"
   - type: Fixtures

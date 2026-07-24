@@ -7,8 +7,8 @@ public sealed partial class MedievalRepairStationComponent : Component
     public MedievalArmorRepairType RepairType = MedievalArmorRepairType.Smithing;
 
     [DataField]
-    public float StationMaxArmorRemovalModifier = 1f;
+    public float StationMaxArmorRemovalModifier = 0.5f;
 
     [DataField]
-    public float RepairDelayModifier = 1f;
+    public float RepairDelayModifier = 0.5f;
 }

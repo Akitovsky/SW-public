@@ -9018,6 +9018,7 @@
     snap:
       - Wall
   components:
+    - type: Occluder
     - type: MeleeSound
       soundGroups:
         Brute:
