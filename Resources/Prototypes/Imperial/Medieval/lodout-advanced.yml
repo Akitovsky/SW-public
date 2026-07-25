@@ -289,3 +289,37 @@
     proto: BandTimer30hours
   equipment:
     outerClothing: MedievalClothingOuterArmorChainMailLight
+
+
+############ Vilage
+
+- type: loadoutGroup
+  id: MedievalArmorVilage
+  name: loadout-group-armor-mdv
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - MedievalClothingOuterArmorGambesonVilage
+  - MedievalClothingOuterArmorStuddedVilage
+  - MedievalClothingOuterArmorChainMailLightVilage
+
+- type: loadout
+  id: MedievalClothingOuterArmorGambesonVilage
+  equipment:
+    outerClothing: MedievalClothingOuterArmorGambeson
+
+- type: loadout
+  id: MedievalClothingOuterArmorStuddedVilage
+  #effects:
+  #- !type:GroupLoadoutEffect
+  #  proto: BandTimer10hours
+  equipment:
+    outerClothing: MedievalClothingOuterArmorStudded
+
+- type: loadout
+  id: MedievalClothingOuterArmorChainMailLightVilage
+  #effects:
+  #- !type:GroupLoadoutEffect
+  #  proto: BandTimer30hours
+  equipment:
+    outerClothing: MedievalClothingOuterArmorChainMailLight
