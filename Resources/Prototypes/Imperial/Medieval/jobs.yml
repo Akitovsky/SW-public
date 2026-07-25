@@ -4773,6 +4773,8 @@
   #- MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalTraderLock
+  - MedievalTraderKey
 
 - type: loadoutGroup
   id: TraderJumpsuit
@@ -4893,6 +4895,8 @@
   #- MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalTraderLock
+  - MedievalTraderKey
 
 - type: loadoutGroup
   id: SouthTraderHead

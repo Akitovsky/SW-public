@@ -6753,3 +6753,5 @@ ent-MedievalDecorMediumRock12 = валун
     .desc = "Камень есть – ума  не  надо."
     .suffix = { "Средневековье, декор" }
 loadout-group-armor-mdv = Броня
+loadout-group-lock-mdv = Замки
+loadout-group-key-mdv = Ключ

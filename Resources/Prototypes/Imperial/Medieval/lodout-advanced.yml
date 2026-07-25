@@ -148,3 +148,55 @@
     proto: InsurgencyTimer30hours
   equipment:
     outerClothing: MedievalClothingOuterArmorIronCuirassLight
+
+################ TRADER
+- type: loadoutGroup
+  id: MedievalTraderLock
+  name: loadout-group-lock-mdv
+  minLimit: 1
+  maxLimit: 2
+  loadouts:
+  - MedievalDoorLockT1
+  - MedievalDoorLockT2
+  - MedievalDoorLockT3
+
+- type: loadoutGroup
+  id: MedievalTraderKey
+  name: loadout-group-key-mdv
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - MedievalDoorKeyCheck
+
+- type: loadout
+  id: MedievalDoorKeyCheck
+  storage:
+    back:
+    - MedievalDoorKeyCheck
+
+- type: loadout
+  id: MedievalDoorLockT1
+  #effects:
+  #- !type:GroupLoadoutEffect
+  #  proto: InsurgencyTimer30hours
+  storage:
+    back:
+    - MedievalDoorLockT1
+
+- type: loadout
+  id: MedievalDoorLockT2
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: TradersTimer10hours
+  storage:
+    back:
+    - MedievalDoorLockT2
+
+- type: loadout
+  id: MedievalDoorLockT3
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: TradersTimer30hours
+  storage:
+    back:
+    - MedievalDoorLockT3
