@@ -2203,20 +2203,24 @@
       storagebase: !type:Container
   - type: StorageFill
     contents:
+      - id: MedievalFalshionRusty
+        prob: 0.13
+      - id: MedievalMaceRusty
+        prob: 0.13
+      - id: MedievalSpearRusty
+        prob: 0.13
+      - id: MedievalSaberRusty
+        prob: 0.13
       - id: MedievalDaggerT3
-        prob: 0.2
+        prob: 0.13
       - id: MedievalWoodenSword
-        prob: 0.2
-      - id: MedievalMaceT3HeavyBone
-        prob: 0.2
+        prob: 0.13
       - id: BaseBallBat
-        prob: 0.2
+        prob: 0.13
       - id: MedievalHatchet
-        prob: 0.2
+        prob: 0.13
       - id: KitchenKnife
-        prob: 0.2
-      - id: MedievalShortSword
-        prob: 0.2
+        prob: 0.13
 
 
 - type: entity
