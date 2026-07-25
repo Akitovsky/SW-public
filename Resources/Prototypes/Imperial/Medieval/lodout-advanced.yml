@@ -244,7 +244,7 @@
   id: MedievalClothingOuterArmorStuddedMerc
   effects:
   - !type:GroupLoadoutEffect
-    proto: MercTimer4hours
+    proto: MercTimer10hours
   equipment:
     outerClothing: MedievalClothingOuterArmorStudded
 
@@ -252,6 +252,40 @@
   id: MedievalClothingOuterArmorChainMailLightMerc
   effects:
   - !type:GroupLoadoutEffect
-    proto: MercTimer10hours
+    proto: MercTimer30hours
+  equipment:
+    outerClothing: MedievalClothingOuterArmorChainMailLight
+
+
+############ Bandit
+
+- type: loadoutGroup
+  id: MedievalArmorBand
+  name: loadout-group-armor-mdv
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - MedievalClothingOuterArmorGambesonBand
+  - MedievalClothingOuterArmorStuddedBand
+  - MedievalClothingOuterArmorChainMailLightBand
+
+- type: loadout
+  id: MedievalClothingOuterArmorGambesonBand
+  equipment:
+    outerClothing: MedievalClothingOuterArmorGambeson
+
+- type: loadout
+  id: MedievalClothingOuterArmorStuddedBand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: BandTimer10hours
+  equipment:
+    outerClothing: MedievalClothingOuterArmorStudded
+
+- type: loadout
+  id: MedievalClothingOuterArmorChainMailLightBand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: BandTimer30hours
   equipment:
     outerClothing: MedievalClothingOuterArmorChainMailLight

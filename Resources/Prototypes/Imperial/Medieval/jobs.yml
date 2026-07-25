@@ -3627,6 +3627,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalArmorBand
 
 # MEDIEVAL BANDIT REGULAR
 
@@ -3691,6 +3692,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalArmorBand
 
 # MEDIEVAL BANDIT VETERAN
 
@@ -3756,6 +3758,7 @@
   - MedievalBelt
   - MedievalTrinkets3
   - MedievalGlovesWithIron
+  - MedievalArmorBand
 
 # MEDIEVAL BANDIT LEADER
 
@@ -3828,6 +3831,7 @@
   - MedievalBelt
   - MedievalTrinkets3
   - MedievalGlovesWithIron
+  - MedievalArmorBand
 
 # MEDIEVAL BANDIT KAYOT RECRUIT
 

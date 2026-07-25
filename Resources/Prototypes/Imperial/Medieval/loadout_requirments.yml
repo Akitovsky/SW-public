@@ -202,6 +202,15 @@
       time: 108000
 
 - type: loadoutEffectGroup
+  id: BandTimer4hours
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Band
+      time: 14400
+
+- type: loadoutEffectGroup
   id: BandTimer10hours
   effects:
   - !type:JobRequirementLoadoutEffect
