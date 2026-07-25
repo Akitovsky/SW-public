@@ -247,3 +247,4 @@
     distance: 4
   - type: MedievalMeleeResource
     resourceWaste: 0
+  - type: Werewolf
