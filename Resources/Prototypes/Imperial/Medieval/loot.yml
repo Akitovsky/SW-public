@@ -792,6 +792,31 @@
     lifetime: 600
   #- type: SpawnOnDespawn
   #  prototype: MedievalChestWithLoot2
+  - type: UniversalLockable
+    isRandomLock: MedievalDoorLockT1
+    chanceOfLockSpawn: 0.25
+  - type: ResistLocker
+    resistTime: 60
+  - type: Lock
+    locked: false
+    showLockVerbs: false
+    showExamine: false
+    lockOnClick: false
+    unlockOnClick: false
+    useAccess: false
+    unlockingSound: null
+    lockingSound: null
+    breakOnAccessBreaker: false
+  - type: ItemSlots
+    slots:
+      lockSlot:
+        name: Lock
+        ejectOnBreak: true
+        insertSound: null
+        ejectSound: /Audio/Effects/unbuckle.ogg
+        whitelist:
+          components:
+          - UniversalLock
   - type: StorageFill
     contents:
       - id: MedievalClothingUniformJumpsuitShitCloth24
@@ -1292,6 +1317,31 @@
     lifetime: 600
   #- type: SpawnOnDespawn
   #  prototype: MedievalChestWithLoot3
+  - type: UniversalLockable
+    isRandomLock: MedievalDoorLockT1
+    chanceOfLockSpawn: 0.5
+  - type: ResistLocker
+    resistTime: 60
+  - type: Lock
+    locked: false
+    showLockVerbs: false
+    showExamine: false
+    lockOnClick: false
+    unlockOnClick: false
+    useAccess: false
+    unlockingSound: null
+    lockingSound: null
+    breakOnAccessBreaker: false
+  - type: ItemSlots
+    slots:
+      lockSlot:
+        name: Lock
+        ejectOnBreak: true
+        insertSound: null
+        ejectSound: /Audio/Effects/unbuckle.ogg
+        whitelist:
+          components:
+          - UniversalLock
   - type: StorageFill
     contents:
       - id: MedievalClothingUniformJumpsuitShitCloth24

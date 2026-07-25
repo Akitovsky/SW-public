@@ -70,6 +70,14 @@ public sealed partial class UniversalLockpickWindow : DefaultWindow
                     color = Color.FromHex("#003cd570");
                     arrowText = "▼▼";
                     break;
+                case 100:
+                    color = Color.FromHex("#d37e00a4");
+                    arrowText = "?";
+                    break;
+                case 200:
+                    color = Color.FromHex("#003cd570");
+                    arrowText = "??";
+                    break;
                 case 0:
                 default:
                     color = Color.FromHex("#ffffff00");

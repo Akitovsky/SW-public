@@ -7,11 +7,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Imperial.Medieval.UniversalSecurity;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class UniversalLockComponent : Component
 {
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool IsLocked = false;
 
     [DataField]

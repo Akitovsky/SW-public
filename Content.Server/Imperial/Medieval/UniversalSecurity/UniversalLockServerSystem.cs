@@ -65,14 +65,18 @@ public sealed class UniversalLockServerSystem : EntitySystem
         lockEntity.Comp.MaxValue = maxValue;
 
         _audioSystem.PlayPvs(lockEntity.Comp.LockSetupSound, lockEntity);
+
+        Dirty(lockEntity);
     }
 
-    public void SetLockCodeFraction(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
+    public void SetLockCodeQuite(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
     {
         lockEntity.Comp.Code = code;
         lockEntity.Comp.IsSetuped = true;
         lockEntity.Comp.Name = string.Empty;
         lockEntity.Comp.Length = code.Length;
         lockEntity.Comp.MaxValue = maxValue;
+
+        Dirty(lockEntity);
     }
 }
