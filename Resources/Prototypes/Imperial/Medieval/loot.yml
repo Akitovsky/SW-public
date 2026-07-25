@@ -762,6 +762,14 @@
         prob: 0.15
       - id: MedievalRevent10
         prob: 0.045
+      - id: MedievalFalshionRusty
+        prob: 0.045
+      - id: MedievalMaceRusty
+        prob: 0.045
+      - id: MedievalSpearRusty
+        prob: 0.045
+      - id: MedievalSaberRusty
+        prob: 0.045
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -1287,6 +1295,14 @@
         prob: 0.2
       - id: MedievalRevent10
         prob: 0.2
+      - id: MedievalFalshionRusty
+        prob: 0.045
+      - id: MedievalMaceRusty
+        prob: 0.045
+      - id: MedievalSpearRusty
+        prob: 0.045
+      - id: MedievalSaberRusty
+        prob: 0.045
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -1866,6 +1882,14 @@
         prob: 0.2
       - id: MedievalRevent10
         prob: 0.2
+      - id: MedievalFalshionRusty
+        prob: 0.045
+      - id: MedievalMaceRusty
+        prob: 0.045
+      - id: MedievalSpearRusty
+        prob: 0.045
+      - id: MedievalSaberRusty
+        prob: 0.045
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -2022,3 +2046,11 @@
         prob: 0.03
       - id: MedievalRevent5
         prob: 0.03
+      - id: MedievalFalshionRusty
+        prob: 0.015
+      - id: MedievalMaceRusty
+        prob: 0.015
+      - id: MedievalSpearRusty
+        prob: 0.015
+      - id: MedievalSaberRusty
+        prob: 0.015
