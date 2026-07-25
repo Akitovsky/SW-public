@@ -256,6 +256,15 @@
       time: 108000
 
 - type: loadoutEffectGroup
+  id: MercTimer4hours
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Merc
+      time: 14400
+
+- type: loadoutEffectGroup
   id: MercTimer10hours
   effects:
   - !type:JobRequirementLoadoutEffect
