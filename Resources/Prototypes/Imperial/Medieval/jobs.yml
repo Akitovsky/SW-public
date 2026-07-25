@@ -5,7 +5,6 @@
   groups:
   - TravellerHead
   - TravellerJumpsuit
-  - MedievalArmorTraveller
   - MedievalNeck
   - MedievalBackpack
   #- SecurityOuterClothing
@@ -16,6 +15,8 @@
   - MedievalTrinkets
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalArmorTraveller
+  - MedievalRustyWeapons
 
 - type: roleLoadout
   id: JobMedievalLegionCourier
@@ -32,6 +33,8 @@
   - MedievalTrinkets
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalArmorTraveller
+  - MedievalRustyWeapons
 
 - type: loadoutGroup
   id: TravellerHead
@@ -1096,7 +1099,6 @@
   - TravellerHead
   - MedievalNeck
   - TravellerJumpsuit
-  - MedievalArmorTraveller
   - MedievalBackpack
   #- SecurityOuterClothing
   - MedievalShoes
@@ -1106,6 +1108,8 @@
   - MedievalTrinkets3
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalArmorTraveller
+  - MedievalRustyWeapons
 
 # MEDIEVAL BARD
 
@@ -3628,6 +3632,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorBand
+  - MedievalRustyWeapons
 
 # MEDIEVAL BANDIT REGULAR
 
@@ -3693,6 +3698,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorBand
+  - MedievalRustyWeapons
 
 # MEDIEVAL BANDIT VETERAN
 
@@ -3759,6 +3765,7 @@
   - MedievalTrinkets3
   - MedievalGlovesWithIron
   - MedievalArmorBand
+  - MedievalRustyWeapons
 
 # MEDIEVAL BANDIT LEADER
 
@@ -3832,6 +3839,7 @@
   - MedievalTrinkets3
   - MedievalGlovesWithIron
   - MedievalArmorBand
+  - MedievalRustyWeapons
 
 # MEDIEVAL BANDIT KAYOT RECRUIT
 
@@ -4161,6 +4169,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorMerc
+  - MedievalRustyWeapons
 
 # MEDIEVAL MercLeader REGULAR
 
@@ -4239,6 +4248,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorMerc
+  - MedievalRustyWeapons
 
 # MEDIEVAL COLLEGIUM RECRUIT
 
@@ -5026,6 +5036,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalRustyWeapons
 
 # MEDIEVAL MinerLeader REGULAR
 
@@ -5103,6 +5114,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalRustyWeapons
 
 # MEDIEVAL Blacksmith
 
@@ -5621,6 +5633,7 @@
   - MedievalGloves
   - MedievalShoes
   - MedievalArmorVilage
+  - MedievalRustyWeapons
 
 # MEDIEVAL VillagerLeader
 

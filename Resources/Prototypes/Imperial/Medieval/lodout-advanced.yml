@@ -323,3 +323,41 @@
   #  proto: BandTimer30hours
   equipment:
     outerClothing: MedievalClothingOuterArmorChainMailLight
+
+########## RUSTED WEAPONS
+
+
+- type: loadoutGroup
+  id: MedievalRustyWeapons
+  name: loadout-group-weapons-mdv
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - MedievalFalshionRusty
+  - MedievalMaceRusty
+  - MedievalSpearRusty
+  - MedievalSaberRusty
+
+- type: loadout
+  id: MedievalFalshionRusty
+  storage:
+    back:
+    - MedievalFalshionRusty
+
+- type: loadout
+  id: MedievalMaceRusty
+  storage:
+    back:
+    - MedievalMaceRusty
+
+- type: loadout
+  id: MedievalSpearRusty
+  storage:
+    back:
+    - MedievalSpearRusty
+
+- type: loadout
+  id: MedievalSaberRusty
+  storage:
+    back:
+    - MedievalSaberRusty
