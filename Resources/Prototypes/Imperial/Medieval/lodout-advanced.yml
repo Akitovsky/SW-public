@@ -330,7 +330,7 @@
 - type: loadoutGroup
   id: MedievalRustyWeapons
   name: loadout-group-weapons-mdv
-  minLimit: 1
+  minLimit: 0
   maxLimit: 1
   loadouts:
   - MedievalFalshionRusty
