@@ -65,6 +65,8 @@ public sealed class UniversalLockServerSystem : EntitySystem
         lockEntity.Comp.MaxValue = maxValue;
 
         _audioSystem.PlayPvs(lockEntity.Comp.LockSetupSound, lockEntity);
+
+        Dirty(lockEntity);
     }
 
     public void SetLockCodeQuite(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
@@ -74,5 +76,7 @@ public sealed class UniversalLockServerSystem : EntitySystem
         lockEntity.Comp.Name = string.Empty;
         lockEntity.Comp.Length = code.Length;
         lockEntity.Comp.MaxValue = maxValue;
+
+        Dirty(lockEntity);
     }
 }

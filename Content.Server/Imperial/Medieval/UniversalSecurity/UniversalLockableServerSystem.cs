@@ -24,6 +24,7 @@ using Robust.Shared.Containers;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
+using Content.Shared.Storage.Components;
 
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
@@ -338,6 +339,8 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (TryComp<LockComponent>(lockableEntity, out var lockComponent))
             if (lockComponent.Locked != lockEntity.Comp.IsLocked)
                 _lockSystem.ToggleLock(lockableEntity, null, lockComponent);
+
+        Dirty(lockEntity);
     }
 
     public void LockSpawnedLockable(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEntity, ItemSlot slot)

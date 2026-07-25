@@ -795,6 +795,8 @@
   - type: UniversalLockable
     isRandomLock: MedievalDoorLockT1
     chanceOfLockSpawn: 0.25
+  - type: ResistLocker
+    resistTime: 60
   - type: Lock
     locked: false
     showLockVerbs: false
@@ -1318,6 +1320,8 @@
   - type: UniversalLockable
     isRandomLock: MedievalDoorLockT1
     chanceOfLockSpawn: 0.5
+  - type: ResistLocker
+    resistTime: 60
   - type: Lock
     locked: false
     showLockVerbs: false

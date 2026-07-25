@@ -95,6 +95,8 @@
       - entity_storage
   - type: RequireProjectileTarget
   - type: UniversalLockable
+  - type: ResistLocker
+    resistTime: 60
   - type: Lock
     locked: false
     showLockVerbs: false
