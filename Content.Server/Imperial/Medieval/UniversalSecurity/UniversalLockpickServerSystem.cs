@@ -146,7 +146,7 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
 
         bool isHacker = HasComp<DoorHackerComponent>(user);
         int[] stateCode = new int[lockComponent.Length];
-
+        // 0 - это без подсказок, 1 - значение близко больше, -1 - значение близко меньше, 2 - значение далеко больше, -2 - значение далеко меньше, 100 - значение близко, 200 - значение далеко
         for (var i = 0; i < args.NewCode.Length; i++)
         {
             if (lockComponent.Code[i] == args.NewCode[i])
@@ -155,15 +155,16 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
                 continue;
             }
 
+            int diff = Math.Abs(lockComponent.Code[i] - args.NewCode[i]);
+
             if (isHacker)
             {
-                int diff = Math.Abs(lockComponent.Code[i] - args.NewCode[i]);
                 int direction = Math.Sign(lockComponent.Code[i] - args.NewCode[i]);
 
                 stateCode[i] = diff <= 3 ? direction : direction * 2;
             }
             else
-                stateCode[i] = 0;
+                stateCode[i] = diff <= 3 ? 100 : 200;
         }
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, stateCode);

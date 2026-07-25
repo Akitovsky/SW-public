@@ -67,7 +67,7 @@ public sealed class UniversalLockServerSystem : EntitySystem
         _audioSystem.PlayPvs(lockEntity.Comp.LockSetupSound, lockEntity);
     }
 
-    public void SetLockCodeFraction(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
+    public void SetLockCodeQuite(Entity<UniversalLockComponent> lockEntity, int[] code, int maxValue)
     {
         lockEntity.Comp.Code = code;
         lockEntity.Comp.IsSetuped = true;
