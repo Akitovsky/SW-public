@@ -9,6 +9,7 @@
   abstract: true
   id: BaseSpearCharged
   components:
+  - type: UseDelayAroundCursor
   - type: ChargedAttack
     maxAttackTime: 3.0
     staticModifier: 2.5
@@ -22,6 +23,7 @@
   abstract: true
   id: BaseOneHandedCharged
   components:
+  - type: UseDelayAroundCursor
   - type: ChargedAttack
     maxAttackTime: 2.0
     staticModifier: 2
@@ -35,6 +37,7 @@
   abstract: true
   id: BaseDaggerCharged
   components:
+  - type: UseDelayAroundCursor
   - type: ChargedAttack
     maxAttackTime: 1.5
     staticModifier: 3
@@ -48,6 +51,7 @@
   abstract: true
   id: BaseCrushingCharged
   components:
+  - type: UseDelayAroundCursor
   - type: ChargedAttack
     maxAttackTime: 3.0
     staticModifier: 2
@@ -61,6 +65,7 @@
   abstract: true
   id: BaseTwoHandedCharged
   components:
+  - type: UseDelayAroundCursor
   - type: ChargedAttack
     maxAttackTime: 4.0
     staticModifier: 3
