@@ -216,6 +216,15 @@
   id: MedievalChest
   name: MedievalChest
   components:
+  - type: EntityStorage
+    closeSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
+    openSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
   - type: Sprite
     sprite: Imperial/Medieval/Decor/chest.rsi
     layers:
@@ -265,6 +274,15 @@
   id: MedievalChest2
   name: MedievalChest2
   components:
+  - type: EntityStorage
+    closeSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
+    openSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
   - type: Sprite
     sprite: Imperial/Medieval/Decor/chest2.rsi
     layers:
@@ -314,6 +332,15 @@
   id: MedievalChest3
   name: MedievalChest3
   components:
+  - type: EntityStorage
+    closeSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
+    openSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
   - type: Sprite
     sprite: Imperial/Medieval/Decor/chest3.rsi
     layers:
@@ -363,6 +390,15 @@
   id: MedievalChest4
   name: MedievalChest4
   components:
+  - type: EntityStorage
+    closeSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
+    openSound: 
+      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      params:
+        variation: 0.05
   - type: Sprite
     sprite: Imperial/Medieval/Decor/chest4.rsi
     layers:
