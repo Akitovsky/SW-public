@@ -1900,6 +1900,9 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: Mana
+      maxMana: 150
+      regen: 1.2
     - type: WarningOnAttach
       message: medieval-warning-base
     - type: BibleUser #Lets them heal with bibles

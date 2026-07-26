@@ -21,6 +21,8 @@
   - type: MedievalSpikeTarget # imperial medieval
     enabled: false
   - type: Mana
+    maxMana: 150
+    regen: 1
     maxManaRaceModifier: 1.5
     regenRaceModifier: 1.5
   - type: PointLight
@@ -229,6 +231,9 @@
   components:
   - type: Loadout
     prototypes: [ MedievalNecroLeader ]
+  - type: Mana
+    maxMana: 280
+    regen: 2
   - type: Mana
     maxManaRaceModifier: 3.9
     regenRaceModifier: 3.9
