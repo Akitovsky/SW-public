@@ -12,7 +12,7 @@ armor-integrity-broken-popup = {$armor} сломана!
 armor-repair-wrong-tool-popup = Неподходящий инструмент для этой брони.
 armor-repair-fully-repaired-popup = Эта броня уже полностью починена.
 armor-repair-irreparable-popup = Эта броня уже не подлежит ремонту.
-armor-repair-tool-max-durability-cost = Инструмент расходует [color=yellow]{$amount}[/color] максимальной прочности у брони.
+armor-repair-tool-max-durability-cost = Инструмент расходует [color=yellow]{$amount}[/color] максимальной прочности у брони в ваших руках
 armor-repair-tool-no-max-durability-cost = Этот инструмент не расходует максимальную прочность брони.
 armor-repair-tool-charges = Осталось зарядов: [color=yellow]{$charges}[/color].
 armor-repair-type-sewing = Предназначено для ткани и кожи.

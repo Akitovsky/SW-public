@@ -351,3 +351,12 @@
     requirement:
       !type:OverallPlaytimeRequirement
       time: 14400
+
+
+- type: loadoutEffectGroup
+  id: MedievalTimer30hours
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 108000

@@ -779,7 +779,7 @@
     damage:
       types:
         Slash: 7
-        Piercing: 6
+        Piercing: 1
         Structural: 16
         ParryAble: 1
     resetOnHandSelected: false

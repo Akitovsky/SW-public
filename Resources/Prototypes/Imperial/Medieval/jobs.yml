@@ -17,6 +17,7 @@
   - MedievalGloves
   - MedievalArmorTraveller
   - MedievalRustyWeapons
+  - MedievalRepair
 
 - type: roleLoadout
   id: JobMedievalLegionCourier
@@ -35,6 +36,7 @@
   - MedievalGloves
   - MedievalArmorTraveller
   - MedievalRustyWeapons
+  - MedievalRepair
 
 - type: loadoutGroup
   id: TravellerHead
@@ -1110,6 +1112,7 @@
   - MedievalGloves
   - MedievalArmorTraveller
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL BARD
 
@@ -1165,6 +1168,7 @@
   - MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalRepair
 
 - type: loadoutGroup
   id: BardItems
@@ -1934,6 +1938,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalRepair
 
 - type: loadoutGroup
   id: ChaplainJumpsuitMedieval
@@ -2150,6 +2155,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL LegionJAILED
 
@@ -2249,6 +2255,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalJumpsuitLegion
+  - MedievalRepair
 
 # MEDIEVAL LEGION RECRUIT
 
@@ -2317,6 +2324,7 @@
   - MedievalGloves
   - MedievalJumpsuitLegion
   - MedievalArmorLegionRecruit
+  - MedievalRepair
 
 - type: loadoutGroup
   id: MedievalBeltLegion
@@ -2425,6 +2433,7 @@
   - MedievalGloves
   - MedievalJumpsuitLegion
   - MedievalArmorLegion
+  - MedievalRepair
 
 # MEDIEVAL LEGION Gateman
 
@@ -2484,6 +2493,7 @@
   - MedievalGloves
   - MedievalJumpsuitLegion
   - MedievalArmorLegion
+  - MedievalRepair
 
 # MEDIEVAL LEGION OPCION
 
@@ -2553,6 +2563,7 @@
   - MedievalTrinkets3
   - MedievalGlovesWithIron
   - MedievalArmorLegion
+  - MedievalRepair
 
 # MEDIEVAL LEGION TRIBUN
 
@@ -2621,6 +2632,7 @@
   - MedievalTrinkets
   - MedievalGlovesWithIron
   - MedievalArmorLegion
+  - MedievalRepair
 
 # MEDIEVAL LEGION LEGAT
 
@@ -2698,6 +2710,7 @@
   - MedievalGlovesWithIron
   - MedievalHelmetLegionLegat
   - MedievalArmorLegion
+  - MedievalRepair
 
 - type: loadoutGroup
   id: MedievalHelmetLegionLegat
@@ -2880,6 +2893,7 @@
   - MedievalGloves
   - MedievalJumpsuitMagLegion
   - MedievalBackpackMagLegion
+  - MedievalRepair
 
 - type: loadoutGroup
   id: MedievalJumpsuitMagLegion
@@ -2984,6 +2998,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL Insurgency RECRUIT
 
@@ -3048,6 +3063,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorInsurgencyRecruit
+  - MedievalRepair
 
 - type: loadoutGroup
   id: MedievalBeltInsurgency
@@ -3135,6 +3151,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorInsurgency
+  - MedievalRepair
 
 # MEDIEVAL Insurgency Gateman
 
@@ -3189,6 +3206,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalArmorInsurgency
+  - MedievalRepair
 
 # MEDIEVAL Insurgency OPCION
 
@@ -3254,6 +3272,7 @@
   - MedievalTrinkets3
   - MedievalGlovesWithIron
   - MedievalArmorInsurgency
+  - MedievalRepair
 
 # MEDIEVAL Insurgency TRIBUN
 
@@ -3317,6 +3336,7 @@
   - MedievalTrinkets
   - MedievalGlovesWithIron
   - MedievalArmorInsurgency
+  - MedievalRepair
 
 # MEDIEVAL Insurgency LEGAT
 
@@ -3394,6 +3414,7 @@
   - MedievalTrinkets
   - MedievalGlovesWithIron
   - MedievalArmorInsurgency
+  - MedievalRepair
 
 # MEDIEVAL InsurgencyMAG
 
@@ -3484,6 +3505,7 @@
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
   - MedievalBackpackMagLegion
+  - MedievalRepair
 
 # MEDIEVAL InsurgencyAlchemic
 
@@ -3570,6 +3592,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
+  - MedievalRepair
 
 
 # MEDIEVAL BANDIT RECRUIT
@@ -3636,6 +3659,7 @@
   - MedievalGloves
   - MedievalArmorBand
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL BANDIT REGULAR
 
@@ -3702,6 +3726,7 @@
   - MedievalGloves
   - MedievalArmorBand
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL BANDIT VETERAN
 
@@ -3769,6 +3794,7 @@
   - MedievalGlovesWithIron
   - MedievalArmorBand
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL BANDIT LEADER
 
@@ -3843,6 +3869,7 @@
   - MedievalGlovesWithIron
   - MedievalArmorBand
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL BANDIT KAYOT RECRUIT
 
@@ -4173,6 +4200,7 @@
   - MedievalGloves
   - MedievalArmorMerc
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL MercLeader REGULAR
 
@@ -4252,6 +4280,7 @@
   - MedievalGloves
   - MedievalArmorMerc
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL COLLEGIUM RECRUIT
 
@@ -4331,6 +4360,7 @@
   #- MedievalShoes
   #- MedievalTrinkets
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL COLLEGIUM COMMON
 
@@ -4412,6 +4442,7 @@
   #- MedievalTrinkets
   - MedievalGloves
   - MedievalCollegiumHead
+  - MedievalRepair
 
 # MEDIEVAL COLLEGIUM Leader
 
@@ -4497,6 +4528,7 @@
   #- MedievalShoes
   #- MedievalTrinkets
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL Tribe RECRUIT
 
@@ -5040,6 +5072,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL MinerLeader REGULAR
 
@@ -5118,6 +5151,7 @@
   - MedievalTrinkets
   - MedievalGloves
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL Blacksmith
 
@@ -5177,6 +5211,7 @@
   - MedievalBackpack
   - MedievalShoes
   - MedievalTrinkets
+  - MedievalRepair
   #- MedievalGloves
 
 # MEDIEVAL BlacksmithN
@@ -5237,6 +5272,7 @@
   - MedievalBackpack
   - MedievalShoes
   - MedievalTrinkets
+  - MedievalRepair
   #- MedievalGloves
 
 # MEDIEVAL BlacksmithYoung
@@ -5296,6 +5332,7 @@
   - MedievalShoes
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL BlacksmithYoungN
 
@@ -5354,6 +5391,7 @@
   - MedievalShoes
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalRepair
 
 # MEDIEVAL Cult REGULAR
 
@@ -5578,6 +5616,7 @@
   - MedievalBackpack
   - MedievalBelt
   - MedievalTrinkets
+  - MedievalRepair
 
 
 # MEDIEVAL Villager REGULAR Def
@@ -5637,6 +5676,7 @@
   - MedievalShoes
   - MedievalArmorVilage
   - MedievalRustyWeapons
+  - MedievalRepair
 
 # MEDIEVAL VillagerLeader
 
@@ -5707,6 +5747,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalGloves
+  - MedievalRepair
 
 - type: loadout
   id: MedievalFlinter

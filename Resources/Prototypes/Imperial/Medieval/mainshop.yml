@@ -1386,7 +1386,7 @@
   id: MdvShopMedievalHatchet
   productEntity: MedievalHatchet
   cost:
-    Revent: 13
+    Revent: 20
   categories:
   - MedievalWeapon
 
@@ -1394,7 +1394,7 @@
   id: MdvShopMedievalWoodenShield
   productEntity: MedievalWoodenShield
   cost:
-    Revent: 15
+    Revent: 25
   categories:
   - MedievalWeapon
 
@@ -1402,7 +1402,7 @@
   id: MdvShopMedievalWoodenShieldKnight
   productEntity: MedievalWoodenShieldKnight
   cost:
-    Revent: 27
+    Revent: 37
   categories:
   - MedievalWeapon
 
@@ -1410,7 +1410,7 @@
   id: MdvShopMedievalWoodenShieldBuckler
   productEntity: MedievalWoodenShieldBuckler
   cost:
-    Revent: 12
+    Revent: 18
   categories:
   - MedievalWeapon
 

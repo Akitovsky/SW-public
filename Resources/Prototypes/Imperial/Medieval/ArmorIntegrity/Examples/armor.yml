@@ -119,9 +119,9 @@
     sprite: Imperial/Medieval/Misc/repairkit.rsi
   - type: MedievalRepairArmor
     repairType: Sewing
-    repairAmount: 18
+    repairAmount: 25
     isSpendable: true
-    repairTime: 8
+    repairTime: 7
     maxArmorRemove: 1
     skilledCrafterMaxArmorRemovalModifier: 0.5
     charges: 6

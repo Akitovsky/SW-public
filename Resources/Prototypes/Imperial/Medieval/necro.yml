@@ -234,7 +234,6 @@
   - type: Mana
     maxMana: 280
     regen: 2
-  - type: Mana
     maxManaRaceModifier: 3.9
     regenRaceModifier: 3.9
   - type: IgnoreBossStart

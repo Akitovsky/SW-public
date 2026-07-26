@@ -368,3 +368,32 @@
   storage:
     back:
     - MedievalSaberRusty
+
+
+
+############ ARMOR REPAIR
+
+
+- type: loadoutGroup
+  id: MedievalRepair
+  name: loadout-group-repair-mdv
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - MedievalSewingNeedle
+  - MedievalHammerBlacksmith
+
+- type: loadout
+  id: MedievalSewingNeedle
+  storage:
+    back:
+    - MedievalSewingNeedle
+
+- type: loadout
+  id: MedievalHammerBlacksmith
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MedievalTimer30hours
+  storage:
+    back:
+    - MedievalHammerBlacksmith
