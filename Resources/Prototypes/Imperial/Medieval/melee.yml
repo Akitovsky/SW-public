@@ -4372,6 +4372,86 @@
   - type: Meltable
     resourceCount: 3
 
+
+- type: entity
+  name: dagger
+  parent: [ BaseKnife, BaseOneHandedCharged ]
+  id: MedievalShortSwordRusty
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: RDWeight
+    value: 1.5
+  - type: QuestItem
+    contractName: "любые одноручные мечи"
+  - type: EmitSoundOnLand
+    sound:
+      collection: MedievalIronDrop
+      params:
+          variation: 0.02
+          volume: 1
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/iron_short_sword_rusty.rsi
+    size: Small
+    state: icon
+  - type: Item
+    size: Small
+    sprite: Imperial/Medieval/Melee/iron_short_sword_rusty.rsi
+  - type: MeleeParry
+    parryChanse: 0.55
+  - type: MeleeWeapon
+    animation: CP14WeaponArcThrust
+    wideAnimation: CP14WeaponArcSlash
+    cPSwingBeverage: true
+    cPAnimationOffset: 1
+    clickDamageModifier: 1.29
+    #resetOnHandSelected: false
+    attackRate: 1
+    range: 1.4
+    damage:
+      types:
+        Slash: 11
+        ParryAble: 1
+    soundHit:
+      path: /Audio/Imperial/Medieval/ES_Knife_Stab_2_-_SFX_Producer.ogg
+    soundSwing:
+      path: /Audio/Imperial/Medieval/sword_swing.ogg
+  - type: MedievalMeleeResource
+    resourceWaste: 0.4
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 13
+  #- type: QualityOfItem
+  #  qualityWeights:
+  #    0: 0
+  #    1: 0
+  #    2: 0
+  #    3: 10
+  #    4: 0
+  #    5: 0
+  #    6: 0
+  #- type: EmbeddableProjectile
+    #offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
+  - type: Tag
+    tags:
+    - Spear
+    - Knife
+  - type: Clothing
+    sprite: Imperial/Medieval/Melee/iron_short_sword_rusty.rsi
+    slots:
+    - belt
+    quickEquip: false
+    equipSound:
+      path: /Audio/Imperial/Medieval/sword_uneqip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/sword_eqip.ogg
+  - type: StaminaDamageOnHit
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+  - type: Meltable
+    resourceCount: 2
+
 - type: entity
   name: short sword
   parent: MedievalShortSword

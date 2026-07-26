@@ -334,15 +334,22 @@
   maxLimit: 1
   loadouts:
   - MedievalFalshionRusty
+  - MedievalShortSwordRusty
+  - MedievalSaberRusty
   - MedievalMaceRusty
   - MedievalSpearRusty
-  - MedievalSaberRusty
 
 - type: loadout
   id: MedievalFalshionRusty
   storage:
     back:
     - MedievalFalshionRusty
+
+- type: loadout
+  id: MedievalShortSwordRusty
+  storage:
+    back:
+    - MedievalShortSwordRusty
 
 - type: loadout
   id: MedievalMaceRusty
