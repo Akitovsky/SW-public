@@ -23,8 +23,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using Content.Shared.Storage.Components;
+using Content.Shared.GameTicking;
 
 public sealed class UniversalLockableServerSystem : EntitySystem
 {
@@ -35,7 +34,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly UniversalLockServerSystem _universalLockSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    public static readonly byte[] SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
+    public static byte[] SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
 
     public static int Factionlength = 6;
     public static int FactionmaxValue = 32;
@@ -50,6 +49,8 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         SubscribeLocalEvent<UniversalLockableComponent, UniversalLockableDoAfterEvent>(OnLockableDoAfter);
         SubscribeLocalEvent<UniversalLockableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<UniversalLockableComponent, MapInitEvent>(OnMapInit, after: new[] { typeof(ItemSlotsSystem), typeof(ContainerSystem), typeof(SharedContainerSystem) });
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
     }
 
     private void OnMapInit(Entity<UniversalLockableComponent> lockableEntity, ref MapInitEvent args)
@@ -65,6 +66,11 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             OnRandomLockSpawn(lockableEntity);
             return;
         }
+    }
+
+    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+    {
+        SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
     }
 
     private void OnRandomLockSpawn(Entity<UniversalLockableComponent> lockableEntity)
