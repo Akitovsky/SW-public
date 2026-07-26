@@ -222,7 +222,7 @@
       params:
         variation: 0.05
     openSound: 
-      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      path: /Audio/Imperial/Medieval/Chest/chest_open.ogg
       params:
         variation: 0.05
   - type: Sprite
@@ -280,7 +280,7 @@
       params:
         variation: 0.05
     openSound: 
-      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      path: /Audio/Imperial/Medieval/Chest/chest_open.ogg
       params:
         variation: 0.05
   - type: Sprite
@@ -338,7 +338,7 @@
       params:
         variation: 0.05
     openSound: 
-      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      path: /Audio/Imperial/Medieval/Chest/chest_open.ogg
       params:
         variation: 0.05
   - type: Sprite
@@ -396,7 +396,7 @@
       params:
         variation: 0.05
     openSound: 
-      path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
+      path: /Audio/Imperial/Medieval/Chest/chest_open.ogg
       params:
         variation: 0.05
   - type: Sprite
