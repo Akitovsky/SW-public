@@ -1580,12 +1580,62 @@
 
 - type: CP14Recipe
   id: MedievalHammerBlacksmith
-  craftTime: 25
+  craftTime: 12
   iconOverride: MedievalHammerBlacksmith
   stacks:
     WoodPlank: 2
     MedievalIronIngot: 2
   result: MedievalHammerBlacksmith
+
+- type: CP14Recipe
+  id: MedievalSewingNeedle
+  craftTime: 5
+  iconOverride: MedievalSewingNeedle
+  stacks:
+    MedievalIronIngot: 1
+  result: MedievalSewingNeedle
+
+- type: CP14Recipe
+  id: MedievalBlacksmithPatches
+  craftTime: 5
+  iconOverride: MedievalBlacksmithPatches
+  stacks:
+    MedievalRivets: 1
+    MedievalIronPlateSmall: 3
+  result: MedievalBlacksmithPatches
+
+- type: CP14Recipe
+  id: MedievalSewingPatches
+  craftTime: 5
+  iconOverride: MedievalSewingPatches
+  stacks:
+    MedievalIronIngot: 1
+    MedievalLeather1: 1
+    Cloth: 4
+  result: MedievalSewingPatches
+
+- type: CP14Recipe
+  id: MedievalBlacksmithKit
+  craftTime: 5
+  iconOverride: MedievalBlacksmithKit
+  stacks:
+    MedievalIronIngot: 2
+    MedievalRivets: 2
+    MedievalIronPlateSmall: 4
+    WoodPlank: 1
+  result: MedievalBlacksmithKit
+
+- type: CP14Recipe
+  id: MedievalSewingKit
+  craftTime: 5
+  iconOverride: MedievalSewingKit
+  stacks:
+    MedievalIronIngot: 1
+    MedievalLeather1: 2
+    MedievalLeatherBelt: 1
+    Cloth: 6
+    WoodPlank: 1
+  result: MedievalSewingKit
 
 - type: CP14Recipe
   id: MedievalHorseLeatherArmor

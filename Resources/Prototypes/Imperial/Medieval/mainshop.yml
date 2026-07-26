@@ -2421,7 +2421,7 @@
   id: MdvShopMedievalHammerBlacksmith
   productEntity: MedievalHammerBlacksmith
   cost:
-    Revent: 20
+    Revent: 15
   categories:
   - MedievalMisc
 
@@ -2529,6 +2529,47 @@
     Revent: 3
   categories:
   - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalSewingNeedle
+  productEntity: MedievalSewingNeedle
+  cost:
+    Revent: 6
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalSewingKit
+  productEntity: MedievalSewingKit
+  cost:
+    Revent: 50
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalBlacksmithKit
+  productEntity: MedievalBlacksmithKit
+  cost:
+    Revent: 50
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalSewingPatches
+  productEntity: MedievalSewingPatches
+  cost:
+    Revent: 30
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalBlacksmithPatches
+  productEntity: MedievalBlacksmithPatches
+  cost:
+    Revent: 30
+  categories:
+  - MedievalMisc
+
 
 #- type: listing
 #  id: MdvShopSoap
