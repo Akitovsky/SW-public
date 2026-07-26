@@ -36,7 +36,7 @@
     repairType: Sewing
     repairAmount: 60
     isSpendable: true
-    repairTime: 12
+    repairTime: 14
     maxArmorRemove: 0
     skilledCrafterMaxArmorRemovalModifier: 0.5
     useSound:
@@ -67,7 +67,7 @@
     repairType: Smithing
     repairAmount: 100
     isSpendable: true
-    repairTime: 12
+    repairTime: 14
     maxArmorRemove: 0
     skilledCrafterMaxArmorRemovalModifier: 0.5
     useSound:
