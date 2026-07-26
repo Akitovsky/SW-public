@@ -469,7 +469,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 900
+        damage: 800
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -507,7 +507,7 @@
       tank:
         reagents:
         - ReagentId: Water
-          Quantity: 900
+          Quantity: 600
   - type: Fixtures
     fixtures:
       fix1:
@@ -563,7 +563,7 @@
       tank:
         reagents:
         - ReagentId: Water
-          Quantity: 900
+          Quantity: 600
   - type: Destructible
     thresholds:
     - trigger:
@@ -613,7 +613,7 @@
       tank:
         reagents:
         - ReagentId: Wine
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -624,7 +624,7 @@
       tank:
         reagents:
         - ReagentId: Mead
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -635,7 +635,7 @@
       tank:
         reagents:
         - ReagentId: RedMead
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -646,7 +646,7 @@
       tank:
         reagents:
         - ReagentId: Beer
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -657,7 +657,7 @@
       tank:
         reagents:
         - ReagentId: Moonshine
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -668,7 +668,7 @@
       tank:
         reagents:
         - ReagentId: Rum
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -679,7 +679,7 @@
       tank:
         reagents:
         - ReagentId: Vodka
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   parent: MedievalBarrelBase
@@ -690,7 +690,7 @@
       tank:
         reagents:
         - ReagentId: Ale
-          Quantity: 900
+          Quantity: 600
 
 - type: entity
   id: MedievalDecorOhapka
