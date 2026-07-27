@@ -47,9 +47,24 @@ public sealed class IslandRadialGenerationSystem : EntitySystem
         var gen  = new IslandBridsonGenerator(config.InterIslandsThreshold, config.MaxCandidatesPerPoint);
 
         var placements = new List<IslandPlacement>();
-        placements.AddRange(gen.Generate(new IslandRing(config.LowIslandMinRange,    config.MediumIslandMinRange), lowPool,  grid, rng));
-        placements.AddRange(gen.Generate(new IslandRing(config.MediumIslandMinRange, config.HighIslandMinRange),   medPool,  grid, rng));
-        placements.AddRange(gen.Generate(new IslandRing(config.HighIslandMinRange,   config.HighIslandMaxRange),   highPool, grid, rng));
+        placements.AddRange(gen.Generate(
+            new IslandRing(config.LowIslandMinRange, config.MediumIslandMinRange),
+            lowPool,
+            config.LowIslandCount,
+            grid,
+            rng));
+        placements.AddRange(gen.Generate(
+            new IslandRing(config.MediumIslandMinRange, config.HighIslandMinRange),
+            medPool,
+            config.MediumIslandCount,
+            grid,
+            rng));
+        placements.AddRange(gen.Generate(
+            new IslandRing(config.HighIslandMinRange, config.HighIslandMaxRange),
+            highPool,
+            config.HighIslandCount,
+            grid,
+            rng));
 
         foreach (var placement in placements)
         {
