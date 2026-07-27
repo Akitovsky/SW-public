@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Light.Components;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
@@ -52,7 +53,8 @@ public sealed class IslandRadialGenerationSystem : EntitySystem
 
         foreach (var placement in placements)
         {
-            _mapLoader.TryLoadGrid(mapId, placement.Path, out _, offset: placement.Pos);
+            if (_mapLoader.TryLoadGrid(mapId, placement.Path, out var island, offset: placement.Pos))
+                RemComp<ImplicitRoofComponent>(island.Value.Owner);
         }
     }
 
