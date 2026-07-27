@@ -1724,6 +1724,9 @@
   - productEntity: MedievalSign9Craft
     cost: 80
     reputationForBuying: 2.7
+  - productEntity: MedievalSign10Craft
+    cost: 80
+    reputationForBuying: 2.7
   - productEntity: MedievalPrisonGrilleCraft
     cost: 12
     reputationForBuying: 0.4
@@ -1771,4 +1774,4 @@
   - productEntity: PottedPlantRandomSW
     cost: 50
     reputationForBuying: 1.5
-    
+

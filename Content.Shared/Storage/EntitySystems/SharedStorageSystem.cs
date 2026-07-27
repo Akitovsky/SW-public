@@ -236,6 +236,7 @@ public abstract class SharedStorageSystem : EntitySystem
             Blacklist = component.Blacklist,
             QuickInsert = component.QuickInsert,
             AreaInsert = component.AreaInsert,
+            ShowVerb = component.ShowVerb, // Imperial Medieval
             StorageInsertSound = component.StorageInsertSound,
             StorageRemoveSound = component.StorageRemoveSound,
             StorageOpenSound = component.StorageOpenSound,
@@ -2020,6 +2021,7 @@ public abstract class SharedStorageSystem : EntitySystem
         public EntityWhitelist? Blacklist;
         public bool QuickInsert;
         public bool AreaInsert;
+        public bool ShowVerb; // Imperial Medieval for UniversableLockableServerSystem
         public SoundSpecifier? StorageInsertSound;
         public SoundSpecifier? StorageRemoveSound;
         public SoundSpecifier? StorageOpenSound;

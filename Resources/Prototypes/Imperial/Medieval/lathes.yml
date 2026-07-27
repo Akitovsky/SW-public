@@ -958,6 +958,8 @@
     - SmokingPipeCraft
     - RollingPinCraft
     - MedievalWoodenFloorRoofItem
+    - MedievalCartRecipe
+    - MedievalDecorBoxEmptyRecipe
 
 - type: entity
   parent: CP14BaseWorkbench
