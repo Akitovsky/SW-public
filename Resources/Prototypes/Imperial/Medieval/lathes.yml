@@ -958,7 +958,7 @@
     - SmokingPipeCraft
     - RollingPinCraft
     - MedievalWoodenFloorRoofItem
-    - MedievalCartCraft
+    - MedievalCartRecipe
     - MedievalDecorBoxEmptyRecipe
 
 - type: entity

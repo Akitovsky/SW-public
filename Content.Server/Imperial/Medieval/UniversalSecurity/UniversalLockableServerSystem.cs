@@ -34,6 +34,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     [Dependency] private readonly UniversalLockServerSystem _universalLockSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+
     public static byte[] SecretServerKeyBytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
 
     public static int Factionlength = 6;
@@ -43,8 +44,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<UniversalLockableComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(MedievalAnchorSystem), typeof(SharedStorageSystem), typeof(SharedDoorSystem) });
-        SubscribeLocalEvent<UniversalLockableComponent, InteractUsingEvent>(OnInteractUsing, before: new[] { typeof(MedievalAnchorSystem), typeof(SharedStorageSystem), typeof(SharedDoorSystem) });
+        SubscribeLocalEvent<UniversalLockableComponent, InteractUsingEvent>(OnInteractUsing, before: new[] { typeof(MedievalAnchorSystem), typeof(SharedStorageSystem), typeof(SharedDoorSystem), typeof(SharedStorageSystem) });
         SubscribeLocalEvent<UniversalLockableComponent, GetVerbsEvent<AlternativeVerb>>(AddAltVerbs);
         SubscribeLocalEvent<UniversalLockableComponent, UniversalLockableDoAfterEvent>(OnLockableDoAfter);
         SubscribeLocalEvent<UniversalLockableComponent, ExaminedEvent>(OnExamine);
@@ -145,19 +145,6 @@ public sealed class UniversalLockableServerSystem : EntitySystem
             }
         }
         return result;
-    }
-
-    private void OnActivate(Entity<UniversalLockableComponent> entity, ref ActivateInWorldEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (IsLocked(entity))
-        {
-            var audioParams = new AudioParams { Volume = -10 };
-            _audioSystem.PlayPvs(entity.Comp.ActivateInWorldDenySound, entity, audioParams);
-            args.Handled = true;
-        }
     }
 
     private void OnInteractUsing(Entity<UniversalLockableComponent> lockableEntity, ref InteractUsingEvent args)
@@ -329,7 +316,7 @@ public sealed class UniversalLockableServerSystem : EntitySystem
     public void OnUsedKeySuccess(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEntity, ItemSlot slot, EntityUid? user)
     {
         lockEntity.Comp.IsLocked = !lockEntity.Comp.IsLocked;
-        _itemSlots.SetLock(lockableEntity, slot, true);
+        _itemSlots.SetLock(lockableEntity, slot, true); // Закрепляем замок
 
         if (!lockEntity.Comp.IsLocked)
         {
@@ -345,6 +332,12 @@ public sealed class UniversalLockableServerSystem : EntitySystem
         if (TryComp<LockComponent>(lockableEntity, out var lockComponent))
             if (lockComponent.Locked != lockEntity.Comp.IsLocked)
                 _lockSystem.ToggleLock(lockableEntity, null, lockComponent);
+
+        if (TryComp<StorageComponent>(lockableEntity, out var storageComponent))
+        {
+            storageComponent.ShowVerb = !lockEntity.Comp.IsLocked;
+            Dirty(lockableEntity, storageComponent);
+        }
 
         Dirty(lockEntity);
     }

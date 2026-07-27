@@ -19,6 +19,9 @@
     maxItemSize: Ginormous
     storageOpenSound: /Audio/Imperial/Medieval/wood_open.ogg
     storageCloseSound: /Audio/Imperial/Medieval/wood_closed.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
   - type: Physics
     bodyType: Dynamic
   - type: Damageable
@@ -63,9 +66,20 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: UniversalLockable
+  - type: ItemSlots
+    slots:
+      lockSlot:
+        ejectOnBreak: true
+        name: Lock
+        insertSound: /Audio/Effects/buckle.ogg
+        ejectSound: /Audio/Effects/unbuckle.ogg
+        whitelist:
+          components:
+          - UniversalLock
 
 - type: entity
-  id: MedievalCartTemplate
+  id: MedievalCartCraft
   parent: BaseItem
   components:
   - type: RDWeight
@@ -81,10 +95,10 @@
     state: icon
 
 - type: CP14Recipe
-  id: MedievalCartCraft
+  id: MedievalCartRecipe
   craftTime: 10
   stacks:
     Cloth: 5
     WoodPlank: 30
     MedievalRope: 1
-  result: MedievalCartTemplate
+  result: MedievalCartCraft

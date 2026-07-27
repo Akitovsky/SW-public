@@ -258,9 +258,9 @@
   parent: BaseItem
   components:
   - type: RDWeight
-    value: 100
+    value: 30
   - type: Item
-    size: Ginormous
+    size: Normal
   - type: SpawnAfterInteract
     prototype: MedievalCatapult
     doAfter: 25
