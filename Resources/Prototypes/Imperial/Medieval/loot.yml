@@ -345,11 +345,13 @@
       - id: MedievalShieldRepairKit
         prob: 0.06
       - id: MedievalAstrolitPiece
-        prob: 0.06
+        prob: 0.07
       - id: MedievalAstrolitPiece
-        prob: 0.06
+        prob: 0.07
       - id: MedievalAstrolitPiece
-        prob: 0.06
+        prob: 0.07
+      - id: MedievalAstrolitPiece
+        prob: 0.07
       - id: MedievalDrugChemistryBottle
         prob: 0.04
       - id: MedievalBrutepack
@@ -1246,11 +1248,13 @@
       - id: MedievalKnut
         prob: 0.09
       - id: MedievalAstrolitPiece
-        prob: 0.12
+        prob: 0.13
       - id: MedievalAstrolitPiece
-        prob: 0.12
+        prob: 0.13
       - id: MedievalAstrolitPiece
-        prob: 0.12
+        prob: 0.13
+      - id: MedievalAstrolitPiece
+        prob: 0.13
       - id: MedaljonDark
         prob: 0.015
       - id: MedaljonExpl
@@ -1492,6 +1496,18 @@
         prob: 0.03
       - id: MedievalBanjoInstrument
         prob: 0.1
+      - id: MedievalAstrolitPiece
+        prob: 0.3
+      - id: MedievalAstrolitPiece
+        prob: 0.3
+      - id: MedievalAstrolitPiece
+        prob: 0.3
+      - id: MedievalAstrolitPiece
+        prob: 0.3
+      - id: MedievalAstrolitPiece
+        prob: 0.3
+      - id: MedievalAstrolitPiece
+        prob: 0.3
       - id: MedievalAstrolitPiece
         prob: 0.3
       - id: MedievalAstrolitPiece
@@ -1953,11 +1969,13 @@
       - id: MedievalPaper
         prob: 0.22
       - id: MedievalAstrolitPiece
-        prob: 0.02
+        prob: 0.03
       - id: MedievalAstrolitPiece
-        prob: 0.02
+        prob: 0.03
       - id: MedievalAstrolitPiece
-        prob: 0.02
+        prob: 0.03
+      - id: MedievalAstrolitPiece
+        prob: 0.03
       - id: MedievalRepairStone
         prob: 0.05
       - id: MedievalShieldRepairKit
