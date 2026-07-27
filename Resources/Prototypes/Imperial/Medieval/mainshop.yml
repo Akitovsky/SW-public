@@ -600,7 +600,7 @@
     Revent: 50
   categories:
   - MedievalBuild
-  
+
 - type: listing
   id: MdvShopMedievalalchem_dispenserCraft
   productEntity: Medievalalchem_dispenserCraft
@@ -2414,6 +2414,30 @@
   productEntity: Torch
   cost:
     Revent: 2
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalGunpowderCharge
+  productEntity: MedievalGunpowderCharge
+  cost:
+    Revent: 12
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalGrapeshot
+  productEntity: MedievalGrapeshot
+  cost:
+    Revent: 12
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalRamrod
+  productEntity: MedievalRamrod
+  cost:
+    Revent: 24
   categories:
   - MedievalMisc
 

@@ -1491,8 +1491,9 @@
   id: MedievalLintstock
   craftTime: 1
   stacks:
+    WoodPlank: 4
+    MedievalLeather1: 2
     MedievalIronIngot: 1
-    MedievalLeather1: 1
     MedievalFireSerdolick: 1
   result: MedievalLintstock
 
@@ -1500,32 +1501,40 @@
   id: MedievalGunpowderCharge
   craftTime: 1
   stacks:
-    Gunpowder: 4
+    Gunpowder: 1
     Cloth: 1
   result: MedievalGunpowderCharge
+
+- type: CP14Recipe
+  id: MedievalRamrod
+  craftTime: 3
+  stacks:
+    WoodPlank: 2
+    Cloth: 1
+  result: MedievalRamrod
 
 - type: CP14Recipe
   id: MedievalCannonballShip
   craftTime: 3
   stacks:
     MedievalIronIngot: 10
+    Gunpowder: 3
   result: MedievalCannonballShip
 
 - type: CP14Recipe
   id: MedievalCannonballExplosive
   craftTime: 3
   stacks:
-    MedievalIronIngot: 5
-    Gunpowder: 4
+    MedievalIronIngot: 8
+    Gunpowder: 6
   result: MedievalCannonballExplosive
 
 - type: CP14Recipe
   id: MedievalGrapeshot
   craftTime: 3
   stacks:
-    MedievalRivets: 3
+    MedievalRivets: 1
     Cloth: 1
-    MedievalRope: 1
   result: MedievalGrapeshot
 
 - type: CP14Recipe
