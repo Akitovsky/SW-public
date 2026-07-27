@@ -862,6 +862,14 @@
   - MedievalBuild
 
 - type: listing
+  id: MdvShopMedievalSign10Craft
+  productEntity: MedievalSign10Craft
+  cost:
+    Revent: 80
+  categories:
+  - MedievalBuild
+
+- type: listing
   id: MdvShopMedievalStoneWallCraft
   productEntity: MedievalStoneWallCraft
   cost:

@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Content.Server.CustomDoorKey.Components;
+using Content.Shared.Storage.EntitySystems;
 
 public sealed partial class UniversalLockpickServerSystem : EntitySystem
 {
@@ -24,12 +25,12 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<UniversalLockpickComponent, AfterInteractEvent>(OnLockpickInteract);
+        SubscribeLocalEvent<UniversalLockpickComponent, AfterInteractEvent>(OnLockpickAfterInteract, before: new[] { typeof(SharedStorageSystem) });
         SubscribeLocalEvent<UniversalLockpickComponent, UniversalLockpickSetCodeMessage>(OnSetCodeReceived);
         SubscribeLocalEvent<UniversalLockpickComponent, UniversalLockpickHackDoAfterEvent>(OnHackDoAfter);
     }
 
-    private void OnLockpickInteract(Entity<UniversalLockpickComponent> lockpickEntity, ref AfterInteractEvent args)
+    private void OnLockpickAfterInteract(Entity<UniversalLockpickComponent> lockpickEntity, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target is not { } lockableUid)
             return;
@@ -128,22 +129,6 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             return;
         }
 
-
-        if (args.NewCode.SequenceEqual(lockComponent.Code))
-        {
-            _lockableSystem.OnUsedKeySuccess((lockUid, lockComponent), (lockableUid, Comp<UniversalLockableComponent>(lockableUid)), slot, user);
-            _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnSucces), lockUid);
-
-            _uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
-
-            lockpickEntity.Comp.LockUid = null;
-            lockpickEntity.Comp.LockableUid = null;
-            lockpickEntity.Comp.User = null;
-
-            args.Handled = true;
-            return;
-        }
-
         bool isHacker = HasComp<DoorHackerComponent>(user);
         int[] stateCode = new int[lockComponent.Length];
         // 0 - это без подсказок, 1 - значение близко больше, -1 - значение близко меньше, 2 - значение далеко больше, -2 - значение далеко меньше, 100 - значение близко, 200 - значение далеко
@@ -165,6 +150,21 @@ public sealed partial class UniversalLockpickServerSystem : EntitySystem
             }
             else
                 stateCode[i] = diff <= 3 ? 100 : 200;
+        }
+
+        if (args.NewCode.SequenceEqual(lockComponent.Code))
+        {
+            _lockableSystem.OnUsedKeySuccess((lockUid, lockComponent), (lockableUid, Comp<UniversalLockableComponent>(lockableUid)), slot, user);
+            _audioSystem.PlayPvs(new SoundPathSpecifier(lockpickEntity.Comp.EffectSoundOnSucces), lockUid);
+
+            //_uiSystem.CloseUi(lockpickEntity.Owner, UniversalSecurityUiKey.Lockpick);
+
+            lockpickEntity.Comp.LockUid = null;
+            lockpickEntity.Comp.LockableUid = null;
+            lockpickEntity.Comp.User = null;
+
+            args.Handled = true;
+            return;
         }
 
         var state = new UniversalLockpickBuiState(lockComponent.MaxValue, lockComponent.Length, stateCode);
