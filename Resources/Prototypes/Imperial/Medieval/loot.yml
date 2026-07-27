@@ -39,11 +39,11 @@
         layer:
         - MachineLayer
   - type: EntityStorage
-    closeSound: 
+    closeSound:
       path: /Audio/Imperial/Medieval/Chest/chest_close.ogg
       params:
         variation: 0.05
-    openSound: 
+    openSound:
       path: /Audio/Imperial/Medieval/Chest/chest_open.ogg
       params:
         variation: 0.05
@@ -486,8 +486,6 @@
         prob: 0.05
       - id: MedievalClothingMaskPlague
         prob: 0.05
-      - id: MedievalMaceT3
-        prob: 0.005
       - id: MedievalHatchet
         prob: 0.005
       - id: MedievalMaskFace
@@ -528,14 +526,6 @@
         prob: 0.024
       - id: MedievalReliefStoneStrong
         prob: 0.01
-      - id: MedievalFalshionT3
-        prob: 0.004
-      - id: MedievalShortSword
-        prob: 0.004
-      - id: MedievalSaber
-        prob: 0.004
-      - id: MedievalPalice
-        prob: 0.004
       - id: MedievalMaceT3HeavyBone
         prob: 0.004
       - id: MedievalBanjoInstrument
@@ -557,9 +547,9 @@
       - id: MedievalClothingHeadHelmetNazal
         prob: 0.025
       - id: MedievalArrowIronPhysics
-        prob: 0.4
+        prob: 0.12
       - id: MedievalBolt
-        prob: 0.25
+        prob: 0.15
       - id: MedievalClothingOuterArmorStudded
         prob: 0.1
       - id: MedievalClothingBackpackSatchelLeather
@@ -571,7 +561,7 @@
       - id: MedievalClothingBackpackLeather
         prob: 0.07
       - id: BowImprovised
-        prob: 0.05
+        prob: 0.03
       - id: MedievalClothingHeadHelmetCrusader
         prob: 0.03
       - id: MedievalClothingHeadHelmetShapel
@@ -609,7 +599,7 @@
       - id: MedievalQuiverSteel
         prob: 0.055
       - id: MedievalPickaxe
-        prob: 0.072
+        prob: 0.012
       - id: MedievalKeyStorage
         prob: 0.07
       - id: MedievalClothingUniformJumpsuitShitCloth19
@@ -769,17 +759,17 @@
       - id: MedievalRevent5
         prob: 0.15
       - id: MedievalRevent10
-        prob: 0.045
+        prob: 0.08
       - id: MedievalFalshionRusty
-        prob: 0.045
+        prob: 0.08
       - id: MedievalMaceRusty
-        prob: 0.045
+        prob: 0.08
       - id: MedievalSpearRusty
-        prob: 0.045
+        prob: 0.08
       - id: MedievalSaberRusty
-        prob: 0.045
+        prob: 0.08
       - id: MedievalShortSwordRusty
-        prob: 0.045
+        prob: 0.08
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -955,10 +945,8 @@
         prob: 0.05
       - id: MedievalClothingMaskPlague
         prob: 0.05
-      - id: MedievalMaceT3
-        prob: 0.005
       - id: MedievalHatchet
-        prob: 0.005
+        prob: 0.002
       - id: MedievalMaskFace
         prob: 0.11
       - id: MedievalClothingOuterArmorLeatherLight
@@ -975,16 +963,8 @@
         prob: 0.024
       - id: MedievalReliefStoneStrong
         prob: 0.015
-      - id: MedievalFalshionT3
-        prob: 0.004
-      - id: MedievalShortSword
-        prob: 0.004
-      - id: MedievalSaber
-        prob: 0.004
-      - id: MedievalPalice
-        prob: 0.004
       - id: MedievalMaceT3HeavyBone
-        prob: 0.004
+        prob: 0.002
       - id: MedievalBanjoInstrument
         prob: 0.01
       - id: MedievalShovel
@@ -1223,10 +1203,6 @@
         prob: 0.4
       - id: MedievalHandheldHealthAnalyzer
         prob: 0.07
-      - id: MedievalIronHammer
-        prob: 0.005
-      - id: MedievalIronHalberdT3
-        prob: 0.005
       - id: MedievalGrenade
         prob: 0.08
       - id: MedievalGrenade
@@ -1256,7 +1232,7 @@
       - id: MedievalGear
         prob: 0.2
       - id: MedievalEbonitOre
-        prob: 0.1
+        prob: 0.076
       - id: MedievalChemistryRecipe
         prob: 0.35
       - id: MedievalForstoneOre
@@ -1306,15 +1282,15 @@
       - id: MedievalRevent10
         prob: 0.2
       - id: MedievalFalshionRusty
-        prob: 0.045
+        prob: 0.1
       - id: MedievalMaceRusty
-        prob: 0.045
+        prob: 0.1
       - id: MedievalSpearRusty
-        prob: 0.045
+        prob: 0.1
       - id: MedievalSaberRusty
-        prob: 0.045
+        prob: 0.1
       - id: MedievalShortSwordRusty
-        prob: 0.045
+        prob: 0.1
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -1488,8 +1464,6 @@
         prob: 0.05
       - id: MedievalClothingMaskPlague
         prob: 0.05
-      - id: MedievalMaceT3
-        prob: 0.05
       - id: MedievalHatchet
         prob: 0.05
       - id: MedievalMaskFace
@@ -1505,17 +1479,9 @@
       - id: MedievalScythe
         prob: 0.1
       - id: MedievalDaggerT3
-        prob: 0.24
-      - id: MedievalFalshionT3
-        prob: 0.04
-      - id: MedievalShortSword
-        prob: 0.04
-      - id: MedievalSaber
-        prob: 0.04
-      - id: MedievalPalice
-        prob: 0.04
+        prob: 0.14
       - id: MedievalMaceT3HeavyBone
-        prob: 0.04
+        prob: 0.03
       - id: MedievalBanjoInstrument
         prob: 0.1
       - id: MedievalScrollBarrier
@@ -1684,8 +1650,6 @@
         prob: 0.0008
       - id: MedievalClothingOuterArmorIronCuirassLight
         prob: 0.0015
-      - id: MedievalSpearT3
-        prob: 0.07
       - id: MedievalLockpickPack
         prob: 0.04
       - id: MedievalLockpick
@@ -1694,10 +1658,6 @@
         prob: 0.4
       - id: MedievalHandheldHealthAnalyzer
         prob: 0.07
-      - id: MedievalIronHammer
-        prob: 0.05
-      - id: MedievalIronHalberdT3
-        prob: 0.05
       - id: MedievalGrenade
         prob: 0.1
       - id: MedievalManaBurnGrenade
@@ -1895,15 +1855,15 @@
       - id: MedievalRevent10
         prob: 0.2
       - id: MedievalFalshionRusty
-        prob: 0.045
+        prob: 0.065
       - id: MedievalMaceRusty
-        prob: 0.045
+        prob: 0.065
       - id: MedievalSpearRusty
-        prob: 0.045
+        prob: 0.065
       - id: MedievalSaberRusty
-        prob: 0.045
+        prob: 0.065
       - id: MedievalShortSwordRusty
-        prob: 0.045
+        prob: 0.065
 
 - type: entity
   parent: MedievalCrateGeneric
@@ -2061,12 +2021,12 @@
       - id: MedievalRevent5
         prob: 0.03
       - id: MedievalFalshionRusty
-        prob: 0.015
+        prob: 0.035
       - id: MedievalMaceRusty
-        prob: 0.015
+        prob: 0.035
       - id: MedievalSpearRusty
-        prob: 0.015
+        prob: 0.035
       - id: MedievalSaberRusty
-        prob: 0.015
+        prob: 0.035
       - id: MedievalShortSwordRusty
-        prob: 0.015
+        prob: 0.035
