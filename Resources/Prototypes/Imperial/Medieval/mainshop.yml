@@ -600,7 +600,7 @@
     Revent: 50
   categories:
   - MedievalBuild
-  
+
 - type: listing
   id: MdvShopMedievalalchem_dispenserCraft
   productEntity: Medievalalchem_dispenserCraft
@@ -856,6 +856,14 @@
 - type: listing
   id: MdvShopMedievalSign9Craft
   productEntity: MedievalSign9Craft
+  cost:
+    Revent: 80
+  categories:
+  - MedievalBuild
+
+- type: listing
+  id: MdvShopMedievalSign10Craft
+  productEntity: MedievalSign10Craft
   cost:
     Revent: 80
   categories:

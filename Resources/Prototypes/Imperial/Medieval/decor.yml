@@ -258,7 +258,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 135
+        density: 300
         mask:
         - SmallMobMask
         layer:
@@ -316,7 +316,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 135
+        density: 300
         mask:
         - SmallMobMask
         layer:
@@ -374,7 +374,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 135
+        density: 300
         mask:
         - SmallMobMask
         layer:
@@ -432,7 +432,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 135
+        density: 300
         mask:
         - SmallMobMask
         layer:
@@ -1041,8 +1041,6 @@
           !type:PhysShapeCircle
           radius: 0.35
         density: 190
-        mask:
-        - MachineMask
         layer:
         - Opaque
 
@@ -1116,14 +1114,14 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.49
-        density: 190
+        density: 300
         mask:
         - SmallMobMask
         layer:
         - MachineLayer
   - type: Storage
     grid:
-    - 0,0,15,6
+    - 0,0,18,8
     maxItemSize: Ginormous
     storageOpenSound: /Audio/Imperial/Medieval/wood_open.ogg
     storageCloseSound: /Audio/Imperial/Medieval/wood_closed.ogg
@@ -1135,6 +1133,29 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+
+- type: entity
+  id: MedievalDecorBoxEmptyCraft
+  parent: BaseItem
+  components:
+  - type: RDWeight
+    value: 50
+  - type: Item
+    size: Ginormous
+  - type: SpawnAfterInteract
+    prototype: MedievalDecorBoxEmpty
+    doAfter: 5
+    deleteOnInteract: true
+  - type: Sprite
+    sprite: Imperial/Medieval/CraftBosses/stockade.rsi
+    state: icon
+
+- type: CP14Recipe
+  id: MedievalDecorBoxEmptyRecipe
+  craftTime: 5
+  stacks:
+    WoodPlank: 20
+  result: MedievalDecorBoxEmptyCraft
 
 - type: entity
   id: MedievalDecorBox
@@ -5692,10 +5713,12 @@
   description: "An always powered light."
   parent: CandleWall
   id: MedievalWalllamp
+  placement:
+    mode: SnapgridCenter
   components:
     - type: Sprite
       sprite: Imperial/Medieval/Decor/candle_wall3.rsi
-      drawdepth: WallMountedItems
+      drawdepth: OverMobs
       layers:
         - state: base
 
