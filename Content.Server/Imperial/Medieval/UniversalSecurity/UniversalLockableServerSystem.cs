@@ -347,6 +347,10 @@ public sealed class UniversalLockableServerSystem : EntitySystem
                 _lockSystem.ToggleLock(lockableEntity, null, lockComponent);
 
         Dirty(lockEntity);
+
+        var ev = new OnLockableKeyUsedSuccessEvent();
+        ev.NewLockState = lockEntity.Comp.IsLocked;
+        RaiseLocalEvent(lockableEntity, ev);
     }
 
     public void LockSpawnedLockable(Entity<UniversalLockComponent> lockEntity, Entity<UniversalLockableComponent> lockableEntity, ItemSlot slot)
