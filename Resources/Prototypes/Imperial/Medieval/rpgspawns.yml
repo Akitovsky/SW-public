@@ -1719,7 +1719,7 @@
   id: MedievalOreAstrolit
   parent: BannerBase
   name: astrolit ore vein
-  description: A rare ore 
+  description: A rare ore
   components:
   - type: Sprite
     sprite: Imperial/Medieval/Decor/medieval_decor.rsi
@@ -1742,9 +1742,9 @@
       - !type:SpawnEntitiesBehavior
         offset: 0.3
         spawn:
-          MedievalAstrolit:
-            min: 2
-            max: 3
+          MedievalAstrolitPiece:
+            min: 6
+            max: 12
   - type: Fixtures
     fixtures:
       fix1:
@@ -1789,10 +1789,10 @@
         Blunt: 6
   - type: Currency
     price:
-      Revent: 10
+      Revent: 12
   - type: MedievalCurrency
     price:
-      Revent: 30
+      Revent: 12
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -1814,6 +1814,43 @@
   name: materials-astrolit
   icon: { sprite: Imperial/Medieval/Materials/mdv.rsi, state: astrolit }
   spawn: MedievalAstrolit
+  maxCount: 30
+
+
+
+- type: entity
+  name: astrolit piece
+  parent: BaseItem
+  id: MedievalAstrolitPiece
+  description: rare crystall ore
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: astrolit_piece
+  - type: Tag
+    tags:
+    - RawMaterial
+    - Sheet
+    - Ore
+  - type: Stack
+    stackType: MedievalAstrolitPiece
+    count: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
+  - type: Currency
+    price:
+      Revent: 2
+  - type: MedievalCurrency
+    price:
+      Revent: 2
+
+- type: stack
+  id: MedievalAstrolitPiece
+  name: materials-astrolit-piece
+  icon: { sprite: Imperial/Medieval/Materials/mdv.rsi, state: astrolit_piece }
+  spawn: MedievalAstrolitPiece
   maxCount: 30
 
 - type: entity

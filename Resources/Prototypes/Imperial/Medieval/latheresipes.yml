@@ -89,6 +89,13 @@
   result: MedievalScrollBarrier
 
 - type: CP14Recipe
+  id: MedievalAstrolit
+  craftTime: 4
+  stacks:
+    MedievalAstrolitPiece: 3
+  result: MedievalAstrolit
+
+- type: CP14Recipe
   id: MedievalDecorMogila2Craft
   craftTime: 5
   stacks:
