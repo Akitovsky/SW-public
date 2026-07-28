@@ -962,6 +962,25 @@
     - MedievalDecorBoxEmptyRecipe
 
 - type: entity
+  parent: MedievalFoundry
+  id: MedievalFoundryMines
+  name: foundry
+  description: It produces sheets and ingots using ores.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Lathe/foundry_mines.rsi
+    state: icon
+  - type: CP14Workbench
+    craftSpeed: 3
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 880
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
   parent: CP14BaseWorkbench
   id: MedievalFoundry
   name: foundry
