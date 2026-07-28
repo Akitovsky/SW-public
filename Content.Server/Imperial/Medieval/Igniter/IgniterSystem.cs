@@ -1,10 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Imperial.Medieval.Cannon;
 using Content.Shared.Atmos.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IgnitionSource;
-using Content.Shared.Imperial.Medieval.Cannon;
 using Content.Shared.Imperial.Medieval.Igniter;
 using Content.Shared.Interaction;
 using Robust.Server.Audio;

@@ -1,16 +1,15 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Imperial.Medieval.Cannon;
+namespace Content.Server.Imperial.Medieval.Cannon;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, ComponentProtoName("Canon")]
+[RegisterComponent, ComponentProtoName("Canon")]
 public sealed partial class CannonComponent : Component
 {
-    [DataField("state"), AutoNetworkedField]
+    [DataField("state")]
     public CannonState State = CannonState.Empty;
 
     [DataField("ammoContainerId")]

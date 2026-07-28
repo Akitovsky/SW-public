@@ -1,4 +1,4 @@
-namespace Content.Shared.Imperial.Medieval.Cannon;
+namespace Content.Server.Imperial.Medieval.Cannon;
 
 public enum CannonState : byte
 {
