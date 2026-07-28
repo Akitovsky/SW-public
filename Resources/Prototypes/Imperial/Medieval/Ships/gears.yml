@@ -7,6 +7,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: Tag
+    tags:
+    - PreventShipFloorBreakage
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -26,7 +29,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - FlimsyLayer
         density: 1000
   - type: Appearance
   - type: GenericVisualizer
@@ -88,7 +91,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - FlimsyLayer
         density: 1000
 
 - type: entity
