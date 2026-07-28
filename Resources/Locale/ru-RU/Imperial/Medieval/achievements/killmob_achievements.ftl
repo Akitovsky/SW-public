@@ -118,12 +118,6 @@ achievement-desc-kill-wolf-1 = Убить первого волка
 achievement-name-kill-wolf-25 = Волчья стая II
 achievement-desc-kill-wolf-25 = Убить 25 волков
 
-achievement-name-kill-wolf-25 = Волчья стая II
-achievement-desc-kill-wolf-25 = Убить 25 волков
-
-achievement-name-kill-wolf-25 = Волчья стая II
-achievement-desc-kill-wolf-25 = Убить 25 волков
-
 achievement-name-kill-wolf-75 = Волчья стая III
 achievement-desc-kill-wolf-75 = Убить 75 волков
 
