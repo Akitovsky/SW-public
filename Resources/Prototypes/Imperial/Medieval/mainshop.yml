@@ -2426,6 +2426,30 @@
   - MedievalMisc
 
 - type: listing
+  id: MdvShopMedievalGunpowderCharge
+  productEntity: MedievalGunpowderCharge
+  cost:
+    Revent: 12
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalGrapeshot
+  productEntity: MedievalGrapeshot
+  cost:
+    Revent: 12
+  categories:
+  - MedievalMisc
+
+- type: listing
+  id: MdvShopMedievalRamrod
+  productEntity: MedievalRamrod
+  cost:
+    Revent: 24
+  categories:
+  - MedievalMisc
+
+- type: listing
   id: MdvShopMedievalHammerBlacksmith
   productEntity: MedievalHammerBlacksmith
   cost:

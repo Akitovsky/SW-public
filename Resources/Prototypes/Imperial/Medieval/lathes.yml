@@ -997,6 +997,7 @@
     craftSpeed: 1
     craftSound: "/Audio/Imperial/Medieval/craft_foundry.ogg"
     recipes:
+    - MedievalAstrolitPiece
     - MedievalGlinaFormaReady
     - FoodBowlBig
     - SheetSteelMedieval
@@ -1054,6 +1055,7 @@
     - RecycleCrystalToEssenceFire
     - RecycleCrystalToEssenceLight
     - RecycleCrystalToEssenceEarth
+    - MedievalScrollBarrier
     - MedievalManaBurnGrenade
     - MedievalGlowStone
     - MedievalCompactDefibrillator
@@ -1283,6 +1285,7 @@
     - BarberScissors
     - MedievalGrenade
     - MedievalLintstock
+    - MedievalRamrod
     - MedievalGunpowderCharge
     - MedievalCannonballShip
     - MedievalCannonballExplosive

@@ -22,8 +22,8 @@
     NegativeLockpickChanceModifier: 0
     PositiveEquipDelayModifier: -0.07
     NegativeEquipDelayModifier: 0.07
-    PositiveSpreadModifier: -0.08
-    NegativeSpreadModifier: 0.05
+    PositiveSpreadModifier: -0.25
+    NegativeSpreadModifier: 0.1
     PositiveStealChanceModifier: 0.04
     NegativeStealChanceModifier: -0.15
     PositiveLockpickLossModifier: -0.09
