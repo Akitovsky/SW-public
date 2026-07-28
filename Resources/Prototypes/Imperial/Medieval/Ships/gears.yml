@@ -31,12 +31,11 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.MedievalAnchorVisuals.Enabled:
+      enum.MedievalAnchorVisuals.Lowered:
         base:
           True: {state: down}
           False: {state: up}
   - type: MedievalAnchor
-    Enabled: false
   - type: Lock
     locked: false
     showLockVerbs: false
