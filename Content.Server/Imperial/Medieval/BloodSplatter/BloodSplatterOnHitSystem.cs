@@ -39,6 +39,7 @@ public sealed class BloodSplatterOnHitSystem : EntitySystem
         if (args.Cancelled ||
             !args.Damage.AnyPositive() ||
             args.Origin is not { } origin ||
+            origin == ent.Owner ||
             !HasComp<MobStateComponent>(origin))
         {
             return;
