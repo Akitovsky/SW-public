@@ -1,0 +1,63 @@
+- type: entity
+  name: MedievalClothingOuterArmorCharmerLightGrayWizardSKIN
+  parent: MedievalClothingOuterArmorCharmerLight
+  id: MedievalClothingOuterArmorCharmerLightGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_robe.rsi
+  - type: Clothing
+    equipDelay: 4
+    unequipDelay: 4
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_robe.rsi
+
+- type: entity
+  parent: MedievalClothingHeadHelmetCharmer
+  name: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
+  id: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+
+- type: entity
+  name: MedievalClothingOuterArmorCharmerLightGrayWizardSKIN
+  parent: MedievalClothingOuterArmorCharmerWeak
+  id: MedievalClothingOuterArmorCharmerWeakGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_robe.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_robe.rsi
+
+- type: entity
+  name: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
+  parent: MedievalClothingHeadHelmetCharmerWeak
+  id: MedievalClothingHeadHelmetCharmerWeakGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: MedievalClothingNeckCloakGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_coat.rsi
+  - type: Insulated
+
+- type: entity
+  parent: MedievalBlackHat
+  name: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
+  id: MedievalBlackHatGrayWizardSKIN
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_helmet.rsi
+  - type: Item
+    size: Normal
+  - type: ManaRegen
+    regen: 0.5

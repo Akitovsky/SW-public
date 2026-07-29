@@ -1,0 +1,185 @@
+- type: entity
+  parent: MedievalClothingOuterArmorIronCuirassLight
+  id: MedievalClothingOuterArmorIronCuirassLightCopperKnight
+  name: iron armor cuirass
+  description: An armored iron plate to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorBrigantin
+  id: MedievalClothingOuterArmorBrigantinCopperKnight
+  name: armor
+  description: An armored northern armor to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorIronCuirass
+  id: MedievalClothingOuterArmorIronCuirassCopperKnight
+  name: iron armor cuirass
+  description: An armored iron plate to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorChainMail
+  id: MedievalClothingOuterArmorChainMailCopperKnight
+  name: iron armor cuirass
+  description: An armored iron plate to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorIron
+  id: MedievalClothingOuterArmorIronCopperKnight
+  name: cloth
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron2
+  id: MedievalClothingOuterArmorUpIron2CopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron3
+  id: MedievalClothingOuterArmorUpIron3CopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron
+  id: MedievalClothingOuterArmorUpIronCopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorEbonit
+  id: MedievalClothingOuterArmorEbonitCopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorEbonit2
+  id: MedievalClothingOuterArmorEbonit2CopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorForstone
+  id: MedievalClothingOuterArmorForstoneCopperKnight
+  name: upgrade iron armor
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingHeadHelmetCrusader
+  id: MedievalClothingHeadHelmetCopperKnight
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_helmet.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_helmet.rsi
+  - type: IngestionBlocker
+    enabled: false
+  - type: IdentityBlocker
+    enabled: false
+
+- type: entity
+  parent: MedievalIronGloves
+  id: MedievalIronGlovesCopperKnight
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_gloves.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_gloves.rsi
+
+- type: entity
+  parent: MedievalClothingFeetSteel
+  id: MedievalClothingFeetSteelCopperKnight
+  components:
+  - type: Sprite
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_boots.rsi
+  - type: Clothing
+    scale: 1.7,1.7
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_boots.rsi

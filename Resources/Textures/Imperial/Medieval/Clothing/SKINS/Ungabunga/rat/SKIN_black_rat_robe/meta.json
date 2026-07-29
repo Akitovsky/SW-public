@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "ICLA",
+    "copyright": "by Discord: ungabunga0464_99904",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-INNERCLOTHING",
+            "directions": 4
+        }
+    ]
+}
