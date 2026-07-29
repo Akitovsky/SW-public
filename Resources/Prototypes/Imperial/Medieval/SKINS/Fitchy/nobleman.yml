@@ -1,0 +1,48 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: MedievalClothingNeckCloakFitchy
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/cloak.rsi
+  - type: Insulated
+  - type: ToggleableClothing
+    clothingPrototype: ClothingMedievalHeadHatHoodCloakFitchy
+    requiredSlot:
+    - neck
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingMedievalHeadHatHoodCloakFitchy
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/head.rsi
+  - type: Clothing
+    equipDelay: 2
+    unequipDelay: 2
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/head.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+  - type: Insulated
+
+- type: entity
+  parent: MedievalSaber
+  id: MedievalSaberFitchy
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+    state: icon
+    size: Small
+  - type: Item
+    size: Normal
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+    slots:
+    - back
+    - suitStorage
+    - belt
+    quickEquip: false
