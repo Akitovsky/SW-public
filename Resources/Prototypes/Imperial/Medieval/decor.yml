@@ -5427,6 +5427,10 @@
   name: nanotrasen banner
   description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
+  - type: Tag
+    tags:
+    - Structure
+    - PreventShipFloorBreakage
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -5706,7 +5710,7 @@
   components:
     - type: Sprite
       sprite: Imperial/Medieval/Decor/flagpole.rsi
-      state: flag
+      state: flagpole
 
 - type: entity
   name: small light

@@ -960,6 +960,7 @@
     - MedievalWoodenFloorRoofItem
     - MedievalCartRecipe
     - MedievalDecorBoxEmptyRecipe
+    - MedievalFlagpoleShipRecipe
 
 - type: entity
   parent: MedievalFoundry
