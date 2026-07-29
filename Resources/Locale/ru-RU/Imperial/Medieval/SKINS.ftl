@@ -1,0 +1,9 @@
+ent-MedievalClothingOuterArmorCharmerLightGrayWizardSKIN = роба серого мага
+    .desc = Ты не пройдешь!
+    .suffix = { "Средневековье, СКИН" }
+ent-MedievalClothingHeadHelmetCharmerGrayWizardSKIN = шляпа серого мага
+    .desc = Ты пройдешь!
+    .suffix = { "Средневековье, СКИН" }
+ent-MedievalClothingNeckCloakGrayWizardSKIN = плащ серого мага
+    .desc = А может и белого
+    .suffix = { "Средневековье, СКИН" }
