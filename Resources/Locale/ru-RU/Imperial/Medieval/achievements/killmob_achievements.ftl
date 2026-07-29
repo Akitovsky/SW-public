@@ -11,7 +11,7 @@ achievement-name-kill-skelet-weak-75 = Слабый скелет III
 achievement-desc-kill-skelet-weak-75 = Убейте 75 слабых скелетов
 
 achievement-name-kill-skelet-weak-150 = Слабый скелет IV
-achievement-desc-kill-skelet-weak-75 = Убейте 150 слабых скелетов
+achievement-desc-kill-skelet-weak-150 = Убейте 150 слабых скелетов
 
 achievement-name-kill-skelet-weak-500 = Слабый скелет V
 achievement-desc-kill-skelet-weak-500 = Убейте 500 слабых скелетов
