@@ -5710,7 +5710,7 @@
   components:
     - type: Sprite
       sprite: Imperial/Medieval/Decor/flagpole.rsi
-      state: flag
+      state: flagpole
 
 - type: entity
   name: small light
