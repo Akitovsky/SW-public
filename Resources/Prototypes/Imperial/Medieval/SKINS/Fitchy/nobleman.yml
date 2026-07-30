@@ -46,3 +46,25 @@
     - suitStorage
     - belt
     quickEquip: false
+
+- type: entity
+  name: falshion
+  parent: MedievalFalshionT3
+  id: MedievalFalshionT3Fitchy
+  description: An ancient war blade.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+
+- type: entity
+  name: falshion
+  parent: MedievalFalshionT3Legion
+  id: MedievalFalshionT3LegionChainMaceFitchy
+  description: An ancient war blade.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Fitchy/NobleMan/champir.rsi

@@ -11,7 +11,7 @@
     sprite: Imperial/Medieval/Clothing/SKINS/Leonid/gray_wizard/gray_wizard_robe.rsi
 
 - type: entity
-  parent: MedievalClothingHeadHelmetCharmer
+  parent: MedievalClothingHeadHelmetCollegiumPurpleHat
   name: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
   id: MedievalClothingHeadHelmetCharmerGrayWizardSKIN
   components:

@@ -1,0 +1,141 @@
+- type: entity
+  parent: MedievalClothingOuterArmorBrigantin
+  id: MedievalClothingOuterArmorBrigantinBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeatherHeavy
+  id: MedievalClothingOuterArmorLeatherHeavyBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeatherLight
+  id: MedievalClothingOuterArmorLeatherLightBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorStudded
+  id: MedievalClothingOuterArmorStuddedBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeather
+  id: MedievalClothingOuterArmorLeatherBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingFeetNorthern
+  id: MedievalClothingFeetSteelBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+    slots:
+    - FEET
+    equipDelay: 0.01
+    unequipDelay: 0.01
+    equipSound:
+      path: /Audio/Imperial/Medieval/shoes_equip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/shoes_unequip.ogg
+
+- type: entity
+  parent: MedievalShoesChamber
+  id: MedievalClothingFeetSteelBaron2
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+    slots:
+    - FEET
+    equipDelay: 0.01
+    unequipDelay: 0.01
+    equipSound:
+      path: /Audio/Imperial/Medieval/shoes_equip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/shoes_unequip.ogg
+
+- type: entity
+  parent: MedievalClothingHeadHelmetShapel
+  id: MedievalClothingHeadHelmetBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+
+- type: entity
+  parent: MedievalClothingHeadHelmetCollegiumPurpleHat
+  id: MedievalClothingHeadHelmetCollegiumPurpleHatBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+
+- type: entity
+  parent: MedievalClothingUniformJumpsuitShitCloth23
+  id: MedievalClothingUniformJumpsuitBaron2
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MedievalClothingUniformJumpsuitBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Insulated
+
+- type: entity
+  parent: ClothingNeckBase
+  id: MedievalClothingNeckCloakBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_coat.rsi
+  - type: Insulated
+
+- type: entity
+  parent: MedievalClothingOuterArmorCharmerWeak
+  id: MedievalClothingOuterArmorCharmerWeakBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorCharmerLight
+  id: MedievalClothingOuterArmorCharmerLightBaron
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
