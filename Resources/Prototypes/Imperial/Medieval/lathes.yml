@@ -1017,7 +1017,7 @@
     craftSpeed: 1
     craftSound: "/Audio/Imperial/Medieval/craft_foundry.ogg"
     recipes:
-    - MedievalAstrolitPiece
+    - MedievalAstrolit
     - MedievalGlinaFormaReady
     - FoodBowlBig
     - SheetSteelMedieval
