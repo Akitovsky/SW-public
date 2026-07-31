@@ -7,6 +7,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: Tag
+    tags:
+    - PreventShipFloorBreakage
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -26,17 +29,16 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - FlimsyLayer
         density: 1000
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.MedievalAnchorVisuals.Enabled:
+      enum.MedievalAnchorVisuals.Lowered:
         base:
           True: {state: down}
           False: {state: up}
   - type: MedievalAnchor
-    Enabled: false
   - type: Lock
     locked: false
     showLockVerbs: false
@@ -89,7 +91,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - FlimsyLayer
         density: 1000
 
 - type: entity

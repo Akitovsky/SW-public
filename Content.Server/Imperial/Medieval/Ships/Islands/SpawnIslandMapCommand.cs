@@ -11,7 +11,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Imperial.Medieval.Ships.Islands;
 
@@ -55,20 +54,7 @@ public sealed class SpawnIslandMapCommand : IConsoleCommand
         moles[(int)Gas.Nitrogen] = 82.10312f;
         atmos.SetMapAtmosphere(mapUid, false, new GasMixture(moles, Atmospherics.T20C));
 
-        var gen = _entMan.AddComponent<IslandRadialGenerationComponent>(mapUid);
-        gen.LowIslands = new List<ResPath>
-        {
-            new("/Maps/Imperial/Medieval/Islands/IslandLow52.yml"),
-        };
-        gen.MediumIslands = new List<ResPath>
-        {
-            new("/Maps/Imperial/Medieval/Islands/IslandMedium56.yml"),
-        };
-        gen.HighIslands = new List<ResPath>
-        {
-            new("/Maps/Imperial/Medieval/Islands/IslandHard10.yml"),
-            new("/Maps/Imperial/Medieval/Islands/IslandHard24.yml"),
-        };
+        _entMan.AddComponent<IslandRadialGenerationComponent>(mapUid);
 
         mapSys.InitializeMap(mapId);
 

@@ -37,7 +37,7 @@ public sealed partial class MedievalCartographerTableNavControl : BaseShuttleCon
     private List<CartographerRadarMarkerData> _radarMarkers = new();
     [Dependency] private readonly IResourceCache _resCache = default!;
 
-    public MedievalCartographerTableNavControl() : base(64f, 256f, 256f)
+    public MedievalCartographerTableNavControl() : base(32f, 256f, 256f)
     {
         RobustXamlLoader.Load(this);
         _shuttles = EntManager.System<SharedShuttleSystem>();
@@ -51,8 +51,8 @@ public sealed partial class MedievalCartographerTableNavControl : BaseShuttleCon
 
         WorldMaxRange = state.MaxRange;
 
-        if (WorldMaxRange < WorldRange)
-            ActualRadarRange = WorldMaxRange;
+        if (WorldRange > WorldMaxRange)
+            WorldRange = WorldMaxRange;
 
         if (WorldMaxRange < WorldMinRange)
             WorldMinRange = WorldMaxRange;
