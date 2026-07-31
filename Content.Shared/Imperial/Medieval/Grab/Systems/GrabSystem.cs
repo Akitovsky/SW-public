@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
@@ -58,6 +59,7 @@ public sealed class GrabSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     #endregion
 
@@ -581,6 +583,8 @@ public sealed class GrabSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("grab-popup-success"), grabbableUid, grabberUid);
         _popup.PopupEntity(Loc.GetString("grabbed-popup"), grabberUid, grabbableUid);
+
+        _adminLogger.Add(Database.LogType.Action, Database.LogImpact.Medium, $"{ToPrettyString(grabberUid)} grabbed \"{ToPrettyString(grabbableUid)}\" at coords {Transform(grabbableUid).Coordinates}");
     }
 
     public bool TryStopGrab(EntityUid grabbableUid, GrabbableComponent grabbableComp, EntityUid? user = null)
@@ -613,6 +617,8 @@ public sealed class GrabSystem : EntitySystem
                 grabbableComp.GrabJointId = null;
             }
         }
+
+        _adminLogger.Add(Database.LogType.Action, Database.LogImpact.Medium, $"{ToPrettyString(grabbableComp.Grabber)} stop grabbing \"{ToPrettyString(grabbableUid)}\" at coords {Transform(grabbableUid).Coordinates}");
 
         var oldGrabber = grabbableComp.Grabber;
         grabbableComp.Grabber = null;
