@@ -890,6 +890,7 @@
     - MedievalAlchemicBelt
     - MedievalClothingHeadHatCowboyBrown
     - MedievalCultConductor
+    - MedievalSleepingBag
 
 - type: entity
   parent: CP14BaseWorkbench
