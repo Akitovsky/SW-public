@@ -5512,7 +5512,7 @@
         - state: fire
           shader: unshaded
     - type: PointLight
-      color: "#e39c40"
+      color: "#f1ce9f"
       radius: 3.5
       power: 10
     - type: Physics
