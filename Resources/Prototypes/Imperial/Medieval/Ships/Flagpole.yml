@@ -57,6 +57,11 @@
           Purple: { state: purpleflag }
           Yellow: { state: yellowflag }
           Blue: { state: blueflag }
+          Pirate: { state: pirateflag }
+          Legion: { state: legionflag }
+          Insurgency: { state: foxflag }
+          Collegium: { state: wizflag }
+          Mercenary: { state: mercflag }
           None: { state: transparent }
   - type: Appearance
   - type: UserInterface
