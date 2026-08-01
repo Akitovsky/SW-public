@@ -1,8 +1,9 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Imperial.Medieval.PlayerCreations.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Imperial.Medieval.CCVar;
+using Content.Shared.Imperial.Medieval.PlayerCreations;
 using Content.Shared.Imperial.Medieval.PlayerCreations.Books;
 using Content.Shared.Paper;
 using Robust.Shared.Configuration;
@@ -19,7 +20,8 @@ public sealed class RandomCreationsBookSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private Dictionary<string, int> _booksSpawned = new();
-
+    private List<CreationBook>? _acceptedBooksCache;
+    private Task<List<CreationBook>>? _acceptedBooksLoading;
 
     public override void Initialize()
     {
@@ -32,12 +34,27 @@ public sealed class RandomCreationsBookSystem : EntitySystem
     public void OnRoundStart(RoundStartedEvent args)
     {
         _booksSpawned = new();
+        _acceptedBooksCache = null;
+        _acceptedBooksLoading = null;
+    }
+
+    private async Task<List<CreationBook>> GetAcceptedBooksCachedAsync()
+    {
+        if (_acceptedBooksCache != null)
+            return _acceptedBooksCache;
+
+        _acceptedBooksLoading ??= _creations.GetAcceptedCreationBooks();
+
+        var result = await _acceptedBooksLoading;
+        _acceptedBooksCache = result;
+        return result;
     }
 
     public async void OnStartup(EntityUid uid, RandomCreationsBookComponent comp, ComponentStartup args)
     {
         var maxPaintings = _cfg.GetCVar(MedievalCCVars.CreationsMaxBooks);
-        var acceptedBooks = await _creations.GetAcceptedCreationBooks();
+        var cached = await GetAcceptedBooksCachedAsync();
+        var acceptedBooks = new List<CreationBook>(cached);
 
         foreach (var spawned in _booksSpawned)
         {
