@@ -86,7 +86,7 @@ public sealed partial class ShipBuyTerminalMenu : DefaultWindow
 
             var nameLabel = new Label
             {
-                Text = offer.DisplayName,
+                Text = Loc.GetString(offer.DisplayName),
                 HorizontalExpand = true,
             };
 
@@ -116,12 +116,14 @@ public sealed partial class ShipBuyTerminalMenu : DefaultWindow
 
             if (!string.IsNullOrWhiteSpace(offer.DisplayDescription))
             {
-                var descLabel = new Label
+                var descLabel = new RichTextLabel
                 {
-                    Text = offer.DisplayDescription,
-                    Modulate = Color.FromHex("#AAAAAA"),
+                    HorizontalExpand = true,
                     Margin = new Thickness(2, 1, 0, 0),
                 };
+                descLabel.SetMessage(
+                    Loc.GetString(offer.DisplayDescription),
+                    defaultColor: Color.FromHex("#AAAAAA"));
                 entry.AddChild(descLabel);
             }
 
