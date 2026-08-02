@@ -96,7 +96,7 @@ public sealed class ChargeableAnnounceSystem : EntitySystem
         if (Deleted(comp.OwnerUid.Value))
             return;
 
-        var ownerName = Identity.Name(comp.OwnerUid.Value, EntityManager);
+        var ownerName = Name(comp.OwnerUid.Value);
         args.PushMarkup($"[color=gray]Владелец: {ownerName}[/color]");
     }
 
