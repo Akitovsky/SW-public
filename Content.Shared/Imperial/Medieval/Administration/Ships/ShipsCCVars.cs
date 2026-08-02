@@ -93,6 +93,8 @@ public sealed class ShipsCCVars : CVars
     /// </summary>
     public static readonly CVarDef<int> WaveMaxBreakCount =
         CVarDef.Create("ships.wavemaxbreakcount", 3, CVar.REPLICATED | CVar.SERVER);
+    public static readonly CVarDef<float> TileBreakChancePerStormLevel =
+        CVarDef.Create("ships.tilebreakchanceperstormlevel", 0.12f, CVar.REPLICATED | CVar.SERVER);
     /// <summary>
     /// Минимальный уровень для поломки лодки (Шторма если кто не понял)
     /// </summary>
