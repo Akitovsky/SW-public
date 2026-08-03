@@ -32,12 +32,37 @@ public sealed class WaystoneListWindow : DefaultWindow
         _container.DisposeAllChildren();
         foreach (var wp in waystones)
         {
+            string prefix = "";
+            bool isDisabled = false;
+
+            if (!wp.IsEnable)
+            {
+                prefix = Loc.GetString("waystone-ui-enabled");
+                isDisabled = true;
+            }
+            else if (wp.IsEnemy)
+            {
+                prefix = Loc.GetString("waystone-ui-enemy");
+                isDisabled = true;
+            }
+
             var button = new Button
             {
-                Text = $"{wp.Name}. Цена: {wp.DeparturePrice + wp.ArrivalPrice} ({wp.DeparturePrice}  +  {wp.ArrivalPrice})",
-                HorizontalExpand = true
+                Text = Loc.GetString("waystone-ui-button-format",
+                    ("prefix", prefix),
+                    ("name", wp.Name),
+                    ("total", wp.DeparturePrice + wp.ArrivalPrice),
+                    ("dep", wp.DeparturePrice),
+                    ("arr", wp.ArrivalPrice)),
+                HorizontalExpand = true,
+                Disabled = isDisabled
             };
-            button.OnPressed += _ => OnItemSelected?.Invoke(wp.Entity);
+
+            if (!isDisabled)
+            {
+                button.OnPressed += _ => OnItemSelected?.Invoke(wp.Entity);
+            }
+
             _container.AddChild(button);
         }
     }

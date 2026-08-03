@@ -178,22 +178,26 @@ public sealed class WaystoneSystem : EntitySystem
         var query = EntityQueryEnumerator<WaystoneComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (!comp.IsEnable)
-                continue;
-
             Entity<WaystoneComponent> entityTarget = (uid, comp);
             if (entityTarget.Owner == entity.Owner)
                 continue;
 
             var targetFaction = entityTarget.Comp.Faction;
 
-            if (_factionsSystem.IsRelationEnemy(faction, targetFaction))
-                continue;
-            if (member is not null &&
-                _factionsSystem.IsRelationEnemy(member.Faction, targetFaction))
-                continue;
+            bool isEnemy = _factionsSystem.IsRelationEnemy(faction, targetFaction);
 
-            infoList.Add(new WaystoneInfo(GetNetEntity(entityTarget), entityTarget.Comp.Name, CountDeparturePrice(entity, args.User), CountArrivalPrice(entityTarget, args.User), entity.Comp.IsEnable));
+            if (!isEnemy && member is not null)
+            {
+                isEnemy = _factionsSystem.IsRelationEnemy(member.Faction, targetFaction);
+            }
+
+            infoList.Add(new WaystoneInfo(
+                GetNetEntity(entityTarget),
+                entityTarget.Comp.Name,
+                CountDeparturePrice(entity, args.User),
+                CountArrivalPrice(entityTarget, args.User),
+                entityTarget.Comp.IsEnable,
+                isEnemy));
         }
 
         _uiSystem.SetUiState(entity.Owner, WaystoneUiKey.Key, new WaystoneUpdateState(infoList));
@@ -517,7 +521,7 @@ public sealed class WaystoneSystem : EntitySystem
 
     private void UpdateAdminUI(Entity<WaystoneComponent> entity)
     {
-        var info = new WaystoneInfo(GetNetEntity(entity), entity.Comp.Name, entity.Comp.DeparturePrice, entity.Comp.ArrivalPrice, entity.Comp.IsEnable);
+        var info = new WaystoneInfo(GetNetEntity(entity), entity.Comp.Name, entity.Comp.DeparturePrice, entity.Comp.ArrivalPrice, entity.Comp.IsEnable, false);
         var state = new WaystoneUpdateState(new List<WaystoneInfo> { info });
 
         _uiSystem.SetUiState(entity.Owner, WaystoneUiKey.AdminKey, state);
