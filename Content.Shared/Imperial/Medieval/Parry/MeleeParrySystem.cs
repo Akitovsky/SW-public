@@ -249,14 +249,31 @@ namespace Content.Shared.MeleeParry
 
         private void OnStaminaDamage(EntityUid uid, MeleeParryAbleComponent component, ref BeforeStaminaDamageEvent args)
         {
-            var item = _hands.GetActiveItem(uid);
-            if (!TryComp<MeleeParryComponent>(item, out var parry)) return;
+            if (args.Cancelled || args.Origin == null)
+                return;
 
-            if (parry.LastSuccessParriedAttacker == args.Origin &&
-               (_timing.CurTime - parry.LastSuccessParriedTime).TotalSeconds < 3f)
+            var item = _hands.GetActiveItem(uid);
+            if (!TryComp<MeleeParryComponent>(item, out var parry))
+                return;
+
+            var attacker = args.Origin.Value;
+            var attackerItem = _hands.GetActiveItem(attacker);
+
+            var weaponEntity = attackerItem ?? attacker;
+
+            if (!TryComp<MeleeWeaponComponent>(weaponEntity, out var meleeWeaponComponent))
+                return;
+
+            if (!meleeWeaponComponent.Damage.DamageDict.TryGetValue("ParryAble", out var parryDMG))
+                return;
+
+            if (attackerItem != null && TryComp<MedievalWeaponSkillCategoryComponent>(attackerItem.Value, out var skillComp))
+                parryDMG *= skillComp.Skill.GetParryData().Able;
+
+
+            if (CheckParryable(uid, (float)parryDMG, out _, out _, out _, out _))
             {
-                parry.LastSuccessParriedAttacker = null;
-                parry.LastSuccessParriedTime = TimeSpan.Zero;
+
                 Dirty(item.Value, parry);
                 args.Cancelled = true;
             }
@@ -277,8 +294,6 @@ namespace Content.Shared.MeleeParry
             {
                 args.Cancelled = true;
 
-                parry.LastSuccessParriedAttacker = args.Origin;
-                parry.LastSuccessParriedTime = _timing.CurTime;
                 parry.ParriedTime = TimeSpan.Zero;
 
                 parryStorage.NextParryTime = TimeSpan.Zero;

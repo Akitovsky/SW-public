@@ -6,12 +6,6 @@ namespace Content.Shared.MeleeParry.Components
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class MeleeParryComponent : Component
     {
-        [ViewVariables(VVAccess.ReadOnly)]
-        public EntityUid? LastSuccessParriedAttacker; //Нужно для парирования урона стамине, после этого оно обнулится
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public TimeSpan LastSuccessParriedTime;  //Нужно для парирования урона стамине, после этого оно обнулится
-
         [DataField]
         [ViewVariables(VVAccess.ReadOnly)]
         public TimeSpan ParriedTime = TimeSpan.Zero;
