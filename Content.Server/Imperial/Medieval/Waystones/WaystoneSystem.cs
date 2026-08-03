@@ -69,7 +69,8 @@ public sealed class WaystoneSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             Entity<WaystoneComponent> entity = (uid, comp);
-            if (entity.Comp.BookedTime < _timing.CurTime && entity.Comp.BookedTime != TimeSpan.Zero)
+            if (entity.Comp.BookedTime != TimeSpan.Zero && entity.Comp.BookedTime < _timing.CurTime ||
+                entity.Comp.User is { } user && (!Exists(user) || !_transform.InRange(entity.Owner, user, 3f)))
             {
                 ClearUserSelection(entity, null);
 
@@ -84,6 +85,19 @@ public sealed class WaystoneSystem : EntitySystem
 
         if (_timer > 1f)
             _timer = 0;
+    }
+    public bool IsWithinRange(EntityUid firstEntity, EntityUid secondEntity, float range)
+    {
+        var firstXform = Transform(firstEntity);
+        var secondXform = Transform(secondEntity);
+
+        if (firstXform.MapID != secondXform.MapID)
+            return false;
+
+        var firstPos = _transform.GetMapCoordinates(firstEntity, firstXform);
+        var secondPos = _transform.GetMapCoordinates(secondEntity, secondXform);
+
+        return (firstPos.Position - secondPos.Position).LengthSquared() <= (range * range);
     }
 
     public void UpdateEnergy(Entity<WaystoneComponent> entity)
