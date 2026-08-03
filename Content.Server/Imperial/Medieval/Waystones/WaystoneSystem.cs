@@ -261,14 +261,21 @@ public sealed class WaystoneSystem : EntitySystem
     {
         if (args.Cancelled || args.Handled)
         {
-            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-connection-loss"), InGameICChatType.Speak, true);
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-doafter-cancelled"), InGameICChatType.Speak, true);
             ClearUserSelection(entity, Transform(args.User).Coordinates);
             return;
         }
 
         if (entity.Comp.SelectedWaystone is not { } selectedWaystone ||
-            !TryComp<WaystoneComponent>(selectedWaystone, out var targetComp)||
-            !targetComp.IsEnable)
+            !TryComp<WaystoneComponent>(selectedWaystone, out var targetComp))
+        {
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-waystone-error"), InGameICChatType.Speak, true);
+            ClearUserSelection(entity, Transform(args.User).Coordinates);
+            args.Handled = true;
+            return;
+        }
+
+        if (!targetComp.IsEnable)
         {
             _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-connection-loss"), InGameICChatType.Speak, true);
             ClearUserSelection(entity, Transform(args.User).Coordinates);
