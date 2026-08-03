@@ -72,6 +72,12 @@ public sealed class WaystoneSystem : EntitySystem
             if (entity.Comp.BookedTime != TimeSpan.Zero && entity.Comp.BookedTime < _timing.CurTime ||
                 entity.Comp.User is { } user && (!Exists(user) || !_transform.InRange(entity.Owner, user, 3f)))
             {
+                if (entity.Comp.ActiveDoAfterId != null)
+                {
+                    _doAfterSystem.Cancel(entity.Comp.ActiveDoAfterId);
+                    entity.Comp.ActiveDoAfterId = null;
+                }
+
                 ClearUserSelection(entity, null);
 
                 _chat.TrySendInGameICMessage(entity, Loc.GetString($"waystone-message-waystone-free"), InGameICChatType.Speak, true);
@@ -86,19 +92,6 @@ public sealed class WaystoneSystem : EntitySystem
         if (_timer > 1f)
             _timer = 0;
     }
-    public bool IsWithinRange(EntityUid firstEntity, EntityUid secondEntity, float range)
-    {
-        var firstXform = Transform(firstEntity);
-        var secondXform = Transform(secondEntity);
-
-        if (firstXform.MapID != secondXform.MapID)
-            return false;
-
-        var firstPos = _transform.GetMapCoordinates(firstEntity, firstXform);
-        var secondPos = _transform.GetMapCoordinates(secondEntity, secondXform);
-
-        return (firstPos.Position - secondPos.Position).LengthSquared() <= (range * range);
-    }
 
     public void UpdateEnergy(Entity<WaystoneComponent> entity)
     {
@@ -111,6 +104,9 @@ public sealed class WaystoneSystem : EntitySystem
 
     private void OnActivate(Entity<WaystoneComponent> entity, ref ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!HasComp<HandsComponent>(args.User))
             return;
 
@@ -215,6 +211,8 @@ public sealed class WaystoneSystem : EntitySystem
         }
 
         _uiSystem.SetUiState(entity.Owner, WaystoneUiKey.Key, new WaystoneUpdateState(infoList));
+
+        args.Handled = true;
     }
 
     private int CountDeparturePrice(Entity<WaystoneComponent> entity, EntityUid user)
@@ -297,7 +295,7 @@ public sealed class WaystoneSystem : EntitySystem
             return;
 
         int toTake = Math.Min(needed, stack.Count);
-        _stack.SetCount(args.Used, stack.Count - toTake);
+        _stack.Use(args.Used, toTake, stack);
         args.Handled = true;
 
         entity.Comp.CurrentPaid += toTake;
@@ -390,6 +388,7 @@ public sealed class WaystoneSystem : EntitySystem
         entity.Comp.BookedTime = TimeSpan.Zero;
         entity.Comp.User = null;
         entity.Comp.SelectedWaystone = null;
+        entity.Comp.ActiveDoAfterId = null;
 
         _audioSystem.Stop(entity.Comp.BookedAudioStream);
         entity.Comp.BookedAudioStream = null;
