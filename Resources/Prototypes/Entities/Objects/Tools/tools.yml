@@ -486,6 +486,7 @@
   - type: StaticPrice
     price: 25
   - type: Shovel
+  - type: Sharp # Imperial Medieval
 
 - type: entity
   parent: BaseItem
