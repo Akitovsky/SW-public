@@ -137,7 +137,7 @@ public sealed class WaystoneSystem : EntitySystem
             return;
         }
 
-        if (entity.Comp.CurrentEnergy < 30)
+        if (entity.Comp.CurrentEnergy < entity.Comp.EnergyPrice)
         {
             if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
             {
@@ -230,7 +230,7 @@ public sealed class WaystoneSystem : EntitySystem
         if (!TryComp<WaystoneComponent>(GetEntity(args.TargetWaystone), out var targetComp))
             return;
 
-        if (!entity.Comp.IsEnable || !targetComp.IsEnable || entity.Comp.CurrentEnergy < 30)
+        if (!entity.Comp.IsEnable || !targetComp.IsEnable || entity.Comp.CurrentEnergy < entity.Comp.EnergyPrice)
             return;
 
         TryComp<MedievalFactionMemberComponent>(args.Actor, out var member);
@@ -363,7 +363,7 @@ public sealed class WaystoneSystem : EntitySystem
 
         entity.Comp.CurrentPaid = 0;
 
-        entity.Comp.CurrentEnergy -= 30;
+        entity.Comp.CurrentEnergy -= entity.Comp.EnergyPrice;
 
         _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Imperial/Medieval/Effects/teleport.ogg"), Transform(entity).Coordinates);
         _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Imperial/Medieval/Effects/teleport.ogg"), Transform(entityTarget).Coordinates);

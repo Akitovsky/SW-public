@@ -53,6 +53,9 @@ public sealed partial class WaystoneComponent : Component
     public float CurrentEnergy = 100f;
 
     [DataField]
+    public float EnergyPrice = 30f;
+
+    [DataField]
     public float EnergyRegenRate = 0.3f;
 
     [DataField]
