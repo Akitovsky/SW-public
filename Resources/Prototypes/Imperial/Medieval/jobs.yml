@@ -704,6 +704,7 @@
   - MedievalMaskFace
   - MedievalPaper
   - MedievalFlinter
+  - FoodBreadMeat
 
 - type: loadoutGroup
   id: MedievalTrinkets3
@@ -723,6 +724,8 @@
   - Gauze
   - MedievalMaskFace
   - MedievalPaper
+  - MedievalFlinter
+  - FoodBreadMeat
 
 - type: loadout
   id: MedievalRevent25
@@ -2151,7 +2154,7 @@
   #- MedievalBelt
   #- ChaplainMaskMedieval
   #- SurvivalSecurity
-  #- MedievalTrinkets
+  - MedievalTrinkets
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
@@ -5755,4 +5758,8 @@
     back:
     - MedievalFlinter
 
-
+- type: loadout
+  id: FoodBreadMeat
+  storage:
+    back:
+    - FoodBreadMeat
