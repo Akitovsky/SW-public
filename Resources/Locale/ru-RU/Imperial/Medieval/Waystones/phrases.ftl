@@ -43,3 +43,9 @@ waystone-xaml-network = Доступные путеводные камни
 waystone-message-waystone-free = Путеводный камень освобожден
 
 waystone-message-energy-low = Недостаточно энергии. Жди.
+
+waystone-message-ui-alredady-open = уже выбирает маршрут.
+
+waystone-message-is-enabled = Данный камень был отключен владельцами.
+
+waystone-message-enemy-capture = Данный камень принадлежить враждебной вам фракции.

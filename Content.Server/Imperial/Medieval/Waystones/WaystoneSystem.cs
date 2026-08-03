@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
@@ -20,6 +21,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 public sealed class WaystoneSystem : EntitySystem
 {
@@ -103,10 +105,24 @@ public sealed class WaystoneSystem : EntitySystem
             return;
 
         if (!entity.Comp.IsEnable)
+        {
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-ui-alredady-open"), InGameICChatType.Speak, true);
             return;
+        }
+
+        if (_uiSystem.IsUiOpen(entity.Owner, WaystoneUiKey.Key))
+        {
+            var actor = _uiSystem.GetActors(entity.Owner, WaystoneUiKey.Key).FirstOrNull();
+            if (actor is not { } actorUid)
+                return;
+
+            _chat.TrySendInGameICMessage(entity, $"{Name(actorUid)} " + Loc.GetString("waystone-message-ui-alredady-open"), InGameICChatType.Speak, true);
+            return;
+        }
+
         if (entity.Comp.CurrentEnergy < 30)
         {
-            _chat.TrySendInGameICMessage(entity, Loc.GetString($"waystone-message-energy-low"), InGameICChatType.Speak, true);
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-energy-low"), InGameICChatType.Speak, true);
             return;
         }
 
@@ -115,7 +131,10 @@ public sealed class WaystoneSystem : EntitySystem
         TryComp<MedievalFactionMemberComponent>(args.User, out var member);
         if (member is not null &&
             _factionsSystem.IsRelationEnemy(member.Faction, faction))
+        {
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-enemy-capture"), InGameICChatType.Speak, true);
             return;
+        }
 
         if (!_uiSystem.TryOpenUi(entity.Owner, WaystoneUiKey.Key, args.User))
             return;
