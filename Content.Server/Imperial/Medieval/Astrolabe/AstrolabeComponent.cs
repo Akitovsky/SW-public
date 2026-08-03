@@ -7,10 +7,10 @@ public sealed partial class AstrolabeComponent : Component
     public int IntelligenceMinToUse = 8;
 
     [DataField]
-    public float BaseDoAfterSeconds = 10f;
+    public float BaseDoAfterSeconds = 5f;
 
     [DataField]
-    public float MinimumDoAfterSeconds = 0.5f;
+    public float MinimumDoAfterSeconds = 0.4f;
 
     [DataField]
     public float IntelligenceModifier = 0.5f;
