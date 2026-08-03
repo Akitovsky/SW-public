@@ -46,7 +46,7 @@ waystone-message-energy-low = Недостаточно энергии. Жди.
 
 waystone-message-ui-already-open = уже выбирает маршрут.
 
-waystone-message-is-enabled = Данный камень был отключен владельцами.
+waystone-message-is-disabled = Данный камень был отключен владельцами.
 
 waystone-message-enemy-capture = Данный камень принадлежит враждебной вам фракции.
 

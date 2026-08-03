@@ -104,7 +104,7 @@ public sealed class WaystoneSystem : EntitySystem
         {
             if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
             {
-                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-is-enabled"), InGameICChatType.Speak, true);
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-is-disabled"), InGameICChatType.Speak, true);
                 entity.Comp.LastMessageTime = _timing.CurTime;
             }
 
