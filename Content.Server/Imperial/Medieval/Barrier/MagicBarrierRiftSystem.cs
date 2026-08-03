@@ -14,7 +14,7 @@ public sealed class MagicBarrierRiftSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MagicBarrierRiftComponent, AfterInteractUsingEvent>(OnRiftUse);
-        SubscribeLocalEvent<MagicBarrierRiftComponent, EntityTerminatingEvent>(OnRiftTerminating);
+        SubscribeLocalEvent<MagicBarrierRiftComponent, ComponentShutdown>(OnRiftShutdown);
         SubscribeLocalEvent<RiftGuardianComponent, MobStateChangedEvent>(OnGuardianStateChanged);
         SubscribeLocalEvent<RiftGuardianComponent, EntityTerminatingEvent>(OnGuardianTerminating);
         SubscribeLocalEvent<RiftGuardianComponent, ComponentShutdown>(OnGuardianShutdown);
@@ -132,7 +132,7 @@ public sealed class MagicBarrierRiftSystem : EntitySystem
         component.State = MagicBarrierRiftState.Ready;
     }
 
-    private void OnRiftTerminating(EntityUid uid, MagicBarrierRiftComponent component, ref EntityTerminatingEvent args)
+    private void OnRiftShutdown(EntityUid uid, MagicBarrierRiftComponent component, ComponentShutdown args)
     {
         DeleteGuardians(component);
     }
