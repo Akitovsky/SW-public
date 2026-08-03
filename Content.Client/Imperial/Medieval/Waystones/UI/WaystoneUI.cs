@@ -37,12 +37,12 @@ public sealed class WaystoneListWindow : DefaultWindow
 
             if (!wp.IsEnable)
             {
-                prefix = Loc.GetString("waystone-ui-enabled");
+                prefix = Loc.GetString("waystone-ui-enabled") + " ";
                 isDisabled = true;
             }
             else if (wp.IsEnemy)
             {
-                prefix = Loc.GetString("waystone-ui-enemy");
+                prefix = Loc.GetString("waystone-ui-enemy") + " ";
                 isDisabled = true;
             }
 
