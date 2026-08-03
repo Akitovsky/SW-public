@@ -24,7 +24,8 @@ waystone-message-money-inserted-needed = Осталось
 
 waystone-message-ritual-started = Ритуал начат, не отходи!
 
-waystone-message-connection-loss = Связь потеряна! Ритуал прерван!
+waystone-message-connection-loss = Путеводный камень назначения был отключен.
+waystone-message-doafter-cancelled = Связь потеряна! Ритуал прерван!
 
 waystone-verb-return-money= Забрать внесенные деньги
 waystone-message-ritual-cancelled = Ритуал прерван, забери деньги
