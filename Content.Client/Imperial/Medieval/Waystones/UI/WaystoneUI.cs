@@ -93,7 +93,10 @@ public sealed class WaystoneBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing) _window?.Dispose();
+        if (!disposing)
+            return;
+
+        _window?.Close();
     }
 }
 
