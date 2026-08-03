@@ -252,16 +252,16 @@ namespace Content.Shared.MeleeParry
             if (args.Cancelled || args.Origin == null)
                 return;
 
-            var item = _hands.GetActiveItem(uid);
-            if (!TryComp<MeleeParryComponent>(item, out var parry))
-                return;
-
             var attacker = args.Origin.Value;
             var attackerItem = _hands.GetActiveItem(attacker);
 
             var weaponEntity = attackerItem ?? attacker;
 
             if (!TryComp<MeleeWeaponComponent>(weaponEntity, out var meleeWeaponComponent))
+                return;
+
+            var item = _hands.GetActiveItem(uid);
+            if (!TryComp<MeleeParryComponent>(item, out var parry))
                 return;
 
             if (!meleeWeaponComponent.Damage.DamageDict.TryGetValue("ParryAble", out var parryDMG))
