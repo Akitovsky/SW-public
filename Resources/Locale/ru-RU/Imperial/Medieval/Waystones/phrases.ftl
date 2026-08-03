@@ -44,8 +44,12 @@ waystone-message-waystone-free = Путеводный камень освобо�
 
 waystone-message-energy-low = Недостаточно энергии. Жди.
 
-waystone-message-ui-alredady-open = уже выбирает маршрут.
+waystone-message-ui-already-open = уже выбирает маршрут.
 
 waystone-message-is-enabled = Данный камень был отключен владельцами.
 
-waystone-message-enemy-capture = Данный камень принадлежить враждебной вам фракции.
+waystone-message-enemy-capture = Данный камень принадлежит враждебной вам фракции.
+
+waystone-message-failed-open-ui = Камень не позволяет использовать себя.
+
+waystone-message-is-booked = Путеводный камень занят в данный момент.

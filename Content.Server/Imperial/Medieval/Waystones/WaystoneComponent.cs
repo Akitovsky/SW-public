@@ -9,7 +9,7 @@ public sealed partial class WaystoneComponent : Component
     public string Name = "Путеводный камень";
 
     [DataField]
-    public ProtoId<MedievalFactionPrototype>? Faction { get; set; } = string.Empty;
+    public ProtoId<MedievalFactionPrototype> Faction { get; set; } = string.Empty;
 
     [DataField]
     public string LinkId = string.Empty;
@@ -57,4 +57,6 @@ public sealed partial class WaystoneComponent : Component
 
     [DataField]
     public string LinkedCircle = string.Empty;
+
+    public TimeSpan LastMessageTime = TimeSpan.Zero;
 }

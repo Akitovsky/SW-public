@@ -69,10 +69,9 @@ public sealed class WaystoneSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             Entity<WaystoneComponent> entity = (uid, comp);
-            if (entity.Comp.BookedTime < _timing.CurTime &&
-                entity.Comp.User is { } user && EntityManager.EntityExists(user))
+            if (entity.Comp.BookedTime < _timing.CurTime && entity.Comp.BookedTime != TimeSpan.Zero)
             {
-                ClearUserSelection(entity, Transform(user).Coordinates);
+                ClearUserSelection(entity, null);
 
                 _chat.TrySendInGameICMessage(entity, Loc.GetString($"waystone-message-waystone-free"), InGameICChatType.Speak, true);
             }
@@ -98,15 +97,28 @@ public sealed class WaystoneSystem : EntitySystem
 
     private void OnActivate(Entity<WaystoneComponent> entity, ref ActivateInWorldEvent args)
     {
-        if (entity.Comp.BookedTime > _timing.CurTime)
-            return;
-
         if (!HasComp<HandsComponent>(args.User))
             return;
 
         if (!entity.Comp.IsEnable)
         {
-            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-ui-alredady-open"), InGameICChatType.Speak, true);
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-is-enabled"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
+            return;
+        }
+
+        if (entity.Comp.BookedTime > _timing.CurTime)
+        {
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-is-booked"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
             return;
         }
 
@@ -116,28 +128,51 @@ public sealed class WaystoneSystem : EntitySystem
             if (actor is not { } actorUid)
                 return;
 
-            _chat.TrySendInGameICMessage(entity, $"{Name(actorUid)} " + Loc.GetString("waystone-message-ui-alredady-open"), InGameICChatType.Speak, true);
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, $"{Name(actorUid)} " + Loc.GetString("waystone-message-ui-already-open"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
             return;
         }
 
         if (entity.Comp.CurrentEnergy < 30)
         {
-            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-energy-low"), InGameICChatType.Speak, true);
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-energy-low"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
             return;
         }
 
-        if (entity.Comp.Faction is not { } faction)
-            return;
+        var faction = entity.Comp.Faction;
+
         TryComp<MedievalFactionMemberComponent>(args.User, out var member);
         if (member is not null &&
             _factionsSystem.IsRelationEnemy(member.Faction, faction))
         {
-            _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-enemy-capture"), InGameICChatType.Speak, true);
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-enemy-capture"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
             return;
         }
 
         if (!_uiSystem.TryOpenUi(entity.Owner, WaystoneUiKey.Key, args.User))
+        {
+            if (entity.Comp.LastMessageTime + TimeSpan.FromSeconds(1f) < _timing.CurTime)
+            {
+                _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-failed-open-ui"), InGameICChatType.Speak, true);
+                entity.Comp.LastMessageTime = _timing.CurTime;
+            }
+
             return;
+        }
 
         var infoList = new List<WaystoneInfo>();
         var query = EntityQueryEnumerator<WaystoneComponent>();
@@ -150,8 +185,8 @@ public sealed class WaystoneSystem : EntitySystem
             if (entityTarget.Owner == entity.Owner)
                 continue;
 
-            if (entityTarget.Comp.Faction is not { } targetFaction)
-                continue;
+            var targetFaction = entityTarget.Comp.Faction;
+
             if (_factionsSystem.IsRelationEnemy(faction, targetFaction))
                 continue;
             if (member is not null &&
@@ -195,9 +230,9 @@ public sealed class WaystoneSystem : EntitySystem
             return;
 
         TryComp<MedievalFactionMemberComponent>(args.Actor, out var member);
-        if (entity.Comp.Faction is not { } faction ||
-            targetComp.Faction is not { } targetFaction ||
-            _factionsSystem.IsRelationEnemy(faction, targetFaction))
+        var targetFaction = targetComp.Faction;
+        var faction = entity.Comp.Faction;
+        if (_factionsSystem.IsRelationEnemy(faction, targetFaction))
             return;
         if (member is not null &&
             (_factionsSystem.IsRelationEnemy(member.Faction, targetFaction) ||
@@ -234,8 +269,6 @@ public sealed class WaystoneSystem : EntitySystem
 
         Entity<WaystoneComponent> entityTarget = (targetUid, targetComp);
 
-        if (entity.Comp.Faction is null || entityTarget.Comp.Faction is null)
-            return;
         int total = CountArrivalPrice(entityTarget, args.User) + CountDeparturePrice(entity, args.User);
         int needed = total - entity.Comp.CurrentPaid;
         if (needed <= 0)
@@ -260,7 +293,7 @@ public sealed class WaystoneSystem : EntitySystem
     private void PrepareToTeleport(Entity<WaystoneComponent> entity, EntityUid user)
     {
         _chat.TrySendInGameICMessage(entity, Loc.GetString("waystone-message-ritual-started"), InGameICChatType.Speak, true);
-        entity.Comp.BookedTime += TimeSpan.FromSeconds(entity.Comp.TimeToTeleport + 1);
+        entity.Comp.BookedTime = _timing.CurTime + TimeSpan.FromSeconds(entity.Comp.TimeToTeleport + 1f);
 
         _audioSystem.Stop(entity.Comp.BookedAudioStream);
         entity.Comp.BookedAudioStream = _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Imperial/Medieval/cat_purring2.ogg"), Transform(entity).Coordinates)?.Entity;
@@ -313,9 +346,6 @@ public sealed class WaystoneSystem : EntitySystem
             !EntityManager.EntityExists(user))
             return;
 
-        if (entity.Comp.Faction is null || entityTarget.Comp.Faction is null)
-            return;
-
         var xform = Transform(entityTarget);
 
         var angle = _random.NextFloat(0, MathF.PI * 2);
@@ -337,7 +367,7 @@ public sealed class WaystoneSystem : EntitySystem
         ClearUserSelection(entity, xform.Coordinates.Offset(offset));
     }
 
-    private void ClearUserSelection(Entity<WaystoneComponent> entity, EntityCoordinates coords)
+    private void ClearUserSelection(Entity<WaystoneComponent> entity, EntityCoordinates? coords)
     {
         entity.Comp.BookedTime = TimeSpan.Zero;
         entity.Comp.User = null;
@@ -406,7 +436,7 @@ public sealed class WaystoneSystem : EntitySystem
         }
     }
 
-    private void DispenseMoney(Entity<WaystoneComponent> entity, EntityCoordinates coords)
+    private void DispenseMoney(Entity<WaystoneComponent> entity, EntityCoordinates? coords)
     {
         var comp = entity.Comp;
         var amount = comp.CurrentPaid;
@@ -420,11 +450,22 @@ public sealed class WaystoneSystem : EntitySystem
         {
             int toSpawn = Math.Min(amount, 100);
 
-            var revent = Spawn("MedievalRevent", coords);
+            if (coords is not { } playerCoords)
+            {
+                var revent = Spawn("MedievalRevent", Transform(entity).Coordinates);
 
-            _stack.SetCount(revent, toSpawn);
+                _stack.SetCount(revent, toSpawn);
 
-            amount -= toSpawn;
+                amount -= toSpawn;
+            }
+            else
+            {
+                var revent = Spawn("MedievalRevent", playerCoords);
+
+                _stack.SetCount(revent, toSpawn);
+
+                amount -= toSpawn;
+            }
         }
 
         _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Imperial/Medieval/coin_out.ogg"), Transform(entity).Coordinates);
@@ -527,7 +568,10 @@ public sealed class WaystoneSystem : EntitySystem
             if (string.IsNullOrEmpty(comp.LinkId) || comp.LinkId != capturePoint.LinkId)
                 continue;
 
-            comp.Faction = ev.WinnerFaction;
+            if (ev.WinnerFaction is not { } winnerFaction)
+                return;
+
+            comp.Faction = winnerFaction;
 
             if (!string.IsNullOrEmpty(comp.LinkedCircle))
                 validLinks.Add(comp.LinkedCircle);
