@@ -3487,7 +3487,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      95: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3.2
@@ -3502,11 +3502,11 @@
   - type: MobMover
   - type: SlowOnDamage
     speedModifierThresholds:
-      10: 1
-      15: 0.8
-      30: 0.7
-      50: 0.6
-      65: 0.5
+      20: 1
+      35: 0.8
+      50: 0.7
+      70: 0.6
+      85: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3539,6 +3539,22 @@
       path: /Audio/Imperial/Medieval/footstep_hunter.ogg
       params:
         variation: 0.125
+  - type: LocalLight
+    energy: 0.4
+    radius: 4.5
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damageCap: 95
+    damage:
+      groups:
+        Brute: -0.8
+        Burn: -0.5
+        Airloss: -0.5
+        Toxin: -0.5
+      types:
+        Bloodloss: -0.5
+        Cellular: -0.5
   - type: LanguageSpeaker
     languages:
       #Common: Understand
