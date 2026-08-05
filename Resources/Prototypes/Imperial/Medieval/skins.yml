@@ -279,9 +279,6 @@
     MedievalClothingNeckCloakBrown: [ MedievalClothingNeckCloakGrayWizardSKIN ]
     MedievalClothingNeckCloakGreen: [ MedievalClothingNeckCloakGrayWizardSKIN ]
     MedievalClothingUniformJumpsuitShitCloth24: [ MedievalClothingUniformJumpsuitUngaRat ]
-    MedievalClothingBackpackSatchelLeather: [CamoBackpackZakvielianT1]
-    MedievalClothingBackpackLeather: [CamoBackpackZakvielianT2]
-    MedievalClothingBackpackSatchelTraveller: [CamoBackpackZakvielianT3]
 
 - type: customization
   id: binnibux
@@ -501,7 +498,7 @@
 
 - type: customization
   id: zakvielian
-  holder: d9ff058f-0e8b-4624-818b-0c55e8776057
+  holder: 7bef4086-1fc4-4c9b-b2ba-1859e8d3d6c5
   map:
     MedievalClothingOuterArmorIronCuirassLight: [MedievalClothingOuterArmorIronCuirassLightCopperKnight]
     MedievalClothingOuterArmorBrigantin: [MedievalClothingOuterArmorBrigantinCopperKnight]
@@ -534,9 +531,6 @@
     MedievalClothingHeadHelmetCharmerLegion: [MedievalClothingHeadHelmetCollegiumPurpleHatBaron]
     MedievalClothingHeadHelmetCharmerIns: [MedievalClothingHeadHelmetCollegiumPurpleHatBaron]
     MedievalClothingHeadHelmetCharmerLight: [MedievalClothingHeadHelmetCollegiumPurpleHatBaron]
-    MedievalClothingBackpackSatchelLeather: [CamoBackpackZakvielianT1]
-    MedievalClothingBackpackLeather: [CamoBackpackZakvielianT2]
-    MedievalClothingBackpackSatchelTraveller: [CamoBackpackZakvielianT3]
 
 - type: customization
   id: Leonid
@@ -557,7 +551,4 @@
     MedievalClothingNeckCloakGreen: [MedievalClothingNeckCloakGrayWizardSKIN]
     MedievalBlackHat: [MedievalBlackHatGrayWizardSKIN]
     Log: [MedievalBlackHatGrayWizardSKIN, MedievalClothingNeckCloakGrayWizardSKIN]
-    MedievalClothingBackpackSatchelLeather: [CamoBackpackZakvielianT1]
-    MedievalClothingBackpackLeather: [CamoBackpackZakvielianT2]
-    MedievalClothingBackpackSatchelTraveller: [CamoBackpackZakvielianT3]
 
