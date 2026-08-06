@@ -144,7 +144,8 @@ public sealed class WaveSystem : EntitySystem
             return;
         }
 
-        if (_cfg.GetCVar(ShipsCCVars.WaveMinToBreakLevel) > _cfg.GetCVar(ShipsCCVars.StormLevel))
+        var stormLevel = _cfg.GetCVar(ShipsCCVars.StormLevel);
+        if (_cfg.GetCVar(ShipsCCVars.WaveMinToBreakLevel) > stormLevel)
         {
             if (component.DeleteOnCollide)
                 DeleteWaveOnGridImpact(wave, component, collisionPos);
@@ -154,7 +155,7 @@ public sealed class WaveSystem : EntitySystem
 
         var grid = new Entity<MapGridComponent>(targetEntity, mapGridComp);
         var centerTilePos = _map.MapToGrid(grid, collisionPos);
-        var radiusTiles = _cfg.GetCVar(ShipsCCVars.WaveRadiusTiles) + _cfg.GetCVar(ShipsCCVars.StormLevel);
+        var radiusTiles = _cfg.GetCVar(ShipsCCVars.WaveRadiusTiles) + stormLevel;
         var radiusLimit = (int) MathF.Ceiling(radiusTiles);
         var radiusSquared = radiusTiles * radiusTiles;
 
@@ -189,7 +190,11 @@ public sealed class WaveSystem : EntitySystem
         }
 
         var maxBreakCount = Math.Max(0, _cfg.GetCVar(ShipsCCVars.WaveMaxBreakCount));
-        if (maxBreakCount > 0)
+        var tileBreakChance = Math.Clamp(
+            _cfg.GetCVar(ShipsCCVars.TileBreakChancePerStormLevel) * stormLevel,
+            0f,
+            1f);
+        if (maxBreakCount > 0 && _random.Prob(tileBreakChance))
         {
             _random.Shuffle(_nearbyTiles);
 

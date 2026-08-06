@@ -1,5 +1,6 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.CartographerTable;
+using Content.Shared.Imperial.Medieval.Factions.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -23,6 +24,21 @@ public sealed class MedievalShipFlagpoleSystemShared : EntitySystem
     {
         if (ent.Comp.User is not null && ent.Comp.User != args.Actor)
             return;
+
+        if (TryComp<MedievalFactionMemberComponent>(args.Actor, out var factionComponent))
+        {
+            if (args.FlagColor == MedievalShipFlagpoleMenuAction.Legion && factionComponent.Faction != "Legion")
+                return;
+
+            if (args.FlagColor == MedievalShipFlagpoleMenuAction.Insurgency && factionComponent.Faction != "Insurgency")
+                return;
+
+            if (args.FlagColor == MedievalShipFlagpoleMenuAction.Collegium && factionComponent.Faction != "Collegium")
+                return;
+
+            if (args.FlagColor == MedievalShipFlagpoleMenuAction.Mercenary && factionComponent.Faction != "Merc")
+                return;
+        }
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.Actor, TimeSpan.FromSeconds(ent.Comp.DoAfterTime), new MedievalShipFlagpoleDoAfterEvent(args.FlagColor), ent, ent)
         {
@@ -88,6 +104,11 @@ public sealed class MedievalShipFlagpoleSystemShared : EntitySystem
             MedievalShipFlagpoleMenuAction.Purple => "purpleflag",
             MedievalShipFlagpoleMenuAction.Yellow => "yellowflag",
             MedievalShipFlagpoleMenuAction.Blue => "blueflag",
+            MedievalShipFlagpoleMenuAction.Pirate => "pirateflag",
+            MedievalShipFlagpoleMenuAction.Legion => "legionflag",
+            MedievalShipFlagpoleMenuAction.Insurgency => "foxflag",
+            MedievalShipFlagpoleMenuAction.Collegium => "wizflag",
+            MedievalShipFlagpoleMenuAction.Mercenary => "mercflag",
             _ => "transparent"
         };
     }

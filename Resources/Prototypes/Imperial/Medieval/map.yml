@@ -53,7 +53,7 @@
             MedievalKayotVeteran: [ 1, 1 ]
             MedievalKayotLeader: [ 1, 1 ]
             # Collegium (15 total)
-            MedievalCollegiumRecruit: [ 7, 7 ]
+            MedievalCollegiumRecruit: [ 10, 10 ]
             MedievalCollegiumCommon: [ 7, 7 ]
             MedievalCollegiumLeader: [ 1, 1 ]
             # Cult (10 total)
@@ -135,7 +135,7 @@
             MedievalKayotVeteran: [ 1, 1 ]
             MedievalKayotLeader: [ 1, 1 ]
             # Collegium (11 total)
-            MedievalCollegiumRecruit: [ 5, 5 ]
+            MedievalCollegiumRecruit: [ 7, 7 ]
             MedievalCollegiumCommon: [ 5, 5 ]
             MedievalCollegiumLeader: [ 1, 1 ]
             # Cult (7 total)
@@ -216,7 +216,7 @@
             MedievalKayotRegular: [ 1, 1 ]
             MedievalKayotLeader: [ 1, 1 ]
             # Collegium (7 total)
-            MedievalCollegiumRecruit: [ 3, 3 ]
+            MedievalCollegiumRecruit: [ 4, 4 ]
             MedievalCollegiumCommon: [ 3, 3 ]
             MedievalCollegiumLeader: [ 1, 1 ]
             # Cult (5 total)
@@ -295,7 +295,7 @@
             MedievalKayotRecruit: [ 1, 1 ]
             MedievalKayotLeader: [ 1, 1 ]
             # Collegium (4 total)
-            MedievalCollegiumRecruit: [ 1, 1 ]
+            MedievalCollegiumRecruit: [ 2, 2 ]
             MedievalCollegiumCommon: [ 2, 2 ]
             MedievalCollegiumLeader: [ 1, 1 ]
             # Tribe (4 total)
@@ -371,7 +371,7 @@
             MedievalKayotRecruit: [ 1, 1 ]
             MedievalKayotLeader: [ 1, 1 ]
             # Collegium (3 total)
-            MedievalCollegiumRecruit: [ 1, 1 ]
+            MedievalCollegiumRecruit: [ 2, 2 ]
             MedievalCollegiumCommon: [ 1, 1 ]
             MedievalCollegiumLeader: [ 1, 1 ]
             # Tribe (3 total)

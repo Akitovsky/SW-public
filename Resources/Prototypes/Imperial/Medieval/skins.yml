@@ -399,7 +399,7 @@
     MedievalClothingOuterArmorForstone: [MedievalClothingOuterArmorForstoneDeimon]
     MedievalClothingOuterArmorCharmerLight: [MedievalClothingOuterArmorCharmerLightDeimon]
     MedievalClothingHeadHelmetCharmerLight: [MedievalClothingHeadHelmetCharmerLightDeimon]
-    Log: [DeimonStaffMedieval, MedievalDeimonGlasses, MedievalClothingNeckCloakDeimon]
+    Log: [DeimonStaffMedieval, MedievalDeimonGlasses, MedievalClothingNeckCloakDeimon, MedievalClothingHeadHelmetCharmerLightDeimon]
     MedievalShoesChamber: [MedievalShoesChamberDeimon]
     MedievalClothingOuterArmorCharmer: [MedievalClothingOuterArmorCharmerDeimon]
     MedievalClothingHeadHelmetCharmer: [MedievalClothingHeadHelmetCharmerDeimon]
@@ -410,6 +410,7 @@
     MedievalClothingHeadHelmetCharmerIns: [MedievalClothingHeadHelmetCharmerLightDeimon]
     MedievalClothingOuterArmorCharmerLightLegion: [MedievalClothingOuterArmorCharmerLightDeimon]
     MedievalClothingHeadHelmetCharmerLegion: [MedievalClothingHeadHelmetCharmerLightDeimon]
+    MedievalShoesSapogi: [MedievalShoesChamberDeimon]
 
 - type: customization
   id: apolla
