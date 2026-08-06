@@ -962,6 +962,7 @@
     - MedievalCartRecipe
     - MedievalDecorBoxEmptyRecipe
     - MedievalFlagpoleShipRecipe
+    - MedievalBedT2Recipe
 
 - type: entity
   parent: MedievalFoundry
