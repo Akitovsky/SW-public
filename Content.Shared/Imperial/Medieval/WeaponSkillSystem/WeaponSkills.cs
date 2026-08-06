@@ -32,7 +32,7 @@ public sealed partial class MedievalWeaponSkillCategoryComponent : Component
 public sealed partial class OneHandedBluntSkillComponent : Component
 {
     [DataField("damageMult")] public float DamageMult = 1.15f;
-    [DataField("staminaDamage")] public float StaminaDamage = 4f;
+    [DataField("staminaDamage")] public float StaminaDamage = 1f;
 
     [DataField("bypassType")] public string BypassType = "Blunt";
     [DataField("bypassAmount")] public FixedPoint2 BypassAmount = 2f;
@@ -42,7 +42,7 @@ public sealed partial class OneHandedBluntSkillComponent : Component
 public sealed partial class OneHandedBluntLightSkillComponent : Component
 {
     [DataField("damageMult")] public float DamageMult = 1.10f;
-    [DataField("staminaDamage")] public float StaminaDamage = 2f;
+    [DataField("staminaDamage")] public float StaminaDamage = 1f;
     [DataField("bypassType")] public string BypassType = "Blunt";
     [DataField("bypassAmount")] public FixedPoint2 BypassAmount = 1f;
 }
@@ -80,7 +80,7 @@ public sealed partial class TwoHandedSkillComponent : Component
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CrossbowSkillComponent : Component
 {
-    [DataField("staminaOnHit")] public float StaminaOnHit = 16f;
+    [DataField("staminaOnHit")] public float StaminaOnHit = 12f;
     [DataField("bypassType")] public string BypassType = "Piercing";
     [DataField("bypassAmount")] public FixedPoint2 BypassAmount = 6f;
 }

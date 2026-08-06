@@ -123,7 +123,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -179,7 +179,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -222,7 +222,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: MedievalSpearNecro
@@ -286,7 +286,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -343,7 +343,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: falshion
@@ -391,7 +391,7 @@
       types:
         Blunt: 0.5
   - type: StaminaDamageOnHit
-    damage: 10
+    damage: 6
   #- type: QualityOfItem
   #  qualityWeights:
   #    0: 0
@@ -509,7 +509,7 @@
     distance: 0.4
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -552,7 +552,7 @@
         Piercing: 10
         Slash: 12
         Structural: 3
-        Caustic: 6
+        Caustic: 3
         ParryAble: 1
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -576,7 +576,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
 
@@ -635,7 +635,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: iron hammer
@@ -817,7 +817,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -882,7 +882,7 @@
     distance: 0.8
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -971,7 +971,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1018,7 +1018,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1029,7 +1029,7 @@
   description: MedievalKnut
   components:
   - type: StaminaDamageOnHit
-    damage: 8
+    damage: 6
   - type: MeleeWeapon
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -1647,7 +1647,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -1710,7 +1710,7 @@
       types:
         Slash: 6
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1776,7 +1776,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 1
 
@@ -1869,7 +1869,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -1880,6 +1880,8 @@
   id: MedievalSpearRusty
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: Item
+    size: Normal
   - type: Spear
   - type: RDWeight
     value: 4
@@ -1912,8 +1914,6 @@
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
     resourceWaste: 0.7
-  - type: Item
-    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
@@ -1960,7 +1960,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -2027,7 +2027,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -2082,7 +2082,7 @@
     - belt
     quickEquip: false
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -2149,7 +2149,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -2233,7 +2233,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2320,7 +2320,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2554,7 +2554,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2722,7 +2722,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -3087,7 +3087,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3280,7 +3280,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3357,7 +3357,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3416,7 +3416,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -3509,7 +3509,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3576,7 +3576,7 @@
     distance: 0.4
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -3643,7 +3643,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3727,7 +3727,7 @@
     distance: 2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -4134,7 +4134,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: falshion
@@ -4210,7 +4210,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -4286,7 +4286,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -4368,7 +4368,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4448,7 +4448,7 @@
     unequipSound:
       path: /Audio/Imperial/Medieval/sword_eqip.ogg
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -4587,7 +4587,7 @@
     distance: 0.32
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4693,7 +4693,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4773,7 +4773,7 @@
     unequipSound:
       path: /Audio/Imperial/Medieval/sword_eqip.ogg
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -4953,7 +4953,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -5028,7 +5028,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -5087,7 +5087,7 @@
     distance: 1
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   id: MedievalEffectWindowParry
@@ -5331,7 +5331,7 @@
     distance: 0.04
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 10
+    damage: 5
   - type: Item
     size: Normal
     shape:
@@ -5394,7 +5394,7 @@
     distance: 0.04
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8
+    damage: 4
   - type: Item
     size: Normal
     shape:
@@ -5470,7 +5470,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: Sulica
@@ -5538,7 +5538,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: MedievalIronRoyalSword

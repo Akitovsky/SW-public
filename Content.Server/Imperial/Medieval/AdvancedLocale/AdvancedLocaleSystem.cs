@@ -24,6 +24,6 @@ public sealed class AdvancedLocaleSystem : EntitySystem
         if (comp.Content != "")
             _paper.SetContent(uid, Loc.GetString(comp.Content));
         if (comp.WayStoneName != "" && TryComp<WaystoneComponent>(uid, out var waystone))
-            waystone.Name = comp.WayStoneName;
+            waystone.Name = Loc.GetString(comp.WayStoneName);
     }
 }

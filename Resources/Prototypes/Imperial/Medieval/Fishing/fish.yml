@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - fish
+    - Meat
   - type: SolutionContainerManager
     solutions:
       food:
@@ -117,6 +118,7 @@
   - type: Tag
     tags:
     - fish
+    - Meat
   - type: Item
     size: Small
   - type: SolutionContainerManager

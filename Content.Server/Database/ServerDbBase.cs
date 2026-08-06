@@ -1306,6 +1306,23 @@ namespace Content.Server.Database
             return record == null ? null : MakePlayerRecord(record);
         }
 
+        public async Task<Dictionary<Guid, PlayerRecord>> GetPlayerRecordsByUserIds(
+            IReadOnlyCollection<NetUserId> userIds, CancellationToken cancel = default)
+        {
+            if (userIds.Count == 0)
+                return new Dictionary<Guid, PlayerRecord>();
+
+            await using var db = await GetDb(cancel);
+
+            var ids = userIds.Select(u => u.UserId).ToArray();
+
+            var records = await db.DbContext.Player
+                .Where(p => ids.Contains(p.UserId))
+                .ToListAsync(cancel);
+
+            return records.ToDictionary(r => r.UserId, r => MakePlayerRecord(r)!);
+        }
+
         protected async Task<bool> PlayerRecordExists(DbGuard db, NetUserId userId)
         {
             return await db.DbContext.Player.AnyAsync(p => p.UserId == userId);

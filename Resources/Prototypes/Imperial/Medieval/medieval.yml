@@ -649,6 +649,7 @@
     snap:
     - Wall
   components:
+  - type: Marker
   - type: PowerSupplier
     supplyRate: 5000
   - type: Sprite
@@ -8473,10 +8474,10 @@
   description: DeimonStaffMedieval
   components:
   - type: Item
-    sprite: Imperial/Medieval/Misc/ahrimanstaff.rsi
+    sprite: Imperial/Medieval/Misc/deimon_staff.rsi
     size: Large
   - type: Sprite
-    sprite: Imperial/Medieval/Misc/ahrimanstaff.rsi
+    sprite: Imperial/Medieval/Misc/deimon_staff.rsi
     state: icon
 
 - type: entity

@@ -1,0 +1,10 @@
+auto-round-end-reason = Время раунда истекло.
+ui-vote-extend-round-initiator = Автоматический продлятор раунда
+ui-vote-extend-round-title = Продлить раунд на 1 час?
+ui-vote-extend-yes = Да
+ui-vote-extend-no = Нет
+ui-vote-extend-success = Голосование за продление раунда завершилось успешно. Раунд продлен на час.
+ui-vote-extend-fail = Голосование за продление раунда провалилось. Раунд завершится через 15 минут.
+ui-vote-extend-announcement = Запущено автоматическое голосование за продление раунда.
+auto-round-end-army-attack = Нет покоя нечестивым. Сотня последователей Морбиуса восстает из-под земли!
+auto-round-end-army-sender = от барьера

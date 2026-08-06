@@ -196,6 +196,7 @@ public sealed partial class MedievalPlagueSystem : SharedMedievalPlagueSystem
             _data.Immune++;
 
             var immune = EnsureComp<MedievalPlagueImmuneComponent>(uid);
+            if (HasComp<MedievalPlagueClumsinessComponent>(uid)) RemComp<MedievalPlagueClumsinessComponent>(uid);
             immune.StartTime = _timing.CurTime;
         }
 

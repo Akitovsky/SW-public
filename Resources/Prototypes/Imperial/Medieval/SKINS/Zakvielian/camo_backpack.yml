@@ -1,0 +1,20 @@
+- type: entity
+  parent: MedievalClothingBackpackSatchelLeather
+  id: CamoBackpackZakvielianT1
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/camo_backpack.rsi
+
+- type: entity
+  parent: MedievalClothingBackpackLeather
+  id: CamoBackpackZakvielianT2
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/camo_backpack.rsi
+
+- type: entity
+  parent: MedievalClothingBackpackSatchelTraveller
+  id: CamoBackpackZakvielianT3
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/camo_backpack.rsi

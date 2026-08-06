@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Imperial.Medieval.PlayerCreations.Administration;
 using Content.Shared.GameTicking;
@@ -19,6 +20,8 @@ public sealed class RandomCreationsPaintingSystem : EntitySystem
 
     private Dictionary<string, int> _paintngsSpawned = new();
 
+    private List<CreationPaintingMessage>? _acceptedPaintingsCache;
+    private Task<List<CreationPaintingMessage>>? _acceptedPaintingsLoading;
 
     public override void Initialize()
     {
@@ -31,12 +34,27 @@ public sealed class RandomCreationsPaintingSystem : EntitySystem
     public void OnRoundStart(RoundStartedEvent args)
     {
         _paintngsSpawned = new();
+        _acceptedPaintingsCache = null;
+        _acceptedPaintingsLoading = null;
+    }
+
+    private async Task<List<CreationPaintingMessage>> GetAcceptedPaintingsCachedAsync()
+    {
+        if (_acceptedPaintingsCache != null)
+            return _acceptedPaintingsCache;
+
+        _acceptedPaintingsLoading ??= _creations.GetAcceptedPaintingsMessages();
+
+        var result = await _acceptedPaintingsLoading;
+        _acceptedPaintingsCache = result;
+        return result;
     }
 
     public async void OnMapInit(EntityUid uid, RandomCreationsPaintingComponent comp, MapInitEvent args)
     {
         var maxPaintings = _cfg.GetCVar(MedievalCCVars.CreationsMaxPaintings);
-        var acceptedPaintings = await _creations.GetAcceptedPaintingsMessages();
+        var cached = await GetAcceptedPaintingsCachedAsync();
+        var acceptedPaintings = new List<CreationPaintingMessage>(cached);
 
         foreach (var spawned in _paintngsSpawned)
         {

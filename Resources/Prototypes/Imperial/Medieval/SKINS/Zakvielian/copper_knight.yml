@@ -1,0 +1,135 @@
+- type: entity
+  parent: MedievalClothingOuterArmorIronCuirassLight
+  id: MedievalClothingOuterArmorIronCuirassLightCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorBrigantin
+  id: MedievalClothingOuterArmorBrigantinCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorIronCuirass
+  id: MedievalClothingOuterArmorIronCuirassCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorChainMail
+  id: MedievalClothingOuterArmorChainMailCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorIron
+  id: MedievalClothingOuterArmorIronCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron2
+  id: MedievalClothingOuterArmorUpIron2CopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron3
+  id: MedievalClothingOuterArmorUpIron3CopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorUpIron
+  id: MedievalClothingOuterArmorUpIronCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorEbonit
+  id: MedievalClothingOuterArmorEbonitCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorEbonit2
+  id: MedievalClothingOuterArmorEbonit2CopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingOuterArmorForstone
+  id: MedievalClothingOuterArmorForstoneCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_cuirass.rsi
+  - type: MedievalIronHitSound
+
+- type: entity
+  parent: MedievalClothingHeadHelmetCrusader
+  id: MedievalClothingHeadHelmetCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_helmet.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_helmet.rsi
+  - type: IngestionBlocker
+    enabled: false
+  - type: IdentityBlocker
+    enabled: false
+
+- type: entity
+  parent: MedievalIronGloves
+  id: MedievalIronGlovesCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_gloves.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_gloves.rsi
+
+- type: entity
+  parent: MedievalClothingFeetSteel
+  id: MedievalClothingFeetSteelCopperKnight
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_boots.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/copper_knight/copper_boots.rsi

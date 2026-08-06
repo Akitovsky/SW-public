@@ -325,7 +325,7 @@
 - type: trait
   id: SkillOneHandedBlunt
   name: Мастер булав
-  description: +15% урона, +8 урона стамине. Дополнительный урон, пробивающий броню при ЛКМ ударе.
+  description: Больше урона, больше урона стамине. Дополнительный урон, пробивающий броню при ЛКМ ударе.
   category: WeaponSkills
   cost: 1
   components:
@@ -334,7 +334,7 @@
 - type: trait
   id: SkillOneHandedBluntLight
   name: Владение легкими булавами
-  description: +15% урона, +4 урона стамине. Дополнительный урон, пробивающий броню при ЛКМ ударе.
+  description: Больше урона, больше урона стамине. Дополнительный урон, пробивающий броню при ЛКМ ударе.
   category: WeaponSkills
   cost: 1
   components:

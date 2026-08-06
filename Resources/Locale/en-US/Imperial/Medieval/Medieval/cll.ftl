@@ -1,0 +1,9 @@
+ent-MedievalClothingFeetNorthern = northern boots
+    .desc = Stylish boots made of leather and steel.
+    .suffix = { "Medieval" }
+ent-MedievalClothingOuterArmorNorthern = northern armor
+    .desc = True northern armor.
+    .suffix = { "Medieval, clothing" }
+ent-MedievalClothingHeadHelmetNorthern = northern helmet
+    .desc = A fine and reliable northern helmet.
+    .suffix = { "Medieval, clothing" }

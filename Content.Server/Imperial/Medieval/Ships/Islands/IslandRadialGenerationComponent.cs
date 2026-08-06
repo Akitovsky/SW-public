@@ -5,7 +5,7 @@ namespace Content.Server.Imperial.Medieval.Ships.Islands;
 [RegisterComponent]
 public sealed partial class IslandRadialGenerationComponent : Component
 {
-    [DataField]
+    [DataField(readOnly: true)]
     public List<ResPath> LowIslands = new()
     {
         new("/Maps/Imperial/Medieval/Islands/IslandLow1.yml"),
@@ -30,7 +30,7 @@ public sealed partial class IslandRadialGenerationComponent : Component
         new("/Maps/Imperial/Medieval/Islands/IslandLow53.yml"),
     };
 
-    [DataField]
+    [DataField(readOnly: true)]
     public List<ResPath> MediumIslands = new()
     {
         new("/Maps/Imperial/Medieval/Islands/IslandMedium5.yml"),
@@ -56,7 +56,7 @@ public sealed partial class IslandRadialGenerationComponent : Component
         new("/Maps/Imperial/Medieval/Islands/IslandMedium57.yml"),
     };
 
-    [DataField]
+    [DataField(readOnly: true)]
     public List<ResPath> HighIslands = new()
     {
         new("/Maps/Imperial/Medieval/Islands/IslandHard9.yml"),
@@ -91,20 +91,20 @@ public sealed partial class IslandRadialGenerationComponent : Component
     public int HighIslandCount = 6;
 
     [DataField]
-    public float LowIslandMinRange = 530f;
+    public float LowIslandMinRange = 830f;
 
     [DataField]
-    public float MediumIslandMinRange = 100f;
+    public float MediumIslandMinRange = 1300f;
 
     [DataField]
-    public float HighIslandMinRange = 1400f;
+    public float HighIslandMinRange = 1600f;
 
     [DataField]
-    public float HighIslandMaxRange = 2000f;
+    public float HighIslandMaxRange = 2100f;
 
     [DataField]
     public float InterIslandsThreshold = 16f;
 
     [DataField]
-    public int MaxCandidatesPerPoint = 30;
+    public int MaxPlacementAttempts = 30;
 }

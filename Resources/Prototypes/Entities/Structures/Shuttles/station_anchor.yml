@@ -8,6 +8,7 @@
     mode: AlignTileAny
   components:
   - type: StationAnchor
+  - type: Marker
   - type: Transform
     anchored: true
   - type: Physics

@@ -42,13 +42,26 @@ public sealed partial class CreationsSystem : EntitySystem
         return name;
     }
 
+    private async Task<Dictionary<Guid, string>> GetPlayerNamesBatch(IEnumerable<Guid> authorUserIds)
+    {
+        var ids = authorUserIds.Distinct()
+            .Select(id => new NetUserId(id))
+            .ToList();
+
+        var records = await _db.GetPlayerRecordsByUserIds(ids);
+
+        return records.ToDictionary(kv => kv.Key, kv => kv.Value.LastSeenUserName);
+    }
+
     private async Task<List<CreationPaintingMessage>> ToPaintingMessages(List<Painting> dbPaintings)
     {
+        var names = await GetPlayerNamesBatch(dbPaintings.Select(p => p.AuthorUserId));
+
         var messages = new List<CreationPaintingMessage>();
 
         foreach (var p in dbPaintings)
         {
-            var name = await GetPlayerName((NetUserId)p.AuthorUserId);
+            names.TryGetValue(p.AuthorUserId, out var name);
 
             messages.Add(new CreationPaintingMessage(
                 PaintingHelper.StringToColors(p.Texture),
@@ -57,7 +70,7 @@ public sealed partial class CreationsSystem : EntitySystem
                 p.Author,
                 (NetUserId)p.AuthorUserId,
                 p.CreationTime,
-                name));
+                name ?? ""));
         }
 
         return messages;
@@ -66,11 +79,13 @@ public sealed partial class CreationsSystem : EntitySystem
 
     private async Task<List<CreationBook>> ToBookMessages(List<Book> dbBooks)
     {
+        var names = await GetPlayerNamesBatch(dbBooks.Select(p => p.AuthorUserId));
+
         var messages = new List<CreationBook>();
 
         foreach (var p in dbBooks)
         {
-            var name = await GetPlayerName((NetUserId)p.AuthorUserId);
+            names.TryGetValue(p.AuthorUserId, out var name);
 
             messages.Add(new CreationBook(
                 p.Text,
@@ -79,7 +94,7 @@ public sealed partial class CreationsSystem : EntitySystem
                 p.Author,
                 (NetUserId)p.AuthorUserId,
                 p.CreationTime,
-                name
+                name ?? ""
                 ));
         }
 

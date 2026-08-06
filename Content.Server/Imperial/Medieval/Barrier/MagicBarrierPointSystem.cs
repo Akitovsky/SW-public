@@ -126,7 +126,7 @@ namespace Content.Server.MagicBarrier
                 _audio.PlayPvs(new SoundPathSpecifier(barrier.EffectSoundOnScrollAdd), target.Value);
                 QueueDel(used);
 
-                _achievement.TryUpdateProgressAndGrant(user, new BarrierRefilledContext(), 
+                _achievement.TryUpdateProgressAndGrant(user, new BarrierRefilledContext(),
                     ach => ach.Conditions.Any(c => c is RefillBarrierCondition));
                 return;
             }
@@ -440,12 +440,12 @@ namespace Content.Server.MagicBarrier
                     //    _chat.DispatchGlobalAnnouncement("Бойтесь, ОНИ идут... Объединение - единственный шанс на спасение.", playSound: true, colorOverride: Color.DeepPink, sender: "Барьер");
                     //}
 
-                    if (comp.Cycle == 180)
-                    {
-                        IsBarrierActive = false;
-                        _chat.DispatchGlobalAnnouncement("Барьер изветшал и рассыпался в пыль.", playSound: true, colorOverride: Color.Red, sender: "Барьер");
-                        _roundEndSystem.EndRound();
-                    }
+                    // if (comp.Cycle == 180)
+                    // {
+                    //     IsBarrierActive = false;
+                    //     _chat.DispatchGlobalAnnouncement("Барьер изветшал и рассыпался в пыль.", playSound: true, colorOverride: Color.Red, sender: "Барьер");
+                    //     _roundEndSystem.EndRound();
+                    // }
                 }
             }
         }

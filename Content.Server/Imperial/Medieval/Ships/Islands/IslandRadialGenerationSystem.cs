@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Imperial.Medieval.Ships.Islands;
 using Content.Shared.Light.Components;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
@@ -44,7 +45,7 @@ public sealed class IslandRadialGenerationSystem : EntitySystem
 
         var cellSize = maxR > 0f ? maxR + config.InterIslandsThreshold : config.InterIslandsThreshold;
         var grid = new IslandSpatialGrid(cellSize);
-        var gen  = new IslandBridsonGenerator(config.InterIslandsThreshold, config.MaxCandidatesPerPoint);
+        var gen = new IslandRejectionGenerator(config.InterIslandsThreshold, config.MaxPlacementAttempts);
 
         var placements = new List<IslandPlacement>();
         placements.AddRange(gen.Generate(
@@ -69,7 +70,10 @@ public sealed class IslandRadialGenerationSystem : EntitySystem
         foreach (var placement in placements)
         {
             if (_mapLoader.TryLoadGrid(mapId, placement.Path, out var island, offset: placement.Pos))
+            {
+                EnsureComp<IslandComponent>(island.Value.Owner);
                 RemComp<ImplicitRoofComponent>(island.Value.Owner);
+            }
         }
     }
 
