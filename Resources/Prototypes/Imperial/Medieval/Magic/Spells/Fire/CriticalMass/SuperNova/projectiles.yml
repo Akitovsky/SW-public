@@ -14,11 +14,11 @@
     inverted: true
     collapseOnMinDistance: true
   - type: RepeatingTrigger
-    delay: 1.2
+    delay: 2.2
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
+    maxIntensity: 5
     intensitySlope: 6
     totalIntensity: 6
     canCreateVacuum: false
@@ -39,11 +39,11 @@
     inverted: true
     collapseOnMinDistance: true
   - type: RepeatingTrigger
-    delay: 1.2
+    delay: 2.2
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
+    maxIntensity: 7
     intensitySlope: 10
     totalIntensity: 9
     canCreateVacuum: false
