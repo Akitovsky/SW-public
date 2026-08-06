@@ -13,7 +13,7 @@
   - !type:CollectAllItemsCondition
     progressKey: collectAllProgression
     itemPrototypes:
-      MedievalArrowIronPhysics: 10
+      MedievalArrowIronPhysics: 3
       BowImprovised: 1
 
 - type: achievement

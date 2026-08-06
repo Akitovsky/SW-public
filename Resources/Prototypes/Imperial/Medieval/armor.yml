@@ -1532,10 +1532,11 @@
   - type: Clothing
     sprite: Imperial/Medieval/Clothing/Gloves/necro_gloves.rsi
   - type: MeleeWeapon
-    attackRate: 1.8
+    attackRate: 1.4
     damage:
       types:
-        Caustic: 12
+        Caustic: 2
+        Blunt: 10
   - type: MedievalArmorIntegrity
     containerArmorHP: 100
     repairType: Smithing
@@ -1591,7 +1592,8 @@
     attackRate: 1.1
     damage:
       types:
-        Caustic: 7
+        Caustic: 2
+        Blunt: 7
   - type: MedievalArmorIntegrity
     containerArmorHP: 75
     repairType: Smithing
