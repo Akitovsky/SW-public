@@ -1,26 +1,35 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Events;
+using Content.Server.MagicBarrier.Components;
 using Content.Server.Voting;
 using Content.Server.Voting.Managers;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Robust.Shared.Timing;
+using Robust.Shared.Configuration;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Systems;
 
-public sealed partial class AutoRoundEndSystem : EntitySystem
+public sealed partial class AutoRoundExtendSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IVoteManager _voteManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private bool _isEnded;
     private bool _leadEventTriggered;
-
     private TimeSpan _targetDuration;
-    private readonly TimeSpan _maxDuration = TimeSpan.FromHours(5);
-    private readonly TimeSpan _voteLeadTime = TimeSpan.FromMinutes(15);
-    private readonly TimeSpan _extensionTime = TimeSpan.FromHours(1);
+
+    private TimeSpan _initialDuration;
+    private TimeSpan _maxDuration;
+    private TimeSpan _voteLeadTime;
+    private TimeSpan _extensionTime;
 
     public override void Initialize()
     {
@@ -28,6 +37,11 @@ public sealed partial class AutoRoundEndSystem : EntitySystem
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+
+        _cfg.OnValueChanged(CCVars.AutoRoundInitialDuration, v => _initialDuration = TimeSpan.FromMinutes(v), true);
+        _cfg.OnValueChanged(CCVars.AutoRoundMaxDuration, v => _maxDuration = TimeSpan.FromMinutes(v), true);
+        _cfg.OnValueChanged(CCVars.AutoRoundExtensionTime, v => _extensionTime = TimeSpan.FromMinutes(v), true);
+        _cfg.OnValueChanged(CCVars.AutoRoundVoteLeadTime, v => _voteLeadTime = TimeSpan.FromMinutes(v), true);
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -44,7 +58,7 @@ public sealed partial class AutoRoundEndSystem : EntitySystem
     {
         _isEnded = false;
         _leadEventTriggered = false;
-        _targetDuration = TimeSpan.FromHours(3);
+        _targetDuration = _initialDuration;
     }
 
     public override void Update(float frameTime)
@@ -82,6 +96,7 @@ public sealed partial class AutoRoundEndSystem : EntitySystem
     {
         var options = new VoteOptions
         {
+            InitiatorText = Loc.GetString("ui-vote-extend-round-initiator"),
             Title = Loc.GetString("ui-vote-extend-round-title"),
             Options =
             {
@@ -116,8 +131,26 @@ public sealed partial class AutoRoundEndSystem : EntitySystem
 
     private void ArmyAttack()
     {
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("auto-round-end-army-attack"));
+        _chat.DispatchGlobalAnnouncement(
+            Loc.GetString("auto-round-end-army-attack"),
+            playSound: true,
+            colorOverride: Color.FromHex("#9403fc"),
+            sender: Loc.GetString("auto-round-end-army-sender"));
 
-        // TODO: Army attack logic
+        var cursespawners = new List<EntityUid>();
+        var query = EntityQueryEnumerator<MagicBarrierNecroSpawnComponent>();
+
+        while (query.MoveNext(out var uid, out var _))
+            cursespawners.Add(uid);
+
+        if (cursespawners.Count == 0)
+            return;
+
+        for (int i = 0; i < 100; i++)
+        {
+            var chosenSpawner = _random.Pick(cursespawners);
+            var cursexform = Transform(chosenSpawner);
+            Spawn("MedievalSpawnNecroSenderPreset", cursexform.Coordinates);
+        }
     }
 }
