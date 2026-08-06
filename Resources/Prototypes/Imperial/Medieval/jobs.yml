@@ -2377,6 +2377,10 @@
     head: MedievalClothingHeadHelmetLegionRecruit
     neck: MedievalClothingNeckCloakClanEagle
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalLegionRecruit
@@ -2485,6 +2489,10 @@
     head: MedievalClothingHeadHelmetLegionLegionerNew
     neck: MedievalClothingNeckCloakClanEagle
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalLegionLegioner
@@ -2615,6 +2623,10 @@
     head: MedievalClothingHeadHelmetLegionOpcionNew
     neck: MedievalClothingNeckCloakClanEagle
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalLegionOpcion
@@ -2685,6 +2697,10 @@
     head: MedievalClothingHeadHelmetLegionTribuneNew
     neck: MedievalClothingNeckCloakClanEagle
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalLegionTribun
@@ -2754,6 +2770,11 @@
     neck: MedievalClothingNeckCloakClanEagle
     shoes: MedievalClothingFeetSteel
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
+    - MedievalCommsCrystallLeg
 
 - type: playTimeTracker
   id: JobMedievalLegionLegat
@@ -2852,6 +2873,10 @@
     head: MedievalClothingHeadTreasurer
     neck: MedievalClothingNeckCloakClanEagle
     id: MedievalLeatherKey
+  storage:
+    back:
+    - MedievalHandcuffs
+    - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalLegionTreasurer
@@ -3459,6 +3484,9 @@
     neck: MedievalClothingNeckCloakClanFox
     id: MedievalKeyGuard
     shoes: MedievalClothingFeetSteel
+  storage:
+    back:
+    - MedievalCommsCrystallIns
 
 - type: playTimeTracker
   id: JobMedievalInsurgencyLegat
@@ -4323,6 +4351,9 @@
     head: MedievalMercLeadHat
     neck: MedievalClothingNeckCloakClanMerc
     id: MedievalFarmerKey
+  storage:
+    back:
+    - MedievalCommsCrystallMerc
 
 - type: playTimeTracker
   id: JobMedievalMercLeader
@@ -5195,6 +5226,9 @@
     #head: MedievalClothingHeadHelmetShapel
     neck: MedievalClothingNeckCloakClanMine
     id: MedievalWoodKey
+  storage:
+    back:
+    - MedievalCommsCrystallMine
 
 - type: playTimeTracker
   id: JobMedievalMinerLeader
