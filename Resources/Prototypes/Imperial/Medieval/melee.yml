@@ -1880,6 +1880,8 @@
   id: MedievalSpearRusty
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: Item
+    size: Normal
   - type: Spear
   - type: RDWeight
     value: 4
@@ -1912,8 +1914,6 @@
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
     resourceWaste: 0.7
-  - type: Item
-    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
