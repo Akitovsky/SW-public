@@ -10,7 +10,8 @@
     MedievalClothingHeadHelmetCharmerIns: [MedievalClothingHeadHelmetCharmerInsBlood]
     MedievalFalshionT3Legion: [MedievalFalshionT3LegionChainMace, MedievalFalshionT3DarkerSword]
     MedievalFalshionT3LegionSteel: [MedievalFalshionT3LegionSteelChainMace, MedievalFalshionT3DarkerSwordSteel]
-    Log: [AhrimanStaffMedieval, MedievalMagicLightningRune]
+    MedievalClothingNeckCloakClanFox: [MedievalClothingNeckCloakKoshak]
+    Log: [AhrimanStaffMedieval, MedievalMagicLightningRune, MedievalClothingNeckCloakKoshak]
 
 - type: customization
   id: eifall
