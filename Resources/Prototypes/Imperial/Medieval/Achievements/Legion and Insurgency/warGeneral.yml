@@ -13,7 +13,7 @@
   - !type:CollectAllItemsCondition
     progressKey: collectAllProgression
     itemPrototypes:
-      MedievalArrow: 10
+      MedievalArrowIronPhysics: 10
       BowImprovised: 1
 
 - type: achievement
@@ -34,5 +34,5 @@
     itemPrototypes:
       MedievalCatapultCraft: 1
       MedievalCatapultAmmoBarrelStone: 1
-      MedievalCatapultAmmoBarrelAp: 1
+      #MedievalCatapultAmmoBarrelAp: 1
       MedievalCatapultAmmoBarrelGunpowder: 1

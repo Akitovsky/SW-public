@@ -3386,7 +3386,7 @@
     color: orange
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerFire
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakFire
     maxCharge: 30
 
 - type: entity
@@ -3429,7 +3429,7 @@
     color: blue
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerWater
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakWater
     maxCharge: 30
 
 - type: entity
@@ -3472,7 +3472,7 @@
     color: yellow
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerHoly
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakHoly
     maxCharge: 30
 
 - type: entity
