@@ -6,6 +6,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: Marker
   - type: StationAiWhitelist
   - type: AmbientSound
     enabled: false

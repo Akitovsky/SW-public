@@ -1,0 +1,39 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: MedievalClothingNeckCloakUngaRat
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/rat/SKIN_rat_coat.rsi
+  - type: Insulated
+  - type: ToggleableClothing
+    clothingPrototype: ClothingMedievalHeadHatHoodCloakUngaRat
+    requiredSlot:
+    - neck
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingMedievalHeadHatHoodCloakUngaRat
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/rat/SKIN_rat_coat_hood.rsi
+  - type: Clothing
+    equipDelay: 2
+    unequipDelay: 2
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/rat/SKIN_rat_coat_hood.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: HideLayerClothing
+    slots:
+    - Hair
+  - type: Insulated
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MedievalClothingUniformJumpsuitUngaRat
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/rat/SKIN_black_rat_robe.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/rat/SKIN_black_rat_robe.rsi
+  - type: Insulated
