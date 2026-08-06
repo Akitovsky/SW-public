@@ -25,14 +25,16 @@ public struct WaystoneInfo
     public int DeparturePrice;
     public int ArrivalPrice;
     public bool IsEnable;
+    public bool IsEnemy;
 
-    public WaystoneInfo(NetEntity entity, string name, int departurePrice, int arrivalPrice, bool isEnable)
+    public WaystoneInfo(NetEntity entity, string name, int departurePrice, int arrivalPrice, bool isEnable, bool isEnemy)
     {
         Entity = entity;
         Name = name;
         DeparturePrice = departurePrice;
         ArrivalPrice = arrivalPrice;
         IsEnable = isEnable;
+        IsEnemy = isEnemy;
     }
 }
 
