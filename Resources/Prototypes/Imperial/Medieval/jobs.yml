@@ -1765,7 +1765,7 @@
     proto: InnkeeperTimer4hours
   equipment:
     outerClothing: MedievalClothingHeadCloth
-    
+
 # MEDIEVAL TAVERN ASSISTANT
 
 - type: startingGear
@@ -1822,13 +1822,15 @@
   id: MedievalInnkeeperGuardGear
   equipment:
     pocket1: MedievalRevent25
+    pocket2: MedievalHandcuffs
     jumpsuit: MedievalClothingUniformJumpsuitShitCloth11
     head: MedievalClothingHeadHelmetNormandFree
     outerClothing: MedievalClothingOuterArmorGambeson
-    neck: MedievalClothingNeckCloakViking
+    #neck: MedievalClothingNeckCloakViking
     id: MedievalKeyTavern
   inhand:
   - MedievalFalshionT3
+  - MedievalKnut
 
 - type: playTimeTracker
   id: JobMedievalInnkeeperGuard
@@ -3032,12 +3034,12 @@
     id: MedievalKeyLegionAlch
   storage:
     back:
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
     - MedievalRecipeBook
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
 
 - type: playTimeTracker
   id: JobMedievalLegionAlchemic
@@ -3105,7 +3107,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
-  - MedievalRepair
+  #- MedievalRepair
 
 # MEDIEVAL Insurgency RECRUIT
 
@@ -3627,12 +3629,12 @@
     id: MedievalKeyRebelAlch
   storage:
     back:
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
-    - MedievalChemistryRecipe
     - MedievalRecipeBook
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
+    - MedievalChemistryRecipe
 
 - type: playTimeTracker
   id: JobMedievalInsurgencyAlchemic
@@ -3699,7 +3701,7 @@
   #- MedievalMusic
   #- GroupSpeciesBreathToolSecurity
   - MedievalGloves
-  - MedievalRepair
+  #- MedievalRepair
 
 
 # MEDIEVAL BANDIT RECRUIT
