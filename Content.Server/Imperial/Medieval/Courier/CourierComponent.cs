@@ -10,5 +10,5 @@ public sealed partial class CourierComponent : Component
     public int DeliveryPoints;
 
     [DataField]
-    public int FreeMailsCount = 3;
+    public int FreeMailsCount = 9;
 }
