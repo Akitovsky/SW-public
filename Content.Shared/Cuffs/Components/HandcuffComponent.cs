@@ -12,7 +12,7 @@ public sealed partial class HandcuffComponent : Component
     ///     The time it takes to cuff an entity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float CuffTime = 3.5f;
+    public float CuffTime = 5.5f;
 
     /// <summary>
     ///     The time it takes to uncuff an entity.
