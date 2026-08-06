@@ -113,7 +113,7 @@ public sealed partial class ManaSystem : EntitySystem
 
             return;
         }
-
+        manaComponent.CastedSpells.Clear();
         manaComponent.CastedSpells.TryAdd(uid, component.ManaDrain);
     }
 

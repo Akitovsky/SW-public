@@ -2775,6 +2775,7 @@
     - MedievalHandcuffs
     - MedievalKnut
     - MedievalCommsCrystallLeg
+    - MedievalKeyTreasurer
 
 - type: playTimeTracker
   id: JobMedievalLegionLegat
@@ -2877,6 +2878,7 @@
     back:
     - MedievalHandcuffs
     - MedievalKnut
+    - MedievalCommsCrystallLeg
 
 - type: playTimeTracker
   id: JobMedievalLegionTreasurer
