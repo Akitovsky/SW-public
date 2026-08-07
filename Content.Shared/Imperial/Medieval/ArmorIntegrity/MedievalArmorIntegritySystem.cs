@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
@@ -31,6 +32,10 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ExaminedEvent>(OnArmorExamined);
+        SubscribeLocalEvent<MedievalArmorIntegrityComponent, ArmorExamineEvent>(OnArmorExamine);
+        SubscribeLocalEvent<MedievalArmorIntegrityComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+        SubscribeLocalEvent<MedievalArmorIntegrityComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(
+            OnRelayedExplosionResistance);
         SubscribeLocalEvent<DamageableComponent, DamageModifyEvent>(OnDamageModify,
             after: [typeof(InventorySystem)]);
         SubscribeLocalEvent<DamageableComponent, BeforeExplodeEvent>(OnBeforeExplode);
@@ -79,9 +84,48 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         if (TryComp<ArmorComponent>(ent, out var armor) && ent.Comp.UnbrokenResistances.Count == 0)
             CopyArmorResistances(armor.Modifiers, ent.Comp.UnbrokenResistances);
 
+        if (HasComp<ExplosionResistanceComponent>(ent))
+        {
+            if (IsDefaultExplosionResistance(ent.Comp.UnbrokenExplosionResistance) &&
+                IsDefaultExplosionResistance(ent.Comp.BrokenExplosionResistance))
+            {
+                ent.Comp.UnbrokenExplosionResistance = CopyExplosionResistance(ent);
+            }
+
+            RemCompDeferred<ExplosionResistanceComponent>(ent);
+        }
+
         SetContainerArmorHP(ent, ent.Comp.ContainerArmorHP);
         SetArmorResistances(ent, ent.Comp.IsBroken ? ent.Comp.BrokenResistances : ent.Comp.UnbrokenResistances);
         Dirty(ent);
+    }
+
+    private void OnArmorExamine(Entity<MedievalArmorIntegrityComponent> ent, ref ArmorExamineEvent args)
+    {
+        var resistance = GetExplosionResistance(ent.Comp);
+        var value = MathF.Round((1f - resistance.DamageCoefficient) * 100, 1);
+
+        if (value == 0)
+            return;
+
+        args.Msg.PushNewline();
+        args.Msg.AddMarkupOrThrow(Loc.GetString(resistance.Examine, ("value", value)));
+    }
+
+    private void OnGetExplosionResistance(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        ref GetExplosionResistanceEvent args)
+    {
+        ApplyExplosionResistance(GetExplosionResistance(ent.Comp), ref args);
+    }
+
+    private void OnRelayedExplosionResistance(
+        Entity<MedievalArmorIntegrityComponent> ent,
+        ref InventoryRelayedEvent<GetExplosionResistanceEvent> args)
+    {
+        var resistance = GetExplosionResistance(ent.Comp);
+        if (resistance.Worn)
+            ApplyExplosionResistance(resistance, ref args.Args);
     }
 
     private void OnArmorExamined(Entity<MedievalArmorIntegrityComponent> ent, ref ExaminedEvent args)
@@ -340,6 +384,81 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
             resistance.FlatReduction = flatReduction;
         }
+    }
+
+    private MedievalArmorExplosionResistance CopyExplosionResistance(EntityUid entity)
+    {
+        var resistance = new MedievalArmorExplosionResistance();
+        var baseResistance = GetExplosionDamageCoefficient(entity, string.Empty);
+        resistance.DamageCoefficient = baseResistance;
+
+        string? wornProbe = null;
+        var wornProbeCoefficient = baseResistance;
+        if (baseResistance != 1f)
+            wornProbe = string.Empty;
+
+        if (baseResistance != 0f)
+        {
+            foreach (var explosion in _prototype.EnumeratePrototypes<ExplosionPrototype>())
+            {
+                var coefficient = GetExplosionDamageCoefficient(entity, explosion.ID);
+                var modifier = coefficient / baseResistance;
+                if (modifier != 1f)
+                    resistance.Modifiers[explosion.ID] = modifier;
+
+                if (wornProbe == null && coefficient != 1f)
+                {
+                    wornProbe = explosion.ID;
+                    wornProbeCoefficient = coefficient;
+                }
+            }
+        }
+
+        if (wornProbe != null)
+            resistance.Worn = GetRelayedExplosionDamageCoefficient(entity, wornProbe) == wornProbeCoefficient;
+
+        return resistance;
+    }
+
+    private float GetExplosionDamageCoefficient(EntityUid entity, string explosionPrototype)
+    {
+        var ev = new GetExplosionResistanceEvent(explosionPrototype);
+        RaiseLocalEvent(entity, ref ev);
+        return ev.DamageCoefficient;
+    }
+
+    private float GetRelayedExplosionDamageCoefficient(EntityUid entity, string explosionPrototype)
+    {
+        var ev = new InventoryRelayedEvent<GetExplosionResistanceEvent>(
+            new GetExplosionResistanceEvent(explosionPrototype),
+            entity);
+        RaiseLocalEvent(entity, ev);
+        return ev.Args.DamageCoefficient;
+    }
+
+    private static bool IsDefaultExplosionResistance(MedievalArmorExplosionResistance resistance)
+    {
+        return resistance.DamageCoefficient == 1f &&
+               resistance.Worn &&
+               resistance.Examine == "explosion-resistance-coefficient-value" &&
+               resistance.Modifiers.Count == 0;
+    }
+
+    private static MedievalArmorExplosionResistance GetExplosionResistance(
+        MedievalArmorIntegrityComponent component)
+    {
+        return component.IsBroken
+            ? component.BrokenExplosionResistance
+            : component.UnbrokenExplosionResistance;
+    }
+
+    private static void ApplyExplosionResistance(
+        MedievalArmorExplosionResistance resistance,
+        ref GetExplosionResistanceEvent args)
+    {
+        args.DamageCoefficient *= resistance.DamageCoefficient;
+        if (resistance.Modifiers.TryGetValue(args.ExplosionPrototype, out var modifier))
+            args.DamageCoefficient *= modifier;
     }
 
     private static DamageModifierSet CreateModifierSet(
