@@ -18,8 +18,8 @@ namespace Content.Shared.Imperial.Medieval.ArmorIntegrity;
 public sealed class MedievalArmorIntegritySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSkillsSystem _skills = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -53,7 +53,7 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
             !TryComp<InventoryComponent>(ent, out var inventory))
             return;
 
-        var damage = args.Damage * _damageable.UniversalExplosionDamageModifier;
+        var damage = _prototype.Index<ExplosionPrototype>(args.Id).DamagePerIntensity * args.Intensity;
         if (!damage.AnyPositive())
             return;
 
