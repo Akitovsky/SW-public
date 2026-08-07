@@ -2,6 +2,7 @@ using Content.Shared.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
+using Content.Shared.Explosion;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
 using Content.Shared.Inventory;
@@ -17,6 +18,7 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSkillsSystem _skills = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -30,6 +32,7 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
         SubscribeLocalEvent<MedievalArmorIntegrityComponent, ExaminedEvent>(OnArmorExamined);
         SubscribeLocalEvent<DamageableComponent, DamageModifyEvent>(OnDamageModify,
             after: [typeof(InventorySystem)]);
+        SubscribeLocalEvent<DamageableComponent, BeforeExplodeEvent>(OnBeforeExplode);
         SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnCharacterExamined);
     }
 
@@ -40,13 +43,31 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
             !TryComp<InventoryComponent>(ent, out var inventory))
             return;
 
+        DamageEquippedArmor(ent.Owner, inventory, args.OriginalDamage);
+    }
+
+    private void OnBeforeExplode(Entity<DamageableComponent> ent, ref BeforeExplodeEvent args)
+    {
+        if (!_net.IsServer ||
+            !TryComp<InventoryComponent>(ent, out var inventory))
+            return;
+
+        var damage = args.Damage * _damageable.UniversalExplosionDamageModifier;
+        if (!damage.AnyPositive())
+            return;
+
+        DamageEquippedArmor(ent.Owner, inventory, damage);
+    }
+
+    private void DamageEquippedArmor(EntityUid wearer, InventoryComponent inventory, DamageSpecifier damage)
+    {
         var equippedArmor = GetEquippedArmor(inventory, includeBroken: false);
         if (equippedArmor.Count == 0)
             return;
 
-        var dividedDamage = args.OriginalDamage / equippedArmor.Count;
+        var dividedDamage = damage / equippedArmor.Count;
         foreach (var armor in equippedArmor)
-            DamageArmor(armor, dividedDamage, ent.Owner);
+            DamageArmor(armor, dividedDamage, wearer);
     }
 
     private void OnComponentInit(Entity<MedievalArmorIntegrityComponent> ent, ref ComponentInit args)
