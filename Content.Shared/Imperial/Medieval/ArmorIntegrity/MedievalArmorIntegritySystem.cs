@@ -86,11 +86,8 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
         if (HasComp<ExplosionResistanceComponent>(ent))
         {
-            if (IsDefaultExplosionResistance(ent.Comp.UnbrokenExplosionResistance) &&
-                IsDefaultExplosionResistance(ent.Comp.BrokenExplosionResistance))
-            {
+            if (IsDefaultExplosionResistance(ent.Comp.UnbrokenExplosionResistance))
                 ent.Comp.UnbrokenExplosionResistance = CopyExplosionResistance(ent);
-            }
 
             RemCompDeferred<ExplosionResistanceComponent>(ent);
         }
@@ -439,8 +436,6 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
     private static bool IsDefaultExplosionResistance(MedievalArmorExplosionResistance resistance)
     {
         return resistance.DamageCoefficient == 1f &&
-               resistance.Worn &&
-               resistance.Examine == "explosion-resistance-coefficient-value" &&
                resistance.Modifiers.Count == 0;
     }
 
