@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Explosion;
+using Content.Shared.Ghost;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Imperial.Medieval.SmithingSystem.Behaviours;
 using Content.Shared.Inventory;
@@ -101,7 +102,9 @@ public sealed class MedievalArmorIntegritySystem : EntitySystem
 
     private void OnCharacterExamined(Entity<InventoryComponent> ent, ref ExaminedEvent args)
     {
-        var intelligence = _skills.GetSkillLevel(args.Examiner, SharedSkillsSystem.IntelligenceId);
+        var intelligence = HasComp<GhostComponent>(args.Examiner)
+            ? 20
+            : _skills.GetSkillLevel(args.Examiner, SharedSkillsSystem.IntelligenceId);
         if (intelligence <= 8)
             return;
 
