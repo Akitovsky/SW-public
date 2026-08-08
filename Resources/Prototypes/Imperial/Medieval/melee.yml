@@ -5651,7 +5651,7 @@
   description: Dragonslayer.
   components:
   - type: RDWeight
-    value: 15
+    value: 25
   - type: QuestItem
     contractName: "любое двуручное оружие"
   - type: EmitSoundOnLand
@@ -5669,7 +5669,7 @@
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
     cPAnimationOffset: 1
-    clickDamageModifier: 2
+    clickDamageModifier: 2.5
     wideAnimationRotation: 45
     attackRate: 0.15
     range: 2.2
@@ -5726,7 +5726,7 @@
     sprite: Imperial/Medieval/Melee/dragonslayer.rsi
     state: icon
   - type: StaminaDamageOnHit
-    damage: 30 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 35 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Blocking
     passiveBlockFraction: 0.25
     activeBlockFraction: 0.7
