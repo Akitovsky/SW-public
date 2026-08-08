@@ -53,6 +53,10 @@
   - type: MedievalArmorIntegrity
     containerArmorHP: 170
     repairType: Sewing
+    unbrokenExplosionResistance:
+      damageCoefficient: 0.15
+    brokenExplosionResistance:
+      damageCoefficient: 0.85
     unbrokenResistances:
       Blunt:
         coefficient: 0.15
@@ -125,6 +129,10 @@
   - type: MedievalArmorIntegrity
     containerArmorHP: 230
     repairType: Sewing
+    unbrokenExplosionResistance:
+      damageCoefficient: 0.15
+    brokenExplosionResistance:
+      damageCoefficient: 0.85
     unbrokenResistances:
       Blunt:
         coefficient: 0.15
@@ -200,6 +208,10 @@
   - type: MedievalArmorIntegrity
     containerArmorHP: 600
     repairType: Smithing
+    unbrokenExplosionResistance:
+      damageCoefficient: 0.1
+    brokenExplosionResistance:
+      damageCoefficient: 0.85
     unbrokenResistances:
       Blunt:
         coefficient: 0.095
@@ -270,6 +282,10 @@
   - type: MedievalArmorIntegrity
     containerArmorHP: 270
     repairType: Sewing
+    unbrokenExplosionResistance:
+      damageCoefficient: 0.12
+    brokenExplosionResistance:
+      damageCoefficient: 0.85
     unbrokenResistances:
       Blunt:
         coefficient: 0.125
@@ -398,6 +414,10 @@
   - type: MedievalArmorIntegrity
     containerArmorHP: 125
     repairType: Sewing
+    unbrokenExplosionResistance:
+      damageCoefficient: 0.8
+    brokenExplosionResistance:
+      damageCoefficient: 0.9
     unbrokenResistances:
       Blunt:
         coefficient: 0.8
