@@ -465,6 +465,30 @@
   - MedievalLegionArmor
 
 - type: listing
+  id: MdvLegionMedievalClothingOuterHorseArmorLeather
+  productEntity: MedievalClothingOuterHorseArmorLeather
+  cost:
+    MedalLegion: 10
+  categories:
+  - MedievalLegionArmor
+
+- type: listing
+  id: MdvLegionMedievalClothingOuterHorseArmorChainMail
+  productEntity: MedievalClothingOuterHorseArmorChainMail
+  cost:
+    MedalLegion: 20
+  categories:
+  - MedievalLegionArmor
+
+- type: listing
+  id: MdvLegionMedievalClothingOuterHorseArmorUpIron
+  productEntity: MedievalClothingOuterHorseArmorUpIron
+  cost:
+    MedalLegion: 30
+  categories:
+  - MedievalLegionArmor
+
+- type: listing
   id: MdvLegionMedievalHorseWhistle
   productEntity: MedievalHorseWhistle
   cost:
