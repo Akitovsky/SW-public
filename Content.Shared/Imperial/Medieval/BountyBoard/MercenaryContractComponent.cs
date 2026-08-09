@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Stacks;
-using Content.Shared.Imperial.Medieval.Courier;
+using Content.Shared.Imperial.Medieval.Recipient;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -17,7 +17,7 @@ public sealed partial class MercenaryContractComponent : Component
     [DataField]
     public Vector2i PayoutRange { get; set; } = new(125, 200);
 
-    public LetterRecipientData? TargetData;
+    public RecipientData? TargetData;
 
     public int Payout;
 }

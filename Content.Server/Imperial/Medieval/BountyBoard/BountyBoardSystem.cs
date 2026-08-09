@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Imperial.Medieval.Achievements;
-using Content.Server.Imperial.Medieval.Courier;
+using Content.Server.Imperial.Medieval.Recipient;
 using Content.Server.Chat.Managers;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
@@ -44,7 +44,7 @@ public sealed class BountyBoardSystem : EntitySystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AchievementSystem _achievement = default!;
-    [Dependency] private readonly CourierSystem _courierSystem = default!;
+    [Dependency] private readonly RecipientDataSystem _recipientData = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -122,7 +122,7 @@ public sealed class BountyBoardSystem : EntitySystem
         var contractComp = Comp<MercenaryContractComponent>(contractUid);
 
         contractComp.TargetUid = targetData.Target;
-        contractComp.TargetData = _courierSystem.BuildRecipientData(targetData.Target);
+        contractComp.TargetData = _recipientData.GetRecipientData(targetData.Target);
 
         var payout = _random.Next(contractComp.PayoutRange.X, contractComp.PayoutRange.Y);
         contractComp.Payout = payout;
