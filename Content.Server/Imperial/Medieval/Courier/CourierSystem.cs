@@ -308,7 +308,7 @@ public sealed class CourierSystem : EntitySystem
         return letter.Recipient is null ? null : letter.RecipientData;
     }
 
-    private LetterRecipientData? BuildRecipientData(EntityUid recipient)
+    public LetterRecipientData? BuildRecipientData(EntityUid recipient)
     {
         var profile = BuildRecipientProfile(recipient);
         if (profile == null)

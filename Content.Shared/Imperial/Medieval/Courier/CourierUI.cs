@@ -91,13 +91,24 @@ public enum LetterRecipientUiKey : byte
 }
 
 [Serializable, NetSerializable]
+public enum LetterRecipientUiMode : byte
+{
+    Letter,
+    Contract,
+}
+
+[Serializable, NetSerializable]
 public sealed class LetterRecipientBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly LetterRecipientData? Recipient;
+    public readonly LetterRecipientUiMode Mode;
 
-    public LetterRecipientBoundUserInterfaceState(LetterRecipientData? recipient)
+    public LetterRecipientBoundUserInterfaceState(
+        LetterRecipientData? recipient,
+        LetterRecipientUiMode mode = LetterRecipientUiMode.Letter)
     {
         Recipient = recipient;
+        Mode = mode;
     }
 }
 

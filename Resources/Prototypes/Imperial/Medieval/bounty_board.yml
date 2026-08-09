@@ -56,5 +56,9 @@
     state: merccontract
   - type: Item
     size: Small
+  - type: UserInterface
+    interfaces:
+      enum.LetterRecipientUiKey.Key:
+        type: LetterRecipientBoundUserInterface
   - type: MercenaryContract
     payoutRange: 125, 200
