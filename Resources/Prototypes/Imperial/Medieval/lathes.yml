@@ -929,6 +929,11 @@
     recipes:
     - MedievalWeaponCrossbow
     - MedievalWoodenSword
+    - MedievalWoodenClaymore
+    - MedievalWoodenMace
+    - MedievalWoodenMaceHeavy
+    - MedievalWoodenSpear
+    - MedievalWoodenDagger
     - FishingRodT2
     - MedievalBolt
     - MedievalBoltSteel
