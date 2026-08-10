@@ -1,10 +1,12 @@
 using System.Numerics;
+using Content.Server.Imperial.Medieval.Ships;
 using Content.Server.Imperial.Medieval.Ships.Helm;
 using Content.Shared.Imperial.Medieval.Ships.Helm;
 using Content.Shared.Imperial.Medieval.Ships.Sail;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Log;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -42,6 +44,7 @@ public sealed class HelmCacheTest
         var transformSystem = entityManager.System<SharedTransformSystem>();
         var secondGrid = default(Entity<MapGridComponent>);
         EntityUid helmUid = default;
+        EntityUid duplicateHelmUid = default;
         EntityUid sailUid = default;
         EntityUid oarUid = default;
 
@@ -54,28 +57,50 @@ public sealed class HelmCacheTest
             sailUid = entityManager.SpawnEntity("HelmCacheTestSail", new EntityCoordinates(map.Grid, 0f, 0f));
             oarUid = entityManager.SpawnEntity("HelmCacheTestSteeringOar", new EntityCoordinates(map.Grid, 0f, 0f));
 
-            var helm = entityManager.GetComponent<HelmComponent>(helmUid);
+            var grid = entityManager.GetComponent<ShipGridComponent>(map.Grid);
             Assert.Multiple(() =>
             {
-                Assert.That(helm.Sails, Does.Contain(sailUid));
-                Assert.That(helm.SteeringOars, Does.Contain(oarUid));
-                Assert.That(helm.CachedSteeringPower, Is.EqualTo(12f));
+                Assert.That(grid.Helm, Is.EqualTo(helmUid));
+                Assert.That(grid.Sails, Does.Contain(sailUid));
+                Assert.That(grid.SteeringPower, Is.EqualTo(12f));
             });
 
             transformSystem.SetCoordinates(sailUid, new EntityCoordinates(secondGrid, 0f, 0f));
-            Assert.That(helm.Sails, Does.Not.Contain(sailUid));
+            Assert.That(grid.Sails, Does.Not.Contain(sailUid));
 
             transformSystem.SetCoordinates(sailUid, new EntityCoordinates(map.Grid, 0f, 0f));
-            Assert.That(helm.Sails, Does.Contain(sailUid));
+            Assert.That(grid.Sails, Does.Contain(sailUid));
 
             entityManager.DeleteEntity(sailUid);
             entityManager.DeleteEntity(oarUid);
 
             Assert.Multiple(() =>
             {
-                Assert.That(helm.Sails, Is.Empty);
-                Assert.That(helm.SteeringOars, Is.Empty);
-                Assert.That(helm.CachedSteeringPower, Is.Zero);
+                Assert.That(grid.Sails, Is.Empty);
+                Assert.That(grid.SteeringPower, Is.Zero);
+            });
+        });
+
+        pair.ServerLogHandler.FailureLevel = LogLevel.Fatal;
+        await server.WaitAssertion(() =>
+        {
+            duplicateHelmUid = entityManager.SpawnEntity(
+                "HelmCacheTestHelm",
+                new EntityCoordinates(map.Grid, 0f, 0f));
+
+            var grid = entityManager.GetComponent<ShipGridComponent>(map.Grid);
+            Assert.That(grid.Helm, Is.EqualTo(helmUid));
+        });
+        pair.ServerLogHandler.FailureLevel = LogLevel.Error;
+
+        await server.WaitRunTicks(1);
+        await server.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(entityManager.EntityExists(helmUid), Is.True);
+                Assert.That(entityManager.EntityExists(duplicateHelmUid), Is.False);
+                Assert.That(entityManager.GetComponent<ShipGridComponent>(map.Grid).Helm, Is.EqualTo(helmUid));
             });
         });
 

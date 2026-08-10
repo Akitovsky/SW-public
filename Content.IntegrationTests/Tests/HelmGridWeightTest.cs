@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Server.Imperial.Medieval.Ships.Helm;
+using Content.Server.Imperial.Medieval.Ships;
 using Content.Shared._RD.Weight.Components;
 using Content.Shared._RD.Weight.Systems;
 using Robust.Shared.GameObjects;
@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-[TestOf(typeof(HelmWeightSystem))]
+[TestOf(typeof(ShipGridSystem))]
 public sealed class HelmGridWeightTest
 {
     [TestPrototypes]
@@ -33,7 +33,7 @@ public sealed class HelmGridWeightTest
         var mapSystem = entityManager.System<SharedMapSystem>();
         var transformSystem = entityManager.System<SharedTransformSystem>();
         var weightSystem = entityManager.System<RDWeightSystem>();
-        var helmWeightSystem = entityManager.System<HelmWeightSystem>();
+        var shipGridSystem = entityManager.System<ShipGridSystem>();
 
         Entity<MapGridComponent> firstGrid = default;
         Entity<MapGridComponent> secondGrid = default;
@@ -44,6 +44,8 @@ public sealed class HelmGridWeightTest
         {
             firstGrid = map.Grid;
             secondGrid = mapManager.CreateGridEntity(map.MapId);
+            shipGridSystem.EnsureGrid(firstGrid);
+            shipGridSystem.EnsureGrid(secondGrid);
             transformSystem.SetWorldPosition(secondGrid, new Vector2(10f, 0f));
             mapSystem.SetTile(secondGrid, secondGrid, Vector2i.Zero, new Tile(1));
 
@@ -60,32 +62,31 @@ public sealed class HelmGridWeightTest
                 Assert.That(weightSystem.GetTotal(child), Is.EqualTo(2f));
                 Assert.That(weightSystem.GetTotal(parent), Is.EqualTo(4f));
                 Assert.That(entityManager.GetComponent<TransformComponent>(parent).GridUid, Is.EqualTo(firstGrid.Owner));
-                Assert.That(entityManager.HasComponent<HelmGridComponent>(firstGrid));
-                Assert.That(helmWeightSystem.GetTotalOnGrid(firstGrid), Is.EqualTo(4f));
+                Assert.That(entityManager.HasComponent<ShipGridComponent>(firstGrid));
+                Assert.That(shipGridSystem.GetTotalWeight(firstGrid), Is.EqualTo(4f));
             });
-            Assert.That(helmWeightSystem.GetTotalOnGrid(secondGrid), Is.Zero);
+            Assert.That(shipGridSystem.GetTotalWeight(secondGrid), Is.Zero);
 
             transformSystem.SetCoordinates(parent, new EntityCoordinates(secondGrid, 0.5f, 0.5f));
 
-            var secondGridCache = entityManager.GetComponent<HelmGridComponent>(secondGrid);
+            var secondGridCache = entityManager.GetComponent<ShipGridComponent>(secondGrid);
             Assert.Multiple(() =>
             {
-                Assert.That(helmWeightSystem.GetTotalOnGrid(firstGrid), Is.Zero);
-                Assert.That(helmWeightSystem.GetTotalOnGrid(secondGrid), Is.EqualTo(4f));
-                Assert.That(secondGridCache.TileCountInitialized, Is.True);
+                Assert.That(shipGridSystem.GetTotalWeight(firstGrid), Is.Zero);
+                Assert.That(shipGridSystem.GetTotalWeight(secondGrid), Is.EqualTo(4f));
                 Assert.That(secondGridCache.TileCount, Is.EqualTo(1));
             });
 
             var childWeight = entityManager.GetComponent<RDWeightComponent>(child);
             weightSystem.ChangeWeightWithMod((child, childWeight), 2f);
 
-            Assert.That(helmWeightSystem.GetTotalOnGrid(secondGrid), Is.EqualTo(6f));
+            Assert.That(shipGridSystem.GetTotalWeight(secondGrid), Is.EqualTo(6f));
 
             entityManager.DeleteEntity(child);
-            Assert.That(helmWeightSystem.GetTotalOnGrid(secondGrid), Is.EqualTo(2f));
+            Assert.That(shipGridSystem.GetTotalWeight(secondGrid), Is.EqualTo(2f));
 
             entityManager.DeleteEntity(parent);
-            Assert.That(helmWeightSystem.GetTotalOnGrid(secondGrid), Is.Zero);
+            Assert.That(shipGridSystem.GetTotalWeight(secondGrid), Is.Zero);
         });
 
         await pair.CleanReturnAsync();

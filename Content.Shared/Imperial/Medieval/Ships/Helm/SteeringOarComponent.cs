@@ -9,6 +9,4 @@ public sealed partial class SteeringOarComponent : Component
 
     [DataField("power")]
     public float Power { get; set; } = 10f;
-
-    public EntityUid? HelmGridUid;
 }

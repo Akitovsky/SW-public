@@ -1,14 +1,13 @@
 using System;
-using Content.Server.Imperial.Medieval.Ships.PlayerDrowning;
+using System.Collections.Generic;
+using Content.Server.Imperial.Medieval.Ships;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Imperial.Medieval.Administration.Ships;
 using Content.Shared.Imperial.Medieval.Ships.Helm;
-using Content.Shared.Imperial.Medieval.Ships.Sail;
 using Content.Shared.Interaction;
-using Content.Shared.Maps;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.UserInterface;
@@ -16,8 +15,6 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -27,25 +24,21 @@ namespace Content.Server.Imperial.Medieval.Ships.Helm;
 public sealed class HelmSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly HelmWeightSystem _weight = default!;
+    [Dependency] private readonly ShipGridSystem _shipGrid = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
 
     private TimeSpan _nextCheckTime;
+    private readonly Dictionary<EntityUid, PilotState> _pilots = new();
 
     public override void Initialize()
     {
         SubscribeLocalEvent<HelmComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<HelmComponent, ComponentShutdown>(OnHelmShutdown);
-        SubscribeLocalEvent<HelmComponent, GridUidChangedEvent>(OnHelmGridChanged);
         SubscribeLocalEvent<HelmComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<HelmComponent, HelmActionDoAfterEvent>(OnHelmActionDoAfter);
         SubscribeLocalEvent<HelmComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
@@ -54,18 +47,7 @@ public sealed class HelmSystem : EntitySystem
         SubscribeLocalEvent<HelmComponent, HelmRotationChangeMessage>(OnRotationChangeMessage);
 
         SubscribeLocalEvent<MedievalPilotComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-
-        SubscribeLocalEvent<SailComponent, MapInitEvent>(OnSailMapInit);
-        SubscribeLocalEvent<SailComponent, ComponentShutdown>(OnSailShutdown);
-        SubscribeLocalEvent<SailComponent, GridUidChangedEvent>(OnSailGridChanged);
-        SubscribeLocalEvent<SailComponent, SailEfficiencyChangedEvent>(OnSailEfficiencyChanged);
-
-        SubscribeLocalEvent<SteeringOarComponent, ComponentStartup>(OnSteeringOarStartup);
-        SubscribeLocalEvent<SteeringOarComponent, ComponentShutdown>(OnSteeringOarShutdown);
-        SubscribeLocalEvent<SteeringOarComponent, GridUidChangedEvent>(OnSteeringOarGridChanged);
-
-        SubscribeLocalEvent<HelmGridComponent, ComponentStartup>(OnGridCacheStartup);
-        SubscribeLocalEvent<HelmGridComponent, TileChangedEvent>(OnGridTileChanged);
+        SubscribeLocalEvent<MedievalPilotComponent, ComponentShutdown>(OnPilotShutdown);
     }
 
     private void OnUpdateCanMove(EntityUid uid, MedievalPilotComponent component, ref UpdateCanMoveEvent args)
@@ -75,114 +57,16 @@ public sealed class HelmSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, HelmComponent component, ComponentStartup args)
     {
-        _metaData.AddFlag(uid, MetaDataFlags.ExtraTransformEvents);
         component.HelmRotation = NormalizeHelmRotation(component.HelmRotation);
-        RegisterHelm(uid, component, GetGridUid(uid, Transform(uid)));
-    }
-
-    private void OnHelmShutdown(EntityUid uid, HelmComponent component, ComponentShutdown args)
-    {
-        UnregisterHelm(uid, component);
-    }
-
-    private void OnHelmGridChanged(EntityUid uid, HelmComponent component, ref GridUidChangedEvent args)
-    {
-        RegisterHelm(uid, component, args.NewGrid);
-    }
-
-    private void OnSailMapInit(EntityUid uid, SailComponent component, MapInitEvent args)
-    {
-        _metaData.AddFlag(uid, MetaDataFlags.ExtraTransformEvents);
-        RegisterSail(uid, component, GetGridUid(uid, Transform(uid)));
-    }
-
-    private void OnSailShutdown(EntityUid uid, SailComponent component, ComponentShutdown args)
-    {
-        UnregisterSail(uid, component);
-    }
-
-    private void OnSailGridChanged(EntityUid uid, SailComponent component, ref GridUidChangedEvent args)
-    {
-        RegisterSail(uid, component, args.NewGrid);
-    }
-
-    private void OnSailEfficiencyChanged(EntityUid uid, SailComponent component, ref SailEfficiencyChangedEvent args)
-    {
-        if (component.HelmGridUid == null ||
-            !TryComp<HelmGridComponent>(component.HelmGridUid.Value, out var gridCache))
-        {
-            return;
-        }
-
-        var delta = args.NewValue - args.OldValue;
-        gridCache.SailsEfficiency += delta;
-        foreach (var helmUid in gridCache.Helms)
-        {
-            if (TryComp<HelmComponent>(helmUid, out var helm) && helm.Sails.Contains(uid))
-                helm.CachedSailsEfficiency += delta;
-        }
-    }
-
-    private void OnSteeringOarStartup(EntityUid uid, SteeringOarComponent component, ComponentStartup args)
-    {
-        _metaData.AddFlag(uid, MetaDataFlags.ExtraTransformEvents);
-        RegisterSteeringOar(uid, component, GetGridUid(uid, Transform(uid)));
-    }
-
-    private void OnSteeringOarShutdown(EntityUid uid, SteeringOarComponent component, ComponentShutdown args)
-    {
-        UnregisterSteeringOar(uid, component);
-    }
-
-    private void OnSteeringOarGridChanged(EntityUid uid, SteeringOarComponent component, ref GridUidChangedEvent args)
-    {
-        RegisterSteeringOar(uid, component, args.NewGrid);
-    }
-
-    private void OnGridTileChanged(EntityUid uid, HelmGridComponent component, ref TileChangedEvent args)
-    {
-        if (!component.TileCountInitialized)
-            return;
-
-        foreach (var change in args.Changes)
-        {
-            if (!change.EmptyChanged)
-                continue;
-
-            component.TileCount += change.NewTile.IsEmpty ? -1 : 1;
-        }
-
-        component.TileCount = Math.Max(0, component.TileCount);
-    }
-
-    private void OnGridCacheStartup(EntityUid uid, HelmGridComponent component, ComponentStartup args)
-    {
-        InitializeGridCache(uid, component);
-    }
-
-    private void InitializeGridCache(EntityUid uid, HelmGridComponent component)
-    {
-        if (component.TileCountInitialized || !TryComp<MapGridComponent>(uid, out var mapGrid))
-            return;
-
-        var tiles = _map.GetAllTilesEnumerator(uid, mapGrid);
-        while (tiles.MoveNext(out _))
-        {
-            component.TileCount++;
-        }
-
-        component.TileCountInitialized = true;
     }
 
     private void OnBeforeUiOpen(EntityUid uid, HelmComponent component, BeforeActivatableUIOpenEvent args)
     {
-        var pilotComp = EnsureComp<MedievalPilotComponent>(args.User);
-        if (pilotComp.UsingSound != null)
-            StopUsingSound(pilotComp);
+        EnsureComp<MedievalPilotComponent>(args.User);
+        if (_pilots.Remove(args.User, out var previous))
+            StopUsingSound(previous);
 
-        pilotComp.HelmEntity = uid;
-        pilotComp.LastRotationUpdate = _timing.CurTime;
-        pilotComp.RotationBudget = 0f;
+        _pilots[args.User] = new PilotState(uid, _timing.CurTime);
         _actionBlocker.UpdateCanMove(args.User);
 
         UpdateUi(uid, component);
@@ -190,11 +74,17 @@ public sealed class HelmSystem : EntitySystem
 
     private void OnAfterUiClosed(EntityUid uid, HelmComponent component, BoundUIClosedEvent args)
     {
-        if (TryComp<MedievalPilotComponent>(args.Actor, out var pilot))
-            StopUsingSound(pilot);
+        if (!_pilots.TryGetValue(args.Actor, out var pilot) || pilot.Helm != uid)
+            return;
 
         RemComp<MedievalPilotComponent>(args.Actor);
         _actionBlocker.UpdateCanMove(args.Actor);
+    }
+
+    private void OnPilotShutdown(Entity<MedievalPilotComponent> entity, ref ComponentShutdown args)
+    {
+        if (_pilots.Remove(entity, out var pilot))
+            StopUsingSound(pilot);
     }
 
     private void OnMenuActionMessage(EntityUid uid, HelmComponent component, HelmMenuActionMessage msg)
@@ -211,8 +101,9 @@ public sealed class HelmSystem : EntitySystem
     private void OnRotationChangeMessage(EntityUid uid, HelmComponent component, HelmRotationChangeMessage msg)
     {
         var player = msg.Actor;
-        if (!TryComp<MedievalPilotComponent>(player, out var pilot) ||
-            pilot.HelmEntity != uid ||
+        if (!HasComp<MedievalPilotComponent>(player) ||
+            !_pilots.TryGetValue(player, out var pilot) ||
+            pilot.Helm != uid ||
             !_actionBlocker.CanInteract(player, uid) ||
             !_actionBlocker.CanComplexInteract(player) ||
             !_interaction.InRangeAndAccessible(player, uid) ||
@@ -223,8 +114,11 @@ public sealed class HelmSystem : EntitySystem
 
         var curTime = _timing.CurTime;
         var elapsed = Math.Max(0f, (float) (curTime - pilot.LastRotationUpdate).TotalSeconds);
-        var rotationStep = MathF.Abs(component.RotationStep);
-        var maxBudget = rotationStep * MathF.Max(0f, component.RotationSyncMaxBudgetSeconds);
+        var rotationStep = float.IsFinite(component.RotationStep) ? MathF.Abs(component.RotationStep) : 0f;
+        var budgetSeconds = float.IsFinite(component.RotationSyncMaxBudgetSeconds)
+            ? MathF.Max(0f, component.RotationSyncMaxBudgetSeconds)
+            : 0f;
+        var maxBudget = rotationStep * budgetSeconds;
         pilot.RotationBudget = MathF.Min(maxBudget, pilot.RotationBudget + rotationStep * elapsed);
         pilot.LastRotationUpdate = curTime;
 
@@ -234,13 +128,16 @@ public sealed class HelmSystem : EntitySystem
         component.HelmRotation = Math.Clamp(component.HelmRotation + appliedDelta, -180f, 180f);
         pilot.RotationBudget = MathF.Max(0f, pilot.RotationBudget - MathF.Abs(appliedDelta));
 
-        if (msg.Turning)
+        if (MathF.Abs(appliedDelta) >= 0.001f)
+            UpdateUi(uid, component);
+
+        if (msg.Turning && MathF.Abs(appliedDelta) >= 0.001f)
             StartUsingSound(uid, pilot);
         else
             StopUsingSound(pilot);
     }
 
-    private void StartUsingSound(EntityUid helm, MedievalPilotComponent pilot)
+    private void StartUsingSound(EntityUid helm, PilotState pilot)
     {
         if (pilot.UsingSound != null)
             return;
@@ -252,7 +149,7 @@ public sealed class HelmSystem : EntitySystem
             audioParams)?.Entity;
     }
 
-    private void StopUsingSound(MedievalPilotComponent pilot)
+    private void StopUsingSound(PilotState pilot)
     {
         pilot.UsingSound = _audio.Stop(pilot.UsingSound);
     }
@@ -275,11 +172,14 @@ public sealed class HelmSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("helm-examine-left", ("degrees", degrees)));
         }
 
+        var sailsEfficiency = _shipGrid.TryGetHelmGrid(uid, out _, out var shipGrid)
+                ? shipGrid.SailsEfficiency
+                : 0f;
         args.PushMarkup(Loc.GetString(
             "helm-examine-sails-efficiency",
-            ("efficiency", FormatEfficiency(component.CachedSailsEfficiency))));
+            ("efficiency", FormatEfficiency(sailsEfficiency))));
 
-        if (TryGetShipLoad(component, out var weight, out var overloadCeil))
+        if (TryGetShipLoad(uid, out var weight, out var overloadCeil))
         {
             args.PushMarkup(Loc.GetString(
                 "helm-examine-ship-load",
@@ -317,13 +217,17 @@ public sealed class HelmSystem : EntitySystem
 
     private void ApplyHelmAction(EntityUid helm, HelmComponent helmComponent, HelmMenuAction action)
     {
+        var rotationStep = float.IsFinite(helmComponent.RotationStep)
+            ? MathF.Abs(helmComponent.RotationStep)
+            : 0f;
+
         switch (action)
         {
             case HelmMenuAction.RotateLeft:
-                helmComponent.HelmRotation -= helmComponent.RotationStep;
+                helmComponent.HelmRotation -= rotationStep;
                 break;
             case HelmMenuAction.RotateRight:
-                helmComponent.HelmRotation += helmComponent.RotationStep;
+                helmComponent.HelmRotation += rotationStep;
                 break;
             case HelmMenuAction.Center:
                 helmComponent.HelmRotation = 0f;
@@ -336,47 +240,51 @@ public sealed class HelmSystem : EntitySystem
 
     private void UpdateUi(EntityUid uid, HelmComponent component)
     {
+        var rotation = NormalizeHelmRotation(component.HelmRotation);
+        var rotationStep = float.IsFinite(component.RotationStep)
+            ? MathF.Abs(component.RotationStep)
+            : 0f;
+
         _ui.SetUiState(
             uid,
             HelmUiKey.Key,
-            new HelmBoundUserInterfaceState(component.HelmRotation, component.RotationStep));
+            new HelmBoundUserInterfaceState(rotation, rotationStep));
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var curTime = _timing.CurTime;
-        if (curTime <= _nextCheckTime)
+        if (_timing.CurTime <= _nextCheckTime)
             return;
 
-        _nextCheckTime = curTime + TimeSpan.FromSeconds(_cfg.GetCVar(ShipsCCVars.WindDelay));
+        _nextCheckTime = _timing.CurTime + GetUpdateDelay();
         var windEnabled = _cfg.GetCVar(ShipsCCVars.WindEnabled);
 
-        var query = EntityQueryEnumerator<HelmComponent>();
-        while (query.MoveNext(out _, out var helmComponent))
+        var query = EntityQueryEnumerator<ShipGridComponent>();
+        while (query.MoveNext(out var boat, out var grid))
         {
-            if (helmComponent.GridUid is not { } boat)
-                continue;
-
-            if (curTime >= helmComponent.NextCacheUpdate)
+            if (grid.Helm is not { } helmUid ||
+                !TryComp<HelmComponent>(helmUid, out var helmComponent))
             {
-                RefreshCache(helmComponent, boat);
-                helmComponent.NextCacheUpdate = curTime + GetCacheRefreshInterval(helmComponent);
+                continue;
             }
 
             if (windEnabled)
-                RotateShip(boat, helmComponent);
+                RotateShip(boat, grid, helmComponent);
         }
     }
 
-    private void RotateShip(EntityUid boat, HelmComponent helmComponent)
+    private void RotateShip(EntityUid boat, ShipGridComponent grid, HelmComponent helmComponent)
     {
         if (TryComp<ShuttleComponent>(boat, out var shuttle) && !shuttle.Enabled)
             return;
 
-        var steeringPower = helmComponent.CachedSteeringPower;
-        if (steeringPower <= 0f)
+        if (grid.HasLoweredAnchor)
+            return;
+
+        var steeringPower = grid.SteeringPower;
+        if (!float.IsFinite(steeringPower) || steeringPower <= 0f)
             return;
 
         if (!TryComp<PhysicsComponent>(boat, out var body))
@@ -388,15 +296,17 @@ public sealed class HelmSystem : EntitySystem
             if (MathF.Abs(body.AngularVelocity) < 0.001f)
                 return;
 
-            var weight = MathF.Max(helmComponent.MinShipWeight, helmComponent.CachedShipWeight);
+            var weight = GetShipWeight(helmComponent, grid);
             var weightDivider = 1f + weight * 0.01f;
             StabilizeShipRotation(boat, helmComponent, steeringPower, weightDivider, body);
             return;
         }
 
-        var shipWeight = MathF.Max(helmComponent.MinShipWeight, helmComponent.CachedShipWeight);
+        var shipWeight = GetShipWeight(helmComponent, grid);
         var shipWeightDivider = 1f + shipWeight * 0.01f;
         var angularImpulse = steeringInput * helmComponent.MinMotionFactor * steeringPower * helmComponent.TurnImpulseScalar / shipWeightDivider;
+        if (!float.IsFinite(angularImpulse))
+            return;
 
         _physics.ApplyAngularImpulse(boat, angularImpulse, body: body);
     }
@@ -413,7 +323,7 @@ public sealed class HelmSystem : EntitySystem
             return;
 
         var stabilizingImpulseMagnitude = helmComponent.MinMotionFactor * steeringPower * helmComponent.StabilizingImpulseScalar / weightDivider;
-        if (stabilizingImpulseMagnitude <= 0f)
+        if (!float.IsFinite(stabilizingImpulseMagnitude) || stabilizingImpulseMagnitude <= 0f)
             return;
 
         var desiredImpulse = -MathF.Sign(angularVelocity) * stabilizingImpulseMagnitude;
@@ -427,211 +337,40 @@ public sealed class HelmSystem : EntitySystem
             _physics.SetAngularVelocity(boat, 0f, body: body);
     }
 
-    private void RefreshCache(HelmComponent helmComponent, EntityUid boat)
+    private bool TryGetShipLoad(EntityUid helmUid, out float weight, out float overloadCeil)
     {
-        helmComponent.CachedShipWeight = _weight.GetTotalOnGrid(boat);
-
-        if (!TryComp<HelmGridComponent>(boat, out var gridCache))
-        {
-            helmComponent.CachedOverloadCeil = 0f;
-            return;
-        }
-
-        var overloadCeilPerTile = _cfg.GetCVar(ShipsCCVars.OverloadCeilPerTile);
-        if (TryComp<ShipWeightComponent>(boat, out var shipWeight))
-            overloadCeilPerTile = shipWeight.OverloadCeilPerTile;
-
-        helmComponent.CachedOverloadCeil = gridCache.TileCount * overloadCeilPerTile;
-    }
-
-    private bool TryGetShipLoad(HelmComponent helmComponent, out float weight, out float overloadCeil)
-    {
-        if (helmComponent.GridUid == null)
+        if (!_shipGrid.TryGetHelmGrid(helmUid, out var gridUid, out var grid))
         {
             weight = 0f;
             overloadCeil = 0f;
             return false;
         }
 
-        weight = helmComponent.CachedShipWeight;
-        overloadCeil = helmComponent.CachedOverloadCeil;
+        weight = grid.TotalWeight;
+        overloadCeil = _shipGrid.GetMaxWeight(gridUid, grid);
         return true;
-    }
-
-    private void RegisterHelm(EntityUid uid, HelmComponent component, EntityUid? gridUid)
-    {
-        if (gridUid != null && !HasComp<MapGridComponent>(gridUid.Value))
-            gridUid = null;
-
-        if (component.GridUid == gridUid)
-            return;
-
-        UnregisterHelm(uid, component);
-        if (gridUid == null)
-            return;
-
-        var gridCache = EnsureGridCache(gridUid.Value);
-        gridCache.Helms.Add(uid);
-        component.GridUid = gridUid;
-        component.Sails.UnionWith(gridCache.Sails);
-        component.SteeringOars.UnionWith(gridCache.SteeringOars);
-        component.CachedSailsEfficiency = gridCache.SailsEfficiency;
-        component.CachedSteeringPower = gridCache.SteeringPower;
-        RefreshCache(component, gridUid.Value);
-        component.NextCacheUpdate = _timing.CurTime + GetCacheRefreshInterval(component);
-    }
-
-    private void UnregisterHelm(EntityUid uid, HelmComponent component)
-    {
-        if (component.GridUid != null && TryComp<HelmGridComponent>(component.GridUid.Value, out var gridCache))
-            gridCache.Helms.Remove(uid);
-
-        component.GridUid = null;
-        component.NextCacheUpdate = TimeSpan.Zero;
-        component.Sails.Clear();
-        component.SteeringOars.Clear();
-        component.CachedShipWeight = 0f;
-        component.CachedOverloadCeil = 0f;
-        component.CachedSteeringPower = 0f;
-        component.CachedSailsEfficiency = 0f;
-    }
-
-    private void RegisterSail(EntityUid uid, SailComponent component, EntityUid? gridUid)
-    {
-        if (gridUid != null && !HasComp<MapGridComponent>(gridUid.Value))
-            gridUid = null;
-
-        if (component.HelmGridUid == gridUid)
-            return;
-
-        UnregisterSail(uid, component);
-        if (gridUid == null)
-            return;
-
-        var gridCache = EnsureGridCache(gridUid.Value);
-        if (gridCache.Sails.Add(uid))
-            gridCache.SailsEfficiency += component.LastSailEfficencyMod;
-
-        component.HelmGridUid = gridUid;
-
-        foreach (var helmUid in gridCache.Helms)
-        {
-            if (!TryComp<HelmComponent>(helmUid, out var helm))
-                continue;
-
-            if (helm.Sails.Add(uid))
-                helm.CachedSailsEfficiency += component.LastSailEfficencyMod;
-        }
-    }
-
-    private void UnregisterSail(EntityUid uid, SailComponent component)
-    {
-        if (component.HelmGridUid == null ||
-            !TryComp<HelmGridComponent>(component.HelmGridUid.Value, out var gridCache))
-        {
-            component.HelmGridUid = null;
-            return;
-        }
-
-        if (!gridCache.Sails.Remove(uid))
-        {
-            component.HelmGridUid = null;
-            return;
-        }
-
-        gridCache.SailsEfficiency -= component.LastSailEfficencyMod;
-        foreach (var helmUid in gridCache.Helms)
-        {
-            if (!TryComp<HelmComponent>(helmUid, out var helm) || !helm.Sails.Remove(uid))
-                continue;
-
-            helm.CachedSailsEfficiency -= component.LastSailEfficencyMod;
-        }
-
-        component.HelmGridUid = null;
-    }
-
-    private void RegisterSteeringOar(EntityUid uid, SteeringOarComponent component, EntityUid? gridUid)
-    {
-        if (gridUid != null && !HasComp<MapGridComponent>(gridUid.Value))
-            gridUid = null;
-
-        if (component.HelmGridUid == gridUid)
-            return;
-
-        UnregisterSteeringOar(uid, component);
-        if (gridUid == null)
-            return;
-
-        var gridCache = EnsureGridCache(gridUid.Value);
-        if (gridCache.SteeringOars.Add(uid))
-            gridCache.SteeringPower += component.Power;
-
-        component.HelmGridUid = gridUid;
-
-        foreach (var helmUid in gridCache.Helms)
-        {
-            if (!TryComp<HelmComponent>(helmUid, out var helm))
-                continue;
-
-            if (helm.SteeringOars.Add(uid))
-                helm.CachedSteeringPower += component.Power;
-        }
-    }
-
-    private void UnregisterSteeringOar(EntityUid uid, SteeringOarComponent component)
-    {
-        if (component.HelmGridUid == null ||
-            !TryComp<HelmGridComponent>(component.HelmGridUid.Value, out var gridCache))
-        {
-            component.HelmGridUid = null;
-            return;
-        }
-
-        if (!gridCache.SteeringOars.Remove(uid))
-        {
-            component.HelmGridUid = null;
-            return;
-        }
-
-        gridCache.SteeringPower -= component.Power;
-        foreach (var helmUid in gridCache.Helms)
-        {
-            if (!TryComp<HelmComponent>(helmUid, out var helm) || !helm.SteeringOars.Remove(uid))
-                continue;
-
-            helm.CachedSteeringPower -= component.Power;
-        }
-
-        component.HelmGridUid = null;
-    }
-
-    private HelmGridComponent EnsureGridCache(EntityUid gridUid)
-    {
-        var gridCache = EnsureComp<HelmGridComponent>(gridUid);
-        InitializeGridCache(gridUid, gridCache);
-        return gridCache;
-    }
-
-    private EntityUid? GetGridUid(EntityUid uid, TransformComponent xform)
-    {
-        var gridUid = _transform.GetMoverCoordinates(uid, xform).EntityId;
-        return HasComp<MapGridComponent>(gridUid) ? gridUid : null;
-    }
-
-    private static TimeSpan GetCacheRefreshInterval(HelmComponent component)
-    {
-        var seconds = float.IsFinite(component.CacheRefreshInterval)
-            ? MathF.Max(1f, component.CacheRefreshInterval)
-            : 1f;
-        return TimeSpan.FromSeconds(seconds);
     }
 
     private static float GetSteeringInput(HelmComponent helmComponent)
     {
         var diffDegrees = helmComponent.HelmRotation;
-        var maxTurnAngle = MathF.Max(1f, MathF.Abs(helmComponent.SteeringAngleForMaxTurn));
+        var maxTurnAngle = float.IsFinite(helmComponent.SteeringAngleForMaxTurn)
+            ? MathF.Max(1f, MathF.Abs(helmComponent.SteeringAngleForMaxTurn))
+            : 45f;
         return Math.Clamp(-diffDegrees / maxTurnAngle, -1f, 1f);
+    }
+
+    private float GetShipWeight(HelmComponent helm, ShipGridComponent grid)
+    {
+        var minWeight = float.IsFinite(helm.MinShipWeight) ? MathF.Max(0f, helm.MinShipWeight) : 0f;
+        var totalWeight = float.IsFinite(grid.TotalWeight) ? MathF.Max(0f, grid.TotalWeight) : 0f;
+        return MathF.Max(minWeight, totalWeight);
+    }
+
+    private TimeSpan GetUpdateDelay()
+    {
+        var seconds = _cfg.GetCVar(ShipsCCVars.WindDelay);
+        return TimeSpan.FromSeconds(float.IsFinite(seconds) ? MathF.Max(0.1f, seconds) : 1f);
     }
 
     private static string FormatEfficiency(float value)
@@ -646,6 +385,10 @@ public sealed class HelmSystem : EntitySystem
 
     private static float NormalizeHelmRotation(float helmRotation)
     {
+        if (!float.IsFinite(helmRotation))
+            return 0f;
+
+        helmRotation %= 360f;
         if (helmRotation > 180f)
             helmRotation -= 360f;
 
@@ -653,5 +396,13 @@ public sealed class HelmSystem : EntitySystem
             helmRotation += 360f;
 
         return helmRotation;
+    }
+
+    private sealed class PilotState(EntityUid helm, TimeSpan lastRotationUpdate)
+    {
+        public readonly EntityUid Helm = helm;
+        public EntityUid? UsingSound;
+        public TimeSpan LastRotationUpdate = lastRotationUpdate;
+        public float RotationBudget;
     }
 }
