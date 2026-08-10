@@ -450,12 +450,12 @@ ent-MedievalIronGlovesZablik = plated bracers
     .desc = Light steel protection for the arms, leaving movement unhindered and the hands entirely unguarded.
     .suffix = { "SKIN, Medieval, clothing" }
 
-ent-MedievalClothingHeadHelmetZablik = helmet
+ent-MedievalClothingHeadHelmetZablik = hussar helmet
     .desc = A shishak-style helmet fitted to the hussar's panoply. Perhaps one of the most practical helmets for a cavalryman, and for a foot soldier as well. Decorative steel wings are fixed to it, proclaiming the host to which its wearer belongs.
     .suffix = { "SKIN, Medieval, clothing" }
 
 ent-MedievalClothingNeckCloakZablik = cavalry wings
-    .desc = Dense eagle feathers set into a red-painted wooden frame, a sign of cavalry pride and allegiance. The sight of those feathers streaming in the wind may be enough to make an enemy surrender in fear.
+    .desc = Dense eagle feathers set into a red-painted wooden frame, a sign of cavalry pride and hussar allegiance. The sight of those feathers streaming in the wind may be enough to make an enemy surrender in fear.
     .suffix = { "SKIN, Medieval, clothing" }
 
 ent-MedievalClothingUniformJumpsuitShitCloth82 = long zupan
@@ -538,7 +538,7 @@ ent-MedievalClothingUniformJumpsuitShitCloth2383 = old shirt
     .desc = An untucked old shirt.
     .suffix = { "SKIN, Medieval, clothing" }
 
-ent-MedievalGussarFlagZablik = standard
+ent-MedievalGussarFlagZablik = hussar standard
     .desc = An overseas banner hung upon a flagstaff. If the nearby land has a master, that master is a hussar.
     .suffix = { "Medieval" }
 
