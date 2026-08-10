@@ -18,7 +18,7 @@ namespace Content.Client.Imperial.Medieval.Ships.Helm;
 [GenerateTypedNameReferences]
 public sealed partial class HelmMenu : DefaultWindow
 {
-    private const float SyncInterval = 1f;
+    private const float SyncInterval = 0.05f;
 
     private readonly SharedAudioSystem _audio;
     private readonly IInputManager _input;
