@@ -1,4 +1,4 @@
-using Robust.Shared.Audio;
+using System;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Imperial.Medieval.Ships.Helm;
@@ -10,8 +10,11 @@ public sealed partial class MedievalPilotComponent : Component
     public EntityUid? HelmEntity;
 
     [DataField]
-    public float Turning;
+    public EntityUid? UsingSound;
 
     [DataField]
-    public EntityUid? UsingSound;
+    public TimeSpan LastRotationUpdate;
+
+    [DataField]
+    public float RotationBudget;
 }

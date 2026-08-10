@@ -1,7 +1,8 @@
 using System;
 using System.Numerics;
+using Content.Server.Imperial.Medieval.Ships.Helm;
+using Content.Server.Imperial.Medieval.Ships.PlayerDrowning;
 using Content.Server.Shuttles.Components;
-using Content.Shared._RD.Weight.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Imperial.Medieval.Administration.Ships;
@@ -30,11 +31,10 @@ public sealed class SailSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly RDWeightSystem _rdWeight = default!;
+    [Dependency] private readonly HelmWeightSystem _weight = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -231,14 +231,15 @@ public sealed class SailSystem : EntitySystem
             if (MathF.Abs(forceFactor) < 0.001f)
                 continue;
 
-            if (!TryComp<MapGridComponent>(boat, out var mapGrid))
+            if (!TryComp<HelmGridComponent>(boat, out var gridCache) || !gridCache.TileCountInitialized)
                 continue;
 
-            var overloadCeil = ShipWeightHelper.GetMaxWeight(boat, mapGrid, _map, EntityManager, _cfg);
-            if (overloadCeil < 0)
-                continue;
+            var overloadCeilPerTile = _cfg.GetCVar(ShipsCCVars.OverloadCeilPerTile);
+            if (TryComp<ShipWeightComponent>(boat, out var shipWeight))
+                overloadCeilPerTile = shipWeight.OverloadCeilPerTile;
 
-            var weight = _rdWeight.GetTotalOnGrid(boat);
+            var overloadCeil = gridCache.TileCount * overloadCeilPerTile;
+            var weight = _weight.GetTotalOnGrid(boat);
             var impulseMagnitude = GetImpulseMagnitude(stormLevel * windPower * sailComponent.SailSize, overloadCeil, weight);
             var localImpulse = Vector2.UnitY * (impulseMagnitude * forceFactor);
             var worldImpulse = shipDirection.RotateVec(localImpulse);
@@ -264,7 +265,10 @@ public sealed class SailSystem : EntitySystem
         if (MathF.Abs(component.LastSailEfficencyMod - mod) < 0.001f)
             return;
 
+        var oldValue = component.LastSailEfficencyMod;
         component.LastSailEfficencyMod = mod;
+        var ev = new SailEfficiencyChangedEvent(oldValue, mod);
+        RaiseLocalEvent(uid, ref ev);
         Dirty(uid, component);
     }
 

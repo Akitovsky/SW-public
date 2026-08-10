@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace Content.Shared.Imperial.Medieval.Ships.Helm;
 
 /// <summary>
@@ -11,4 +9,6 @@ public sealed partial class SteeringOarComponent : Component
 
     [DataField("power")]
     public float Power { get; set; } = 10f;
+
+    public EntityUid? HelmGridUid;
 }

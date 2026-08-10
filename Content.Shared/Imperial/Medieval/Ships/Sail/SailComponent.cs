@@ -34,4 +34,9 @@ public sealed partial class SailComponent : Component
 
     [ViewVariables]
     public float LastSailEfficencyMod;
+
+    public EntityUid? HelmGridUid;
 }
+
+[ByRefEvent]
+public readonly record struct SailEfficiencyChangedEvent(float OldValue, float NewValue);

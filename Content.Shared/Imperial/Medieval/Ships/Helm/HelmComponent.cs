@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Content.Shared.Imperial.Medieval.Ships.Helm;
 
 [RegisterComponent]
@@ -24,6 +27,25 @@ public sealed partial class HelmComponent : Component
     [DataField("minShipWeight")]
     public float MinShipWeight = 10f;
 
-    [DataField("OverloadCeilPerTile")]
-    public float OverloadCeilPerTile = 20f;
+    [DataField]
+    public float RotationSyncMaxBudgetSeconds = 1.5f;
+
+    [DataField]
+    public float CacheRefreshInterval = 1f;
+
+    public EntityUid? GridUid;
+
+    public TimeSpan NextCacheUpdate;
+
+    public readonly HashSet<EntityUid> Sails = new();
+
+    public readonly HashSet<EntityUid> SteeringOars = new();
+
+    public float CachedShipWeight;
+
+    public float CachedOverloadCeil;
+
+    public float CachedSteeringPower;
+
+    public float CachedSailsEfficiency;
 }
