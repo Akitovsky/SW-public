@@ -73,6 +73,41 @@
   result: MedievalWoodenSword
 
 - type: CP14Recipe
+  id: MedievalWoodenDagger
+  craftTime: 5
+  stacks:
+    WoodPlank: 2
+  result: MedievalWoodenDagger
+
+- type: CP14Recipe
+  id: MedievalWoodenClaymore
+  craftTime: 5
+  stacks:
+    WoodPlank: 4
+  result: MedievalWoodenClaymore
+
+- type: CP14Recipe
+  id: MedievalWoodenMace
+  craftTime: 5
+  stacks:
+    WoodPlank: 3
+  result: MedievalWoodenMace
+
+- type: CP14Recipe
+  id: MedievalWoodenMaceHeavy
+  craftTime: 5
+  stacks:
+    WoodPlank: 3
+  result: MedievalWoodenMaceHeavy
+
+- type: CP14Recipe
+  id: MedievalWoodenSpear
+  craftTime: 5
+  stacks:
+    WoodPlank: 3
+  result: MedievalWoodenSpear
+
+- type: CP14Recipe
   id: MedievalDecorMogila1Craft
   craftTime: 5
   stacks:
