@@ -285,3 +285,57 @@ ent-WallNecropolisUndestructible = {ent-WallNecropolis}
     .desc = {ent-WallNecropolis.desc}
     .suffix = { "НЕРАЗРУШИМЫЙ, Средневековье, Конструкция, Scarlatto" }
 
+### FESTIVAL EVENT
+
+ent-MedievalClothingUniformJumpsuitFestivalEventScarlatto1 = маскарадный костюм прислуги
+    .desc = Приятный костюм для ночных праздников, кажется такой носят прислуги карнавала Нексара.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-MedievalClothingUniformJumpsuitFestivalEventScarlatto2 = маскарадный наряд хранителя
+    .desc = Судя по всему носитель этого наряда был обременён важной задачей.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+
+ent-ClothingMaskFestivalEventScarlatto1 = маскарадная маска прислуги
+    .desc = Всем своим видом напоминает вам о том, что вы лишь наполовину вознеслись к солнцу.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto2 = маскарадная маска прислуги
+    .desc = Всем своим видом напоминает вам о том, что вы лишь наполовину вознеслись к луне.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto3 = маскарадная маска
+    .desc = Маска с более выраженными чертами миловидности и мудрости
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto4 = маскарадная маска
+    .desc = Маска с более выраженными чертами миловидности и мудрости
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto5 = маскарадная маска
+    .desc = Маска с более выраженными чертами миловидности и мудрости
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto6 = маскарадная маска хранителя
+    .desc = Каждый взгляд павший на эту маску будет ослеплён солнечным светом.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto7 = маска трагика
+    .desc = Как... Трагично!
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto8 = маскарадная маска
+    .desc = Маска с более выраженными чертами мужества и терпения
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto9 = маскарадная маска
+    .desc = Маска с более выраженными чертами мужества и терпения
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-ClothingMaskFestivalEventScarlatto10 = маскарадная маска
+    .desc = Маска с более выраженными чертами мужества и терпения
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+
+ent-MedievalDecorationEventFestivalScarlatto1 = фестивальные флажки
+    .desc = Разноцветные флажки, создающие атмосферу карнавала и веселья.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-MedievalDecorationEventFestivalScarlatto2 = фестивальные флажки
+    .desc = Разноцветные флажки, создающие атмосферу карнавала и веселья.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-MedievalDecorationEventFestivalScarlatto3 = фестивальные флажки
+    .desc = Разноцветные флажки, создающие атмосферу карнавала и веселья.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+ent-MedievalDecorationEventFestivalScarlatto4 = фестивальные флажки
+    .desc = Разноцветные флажки, создающие атмосферу карнавала и веселья.
+    .suffix = {"Средневековье, Scarlatto, Маскарад"}
+
+### FESTIVAL EVENT
