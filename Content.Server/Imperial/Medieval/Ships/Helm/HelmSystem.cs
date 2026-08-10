@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Imperial.Medieval.Ships;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Imperial.Medieval.Administration.Ships;
 using Content.Shared.Imperial.Medieval.Ships.Helm;
@@ -29,7 +28,6 @@ public sealed class HelmSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
 
@@ -40,10 +38,8 @@ public sealed class HelmSystem : EntitySystem
     {
         SubscribeLocalEvent<HelmComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HelmComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<HelmComponent, HelmActionDoAfterEvent>(OnHelmActionDoAfter);
         SubscribeLocalEvent<HelmComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
         SubscribeLocalEvent<HelmComponent, BoundUIClosedEvent>(OnAfterUiClosed);
-        SubscribeLocalEvent<HelmComponent, HelmMenuActionMessage>(OnMenuActionMessage);
         SubscribeLocalEvent<HelmComponent, HelmRotationChangeMessage>(OnRotationChangeMessage);
 
         SubscribeLocalEvent<MedievalPilotComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
@@ -87,17 +83,6 @@ public sealed class HelmSystem : EntitySystem
             StopUsingSound(pilot);
     }
 
-    private void OnMenuActionMessage(EntityUid uid, HelmComponent component, HelmMenuActionMessage msg)
-    {
-        var player = msg.Actor;
-        if (!_actionBlocker.CanInteract(player, uid) ||
-            !_actionBlocker.CanComplexInteract(player) ||
-            !_interaction.InRangeAndAccessible(player, uid))
-            return;
-
-        TryStartHelmActionDoAfter(player, uid, msg.Action);
-    }
-
     private void OnRotationChangeMessage(EntityUid uid, HelmComponent component, HelmRotationChangeMessage msg)
     {
         var player = msg.Actor;
@@ -127,9 +112,6 @@ public sealed class HelmSystem : EntitySystem
         var appliedDelta = Math.Clamp(requestedDelta, -pilot.RotationBudget, pilot.RotationBudget);
         component.HelmRotation = Math.Clamp(component.HelmRotation + appliedDelta, -180f, 180f);
         pilot.RotationBudget = MathF.Max(0f, pilot.RotationBudget - MathF.Abs(appliedDelta));
-
-        if (MathF.Abs(appliedDelta) >= 0.001f)
-            UpdateUi(uid, component);
 
         if (msg.Turning && MathF.Abs(appliedDelta) >= 0.001f)
             StartUsingSound(uid, pilot);
@@ -186,56 +168,6 @@ public sealed class HelmSystem : EntitySystem
                 ("weight", FormatWeight(weight)),
                 ("overloadCeil", FormatWeight(overloadCeil))));
         }
-    }
-
-    private void TryStartHelmActionDoAfter(EntityUid player, EntityUid helm, HelmMenuAction action)
-    {
-        var doAfterArgs = new DoAfterArgs(EntityManager, player, 0.5f, new HelmActionDoAfterEvent(action), helm, helm)
-        {
-            MovementThreshold = 0.5f,
-            BreakOnMove = true,
-            CancelDuplicate = true,
-            DistanceThreshold = 2,
-            BreakOnDamage = true,
-            RequireCanInteract = false,
-            BreakOnDropItem = true,
-            BreakOnHandChange = true,
-            NeedHand = true,
-        };
-
-        _doAfter.TryStartDoAfter(doAfterArgs);
-    }
-
-    private void OnHelmActionDoAfter(EntityUid uid, HelmComponent component, HelmActionDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        ApplyHelmAction(uid, component, args.Action);
-        args.Handled = true;
-    }
-
-    private void ApplyHelmAction(EntityUid helm, HelmComponent helmComponent, HelmMenuAction action)
-    {
-        var rotationStep = float.IsFinite(helmComponent.RotationStep)
-            ? MathF.Abs(helmComponent.RotationStep)
-            : 0f;
-
-        switch (action)
-        {
-            case HelmMenuAction.RotateLeft:
-                helmComponent.HelmRotation -= rotationStep;
-                break;
-            case HelmMenuAction.RotateRight:
-                helmComponent.HelmRotation += rotationStep;
-                break;
-            case HelmMenuAction.Center:
-                helmComponent.HelmRotation = 0f;
-                break;
-        }
-
-        helmComponent.HelmRotation = NormalizeHelmRotation(helmComponent.HelmRotation);
-        UpdateUi(helm, helmComponent);
     }
 
     private void UpdateUi(EntityUid uid, HelmComponent component)

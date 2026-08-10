@@ -16,10 +16,6 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Imperial.Medieval.Ships;
 
-/// <summary>
-/// Maintains event-driven structural and aggregate data for ship grids.
-/// Consumers must use this system instead of scanning grid entities or tiles.
-/// </summary>
 public sealed class ShipGridSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
