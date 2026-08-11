@@ -7755,6 +7755,14 @@
     damageCoefficient: 3
 
 - type: entity
+  id: MedievalBlastDoorOpen
+  parent: MedievalBlastDoor
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+
+- type: entity
   id: MedievalGatesGear
   parent: BannerBase
   name: nanotrasen banner
