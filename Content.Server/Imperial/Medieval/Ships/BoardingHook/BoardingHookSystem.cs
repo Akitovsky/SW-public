@@ -10,12 +10,12 @@ using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Throwing;
+using Content.Shared.Trigger;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -28,12 +28,12 @@ public sealed class BoardingHookSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSkillsSystem _skills = default!;
     [Dependency] private readonly ShipGridSystem _shipGrid = default!;
     [Dependency] private readonly ThrownItemSystem _thrown = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -53,11 +53,11 @@ public sealed class BoardingHookSystem : EntitySystem
         SubscribeLocalEvent<BoardingHookProjectileComponent, InteractHandEvent>(OnProjectileInteract);
         SubscribeLocalEvent<BoardingHookProjectileComponent, BoardingHookRemoveDoAfterEvent>(OnRemoveDoAfter);
         SubscribeLocalEvent<BoardingHookProjectileComponent, ComponentShutdown>(OnProjectileShutdown);
+        SubscribeLocalEvent<BoardingHookProjectileComponent, TriggerEvent>(OnRangeCheck);
     }
 
     private void OnAttemptShoot(Entity<BoardingHookComponent> ent, ref AttemptShootEvent args)
     {
-        // An empty shot is how an already anchored hook starts pulling.
         if (ent.Comp.Projectile != null)
             return;
 
@@ -66,22 +66,37 @@ public sealed class BoardingHookSystem : EntitySystem
             !TryComp<WieldableComponent>(ent, out var wieldable) ||
             !wieldable.Wielded ||
             !_skills.HasSkill(args.User, SharedSkillsSystem.StrengthId) ||
-            !TryGetGrid(args.User, out _))
+            !TryGetGrid(args.User, out _) ||
+            !TryComp<GunComponent>(ent, out var gun) ||
+            !TryGetThrowVector(args.User, gun, GetThrowDistance(ent.Comp, args.User), out _))
         {
             args.Cancelled = true;
             args.Message = Loc.GetString("boarding-hook-cannot-throw");
             return;
         }
 
-        // The ammunition entity is the visible hook itself and must use item throwing
-        // so it receives a landing event at the cursor position.
         args.ThrowItems = true;
     }
 
     private void OnGunShot(Entity<BoardingHookComponent> ent, ref GunShotEvent args)
     {
-        if (!TryGetGrid(args.User, out var originGrid))
+        if (!TryGetGrid(args.User, out var originGrid) ||
+            !TryComp<GunComponent>(ent, out var gun))
+        {
             return;
+        }
+
+        if (!TryGetThrowVector(args.User, gun, GetThrowDistance(ent.Comp, args.User), out var throwVector))
+        {
+            foreach (var (projectileUid, _) in args.Ammo)
+            {
+                if (projectileUid is { } projectile)
+                    QueueDel(projectile);
+            }
+
+            _gun.UpdateBasicEntityAmmoCount(ent.Owner, 1);
+            return;
+        }
 
         foreach (var (projectileUid, _) in args.Ammo)
         {
@@ -97,8 +112,22 @@ public sealed class BoardingHookSystem : EntitySystem
             projectileComp.HookItem = ent.Owner;
             projectileComp.User = args.User;
             projectileComp.OriginGrid = originGrid;
-            projectileComp.ThrowOrigin = _transform.GetMapCoordinates(args.User).Position;
-            projectileComp.MaxThrowDistance = GetThrowDistance(ent.Comp, args.User);
+
+            if (TryComp<ThrownItemComponent>(projectile, out var thrown) &&
+                TryComp<PhysicsComponent>(projectile, out var body))
+            {
+                _thrown.StopThrow(projectile, thrown);
+                _physics.SetLinearVelocity(projectile, Vector2.Zero, body: body);
+                _physics.SetAngularVelocity(projectile, 0f, body: body);
+                _throwing.TryThrow(
+                    projectile,
+                    throwVector,
+                    gun.ProjectileSpeedModified,
+                    args.User,
+                    pushbackRatio: 0f,
+                    compensateFriction: true,
+                    recoil: false);
+            }
 
             var visuals = EnsureComp<JointVisualsComponent>(projectile);
             visuals.Sprite = ent.Comp.RopeSprite;
@@ -271,20 +300,20 @@ public sealed class BoardingHookSystem : EntitySystem
         if (hookGridIsIsland)
         {
             success = TryPushGrid(userGrid, hookPosition.Position - userPosition.Position,
-                strengthPower, ent.Comp.OverloadCeilPerTile);
+                strengthPower);
         }
         else if (userGridIsIsland)
         {
             success = TryPushGrid(hookGrid, userPosition.Position - hookPosition.Position,
-                strengthPower, ent.Comp.OverloadCeilPerTile);
+                strengthPower);
         }
         else
         {
             var power = strengthPower * 0.75f;
             if (TryGetGridImpulse(userGrid, hookPosition.Position - userPosition.Position,
-                    power, ent.Comp.OverloadCeilPerTile, out var userBody, out var userImpulse) &&
+                    power, out var userBody, out var userImpulse) &&
                 TryGetGridImpulse(hookGrid, userPosition.Position - hookPosition.Position,
-                    power, ent.Comp.OverloadCeilPerTile, out var hookBody, out var hookImpulse))
+                    power, out var hookBody, out var hookImpulse))
             {
                 ApplyGridImpulse(userGrid, userBody, userImpulse);
                 ApplyGridImpulse(hookGrid, hookBody, hookImpulse);
@@ -315,67 +344,36 @@ public sealed class BoardingHookSystem : EntitySystem
         _gun.UpdateBasicEntityAmmoCount(ent.Comp.HookItem, 1);
     }
 
-    public override void Update(float frameTime)
+    private void OnRangeCheck(Entity<BoardingHookProjectileComponent> ent, ref TriggerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Key != ent.Comp.RangeCheckTrigger)
+            return;
 
-        var query = EntityQueryEnumerator<BoardingHookProjectileComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var projectile, out var xform))
+        args.Handled = true;
+        if (TerminatingOrDeleted(ent.Comp.HookItem) ||
+            TerminatingOrDeleted(ent.Comp.User) ||
+            !TryComp<BoardingHookComponent>(ent.Comp.HookItem, out var hook) ||
+            hook.Projectile != ent.Owner)
         {
-            if (TerminatingOrDeleted(projectile.HookItem) ||
-                TerminatingOrDeleted(projectile.User) ||
-                !TryComp<BoardingHookComponent>(projectile.HookItem, out var hook) ||
-                hook.Projectile != uid)
-            {
-                QueueDel(uid);
-                continue;
-            }
+            QueueDel(ent);
+            return;
+        }
 
-            var projectileMap = _transform.GetMapCoordinates(uid, xform);
-            var userMap = _transform.GetMapCoordinates(projectile.User);
-            if (projectileMap.MapId != userMap.MapId)
-            {
-                QueueDel(uid);
-                continue;
-            }
+        if (!ent.Comp.Anchored)
+            return;
 
-            var distanceFromUser = Vector2.Distance(projectileMap.Position, userMap.Position);
-            if (projectile.Anchored)
-            {
-                if (distanceFromUser > hook.MaxTetherDistance)
-                    QueueDel(uid);
-
-                continue;
-            }
-
-            if (Vector2.Distance(projectileMap.Position, projectile.ThrowOrigin) < projectile.MaxThrowDistance)
-                continue;
-
-            if (!TryComp<ThrownItemComponent>(uid, out var thrown) ||
-                !TryComp<PhysicsComponent>(uid, out var body))
-            {
-                continue;
-            }
-
-            var throwDirection = projectileMap.Position - projectile.ThrowOrigin;
-            var landingPosition = projectile.ThrowOrigin +
-                                  Vector2.Normalize(throwDirection) * projectile.MaxThrowDistance;
-            var landingMap = new MapCoordinates(landingPosition, projectileMap.MapId);
-            var landingCoordinates = _mapManager.TryFindGridAt(landingMap, out var landingGrid, out _)
-                ? _transform.ToCoordinates(landingGrid, landingMap)
-                : _transform.ToCoordinates(_map.GetMapOrInvalid(projectileMap.MapId), landingMap);
-            _transform.SetCoordinates(uid, xform, landingCoordinates);
-
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
-            _physics.SetAngularVelocity(uid, 0f, body: body);
-            _thrown.LandComponent(uid, thrown, body, thrown.PlayLandSound);
-            _thrown.StopThrow(uid, thrown);
+        var projectileMap = _transform.GetMapCoordinates(ent.Owner);
+        var userMap = _transform.GetMapCoordinates(ent.Comp.User);
+        if (projectileMap.MapId != userMap.MapId ||
+            Vector2.Distance(projectileMap.Position, userMap.Position) > hook.MaxTetherDistance)
+        {
+            QueueDel(ent);
         }
     }
 
-    private bool TryPushGrid(EntityUid gridUid, Vector2 direction, float power, float overloadCeilPerTile)
+    private bool TryPushGrid(EntityUid gridUid, Vector2 direction, float power)
     {
-        if (!TryGetGridImpulse(gridUid, direction, power, overloadCeilPerTile, out var body, out var impulse))
+        if (!TryGetGridImpulse(gridUid, direction, power, out var body, out var impulse))
             return false;
 
         ApplyGridImpulse(gridUid, body, impulse);
@@ -386,7 +384,6 @@ public sealed class BoardingHookSystem : EntitySystem
         EntityUid gridUid,
         Vector2 direction,
         float power,
-        float overloadCeilPerTile,
         out PhysicsComponent body,
         out Vector2 impulse)
     {
@@ -405,7 +402,7 @@ public sealed class BoardingHookSystem : EntitySystem
 
         body = foundBody!;
 
-        var overloadCeil = ShipGridSystem.GetMaxWeight(grid, overloadCeilPerTile);
+        var overloadCeil = _shipGrid.GetMaxWeight(gridUid, grid);
         var impulsePower = grid.TotalWeight <= 0f || grid.TotalWeight <= overloadCeil
             ? power
             : power * overloadCeil / grid.TotalWeight;
@@ -423,6 +420,28 @@ public sealed class BoardingHookSystem : EntitySystem
     {
         var strength = _skills.GetSkillLevel(user, SharedSkillsSystem.StrengthId);
         return component.BaseThrowDistance * (1f + strength * component.ThrowDistancePerStrength);
+    }
+
+    private bool TryGetThrowVector(EntityUid user, GunComponent gun, float maxDistance, out Vector2 throwVector)
+    {
+        throwVector = Vector2.Zero;
+        if (gun.ShootCoordinates is not { } shootCoordinates)
+            return false;
+
+        var sourceMap = _transform.GetMapCoordinates(user);
+        var targetMap = _transform.ToMapCoordinates(shootCoordinates);
+        if (sourceMap.MapId != targetMap.MapId)
+            return false;
+
+        throwVector = targetMap.Position - sourceMap.Position;
+        var throwLength = throwVector.Length();
+        if (!float.IsFinite(throwLength) || throwLength <= 0.0001f)
+            return false;
+
+        if (throwLength > maxDistance)
+            throwVector *= maxDistance / throwLength;
+
+        return true;
     }
 
     private bool TryGetGrid(EntityUid uid, out EntityUid grid)

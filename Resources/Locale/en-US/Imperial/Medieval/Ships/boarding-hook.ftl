@@ -3,5 +3,5 @@ ent-MedievalBoardingHook = boarding hook
 ent-MedievalBoardingHookProjectile = thrown boarding hook
     .desc = A heavy boarding hook tied to a rope.
 
-boarding-hook-cannot-throw = You need to wield the hook and have the strength skill to throw it.
+boarding-hook-cannot-throw = You need to wield the hook
 

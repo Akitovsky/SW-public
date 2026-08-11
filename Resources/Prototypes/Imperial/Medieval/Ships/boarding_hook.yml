@@ -54,4 +54,6 @@
         - HighImpassable
   - type: BoardingHookProjectile
   - type: Undrowable
-
+  - type: RepeatingTrigger
+    delay: 0.1
+    keyOut: boarding-hook-range-check

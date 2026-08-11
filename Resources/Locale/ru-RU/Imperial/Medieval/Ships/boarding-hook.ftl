@@ -3,4 +3,4 @@ ent-MedievalBoardingHook = абордажный крюк
 ent-MedievalBoardingHookProjectile = брошенный абордажный крюк
     .desc = Тяжёлый абордажный крюк, привязанный к верёвке.
 
-boarding-hook-cannot-throw = Чтобы бросить крюк, возьмите его в две руки и изучите навык силы.
+boarding-hook-cannot-throw = Чтобы бросить крюк, возьмите его в две руки
