@@ -294,6 +294,22 @@ ent-MedievalBossNecroDragonNoAnnouncement = cursed dragon
     .desc = A creature that has broken the laws of life and death.
     .suffix = { "No announcement, Medieval, mob, boss" }
 
+ent-MedievalBabyBossIceDragon = ice baby dragon
+    .desc = Size doesn't matter!
+    .suffix = { "Medieval, mob, boss" }
+
+ent-MedievalBabyBossFireDragon = fire baby dragon
+    .desc = Size doesn't matter!
+    .suffix = { "Medieval, mob, boss" }
+
+ent-MedievalBabyBossAcidDragon = acid baby dragon
+    .desc = Size doesn't matter!
+    .suffix = { "Medieval, mob, boss" }
+
+ent-MedievalBabyBossThunderDragon = thunder baby dragon
+    .desc = Size doesn't matter!
+    .suffix = { "Medieval, mob, boss" }
+
 ent-MedievalBossNecroDragon = cursed dragon
     .desc = A creature that has broken the laws of life and death.
     .suffix = { "Medieval, mob, boss" }
