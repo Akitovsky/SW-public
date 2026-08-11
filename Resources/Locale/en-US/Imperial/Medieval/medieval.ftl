@@ -310,6 +310,22 @@ ent-MedievalBabyBossThunderDragon = thunder baby dragon
     .desc = Size doesn't matter!
     .suffix = { "Medieval, mob, boss" }
 
+ent-MedievalBossIceDragon = ice dragon
+    .desc = A peasant with a spear is powerless... Run with all your strength.
+    .suffix = { "No announcement, Medieval, mob, boss" }
+
+ent-MedievalBossFireDragon = fire dragon
+    .desc = A peasant with a spear is powerless... Run with all your strength.
+    .suffix = { "No announcement, Medieval, mob, boss" }
+
+ent-MedievalBossAcidDragon = acid dragon
+    .desc = A peasant with a spear is powerless... Run with all your strength.
+    .suffix = { "No announcement, Medieval, mob, boss" }
+
+ent-MedievalBossThunderDragon = thunder dragon
+    .desc = A peasant with a spear is powerless... Run with all your strength.
+    .suffix = { "No announcement, Medieval, mob, boss" }
+
 ent-MedievalBossNecroDragon = cursed dragon
     .desc = A creature that has broken the laws of life and death.
     .suffix = { "Medieval, mob, boss" }

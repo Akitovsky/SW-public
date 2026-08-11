@@ -1,3 +1,12 @@
+- type: speechSounds
+  id: MedievalSmallDragon
+  saySound:
+    path: /Audio/Imperial/Medieval/smalldragon.ogg
+  askSound:
+    path: /Audio/Imperial/Medieval/smalldragon.ogg
+  exclaimSound:
+    path: /Audio/Imperial/Medieval/smalldragon.ogg
+
 - type: entity
   name: dragon
   abstract: true
@@ -109,13 +118,11 @@
       speed: 12
     - type: FootstepModifier
       footstepSoundCollection:
-        path: /Audio/Imperial/Witchers/FootstepWitchersVendigo.ogg
-        params:
-          volume: -4
+        path: /Audio/Effects/Footsteps/hardbarefoot1.ogg
     - type: NoSlip
     - type: Speech
       speechVerb: LargeMob
-      speechSounds: MedievalDragon
+      speechSounds: MedievalSmallDragon
     - type: MovementSpeedModifier
       baseWalkSpeed: 4
       baseSprintSpeed: 2.8
