@@ -12,6 +12,7 @@
     sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
   - type: Wieldable
     unwieldOnUse: false
+    useDelayOnWield: false
   - type: GunRequiresWield
   - type: Gun
     fireRate: 1
@@ -22,6 +23,8 @@
     proto: MedievalBoardingHookProjectile
     capacity: 1
   - type: BoardingHook
+  - type: UseDelay
+    delay: 2
   - type: Appearance
   - type: AmmoCounter
 
@@ -52,6 +55,8 @@
         mask:
         - Impassable
         - HighImpassable
+  - type: Ammo
+    muzzleFlash: null
   - type: BoardingHookProjectile
   - type: Undrowable
   - type: RepeatingTrigger
