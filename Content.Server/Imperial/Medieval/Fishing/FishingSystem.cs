@@ -701,20 +701,21 @@ public sealed partial class FishingSystem : EntitySystem
         float qualityBias)
     {
         var totalWeight = 0f;
-        foreach (var (_, weight, _) in availableFish)
+        for (var i = 0; i < availableFish.Count; i++)
         {
-            totalWeight += MathF.Max(0f, weight);
+            totalWeight += GetBiasedWeight(availableFish[i].Weight, i, availableFish.Count, qualityBias);
         }
 
         if (totalWeight <= 0f)
             return availableFish[_random.Next(availableFish.Count)].Prototype;
 
-        var roll = GetBiasedRoll(totalWeight, qualityBias);
+        var roll = _random.NextFloat(totalWeight);
         var cumulative = 0f;
 
-        foreach (var (prototype, weight, _) in availableFish)
+        for (var i = 0; i < availableFish.Count; i++)
         {
-            cumulative += MathF.Max(0f, weight);
+            var (prototype, weight, _) = availableFish[i];
+            cumulative += GetBiasedWeight(weight, i, availableFish.Count, qualityBias);
             if (roll <= cumulative)
                 return prototype;
         }
@@ -732,14 +733,17 @@ public sealed partial class FishingSystem : EntitySystem
             : 0f;
     }
 
-    private float GetBiasedRoll(float totalWeight, float qualityBias)
+    private static float GetBiasedWeight(float weight, int index, int count, float qualityBias)
     {
+        weight = MathF.Max(0f, weight);
         qualityBias = Math.Clamp(qualityBias, -1f, 1f);
 
-        if (qualityBias != 0f && _random.Prob(MathF.Abs(qualityBias)))
-            return qualityBias > 0f ? totalWeight : 0f;
+        if (count <= 1 || qualityBias == 0f)
+            return weight;
 
-        return _random.NextFloat(totalWeight);
+        var position = (float) index / (count - 1);
+        var multiplier = 1f + qualityBias * (position * 2f - 1f);
+        return weight * multiplier;
     }
 
     private static FishingBaitType GetFishSelectionBaitType(FishingBaitType baitType)

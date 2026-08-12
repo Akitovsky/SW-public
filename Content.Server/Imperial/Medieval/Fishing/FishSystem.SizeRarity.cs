@@ -33,17 +33,17 @@ public sealed partial class FishingSystem : EntitySystem
     private FishSizeRatity GetRandomSize(float qualityBias)
     {
         float totalChance = 0;
-        for (int i = 0; i < _fishSizeRarities.Count; i++)
-            totalChance += _fishSizeRarities[i].Chance;
+        for (var i = 0; i < _fishSizeRarities.Count; i++)
+            totalChance += GetBiasedWeight(_fishSizeRarities[i].Chance, i, _fishSizeRarities.Count, qualityBias);
 
-        var roll = GetBiasedRoll(totalChance, qualityBias);
-        for (int i = 0; i < _fishSizeRarities.Count; i++)
+        var roll = _random.NextFloat(totalChance);
+        for (var i = 0; i < _fishSizeRarities.Count; i++)
         {
-            if (roll < _fishSizeRarities[i].Chance)
-            {
+            var chance = GetBiasedWeight(_fishSizeRarities[i].Chance, i, _fishSizeRarities.Count, qualityBias);
+            if (roll < chance)
                 return _fishSizeRarities[i];
-            }
-            roll -= _fishSizeRarities[i].Chance;
+
+            roll -= chance;
         }
 
         return _fishSizeRarities[_fishSizeRarities.Count - 1];
