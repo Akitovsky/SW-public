@@ -28,6 +28,9 @@ using Content.Server.Construction;
 using Robust.Shared.Timing;
 using System.Numerics;
 using Content.Shared.Coordinates;
+using Content.Shared.Imperial.Medieval.Ships.Islands;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Server.Imperial.Medieval.Fishing;
 
@@ -51,6 +54,7 @@ public sealed partial class FishingSystem : EntitySystem
     [Dependency] private readonly SharedScaleVisualsSystem _scaleVisuals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ITimerManager _timer = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     private readonly List<TaskCompletionSource<float>> _minigameUpdateWaiters = new();
 
@@ -138,8 +142,10 @@ public sealed partial class FishingSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
             return;
 
+        var hasNearbyIsland = HasIslandInRange(ent.Owner, ent.Comp.IslandSearchRange);
         StopFishing(ent);
 
+        ent.Comp.HasNearbyIsland = hasNearbyIsland;
         ent.Comp.LastClickedWater = location;
         Dirty(ent);
     }
@@ -275,7 +281,11 @@ public sealed partial class FishingSystem : EntitySystem
 
         var baseChance = Math.Max(1, ent.Comp.BaseFishingChancePercent);
         var maxChance = Math.Max(baseChance, ent.Comp.MaxChance);
-        var currentChance = Math.Clamp(args.CurrentChance, baseChance, maxChance);
+        var maxChanceMultiplier = ent.Comp.HasNearbyIsland
+            ? Math.Clamp(ent.Comp.NearbyIslandMaxChanceMultiplier, 0f, 1f)
+            : 1f;
+        var effectiveMaxChance = Math.Max(baseChance, maxChance * maxChanceMultiplier);
+        var currentChance = Math.Clamp(args.CurrentChance, baseChance, effectiveMaxChance);
 
         if (_random.Prob(currentChance / 100f))
         {
@@ -284,11 +294,36 @@ public sealed partial class FishingSystem : EntitySystem
         }
 
         var increment = Math.Max(0, ent.Comp.IncrementChance);
-        args.CurrentChance = currentChance < maxChance
-            ? Math.Min(maxChance, currentChance + increment)
+        args.CurrentChance = currentChance < effectiveMaxChance
+            ? Math.Min(effectiveMaxChance, currentChance + increment)
             : currentChance;
 
         args.Repeat = true;
+    }
+
+    private bool HasIslandInRange(EntityUid rodUid, float range)
+    {
+        if (range <= 0f)
+            return false;
+
+        var transform = Transform(rodUid);
+        var searchArea = new PhysShapeCircle(range, _transform.GetWorldPosition(transform));
+        var grids = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(
+            transform.MapID,
+            searchArea,
+            Robust.Shared.Physics.Transform.Empty,
+            ref grids,
+            approx: false,
+            includeMap: false);
+
+        foreach (var grid in grids)
+        {
+            if (HasComp<IslandComponent>(grid))
+                return true;
+        }
+
+        return false;
     }
 
     private void OnHandsDamageChanged(EntityUid uid, HandsComponent hands, DamageChangedEvent args)

@@ -82,6 +82,15 @@ public sealed partial class FishingRodComponent : Component
     [DataField, AutoNetworkedField]
     public int MaxChance = 5;
 
+    [DataField]
+    public float IslandSearchRange = 50f;
+
+    [DataField]
+    public float NearbyIslandMaxChanceMultiplier = 0.7f;
+
+    [DataField]
+    public bool HasNearbyIsland;
+
     [DataField, AutoNetworkedField]
     public FishingLocationType LastClickedWater = FishingLocationType.River;
 
