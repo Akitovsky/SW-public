@@ -246,8 +246,7 @@ public sealed class WaystoneSystem : EntitySystem
         TryComp<MedievalFactionMemberComponent>(args.Actor, out var member);
         var targetFaction = targetComp.Faction;
         var faction = entity.Comp.Faction;
-        if (_factionsSystem.IsRelationEnemy(faction, targetFaction))
-            return;
+
         if (member is not null &&
             (_factionsSystem.IsRelationEnemy(member.Faction, targetFaction) ||
             _factionsSystem.IsRelationEnemy(member.Faction, faction)))
