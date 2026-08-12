@@ -88,7 +88,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 2
   - type: FishingBait
-    baitType: Meat
+    baitType: Worm
   - type: Stack
     stackType: Worm
     count: 1

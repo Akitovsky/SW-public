@@ -30,13 +30,13 @@ public sealed partial class FishingSystem : EntitySystem
         new FishSizeRatity { Name = "fish-size-titanic",  Chance = 0.5f, PriceMod = 10.0f, Scale = 12.0f }
     };
 
-    private FishSizeRatity GetRandomSize()
+    private FishSizeRatity GetRandomSize(float qualityBias)
     {
         float totalChance = 0;
         for (int i = 0; i < _fishSizeRarities.Count; i++)
             totalChance += _fishSizeRarities[i].Chance;
 
-        float roll = (float)new Random().NextDouble() * totalChance;
+        var roll = GetBiasedRoll(totalChance, qualityBias);
         for (int i = 0; i < _fishSizeRarities.Count; i++)
         {
             if (roll < _fishSizeRarities[i].Chance)
@@ -49,9 +49,9 @@ public sealed partial class FishingSystem : EntitySystem
         return _fishSizeRarities[_fishSizeRarities.Count - 1];
     }
 
-    private void GetFishRandomSizeRarity(EntityUid fishUid)
+    private void GetFishRandomSizeRarity(EntityUid fishUid, float qualityBias)
     {
-        var rolledFishSizeRarity = GetRandomSize();
+        var rolledFishSizeRarity = GetRandomSize(qualityBias);
 
         var fishSizeRarity = EnsureComp<FishSizeRarityComponent>(fishUid);
         fishSizeRarity.Name = rolledFishSizeRarity.Name;

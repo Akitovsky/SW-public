@@ -65,6 +65,14 @@ public sealed partial class FishingRodComponent : Component
         ["FishTuna"] = 0.2f,
     };
 
+    [DataField]
+    public Dictionary<FishingBaitType, float> BaitQualityBiases = new()
+    {
+        [FishingBaitType.Meat] = 0.3f,
+        [FishingBaitType.Plant] = 0f,
+        [FishingBaitType.Worm] = -0.3f,
+    };
+
     [DataField, AutoNetworkedField]
     public int Level = 1;
 

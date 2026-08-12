@@ -539,8 +539,9 @@ public sealed partial class FishingSystem : EntitySystem
             ? Transform(bobberUid).Coordinates
             : Transform(rod.Owner).Coordinates;
 
+        var baitQualityBias = GetBaitQualityBias(rod);
         var fish = Spawn(currentFish, spawnCoordinates);
-        GetFishRandomSizeRarity(fish);
+        GetFishRandomSizeRarity(fish, baitQualityBias);
 
         _audio.PlayPvs(rod.Comp.MinigameFishOutSound, spawnCoordinates);
         if (minigameUser is { } userUid && Exists(userUid))
@@ -617,14 +618,14 @@ public sealed partial class FishingSystem : EntitySystem
             return false;
         }
 
-        rod.Comp.CurrentFish = PickWeightedFishPrototype(availableFish);
+        rod.Comp.CurrentFish = PickWeightedFishPrototype(availableFish, GetBaitQualityBias(rod));
         Dirty(rod);
         return true;
     }
 
-    private List<(EntProtoId Prototype, float Weight)> CollectAvailableFish(Entity<FishingRodComponent> rod)
+    private List<(EntProtoId Prototype, float Weight, int Level)> CollectAvailableFish(Entity<FishingRodComponent> rod)
     {
-        var result = new List<(EntProtoId Prototype, float Weight)>();
+        var result = new List<(EntProtoId Prototype, float Weight, int Level)>();
 
         if (rod.Comp.Bait is not { } baitUid || !TryComp<FishingBaitComponent>(baitUid, out var baitComp))
             return result;
@@ -646,19 +647,26 @@ public sealed partial class FishingSystem : EntitySystem
             if (fishComponent.Level > rod.Comp.Level)
                 continue;
 
-            if (fishComponent.Bait != baitComp.BaitType)
+            if (GetFishSelectionBaitType(fishComponent.Bait) != GetFishSelectionBaitType(baitComp.BaitType))
                 continue;
 
-            result.Add((prototypeId, weight));
+            result.Add((prototypeId, weight, fishComponent.Level));
         }
 
+        result.Sort((left, right) =>
+        {
+            var levelComparison = left.Level.CompareTo(right.Level);
+            return levelComparison != 0 ? levelComparison : right.Weight.CompareTo(left.Weight);
+        });
         return result;
     }
 
-    private EntProtoId PickWeightedFishPrototype(IReadOnlyList<(EntProtoId Prototype, float Weight)> availableFish)
+    private EntProtoId PickWeightedFishPrototype(
+        IReadOnlyList<(EntProtoId Prototype, float Weight, int Level)> availableFish,
+        float qualityBias)
     {
         var totalWeight = 0f;
-        foreach (var (_, weight) in availableFish)
+        foreach (var (_, weight, _) in availableFish)
         {
             totalWeight += MathF.Max(0f, weight);
         }
@@ -666,10 +674,10 @@ public sealed partial class FishingSystem : EntitySystem
         if (totalWeight <= 0f)
             return availableFish[_random.Next(availableFish.Count)].Prototype;
 
-        var roll = _random.NextFloat(totalWeight);
+        var roll = GetBiasedRoll(totalWeight, qualityBias);
         var cumulative = 0f;
 
-        foreach (var (prototype, weight) in availableFish)
+        foreach (var (prototype, weight, _) in availableFish)
         {
             cumulative += MathF.Max(0f, weight);
             if (roll <= cumulative)
@@ -678,6 +686,29 @@ public sealed partial class FishingSystem : EntitySystem
 
         return availableFish[^1].Prototype;
     }
+
+    private float GetBaitQualityBias(Entity<FishingRodComponent> rod)
+    {
+        if (rod.Comp.Bait is not { } baitUid || !TryComp<FishingBaitComponent>(baitUid, out var bait))
+            return 0f;
+
+        return rod.Comp.BaitQualityBiases.TryGetValue(bait.BaitType, out var qualityBias)
+            ? Math.Clamp(qualityBias, -1f, 1f)
+            : 0f;
+    }
+
+    private float GetBiasedRoll(float totalWeight, float qualityBias)
+    {
+        qualityBias = Math.Clamp(qualityBias, -1f, 1f);
+
+        if (qualityBias != 0f && _random.Prob(MathF.Abs(qualityBias)))
+            return qualityBias > 0f ? totalWeight : 0f;
+
+        return _random.NextFloat(totalWeight);
+    }
+
+    private static FishingBaitType GetFishSelectionBaitType(FishingBaitType baitType)
+        => baitType == FishingBaitType.Worm ? FishingBaitType.Meat : baitType;
 
     private float GetFishThrowSpeed(EntityUid fishUid)
     {
