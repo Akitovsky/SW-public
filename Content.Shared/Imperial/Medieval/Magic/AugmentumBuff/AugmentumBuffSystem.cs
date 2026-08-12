@@ -39,22 +39,19 @@ public sealed class AugmentumBuffSystem : EntitySystem
         if (duration <= TimeSpan.Zero || TerminatingOrDeleted(target))
             return;
 
-        var component = EnsureComp<AugmentumBuffComponent>(target);
+        var isNew = !TryComp<AugmentumBuffComponent>(target, out var component);
+        component ??= EnsureComp<AugmentumBuffComponent>(target);
         var startTime = component.EndTime > _timing.CurTime
             ? component.EndTime
             : _timing.CurTime;
 
         component.EndTime = startTime + duration;
-        EnsureStaminaProtection(target, component);
         CleanseDisablingEffects(target);
         Dirty(target, component);
         _movement.RefreshMovementSpeedModifiers(target);
 
-        if (!component.TimerRunning)
-        {
-            component.TimerRunning = true;
+        if (isNew)
             _ = RunBuffTimer(target, component);
-        }
     }
 
     private async Task RunBuffTimer(EntityUid target, AugmentumBuffComponent component)
@@ -81,14 +78,17 @@ public sealed class AugmentumBuffSystem : EntitySystem
     private void OnStartup(Entity<AugmentumBuffComponent> entity, ref ComponentStartup args)
     {
         _movement.RefreshMovementSpeedModifiers(entity.Owner);
+
+        if (TryComp<StaminaComponent>(entity.Owner, out var stamina))
+            stamina.CritThreshold *= entity.Comp.StaminaModifier;
     }
 
     private void OnShutdown(Entity<AugmentumBuffComponent> entity, ref ComponentShutdown args)
     {
         _movement.RefreshMovementSpeedModifiers(entity.Owner);
 
-        if (entity.Comp.OwnsStaminaModifier && !TerminatingOrDeleted(entity.Owner))
-            RemComp<StaminaModifierComponent>(entity.Owner);
+        if (TryComp<StaminaComponent>(entity.Owner, out var stamina))
+            stamina.CritThreshold /= entity.Comp.StaminaModifier;
     }
 
     private void OnRefreshMovementSpeed(
@@ -132,16 +132,6 @@ public sealed class AugmentumBuffSystem : EntitySystem
     {
         if (args.EffectKey is "Stun" or "KnockedDown")
             args.Cancelled = true;
-    }
-
-    private void EnsureStaminaProtection(EntityUid target, AugmentumBuffComponent component)
-    {
-        if (HasComp<StaminaModifierComponent>(target))
-            return;
-
-        EnsureComp<StaminaModifierComponent>(target);
-        component.OwnsStaminaModifier = true;
-        Dirty(target, component);
     }
 
     private void CleanseDisablingEffects(EntityUid target)
