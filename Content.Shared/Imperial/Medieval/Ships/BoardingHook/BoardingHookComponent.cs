@@ -6,13 +6,13 @@ namespace Content.Shared.Imperial.Medieval.Ships.BoardingHook;
 public sealed partial class BoardingHookComponent : Component
 {
     [DataField]
-    public float BaseThrowDistance = 5f;
+    public float BaseThrowDistance = 7f;
 
     [DataField]
     public float ThrowDistancePerStrength = 0.015f;
 
     [DataField]
-    public float MaxTetherDistance = 7f;
+    public float MaxTetherDistance = 10f;
 
     [DataField]
     public float Power = 10f;
