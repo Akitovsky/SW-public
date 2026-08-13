@@ -35,6 +35,8 @@ public sealed partial class MedievalMagicSystem
         var performer = GetEntity(args.Performer);
         var sender = GetEntity(args.Sender.Value);
 
+        if (!PassesSpellPrerequisites(sender, performer, Transform(performer).Coordinates)) return;
+
         if (!TryComp<MedievalSpellCasterComponent>(performer, out var spellCasterComponent)) return;
         if (!TryComp<ActionComponent>(sender, out var actionComponent)) return;
         if (actionComponent.Cooldown.HasValue && actionComponent.Cooldown.Value.End >= _timing.CurTime) return;

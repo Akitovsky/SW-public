@@ -20,7 +20,7 @@
       shader: unshaded
   - type: DelayedSpawn
     proto: MedievalMeteor
-    delay: 3
+    delay: 4.5
   - type: TimedDespawn
     lifetime: 5
 
@@ -59,8 +59,8 @@
   id: Meteor
   damagePerIntensity:
     types:
-      Blunt: 5
-      Piercing: 5
+      Blunt: 3
+      Piercing: 3
   lightColor: Gray
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3

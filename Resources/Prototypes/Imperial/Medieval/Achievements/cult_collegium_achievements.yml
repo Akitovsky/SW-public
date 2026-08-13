@@ -54,59 +54,9 @@
   - !type:LocationCondition
     progressKey: collegiumInitLibraryProgression
     requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
     requiredFactions:
     - Collegium
     locationId: achievement-location-collegium-library
-  - !type:LocationCondition
-    progressKey: collegiumInitLectureProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-lecture
-  - !type:LocationCondition
-    progressKey: collegiumInitSpellwardProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-spellward
-  - !type:LocationCondition
-    progressKey: collegiumInitPolygonProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-polygon
-  - !type:LocationCondition
-    progressKey: collegiumInitHallProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-hall
-  - !type:LocationCondition
-    progressKey: collegiumInitAlchemyProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-alchemy
-  - !type:LocationCondition
-    progressKey: collegiumInitPrisonProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCollegiumRecruit
-    requiredFactions:
-    - Collegium
-    locationId: achievement-location-collegium-prison
   tab: AchievementTabCollegiumCult
 
 # Ветка: пополнить барьер 1 раз
@@ -470,38 +420,6 @@
   prerequisites:
   - AchievementCultCollegiumJoin
   conditions:
-  - !type:LocationCondition
-    progressKey: cultInitArmoryProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCult
-    requiredFactions:
-    - Cult
-    locationId: achievement-location-cult-armory
-  - !type:LocationCondition
-    progressKey: cultInitRitualProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCult
-    requiredFactions:
-    - Cult
-    locationId: achievement-location-cult-ritual
-  - !type:LocationCondition
-    progressKey: cultInitAltarHubProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCult
-    requiredFactions:
-    - Cult
-    locationId: achievement-location-cult-altar-hub
-  - !type:LocationCondition
-    progressKey: cultInitPrisonProgression
-    requiredCount: 1
-    requiredJobs:
-    - MedievalCult
-    requiredFactions:
-    - Cult
-    locationId: achievement-location-cult-prison
   - !type:CollectAnyItemsCondition
     progressKey: cultInitBookProgression
     requiredCount: 1

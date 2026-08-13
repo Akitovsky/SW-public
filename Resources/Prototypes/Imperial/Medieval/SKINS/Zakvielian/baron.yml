@@ -1,0 +1,169 @@
+- type: entity
+  parent: MedievalClothingOuterArmorBrigantin
+  id: MedievalClothingOuterArmorBrigantinBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur. Brigandine.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeatherHeavy
+  id: MedievalClothingOuterArmorLeatherHeavyBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur. Heavy leather armor.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeatherLight
+  id: MedievalClothingOuterArmorLeatherLightBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur. Light leather cuirass.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorStudded
+  id: MedievalClothingOuterArmorStuddedBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur. Rawhide armor.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorLeather
+  id: MedievalClothingOuterArmorLeatherBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur. Light armor.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingFeetNorthern
+  id: MedievalClothingFeetSteelBaron
+  name: baron's shoes
+  description: Created specifically to effectively kick debtors.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+    slots:
+    - FEET
+    equipDelay: 0.01
+    unequipDelay: 0.01
+    equipSound:
+      path: /Audio/Imperial/Medieval/shoes_equip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/shoes_unequip.ogg
+
+- type: entity
+  parent: MedievalShoesChamber
+  id: MedievalClothingFeetSteelBaron2
+  name: baron's shoes
+  description: Created specifically to effectively kick debtors.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_boots.rsi
+    slots:
+    - FEET
+    equipDelay: 0.01
+    unequipDelay: 0.01
+    equipSound:
+      path: /Audio/Imperial/Medieval/shoes_equip.ogg
+    unequipSound:
+      path: /Audio/Imperial/Medieval/shoes_unequip.ogg
+
+- type: entity
+  parent: MedievalClothingHeadHelmetShapel
+  id: MedievalClothingHeadHelmetBaron
+  name: baron's earring
+  description: A massive gold earring emphasizing the high status of the owner.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+
+- type: entity
+  parent: MedievalClothingHeadHelmetCollegiumPurpleHat
+  id: MedievalClothingHeadHelmetCollegiumPurpleHatBaron
+  name: baron's earring
+  description: A massive gold earring emphasizing the high status of the owner.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_earring.rsi
+
+- type: entity
+  parent: MedievalClothingUniformJumpsuitShitCloth23
+  id: MedievalClothingUniformJumpsuitBaron2
+  name: baron's caftan
+  description: A luxurious velvet caftan, custom-made by the best tailors of Haven.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MedievalClothingUniformJumpsuitBaron
+  name: baron's caftan
+  description: A luxurious velvet caftan, custom-made by the best tailors of Haven.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_сaftan.rsi
+  - type: Insulated
+
+- type: entity
+  parent: ClothingNeckBase
+  id: MedievalClothingNeckCloakBaron
+  name: baron's cloak
+  description: A long heavy cloak with a fur trim, under which it is convenient to hide the treasury's gold.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_coat.rsi
+  - type: Insulated
+
+- type: entity
+  parent: MedievalClothingOuterArmorCharmerWeak
+  id: MedievalClothingOuterArmorCharmerWeakBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+
+- type: entity
+  parent: MedievalClothingOuterArmorCharmerLight
+  id: MedievalClothingOuterArmorCharmerLightBaron
+  name: baron's armored belly
+  description: A kind of armor, behind the velvet fabric is a layer of dragon skin and sable fur.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Zakvielian/baron/SKIN_baron_puzo.rsi

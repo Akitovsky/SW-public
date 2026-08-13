@@ -24,7 +24,9 @@ waystone-message-money-inserted-needed = Осталось
 
 waystone-message-ritual-started = Ритуал начат, не отходи!
 
-waystone-message-connection-loss = Связь потеряна! Ритуал прерван!
+waystone-message-connection-loss = Путеводный камень назначения был отключен.
+waystone-message-doafter-cancelled = Условия были нарушены. Ритуал прерван.
+waystone-message-waystone-error = Непредвиненная ошибка.
 
 waystone-verb-return-money= Забрать внесенные деньги
 waystone-message-ritual-cancelled = Ритуал прерван, забери деньги
@@ -41,3 +43,13 @@ waystone-xaml-network = Доступные путеводные камни
 waystone-message-waystone-free = Путеводный камень освобожден
 
 waystone-message-energy-low = Недостаточно энергии. Жди.
+
+waystone-message-ui-already-open = уже выбирает маршрут.
+
+waystone-message-is-disabled = Данный камень был отключен владельцами.
+
+waystone-message-enemy-capture = Данный камень принадлежит враждебной вам фракции.
+
+waystone-message-failed-open-ui = Камень не позволяет использовать себя.
+
+waystone-message-is-booked = Путеводный камень занят в данный момент.

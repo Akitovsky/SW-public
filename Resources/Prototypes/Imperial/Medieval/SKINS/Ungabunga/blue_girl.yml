@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: BlueGirlDressUnga
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/blue_girl/SKIN_blue_girl_dress.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/blue_girl/SKIN_blue_girl_dress.rsi
+    slots:
+    - outerClothing
+
+- type: entity
+  parent: ClothingMaskBase
+  id: BlueGirlWig
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/blue_girl/SKIN_blue_girl_hairstyle.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Clothing/SKINS/Ungabunga/blue_girl/SKIN_blue_girl_hairstyle.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout

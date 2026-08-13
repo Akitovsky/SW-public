@@ -16,8 +16,8 @@
   - !type:LocationCondition
     progressKey: locationRecruitVisitLegionProgression
     requiredCount: 1
-    requiredJobs:
-    - "MedievalLegionRecruit"
+    requiredFactions:
+    - Legion
     locationId: achievement-location-legion
 
 - type: achievement
@@ -35,8 +35,8 @@
   conditions:
   - !type:CapturePointCondition
     progressKey: legionRecruitCapturePoint
-    requiredJobs:
-    - "MedievalLegionRecruit"
+    requiredFactions:
+    - Legion
     requiredCount: 2
 
 

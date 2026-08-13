@@ -123,7 +123,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -179,7 +179,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -222,7 +222,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: MedievalSpearNecro
@@ -286,7 +286,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -343,69 +343,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
-
-- type: entity
-  name: falshion
-  parent: [ BaseItem, BaseOneHandedCharged ]
-  id: MedievalWoodenSword
-  description: An ancient war blade.
-  components:
-  - type: RDWeight
-    value: 2
-  # - type: Sharp
-  - type: Sprite
-    sprite: Imperial/Medieval/Melee/wooden_sword.rsi
-    state: icon
-  - type: MeleeParry
-    parryEffectSuccess: MedievalEffectSuccessParryWooden
-  - type: MeleeParryStamina
-  - type: MeleeWeapon
-    clickDamageModifier: 2
-    wideAnimationRotation: -140
-    attackRate: 0.9
-    damage:
-      types:
-        Blunt: 0.5
-        ParryAble: 1
-    soundHit:
-      path: /Audio/Imperial/Medieval/wooden-hit.ogg
-    animation: CP14WeaponArcThrust
-    wideAnimation: CP14WeaponArcSlash
-    cPSwingBeverage: true
-    cPAnimationOffset: 1
-  - type: MedievalMeleeResource
-    resourceWaste: 0.2
-  - type: Item
-    size: Normal
-  - type: Clothing
-    sprite: Imperial/Medieval/Melee/wooden_sword.rsi
-    slots:
-    - back
-    - suitStorage
-    - belt
-    quickEquip: false
-  - type: DisarmMalus
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 0.5
-  - type: StaminaDamageOnHit
-    damage: 10
-  #- type: QualityOfItem
-  #  qualityWeights:
-  #    0: 0
-  #    1: 0
-  #    2: 0
-  #    3: 10
-  #    4: 0
-  #    5: 0
-  #    6: 0
-  - type: MeleeThrowOnHit
-    distance: 0.7
-    speed: 5
-  - type: TrashClear
-    safe: true
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: MedievalBanjoInstrument
@@ -509,7 +447,7 @@
     distance: 0.4
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -552,7 +490,7 @@
         Piercing: 10
         Slash: 12
         Structural: 3
-        Caustic: 6
+        Caustic: 3
         ParryAble: 1
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -576,7 +514,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
 
@@ -635,7 +573,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: iron hammer
@@ -817,7 +755,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -882,7 +820,7 @@
     distance: 0.8
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -971,7 +909,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1018,7 +956,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1029,7 +967,7 @@
   description: MedievalKnut
   components:
   - type: StaminaDamageOnHit
-    damage: 8
+    damage: 6
   - type: MeleeWeapon
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -1647,7 +1585,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -1710,7 +1648,7 @@
       types:
         Slash: 6
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -1776,7 +1714,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 1
 
@@ -1869,7 +1807,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -1880,6 +1818,8 @@
   id: MedievalSpearRusty
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: Item
+    size: Normal
   - type: Spear
   - type: RDWeight
     value: 4
@@ -1912,8 +1852,6 @@
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
     resourceWaste: 0.7
-  - type: Item
-    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
@@ -1960,7 +1898,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -2027,7 +1965,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -2082,7 +2020,7 @@
     - belt
     quickEquip: false
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -2149,7 +2087,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -2233,7 +2171,7 @@
     distance: 1.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2320,7 +2258,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2554,7 +2492,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -2722,7 +2660,7 @@
     distance: 1.2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -3087,7 +3025,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3280,7 +3218,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3357,7 +3295,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3416,7 +3354,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -3509,7 +3447,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3576,7 +3514,7 @@
     distance: 0.4
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -3643,7 +3581,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -3727,7 +3665,7 @@
     distance: 2
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 7
   - type: HeldSpeedModifier
@@ -4134,7 +4072,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: falshion
@@ -4210,7 +4148,7 @@
     distance: 0.5
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -4286,7 +4224,7 @@
     distance: 0.7
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 5
 
@@ -4368,7 +4306,7 @@
     distance: 0.3
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4448,7 +4386,7 @@
     unequipSound:
       path: /Audio/Imperial/Medieval/sword_eqip.ogg
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -4587,7 +4525,7 @@
     distance: 0.32
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4693,7 +4631,7 @@
     distance: 0.6
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 4 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 3
 
@@ -4773,7 +4711,7 @@
     unequipSound:
       path: /Audio/Imperial/Medieval/sword_eqip.ogg
   - type: StaminaDamageOnHit
-    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 1 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 2
 
@@ -4953,7 +4891,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -5028,7 +4966,7 @@
     distance: 0.9
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 6 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
   - type: Meltable
     resourceCount: 4
 
@@ -5087,7 +5025,7 @@
     distance: 1
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 7 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 3 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   id: MedievalEffectWindowParry
@@ -5331,7 +5269,7 @@
     distance: 0.04
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 10
+    damage: 5
   - type: Item
     size: Normal
     shape:
@@ -5394,7 +5332,7 @@
     distance: 0.04
     speed: 5
   - type: StaminaDamageOnHit
-    damage: 8
+    damage: 4
   - type: Item
     size: Normal
     shape:
@@ -5470,7 +5408,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: Sulica
@@ -5538,7 +5476,7 @@
         restitution: 0.3
         friction: 0.2
   - type: StaminaDamageOnHit
-    damage: 5 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+    damage: 2 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
 
 - type: entity
   name: MedievalIronRoyalSword
@@ -5643,3 +5581,137 @@
     sprite: Imperial/Medieval/Melee/bib_spear.rsi
     netsync: false
     state: spear
+
+- type: entity
+  name: dragonslayer
+  parent: [ BaseItem, BaseTwoHandedCharged ]
+  id: MedievalDragonslayer
+  description: Dragonslayer.
+  components:
+  - type: RDWeight
+    value: 25
+  - type: QuestItem
+    contractName: "любое двуручное оружие"
+  - type: EmitSoundOnLand
+    sound:
+      collection: MedievalIronDrop
+      params:
+        variation: 0.02
+        volume: 1
+  - type: Sharp
+  - type: MeleeParry
+    parryChanse: 0.55
+  - type: MeleeWeapon
+    angle: 140
+    animation: CP14WeaponArcThrust
+    wideAnimation: CP14WeaponArcSlash
+    cPSwingBeverage: true
+    cPAnimationOffset: 1
+    clickDamageModifier: 2.5
+    wideAnimationRotation: 45
+    attackRate: 0.15
+    range: 2.2
+    damage:
+      types:
+        Piercing: 32
+        Blunt: 59
+        Structural: 85
+        Slash: 52
+        ParryAble: 1
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: MedievalMeleeResource
+    resourceWaste: 0.05
+    safeToHitGroup: structure
+  - type: MultiHandedItem
+  - type: Item
+    size: Ginormous
+    sprite: Imperial/Medieval/Melee/dragonslayer.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 7
+        Slash: 15
+        Blunt: 39
+  #- type: EmbeddableProjectile
+    #offset: 0.15,0.15
+  - type: MeleeRequiresWield
+  #- type: QualityOfItem
+  #  qualityWeights:
+  #    0: 0
+  #    1: 0
+  #    2: 0
+  #    3: 10
+  #    4: 0
+  #    5: 0
+  #    6: 0
+  - type: MeleeThrowOnHit
+    distance: 1.2
+    speed: 5
+  - type: Meltable
+    resourceCount: 15
+  - type: HeldSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65
+  - type: Clothing
+    equipDelay: 4.6
+    unequipDelay: 2.6
+    sprite: Imperial/Medieval/Melee/dragonslayer.rsi
+    slots:
+    - back
+    - suitStorage
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/dragonslayer.rsi
+    state: icon
+  - type: StaminaDamageOnHit
+    damage: 35 #2 dagger, 5 spear, 4 sword, 5 mace, 8 halberd, 6 sekir, 18 hammer
+  - type: Blocking
+    passiveBlockFraction: 0.25
+    activeBlockFraction: 0.7
+    passiveBlockModifier: #PassiveMedievalWoodenShieldBlock
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+    activeBlockModifier: #ActiveMedievalWoodenShieldBlock
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    locPrefix: shield
+  - type: Damageable
+    damageContainer: Shield
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10000
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+  - type: ChargedAttack
+    maxAttackTime: 4.0
+    staticModifier: 3
+    staminaDamage: 20
+    speedModifer: 0.4
+    effectProtoId: AttackEffect4s
+  - type: StaminaResistance
+    damageCoefficient: 0.85
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85

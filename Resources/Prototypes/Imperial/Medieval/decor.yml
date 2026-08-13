@@ -1362,6 +1362,61 @@
     level: 2
 
 - type: entity
+  parent: Bed
+  id: MedievalBedT2
+  components:
+  - type: Strap
+    buckleTime: 0.5
+    unbuckleTime: 0.5
+    buckleSound:
+      path: /Audio/Imperial/Medieval/Effects/lay_on_bed1.ogg
+    unbuckleSound:
+      path: /Audio/Imperial/Medieval/Effects/lay_on_bed2.ogg
+  - type: Buckle
+  - type: BloodRegenBed
+    bloodRegenMultiplier: 2.0
+  - type: Sprite
+    sprite: Imperial/Medieval/Decor/medieval_decor.rsi
+    state: bedT2
+  - type: HealOnBuckle
+    damage:
+      groups:
+        Brute: -0.2
+        Burn: -0.2
+        Airloss: -0.4
+      types:
+        Poison: -0.16
+        Caustic: -0.05
+        Radiation: -0.07
+  - type: MedievalPlagueHealStrapped
+
+- type: entity
+  id: MedievalBedT2Craft
+  parent: BaseItem
+  components:
+  - type: RDWeight
+    value: 25
+  - type: Item
+    size: Normal
+  - type: SpawnAfterInteract
+    prototype: MedievalBedT2
+    doAfter: 15
+    deleteOnInteract: true
+  - type: Sprite
+    sprite: Imperial/Medieval/CraftBosses/stockade.rsi
+    state: icon
+
+- type: CP14Recipe
+  id: MedievalBedT2Recipe
+  craftTime: 10
+  stacks:
+    Cloth: 10
+    WoodPlank: 10
+    MedievalGrass: 3
+    Cotton: 2
+  result: MedievalBedT2Craft
+
+- type: entity
   id: MedievalDecorAnons
   parent: MedievalBannerBase
   name: nanotrasen banner
@@ -3331,7 +3386,7 @@
     color: orange
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerFire
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakFire
     maxCharge: 30
 
 - type: entity
@@ -3374,7 +3429,7 @@
     color: blue
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerWater
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakWater
     maxCharge: 30
 
 - type: entity
@@ -3417,7 +3472,7 @@
     color: yellow
     castShadows: false
   - type: MagicSpellcraft
-    spawnedEntity: MedievalSpellSpawnerHoly
+    spawnedEntity: MedievalSpellBookRecodeCollegiumWeakHoly
     maxCharge: 30
 
 - type: entity

@@ -20,14 +20,14 @@
     guildName: courier-ui-guild-name
     mailLootTable: MailLootTable
     boxMailLootTable: BoxMailLootTable
-    minDeliveryPointsReward: 3
-    maxDeliveryPointsReward: 4
+    minDeliveryPointsReward: 4
+    maxDeliveryPointsReward: 9
     minBalanceReward: 30
-    maxBalanceReward: 40
+    maxBalanceReward: 80
     urgentBalanceRewardMultiplier: 3
     boxBalanceRewardMultiplier: 9
     minUrgentMinutes: 30
-    maxUrgentMinutes: 40
+    maxUrgentMinutes: 70
     offers:
     - productEntity: CourierLetter
       freeMailsCost: 1
