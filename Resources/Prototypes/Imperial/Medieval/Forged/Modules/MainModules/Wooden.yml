@@ -56,7 +56,7 @@
     partSlot: torso
     layerState: wooden_torso
     rsiPath: Imperial/Medieval/Forged/wooden.rsi
-    resistanceModifier: -0.33
+    resistanceModifier: -0.1
     speedModifier: 0
 
 - type: entity

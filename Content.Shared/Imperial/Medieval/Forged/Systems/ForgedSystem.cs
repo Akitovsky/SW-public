@@ -124,7 +124,7 @@ public sealed class ForgedSystem : EntitySystem
         if (forgedEntity.Owner != args.User)
             return;
 
-        var removeCategory = new VerbCategory("forged-remove-category-verb", null);
+        var removeCategory = new VerbCategory($"{Loc.GetString("forged-remove-category-verb")}", null);
 
         foreach (var (_, moduleUid) in forgedEntity.Comp.FittedModules)
         {
@@ -219,7 +219,8 @@ public sealed class ForgedSystem : EntitySystem
 
             if (container.Count > 0)
             {
-                _popup.PopupEntity(Loc.GetString("forged-slot-occupied"), uid, args.User);
+                if (_net.IsServer)
+                    _popup.PopupEntity(Loc.GetString("forged-slot-occupied"), uid, args.User);
                 return;
             }
 
@@ -228,7 +229,8 @@ public sealed class ForgedSystem : EntitySystem
                 var reqContainerId = GetContainerId(module.RequiredModule);
                 if (!_containerSystem.TryGetContainer(uid, reqContainerId, out var reqContainer) || reqContainer.Count == 0)
                 {
-                    _popup.PopupEntity(Loc.GetString("forged-base-module-required"), uid, args.User);
+                    if (_net.IsServer)
+                        _popup.PopupEntity(Loc.GetString("forged-base-module-required"), uid, args.User);
                     return;
                 }
             }

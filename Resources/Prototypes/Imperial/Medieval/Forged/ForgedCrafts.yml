@@ -391,9 +391,9 @@
   id: ForgedTorsoExplosiveCraft
   result: ForgedTorsoExplosive
   stacks:
-    Gunpowder: 1
+    Gunpowder: 3
     MedievalFireSerdolick: 3
-    MedievalMagicGlina: 1
+    MedievalMagicGlina: 2
 
 - type: CP14Recipe
   id: ForgedLHandCannon1Craft

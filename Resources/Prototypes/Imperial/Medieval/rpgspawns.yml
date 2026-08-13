@@ -1794,6 +1794,7 @@
     price:
       Revent: 12
   - type: Food
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
