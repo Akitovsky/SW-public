@@ -86,6 +86,7 @@
     price:
       Revent: 10
   - type: Food
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
@@ -960,6 +961,7 @@
     price:
       Revent: 10
   - type: Food
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
