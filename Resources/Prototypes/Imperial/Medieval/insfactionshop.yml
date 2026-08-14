@@ -472,7 +472,7 @@
   id: MdvInsMedievalClothingOuterHorseArmorLeather
   productEntity: MedievalClothingOuterHorseArmorLeather
   cost:
-    MedalLegion: 10
+    MedalLegion: 3
   categories:
   - MedievalInsArmor
 
@@ -480,7 +480,7 @@
   id: MdvInsMedievalClothingOuterHorseArmorChainMail
   productEntity: MedievalClothingOuterHorseArmorChainMail
   cost:
-    MedalLegion: 20
+    MedalLegion: 7
   categories:
   - MedievalInsArmor
 
@@ -488,7 +488,7 @@
   id: MdvInsMedievalClothingOuterHorseArmorUpIron
   productEntity: MedievalClothingOuterHorseArmorUpIron
   cost:
-    MedalLegion: 30
+    MedalLegion: 12
   categories:
   - MedievalInsArmor
 
