@@ -61,8 +61,8 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Imperial/Medieval/lightsphere_cast.ogg
     icon:
-      sprite: Imperial/Medieval/Magic/Light/MagicLight/icons.rsi
-      state: beginner
+      sprite: Imperial/Medieval/Magic/Light/MagicLight/light2.rsi
+      state: light2
   - type: InstantAction
     event: !type:MedievalInstantSpawnEvent
       spawnedEntityPrototype: MedievalProjectileLightOrbiter
