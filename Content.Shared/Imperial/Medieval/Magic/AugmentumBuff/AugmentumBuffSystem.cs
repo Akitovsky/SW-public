@@ -31,7 +31,6 @@ public sealed class AugmentumBuffSystem : EntitySystem
         SubscribeLocalEvent<AugmentumBuffComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffectAdded);
         SubscribeLocalEvent<AugmentumBuffComponent, NewBeforeStatusEffectAddedEvent>(OnBeforeStatusEffectAdded);
         SubscribeLocalEvent<KnockedDownComponent, ComponentStartup>(OnKnockedDownStartup);
-        SubscribeLocalEvent<StunnedComponent, ComponentStartup>(OnStunnedStartup);
     }
 
     public void ApplyAugmentumBuff(EntityUid target, TimeSpan duration)
@@ -107,12 +106,6 @@ public sealed class AugmentumBuffSystem : EntitySystem
     {
         if (HasComp<AugmentumBuffComponent>(entity.Owner))
             RemCompDeferred<KnockedDownComponent>(entity.Owner);
-    }
-
-    private void OnStunnedStartup(Entity<StunnedComponent> entity, ref ComponentStartup args)
-    {
-        if (HasComp<AugmentumBuffComponent>(entity.Owner))
-            RemCompDeferred<StunnedComponent>(entity.Owner);
     }
 
     private void OnBeforeStatusEffectAdded(
