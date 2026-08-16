@@ -27,38 +27,14 @@
     resistanceBypass: true
     soundHit:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 150
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 6
-        - ReagentId: SpaceDrugs
-          Quantity: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-    transferAmount: 150
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionInjectOnEmbed
-    transferEfficiency: 1
-    transferAmount: 150
-    solution: melee
-  - type: SolutionTransfer
-    transferAmount: 150
-    minTransferAmount: 150
-    maxTransferAmount: 150
+  - type: AugmentumBuffOnMeleeHit
+    duration: 6
   - type: MedievalSpellOnInteract
     soundOnInteract:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
     effects:
-      - !type:AddReagentToTarget
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 6
-        - ReagentId: SpaceDrugs
-          Quantity: 5
+      - !type:ApplyAugmentumBuff
+        duration: 6
 # Middle
 
 - type: entity
@@ -88,38 +64,14 @@
     resistanceBypass: true
     soundHit:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 150
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 14
-        - ReagentId: SpaceDrugs
-          Quantity: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-    transferAmount: 150
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionInjectOnEmbed
-    transferEfficiency: 1
-    transferAmount: 150
-    solution: melee
-  - type: SolutionTransfer
-    transferAmount: 150
-    minTransferAmount: 150
-    maxTransferAmount: 150
+  - type: AugmentumBuffOnMeleeHit
+    duration: 14
   - type: MedievalSpellOnInteract
     soundOnInteract:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
     effects:
-      - !type:AddReagentToTarget
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 14
-        - ReagentId: SpaceDrugs
-          Quantity: 5
+      - !type:ApplyAugmentumBuff
+        duration: 14
 
 # Senior
 
@@ -150,35 +102,11 @@
     resistanceBypass: true
     soundHit:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 150
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 24
-        - ReagentId: SpaceDrugs
-          Quantity: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-    transferAmount: 150
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionInjectOnEmbed
-    transferEfficiency: 1
-    transferAmount: 150
-    solution: melee
-  - type: SolutionTransfer
-    transferAmount: 150
-    minTransferAmount: 150
-    maxTransferAmount: 150
+  - type: AugmentumBuffOnMeleeHit
+    duration: 24
   - type: MedievalSpellOnInteract
     soundOnInteract:
       path: /Audio/Imperial/Medieval/buff_cast.ogg
     effects:
-      - !type:AddReagentToTarget
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 24
-        - ReagentId: SpaceDrugs
-          Quantity: 5
+      - !type:ApplyAugmentumBuff
+        duration: 24
