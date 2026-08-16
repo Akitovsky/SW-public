@@ -57,11 +57,10 @@ public sealed class MedievalShipFlagpoleSystemShared : EntitySystem
 
     private void OnDoAfter(Entity<MedievalShipFlagpoleComponent> ent, ref MedievalShipFlagpoleDoAfterEvent args)
     {
+        ent.Comp.User = null;
+
         if (args.Cancelled || args.Handled)
-        {
-            ent.Comp.User = null;
             return;
-        }
 
         _appearance.SetData(ent, MedievalShipFlagpoleVisuals.State, args.Action);
 
@@ -82,8 +81,6 @@ public sealed class MedievalShipFlagpoleSystemShared : EntitySystem
 
         if (_net.IsServer)
             _audio.PlayPvs(MedievalShipSounds.SailOpen, ent);
-
-        ent.Comp.User = null;
     }
 
     public static string GetFlagState(MedievalShipFlagpoleMenuAction action)
