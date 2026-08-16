@@ -238,6 +238,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.PraiseWindowUiKey.Key:
+        type: PraiseWindowBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -368,6 +370,7 @@
   - type: LastWords
   - type: MeleeParryStorage
   - type: AchievementOwner
+  - type: Praise
 # Imperial Medieval End
 
 - type: entity

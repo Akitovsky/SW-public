@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.Imperial.Medieval.Praises;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
@@ -203,6 +204,12 @@ namespace Content.Server.Database
         public Task<FlavorImage?> GetFlavorImage(Guid uid, CancellationToken cancel, int? slot = null);
         public Task AddOrUpdateFlavorImage(Guid uid, byte[] image, CancellationToken cancel, int? slot = null);
         public Task RemoveFlavorImage(Guid uid, int slot, CancellationToken cancel);
+
+        Task<List<Praise>> GetPraises(Guid id, CancellationToken cancel = default);
+        Task AddPraise(Praise praise, CancellationToken cancel = default);
+        Task AddPraises(IEnumerable<Praise> praises, CancellationToken cancel = default);
+        Task RemovePraise(Praise praise, CancellationToken cancel = default);
+
         public Dictionary<string, int> GetDbLogs();
 
         #endregion
@@ -829,6 +836,31 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.DeletePlayerAchievementProgress(userId, achievementId, cancel));
         }
+
+        public Task<List<Praise>> GetPraises(Guid id, CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetPraises(id, cancel));
+        }
+
+        public Task AddPraise(Praise praise, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddPraise(praise, cancel));
+        }
+
+        public Task AddPraises(IEnumerable<Praise> praises, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddPraises(praises, cancel));
+        }
+
+        public Task RemovePraise(Praise praise, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddPraise(praise, cancel));
+        }
+
         #endregion
 
         #region Playtime

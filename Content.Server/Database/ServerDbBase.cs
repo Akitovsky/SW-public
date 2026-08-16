@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Imperial.Medieval.Language;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -25,7 +24,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Imperial.Medieval.PlayerCreations;
-using Content.Shared.Imperial.Medieval.Skills;
 
 namespace Content.Server.Database
 {
@@ -1194,6 +1192,33 @@ namespace Content.Server.Database
                 .ToListAsync(cancel);
 
             db.DbContext.PlayerAchievementsProgress.RemoveRange(rows);
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task<List<Praise>> GetPraises(Guid id, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.Praises.Where(p => p.GivenTo == id).ToListAsync(cancel);
+        }
+
+        public async Task AddPraise(Praise praise, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            db.DbContext.Praises.Add(praise);
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddPraises(IEnumerable<Praise> praises, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            await db.DbContext.Praises.AddRangeAsync(praises, cancel);
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task RemovePraise(Praise praise, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            db.DbContext.Praises.Remove(praise);
             await db.DbContext.SaveChangesAsync(cancel);
         }
 

@@ -975,6 +975,36 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("player_achievements_progress", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Praise", b =>
+                {
+                    b.Property<Guid>("GivenTo")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("given_to");
+
+                    b.Property<Guid>("GivenBy")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("given_by");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("reason");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("weight");
+
+                    b.HasKey("GivenTo", "GivenBy", "Date")
+                        .HasName("PK_praise");
+
+                    b.ToTable("praise", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
                     b.Property<int>("Id")

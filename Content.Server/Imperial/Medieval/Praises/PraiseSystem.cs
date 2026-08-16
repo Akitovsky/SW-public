@@ -1,0 +1,158 @@
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Content.Server.Database;
+using Content.Shared.GameTicking;
+using Content.Shared.Imperial.ICCVar;
+using Content.Shared.Imperial.Medieval.Praises;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
+
+namespace Content.Server.Imperial.Medieval.Praises;
+
+public sealed class PraiseSystem : EntitySystem
+{
+    [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
+    [Dependency] private readonly IPlayerManager _playerMan = default!;
+    [Dependency] private readonly IConfigurationManager _cfgMan = default!;
+    [Dependency] private readonly IServerDbManager _dbMan = default!;
+    [Dependency] private readonly UserDbDataManager _userDbDataMan = default!;
+
+    private Dictionary<NetUserId, int> _remainingPraises = new();
+    private Dictionary<NetUserId, List<Praise>> _praises = new(); //recent praises sent to each player before the current round
+    private Dictionary<NetUserId, List<Praise>> _newPraises = new(); //praises sent to each user during this round
+
+    //don't forget to change it in 'PraiseWindow' and 'Praise' class too
+    //(I didn't want to create a separate static class for storing a single constant and putting it anywhere else would be strange)
+    //(also couldn't import the praise namespace into DB model for some reason)
+    private const int MaxPraiseReasonLength = 50;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _userDbDataMan.AddOnLoadPlayer(OnLoadPlayer);
+        SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<PraiseComponent, PraiseWindowMessage>(OnPraiseSent);
+        SubscribeLocalEvent<RoundEndedEvent>(OnRoundEnd);
+    }
+
+    private bool CanPraise(ICommonSession user, ICommonSession target, out bool noPraises, out bool praisedRecently)
+    {
+        if (!_remainingPraises.ContainsKey(user.UserId))
+            _remainingPraises[user.UserId] = _cfgMan.GetCVar(ICCVars.PraisesPerRound);
+
+        noPraises = praisedRecently = false;
+
+        if (_remainingPraises[user.UserId] <= 0)
+            noPraises = true;
+
+        if (!_praises.ContainsKey(target.UserId))
+            _praises[target.UserId] = new(); //shouldn't happen but just in case
+
+        if (!_newPraises.ContainsKey(target.UserId))
+            _newPraises[target.UserId] = new();
+
+        IEnumerable<Praise> praises = _praises[target.UserId].Concat(_newPraises[target.UserId]);
+        DateTime tp = DateTime.Now - _cfgMan.GetCVar(ICCVars.PraiseCooldown);
+        foreach (Praise praise in praises)
+        {
+            if (praise.GivenBy == user.UserId && praise.Date > tp)
+                praisedRecently = true;
+        }
+
+        return !(noPraises || praisedRecently);
+    }
+
+    private PraiseWindowBoundUserInterfaceState GenerateState(ICommonSession user, ICommonSession target)
+    {
+        bool canPraise = CanPraise(user, target, out bool noPraises, out bool praisedRecently);
+
+        string msg = Loc.GetString("praises-window-info", ("count", _remainingPraises[user.UserId]));
+        if (noPraises)
+            msg = Loc.GetString("praises-window-nopraises");
+        if (praisedRecently)
+            msg = Loc.GetString("praises-window-praisedrecently");
+
+        return new(msg, !canPraise);
+    }
+
+    private void OnGetVerbs(EntityUid uid, PraiseComponent praise, ref GetVerbsEvent<ExamineVerb> args)
+    {
+        EntityUid userUid = args.User;
+        if (!TryComp<PraiseComponent>(userUid, out var praiseUser) || uid == userUid)
+            return;
+
+        args.Verbs.Add(new ExamineVerb()
+        {
+            Act = () =>
+            {
+                if (!_uiSys.TryOpenUi(userUid, PraiseWindowUiKey.Key, userUid)) //bounding UI to user so multiple players can praise the same guy simultaneously
+                    return;
+
+                if (!_playerMan.TryGetSessionByEntity(uid, out var target) ||
+                    !_playerMan.TryGetSessionByEntity(userUid, out var user))
+                    return;
+
+                praiseUser.LastTarget = target;
+                _uiSys.SetUiState(userUid, PraiseWindowUiKey.Key, GenerateState(user, target));
+            },
+            CloseMenu = true,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Imperial/Medieval/date.rsi"), "date"),
+            Text = Loc.GetString("praises-verbname")
+        });
+    }
+
+    private void OnPraiseSent(EntityUid uid, PraiseComponent praise, ref PraiseWindowMessage ev)
+    {
+        ICommonSession? target = praise.LastTarget;
+
+        if (ev.Reason.Length > MaxPraiseReasonLength ||
+            target == null ||
+            !_playerMan.TryGetSessionByEntity(ev.Actor, out var user))
+            return;
+
+        if (CanPraise(user, target, out _, out _))
+        {
+            _remainingPraises[user.UserId] -= 1;
+            _newPraises[target.UserId].Add(new Praise
+            {
+                GivenTo = target.UserId,
+                GivenBy = user.UserId,
+                Date = DateTime.Now,
+                Reason = ev.Reason,
+                Weight = praise.Weight
+            });
+        }
+
+        _uiSys.SetUiState(ev.Actor, PraiseWindowUiKey.Key, GenerateState(user, target));
+    }
+
+    private async Task OnLoadPlayer(ICommonSession player, CancellationToken cancel)
+    {
+        if (_praises.ContainsKey(player.UserId))
+            return;
+
+        DateTime tp = DateTime.Now + _cfgMan.GetCVar(ICCVars.PraiseCooldown);
+
+        //collecting only the recent entries to speed up search, would do this in DB manager but that would require getting access to config manager from there to get the CD CVar value
+        _praises[player.UserId] = (await _dbMan.GetPraises(player.UserId, cancel)).Where(p => p.Date > tp).ToList();
+    }
+
+    private void OnRoundEnd(RoundEndedEvent ev)
+    {
+        foreach (var values in _newPraises.Values)
+        {
+            _dbMan.AddPraises(values);
+        }
+
+        _remainingPraises.Clear();
+        _praises.Clear();
+        _newPraises.Clear();
+    }
+}
