@@ -22,7 +22,7 @@ public sealed class PraiseSystem : EntitySystem
             return;
 
         _window = new(_records[ev.Target]);
-        _window.Open();
+        _window.OpenCentered();
     }
 
     public void ToggleView(NetUserId target)

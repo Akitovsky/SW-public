@@ -3,7 +3,7 @@
                Resizable="False">
     <BoxContainer Orientation="Vertical">
         <RichTextLabel Name="MessageLabel" Text=""/>
-        <RichTextLabel Text="[bold]{Loc 'praises-window-reason'}:[/bold]" />
+        <RichTextLabel Text="{Loc 'praises-window-reason'}:" />
         <LineEdit Name="ReasonEdit"
                   HorizontalExpand="True"/>
         <Button Name="SendButton"
