@@ -968,6 +968,12 @@
     - MedievalDecorBoxEmptyRecipe
     - MedievalFlagpoleShipRecipe
     - MedievalBedT2Recipe
+    - ForgedWoodenHeadCraft
+    - ForgedWoodenTorsoCraft
+    - ForgedWoodenRArmCraft
+    - ForgedWoodenLArmCraft
+    - ForgedWoodenRLegCraft
+    - ForgedWoodenLLegCraft
 
 - type: entity
   parent: MedievalFoundry
