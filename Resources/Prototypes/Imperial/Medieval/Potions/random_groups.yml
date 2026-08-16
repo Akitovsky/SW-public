@@ -57,8 +57,6 @@
   - medievalexplosion
   - medievalhealburn
   - medievalhealbloodandoxygen
-  - medievalacid
-  - medievalradiation
   - medievaldrughealmech
   - medievalvomit
   - medievalAmmonia
@@ -114,7 +112,8 @@
   - medievaladvancedhealpiercing
   - medievaladvancedhealblunt
   - medievaladvancedhealburn
-  - medievaladvancedacidradiation
+  - medievalacid
+  - medievalradiation
   - medievaladvancedfast
   - medievaladvancedslow
   - medievaladvancedpacifism
@@ -160,6 +159,7 @@
   - medievalbestheal
   - medievalbestpoison
   - medievalbeststimulant
+  - medievaladvancedacidradiation
   reactants: 1
   potionCount: 1
   priority: 3
