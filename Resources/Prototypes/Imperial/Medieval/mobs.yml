@@ -3474,8 +3474,10 @@
     damage:
       groups:
         Brute: 6
+        Airloss: 2
       types:
         ParryAble: 1
+        Bloodloss: 3
   - type: Puller
   - type: Tag
     tags:
@@ -3501,10 +3503,10 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       20: 1
-      35: 0.7
-      50: 0.6
-      70: 0.5
-      85: 0.4
+      35: 0.8
+      50: 0.7
+      70: 0.6
+      85: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
