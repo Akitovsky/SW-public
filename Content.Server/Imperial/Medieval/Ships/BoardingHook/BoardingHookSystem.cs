@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
-using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Imperial.Medieval.Ships.BoardingHook;
 using Content.Shared.Imperial.Medieval.Ships.Islands;
 using Content.Shared.Imperial.Medieval.Skills;
@@ -30,26 +28,20 @@ namespace Content.Server.Imperial.Medieval.Ships.BoardingHook;
 
 public sealed class BoardingHookSystem : SharedBoardingHookSystem
 {
-    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSkillsSystem _skills = default!;
     [Dependency] private readonly ShipGridSystem _shipGrid = default!;
     [Dependency] private readonly ThrownItemSystem _thrown = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BoardingHookComponent, AttemptShootEvent>(OnAttemptShoot);
-        SubscribeLocalEvent<BoardingHookComponent, GunShotEvent>(OnGunShot);
         SubscribeLocalEvent<BoardingHookComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<BoardingHookComponent, GotUnequippedHandEvent>(OnUnequipped);
         SubscribeLocalEvent<BoardingHookComponent, ItemUnwieldedEvent>(OnUnwielded);
@@ -64,25 +56,6 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         SubscribeLocalEvent<BoardingHookProjectileComponent, TriggerEvent>(OnRangeCheck);
     }
 
-    private void OnAttemptShoot(Entity<BoardingHookComponent> ent, ref AttemptShootEvent args)
-    {
-        if (!_combatMode.IsInCombatMode(args.User) ||
-            _hands.GetActiveItem(args.User) != ent.Owner ||
-            !TryComp<WieldableComponent>(ent, out var wieldable) ||
-            !wieldable.Wielded ||
-            !_skills.HasSkill(args.User, SharedSkillsSystem.StrengthId) ||
-            !TryGetGrid(args.User, out _) ||
-            !TryComp<GunComponent>(ent, out var gun) ||
-            !TryGetThrowVector(args.User, gun, GetThrowDistance(ent.Comp, args.User), out _))
-        {
-            args.Cancelled = true;
-            args.Message = Loc.GetString("boarding-hook-cannot-throw");
-            return;
-        }
-
-        args.ThrowItems = true;
-    }
-
     protected override void OnShotAttempted(Entity<BoardingHookComponent> ent, ref ShotAttemptedEvent args)
     {
         if (ent.Comp.Projectile != null)
@@ -95,8 +68,10 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         base.OnShotAttempted(ent, ref args);
     }
 
-    private void OnGunShot(Entity<BoardingHookComponent> ent, ref GunShotEvent args)
+    protected override void OnGunShot(Entity<BoardingHookComponent> ent, ref GunShotEvent args)
     {
+        base.OnGunShot(ent, ref args);
+
         if (!TryGetGrid(args.User, out var originGrid) ||
             !TryComp<GunComponent>(ent, out var gun))
         {
@@ -167,11 +142,11 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         if (ent.Comp.Projectile is not { } projectile ||
             !TryComp(projectile, out projectileComp) ||
             projectileComp.User != user ||
-            !_combatMode.IsInCombatMode(user) ||
-            _hands.GetActiveItem(user) != ent.Owner ||
+            !CombatMode.IsInCombatMode(user) ||
+            Hands.GetActiveItem(user) != ent.Owner ||
             !TryComp<WieldableComponent>(ent, out var wieldable) ||
             !wieldable.Wielded ||
-            !_skills.HasSkill(user, SharedSkillsSystem.StrengthId))
+            !Skills.HasSkill(user, SharedSkillsSystem.StrengthId))
         {
             return false;
         }
@@ -194,7 +169,7 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
             return;
         }
 
-        var time = Math.Max(1f, 7f - _skills.GetSkillLevel(user, "Agility") * 0.3f);
+        var time = Math.Max(1f, 7f - Skills.GetSkillLevel(user, SharedSkillsSystem.AgilityId) * 0.3f);
         var doAfter = new DoAfterArgs(
             EntityManager,
             user,
@@ -207,6 +182,7 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
             MovementThreshold = 0.1f,
             BreakOnMove = true,
             BlockDuplicate = true,
+            CancelDuplicate = false,
             DistanceThreshold = null,
             BreakOnDamage = true,
             RequireCanInteract = false,
@@ -266,7 +242,7 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         }
 
         if (TryGetGrid(args.OtherEntity, out var grid))
-            TryAnchorProjectile(ent, grid, _transform.GetMoverCoordinates(args.OtherEntity));
+            TryAnchorProjectile(ent, grid, TransformSystem.GetMoverCoordinates(args.OtherEntity));
 
         _physics.SetLinearVelocity(ent, Vector2.Zero, body: body);
         _physics.SetAngularVelocity(ent, 0f, body: body);
@@ -277,12 +253,12 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
     private void OnProjectileInteract(Entity<BoardingHookProjectileComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled || !ent.Comp.Anchored || ent.Comp.User == args.User ||
-            !_skills.HasSkill(args.User, SharedSkillsSystem.StrengthId))
+            !Skills.HasSkill(args.User, SharedSkillsSystem.StrengthId))
         {
             return;
         }
 
-        var strength = Math.Clamp(_skills.GetSkillLevel(args.User, SharedSkillsSystem.StrengthId), 1, 20);
+        var strength = Math.Clamp(Skills.GetSkillLevel(args.User, SharedSkillsSystem.StrengthId), 1, 20);
         var timeMultiplier = strength >= 10
             ? 1f - (strength - 10) * 0.05f
             : 1f + (10 - strength) * 0.05f;
@@ -321,10 +297,10 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
             !TryComp<BoardingHookProjectileComponent>(projectile, out var projectileComp) ||
             !projectileComp.Anchored ||
             projectileComp.User != args.User ||
-            _hands.GetActiveItem(args.User) != ent.Owner ||
+            Hands.GetActiveItem(args.User) != ent.Owner ||
             !TryComp<WieldableComponent>(ent, out var wieldable) ||
             !wieldable.Wielded ||
-            !_skills.HasSkill(args.User, SharedSkillsSystem.StrengthId) ||
+            !Skills.HasSkill(args.User, SharedSkillsSystem.StrengthId) ||
             !TryGetGrid(args.User, out var userGrid) ||
             !TryGetGrid(projectile, out var hookGrid) ||
             userGrid == hookGrid)
@@ -341,13 +317,13 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
             return;
         }
 
-        var userPosition = _transform.GetMapCoordinates(args.User);
-        var hookPosition = _transform.GetMapCoordinates(projectile);
+        var userPosition = TransformSystem.GetMapCoordinates(args.User);
+        var hookPosition = TransformSystem.GetMapCoordinates(projectile);
         if (userPosition.MapId != hookPosition.MapId)
             return;
 
         var strengthPower = ent.Comp.Power *
-            (1f + (_skills.GetSkillLevel(args.User, SharedSkillsSystem.StrengthId) - 10) * 0.03f);
+            (1f + (Skills.GetSkillLevel(args.User, SharedSkillsSystem.StrengthId) - 10) * 0.03f);
         bool success;
 
         if (hookGridIsIsland)
@@ -425,8 +401,8 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         if (!ent.Comp.Anchored)
             return;
 
-        var projectileMap = _transform.GetMapCoordinates(ent.Owner);
-        var userMap = _transform.GetMapCoordinates(ent.Comp.User);
+        var projectileMap = TransformSystem.GetMapCoordinates(ent.Owner);
+        var userMap = TransformSystem.GetMapCoordinates(ent.Comp.User);
         if (projectileMap.MapId != userMap.MapId ||
             Vector2.Distance(projectileMap.Position, userMap.Position) > hook.MaxTetherDistance)
         {
@@ -479,40 +455,6 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
         _physics.ApplyLinearImpulse(gridUid, impulse, body: body);
     }
 
-    private float GetThrowDistance(BoardingHookComponent component, EntityUid user)
-    {
-        var strength = _skills.GetSkillLevel(user, SharedSkillsSystem.StrengthId);
-        return component.BaseThrowDistance * (1f + strength * component.ThrowDistancePerStrength);
-    }
-
-    private bool TryGetThrowVector(EntityUid user, GunComponent gun, float maxDistance, out Vector2 throwVector)
-    {
-        throwVector = Vector2.Zero;
-        if (gun.ShootCoordinates is not { } shootCoordinates)
-            return false;
-
-        var sourceMap = _transform.GetMapCoordinates(user);
-        var targetMap = _transform.ToMapCoordinates(shootCoordinates);
-        if (sourceMap.MapId != targetMap.MapId)
-            return false;
-
-        throwVector = targetMap.Position - sourceMap.Position;
-        var throwLength = throwVector.Length();
-        if (!float.IsFinite(throwLength) || throwLength <= 0.0001f)
-            return false;
-
-        if (throwLength > maxDistance)
-            throwVector *= maxDistance / throwLength;
-
-        return true;
-    }
-
-    private bool TryGetGrid(EntityUid uid, out EntityUid grid)
-    {
-        grid = _transform.GetMoverCoordinates(uid).EntityId;
-        return HasComp<MapGridComponent>(grid);
-    }
-
     private bool TryAnchorProjectile(
         Entity<BoardingHookProjectileComponent> ent,
         EntityUid grid,
@@ -526,7 +468,7 @@ public sealed class BoardingHookSystem : SharedBoardingHookSystem
             return false;
         }
 
-        _transform.AnchorEntity((ent.Owner, Transform(ent)), (grid, mapGrid), tile.GridIndices);
+        TransformSystem.AnchorEntity((ent.Owner, Transform(ent)), (grid, mapGrid), tile.GridIndices);
         ent.Comp.Anchored = true;
         return true;
     }
