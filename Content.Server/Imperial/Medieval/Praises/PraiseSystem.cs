@@ -12,11 +12,13 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Server.Administration.Managers;
 
 namespace Content.Server.Imperial.Medieval.Praises;
 
 public sealed class PraiseSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminManager _adminMan = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IConfigurationManager _cfgMan = default!;
@@ -26,6 +28,9 @@ public sealed class PraiseSystem : EntitySystem
     private Dictionary<NetUserId, int> _remainingPraises = new();
     private Dictionary<NetUserId, List<Praise>> _praises = new(); //recent praises sent to each player before the current round
     private Dictionary<NetUserId, List<Praise>> _newPraises = new(); //praises sent to each user during this round
+    private Dictionary<NetUserId, DateTime> _lastPraiseViewDataRequests = new();
+
+    private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(10);
 
     //don't forget to change it in 'PraiseWindow' and 'Praise' class too
     //(I didn't want to create a separate static class for storing a single constant and putting it anywhere else would be strange)
@@ -40,6 +45,7 @@ public sealed class PraiseSystem : EntitySystem
         SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
         SubscribeLocalEvent<PraiseComponent, PraiseWindowMessage>(OnPraiseSent);
         SubscribeLocalEvent<RoundEndedEvent>(OnRoundEnd);
+        SubscribeNetworkEvent<PraiseViewOpenedMessage>(OnPraiseViewOpened);
     }
 
     private bool CanPraise(ICommonSession user, ICommonSession target, out bool noPraises, out bool praisedRecently)
@@ -75,7 +81,7 @@ public sealed class PraiseSystem : EntitySystem
 
         string msg = Loc.GetString("praises-window-info", ("count", _remainingPraises[user.UserId]));
         if (noPraises)
-            msg = Loc.GetString("praises-window-nopraises");
+            msg = Loc.GetString("praises-window-outofpraises");
         if (praisedRecently)
             msg = Loc.GetString("praises-window-praisedrecently");
 
@@ -154,5 +160,32 @@ public sealed class PraiseSystem : EntitySystem
         _remainingPraises.Clear();
         _praises.Clear();
         _newPraises.Clear();
+    }
+
+    private async void OnPraiseViewOpened(PraiseViewOpenedMessage msg, EntitySessionEventArgs args)
+    {
+        NetUserId id = args.SenderSession.UserId;
+
+        if (msg.Target != id && !_adminMan.IsAdmin(args.SenderSession))
+            return;
+
+        if (!_lastPraiseViewDataRequests.ContainsKey(id))
+            _lastPraiseViewDataRequests[id] = DateTime.MinValue;
+
+        if (!_newPraises.ContainsKey(msg.Target))
+            _newPraises[msg.Target] = new();
+
+        if (_lastPraiseViewDataRequests[id] > DateTime.Now - _praiseViewDataRequestCooldown)
+            return;
+
+        _lastPraiseViewDataRequests[id] = DateTime.Now;
+        List<PraiseViewRecord> records = new();
+        IEnumerable<Praise> praises = (await _dbMan.GetPraises(msg.Target)).Concat(_newPraises[msg.Target]);
+        foreach (Praise praise in praises)
+        {
+            records.Add(new PraiseViewRecord { Reason = praise.Reason, Date = praise.Date });
+        }
+
+        RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = records });
     }
 }
