@@ -9,6 +9,7 @@ using Content.Shared.Imperial.Medieval.Ships.BoardingHook;
 using Content.Shared.Imperial.Medieval.Ships.Islands;
 using Content.Shared.Imperial.Medieval.Skills;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
@@ -27,12 +28,13 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Imperial.Medieval.Ships.BoardingHook;
 
-public sealed class BoardingHookSystem : EntitySystem
+public sealed class BoardingHookSystem : SharedBoardingHookSystem
 {
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -41,13 +43,11 @@ public sealed class BoardingHookSystem : EntitySystem
     [Dependency] private readonly ThrownItemSystem _thrown = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BoardingHookComponent, ShotAttemptedEvent>(OnShotAttempted);
         SubscribeLocalEvent<BoardingHookComponent, AttemptShootEvent>(OnAttemptShoot);
         SubscribeLocalEvent<BoardingHookComponent, GunShotEvent>(OnGunShot);
         SubscribeLocalEvent<BoardingHookComponent, ActivateInWorldEvent>(OnActivate);
@@ -83,7 +83,7 @@ public sealed class BoardingHookSystem : EntitySystem
         args.ThrowItems = true;
     }
 
-    private void OnShotAttempted(Entity<BoardingHookComponent> ent, ref ShotAttemptedEvent args)
+    protected override void OnShotAttempted(Entity<BoardingHookComponent> ent, ref ShotAttemptedEvent args)
     {
         if (ent.Comp.Projectile != null)
         {
@@ -92,8 +92,7 @@ public sealed class BoardingHookSystem : EntitySystem
             return;
         }
 
-        if (_useDelay.IsDelayed(ent.Owner))
-            args.Cancel();
+        base.OnShotAttempted(ent, ref args);
     }
 
     private void OnGunShot(Entity<BoardingHookComponent> ent, ref GunShotEvent args)
@@ -115,6 +114,8 @@ public sealed class BoardingHookSystem : EntitySystem
             _gun.UpdateBasicEntityAmmoCount(ent.Owner, 1);
             return;
         }
+
+        _item.SetHeldPrefix(ent.Owner, ent.Comp.UnwrappedInhandPrefix);
 
         foreach (var (projectileUid, _) in args.Ammo)
         {
@@ -394,7 +395,16 @@ public sealed class BoardingHookSystem : EntitySystem
         hook.Projectile = null;
         hook.User = null;
         _gun.UpdateBasicEntityAmmoCount(ent.Comp.HookItem, 1);
-        _useDelay.TryResetDelay(ent.Comp.HookItem);
+
+        if (TryComp<WieldableComponent>(ent.Comp.HookItem, out var wieldable))
+        {
+            var prefix = wieldable.Wielded
+                ? wieldable.WieldedInhandPrefix
+                : wieldable.OldInhandPrefix;
+            _item.SetHeldPrefix(ent.Comp.HookItem, prefix);
+        }
+
+        UseDelay.TryResetDelay(ent.Comp.HookItem);
     }
 
     private void OnRangeCheck(Entity<BoardingHookProjectileComponent> ent, ref TriggerEvent args)

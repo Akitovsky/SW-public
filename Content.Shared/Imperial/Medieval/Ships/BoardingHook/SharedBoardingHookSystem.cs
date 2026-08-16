@@ -4,9 +4,9 @@ using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Imperial.Medieval.Ships.BoardingHook;
 
-public sealed class SharedBoardingHookSystem : EntitySystem
+public abstract class SharedBoardingHookSystem : EntitySystem
 {
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     public override void Initialize()
     {
@@ -15,9 +15,9 @@ public sealed class SharedBoardingHookSystem : EntitySystem
         SubscribeLocalEvent<BoardingHookComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
-    private void OnShotAttempted(Entity<BoardingHookComponent> ent, ref ShotAttemptedEvent args)
+    protected virtual void OnShotAttempted(Entity<BoardingHookComponent> ent, ref ShotAttemptedEvent args)
     {
-        if (_useDelay.IsDelayed(ent.Owner) ||
+        if (UseDelay.IsDelayed(ent.Owner) ||
             TryComp<BasicEntityAmmoProviderComponent>(ent, out var ammo) && ammo.Count == 0)
         {
             args.Cancel();

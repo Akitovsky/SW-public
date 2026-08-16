@@ -5,11 +5,13 @@
   description: A heavy iron hook with a sturdy rope, used to pull ships together.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-    state: base
+    sprite: Imperial/Medieval/Ships/BoardingHook.rsi
+    layers:
+    - state: icon
+      map: ["base"]
   - type: Item
     size: Large
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    sprite: Imperial/Medieval/Ships/BoardingHook.rsi
   - type: Wieldable
     unwieldOnUse: false
     useDelayOnWield: false
@@ -26,6 +28,12 @@
   - type: UseDelay
     delay: 2
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        base:
+          True: { state: icon }
+          False: { state: unwrapped-icon }
   - type: AmmoCounter
 
 - type: entity

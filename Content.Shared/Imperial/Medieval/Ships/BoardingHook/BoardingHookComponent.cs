@@ -18,6 +18,9 @@ public sealed partial class BoardingHookComponent : Component
     public float Power = 10f;
 
     [DataField]
+    public string UnwrappedInhandPrefix = "unwrapped";
+
+    [DataField]
     public SpriteSpecifier RopeSprite =
         new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
 
