@@ -1211,7 +1211,7 @@ namespace Content.Server.Database
         public async Task AddPraises(IEnumerable<Praise> praises, CancellationToken cancel)
         {
             await using var db = await GetDb(cancel);
-            await db.DbContext.Praises.AddRangeAsync(praises, cancel);
+            db.DbContext.Praises.AddRange(praises);
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
