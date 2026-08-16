@@ -12,7 +12,9 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Wieldable.Components;
 using Robust.Server.GameObjects;
@@ -36,6 +38,8 @@ namespace Content.Server.Imperial.Medieval.Fishing;
 
 public sealed partial class FishingSystem : EntitySystem
 {
+    private static readonly ProtoId<TagPrototype> MeatTag = "Meat";
+
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
@@ -55,6 +59,7 @@ public sealed partial class FishingSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ITimerManager _timer = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private readonly List<TaskCompletionSource<float>> _minigameUpdateWaiters = new();
 
@@ -111,7 +116,7 @@ public sealed partial class FishingSystem : EntitySystem
         if (!_interaction.InRangeAndAccessible(args.User, fishingTargetUid, ent.Comp.AfterInteractDistanceThreshold))
             return;
 
-        if (ent.Comp.Bait is not { } baitUid || !TryComp<FishingBaitComponent>(baitUid, out _))
+        if (ent.Comp.Bait is not { } baitUid || !TryGetFishingBaitType(baitUid, out _))
         {
             if (ent.Comp.Bait != null)
             {
@@ -576,6 +581,7 @@ public sealed partial class FishingSystem : EntitySystem
 
         var baitQualityBias = GetBaitQualityBias(rod);
         var fish = Spawn(currentFish, spawnCoordinates);
+        RemComp<SpaceGarbageComponent>(fish);
         GetFishRandomSizeRarity(fish, baitQualityBias);
 
         _audio.PlayPvs(rod.Comp.MinigameFishOutSound, spawnCoordinates);
@@ -662,7 +668,7 @@ public sealed partial class FishingSystem : EntitySystem
     {
         var result = new List<(EntProtoId Prototype, float Weight, int Level)>();
 
-        if (rod.Comp.Bait is not { } baitUid || !TryComp<FishingBaitComponent>(baitUid, out var baitComp))
+        if (rod.Comp.Bait is not { } baitUid || !TryGetFishingBaitType(baitUid, out var baitType))
             return result;
 
         foreach (var (prototypeId, weight) in rod.Comp.FishWeights)
@@ -682,7 +688,7 @@ public sealed partial class FishingSystem : EntitySystem
             if (fishComponent.Level > rod.Comp.Level)
                 continue;
 
-            if (GetFishSelectionBaitType(fishComponent.Bait) != GetFishSelectionBaitType(baitComp.BaitType))
+            if (GetFishSelectionBaitType(fishComponent.Bait) != GetFishSelectionBaitType(baitType))
                 continue;
 
             result.Add((prototypeId, weight, fishComponent.Level));
@@ -725,12 +731,32 @@ public sealed partial class FishingSystem : EntitySystem
 
     private float GetBaitQualityBias(Entity<FishingRodComponent> rod)
     {
-        if (rod.Comp.Bait is not { } baitUid || !TryComp<FishingBaitComponent>(baitUid, out var bait))
+        if (rod.Comp.Bait is not { } baitUid || !TryGetFishingBaitType(baitUid, out var baitType))
             return 0f;
 
-        return rod.Comp.BaitQualityBiases.TryGetValue(bait.BaitType, out var qualityBias)
+        return rod.Comp.BaitQualityBiases.TryGetValue(baitType, out var qualityBias)
             ? Math.Clamp(qualityBias, -1f, 1f)
             : 0f;
+    }
+
+    public bool TryGetFishingBaitType(EntityUid baitUid, out FishingBaitType baitType)
+    {
+        baitType = default;
+
+        if (HasComp<FishingBaitBlacklistComponent>(baitUid))
+            return false;
+
+        if (TryComp<FishingBaitComponent>(baitUid, out var bait))
+        {
+            baitType = bait.BaitType;
+            return true;
+        }
+
+        if (!_tag.HasTag(baitUid, MeatTag))
+            return false;
+
+        baitType = FishingBaitType.Meat;
+        return true;
     }
 
     private static float GetBiasedWeight(float weight, int index, int count, float qualityBias)

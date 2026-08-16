@@ -33,6 +33,11 @@
         whitelist:
           components:
           - FishingBait
+          tags:
+          - Meat
+        blacklist:
+          components:
+          - FishingBaitBlacklist
   - type: UserInterface
     interfaces:
       enum.FishingRodUiKey.Key:

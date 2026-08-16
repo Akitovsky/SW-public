@@ -5,6 +5,7 @@
   parent: BaseItem
   id: MedievalMagicDust
   components:
+    - type: FishingBaitBlacklist
     - type: Tag
       tags:
         - Meat
