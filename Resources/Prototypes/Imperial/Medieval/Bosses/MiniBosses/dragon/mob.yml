@@ -106,6 +106,7 @@
           Brute: 48
         types:
           Structural: 600
+          ParryAble: 0.25
       range: 2.5
       attackRate: 0.5
     - type: StaminaDamageOnHit
