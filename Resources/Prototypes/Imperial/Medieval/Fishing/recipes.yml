@@ -62,6 +62,16 @@
             - minTemperature: 335
     - node: fish plotva cooked
       entity: FishPlotvaCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishLinCooking
@@ -77,6 +87,16 @@
             - minTemperature: 335
     - node: fish lin cooked
       entity: FishLinCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishSterlyadCooking
@@ -92,6 +112,16 @@
             - minTemperature: 335
     - node: fish sterlyad cooked
       entity: FishSterlyadCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishOkunCooking
@@ -107,6 +137,16 @@
             - minTemperature: 335
     - node: fish okun cooked
       entity: FishOkunCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishZherekhCooking
@@ -122,6 +162,16 @@
             - minTemperature: 335
     - node: fish zherekh cooked
       entity: FishZherekhCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishSomCooking
@@ -137,6 +187,16 @@
             - minTemperature: 335
     - node: fish som cooked
       entity: FishSomCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishKefalCooking
@@ -152,6 +212,16 @@
             - minTemperature: 335
     - node: fish kefal cooked
       entity: FishKefalCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishKambalaTurboCooking
@@ -167,6 +237,16 @@
             - minTemperature: 335
     - node: fish kambala turbo cooked
       entity: FishKambalaTurboCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishGoldSparCooking
@@ -182,6 +262,16 @@
             - minTemperature: 335
     - node: fish gold spar cooked
       entity: FishGoldSparCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishStavridaCooking
@@ -197,6 +287,16 @@
             - minTemperature: 335
     - node: fish stavrida cooked
       entity: FishStavridaCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishZubatkaCooking
@@ -212,6 +312,16 @@
             - minTemperature: 335
     - node: fish zubatka cooked
       entity: FishZubatkaCooked
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end
 
 - type: constructionGraph
   id: FishTunaCooking
@@ -227,4 +337,13 @@
             - minTemperature: 335
     - node: fish tuna cooked
       entity: FishTunaCooked
-
+      # Imperial medieval start
+      transform:
+      - !type:UserWhitelistCompGrantTransform
+        whitelist:
+          components:
+          - Farmer
+        grants:
+        - type: FarmerBoostOnConsume
+          time: 15
+      # Imperial medieval end

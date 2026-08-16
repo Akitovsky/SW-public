@@ -649,7 +649,6 @@
     snap:
     - Wall
   components:
-  - type: Marker
   - type: PowerSupplier
     supplyRate: 5000
   - type: Sprite
