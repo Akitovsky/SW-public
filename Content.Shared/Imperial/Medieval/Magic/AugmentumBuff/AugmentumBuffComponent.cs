@@ -8,9 +8,12 @@ public sealed partial class AugmentumBuffComponent : Component
     [ViewVariables, AutoPausedField, AutoNetworkedField]
     public TimeSpan EndTime;
 
+    [ViewVariables, AutoNetworkedField]
+    public bool OwnsStaminaModifier;
+
     [DataField, AutoNetworkedField]
     public float SpeedModifier = 1.3f;
 
-    [DataField, AutoNetworkedField]
-    public float StaminaModifier = 2f;
+    [ViewVariables]
+    public bool TimerRunning;
 }
