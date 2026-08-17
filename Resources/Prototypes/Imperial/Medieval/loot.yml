@@ -1740,6 +1740,16 @@
         prob: 0.7
       - id: MedievalIngotGold
         prob: 0.7
+      - id: MedievalIngotSilver
+        prob: 0.7
+      - id: MedievalIngotSilver
+        prob: 0.7
+      - id: MedievalIngotSilver
+        prob: 0.7
+      - id: MedievalIngotSilver
+        prob: 0.7
+      - id: MedievalIngotSilver
+        prob: 0.7
       - id: MedaljonSpeed
         prob: 0.04
       - id: MedaljonMana
