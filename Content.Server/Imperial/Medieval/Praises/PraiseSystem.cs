@@ -26,11 +26,12 @@ public sealed class PraiseSystem : EntitySystem
     [Dependency] private readonly UserDbDataManager _userDbDataMan = default!;
 
     private Dictionary<NetUserId, int> _remainingPraises = new();
-    private Dictionary<NetUserId, List<Praise>> _praises = new(); //recent praises sent to each player before the current round
-    private Dictionary<NetUserId, List<Praise>> _newPraises = new(); //praises sent to each user during this round
-    private Dictionary<NetUserId, DateTime> _lastPraiseViewDataRequests = new();
+    private Dictionary<NetUserId, List<Praise>> _praises = new(); //recent praises sent to each player before the current round (to check if he was praised recently)
+    private Dictionary<NetUserId, List<Praise>> _newPraises = new(); //praises sent to each player during this round (to be written later)
+    private Dictionary<NetUserId, int> _praiseRating = new(); //total praise weight of each player
+    private Dictionary<NetUserId, DateTime> _lastPraiseViewDataRequests = new(); //time of the last praise view data request made by this player (to prevent spam)
 
-    private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(10);
+    private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(10); //to prevent spam
 
     //don't forget to change it in 'PraiseWindow' and 'Praise' class too
     //(I didn't want to create a separate static class for storing a single constant and putting it anywhere else would be strange)
@@ -41,13 +42,34 @@ public sealed class PraiseSystem : EntitySystem
     {
         base.Initialize();
 
-        _userDbDataMan.AddOnLoadPlayer(OnLoadPlayer);
+        SubscribeLocalEvent<PraiseComponent, PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
         SubscribeLocalEvent<PraiseComponent, PraiseWindowMessage>(OnPraiseSent);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeNetworkEvent<PraiseRatingOpenedMessage>(OnPraiseRatingOpened);
         SubscribeNetworkEvent<PraiseViewOpenedMessage>(OnPraiseViewOpened);
         SubscribeNetworkEvent<PraiseViewDeleteMessage>(OnPraiseViewDelete);
         SubscribeNetworkEvent<PraiseViewEditMessage>(OnPraiseViewEdit);
+    }
+
+    private void OnSpawnComplete(EntityUid uid, PraiseComponent praise, PlayerSpawnCompleteEvent args)
+    {
+        AddPlayerData(args.Player); //since only async methods can use 'await' I had to do this
+    }
+
+    private async void AddPlayerData(ICommonSession player)
+    {
+        List<Praise> praises = await _dbMan.GetPraises(player.UserId);
+
+        _praiseRating[player.UserId] = 0;
+        foreach (Praise praise in praises)
+        {
+            _praiseRating[player.UserId] += praise.Weight;
+        }
+
+        //collecting only the recent entries to speed up search, would do this in DB manager but that would require getting access to config manager from there to get the CD CVar value
+        DateTime tp = DateTime.Now - _cfgMan.GetCVar(ICCVars.PraiseCooldown);
+        _praises[player.UserId] = praises.Where(p => p.Date > tp).ToList();
     }
 
     private bool CanPraise(ICommonSession user, ICommonSession target, out bool noPraises, out bool praisedRecently)
@@ -142,17 +164,6 @@ public sealed class PraiseSystem : EntitySystem
         _uiSys.SetUiState(ev.Actor, PraiseWindowUiKey.Key, GenerateState(user, target));
     }
 
-    private async Task OnLoadPlayer(ICommonSession player, CancellationToken cancel)
-    {
-        if (_praises.ContainsKey(player.UserId))
-            return;
-
-        DateTime tp = DateTime.Now - _cfgMan.GetCVar(ICCVars.PraiseCooldown);
-
-        //collecting only the recent entries to speed up search, would do this in DB manager but that would require getting access to config manager from there to get the CD CVar value
-        _praises[player.UserId] = (await _dbMan.GetPraises(player.UserId, cancel)).Where(p => p.Date > tp).ToList();
-    }
-
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         foreach (var values in _newPraises.Values)
@@ -163,6 +174,25 @@ public sealed class PraiseSystem : EntitySystem
         _remainingPraises.Clear();
         _praises.Clear();
         _newPraises.Clear();
+        _lastPraiseViewDataRequests.Clear();
+    }
+
+    private void OnPraiseRatingOpened(PraiseRatingOpenedMessage ev, EntitySessionEventArgs args)
+    {
+        if (!_adminMan.IsAdmin(args.SenderSession))
+            return;
+
+        PraiseRatingMessage msg = new();
+        msg.Rating = new();
+        foreach ((NetUserId id, int weight) in _praiseRating)
+        {
+            if (!_playerMan.TryGetSessionById(id, out var player))
+                return;
+
+            msg.Rating.Add((player.Name, weight));
+        }
+
+        RaiseNetworkEvent(msg, args.SenderSession);
     }
 
     private async void OnPraiseViewOpened(PraiseViewOpenedMessage msg, EntitySessionEventArgs args)

@@ -5,33 +5,55 @@ namespace Content.Client.Imperial.Medieval.Praises;
 
 public sealed class PraiseSystem : EntitySystem
 {
-    private PraiseViewWindow? _window;
+    private PraiseViewWindow? _viewWindow;
+    private PraiseRatingWindow? _ratingWindow;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeNetworkEvent<PraiseViewMessage>(OnPraiseViewMessage);
+        SubscribeNetworkEvent<PraiseRatingMessage>(OnPraiseRatingMessage);
     }
 
     private void OnPraiseViewMessage(PraiseViewMessage ev)
     {
-        if (_window != null)
+        if (_viewWindow != null)
             return;
 
-        _window = new(ev.Records, ev.Admin);
-        _window.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
-        _window.OnDeleteButtonPressed += record => RaiseNetworkEvent(new PraiseViewDeleteMessage { Target = ev.Target, Record = record });
-        _window.OpenCentered();
+        _viewWindow = new(ev.Records, ev.Admin);
+        _viewWindow.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
+        _viewWindow.OnDeleteButtonPressed += record => RaiseNetworkEvent(new PraiseViewDeleteMessage { Target = ev.Target, Record = record });
+        _viewWindow.OpenCentered();
+    }
+
+    private void OnPraiseRatingMessage(PraiseRatingMessage ev)
+    {
+        if (_ratingWindow != null)
+            return;
+
+        _ratingWindow = new(ev.Rating);
+        _ratingWindow.OpenCentered();
     }
 
     public void ToggleView(NetUserId target)
     {
-        if (_window != null)
+        if (_viewWindow != null)
         {
-            _window.Dispose();
-            _window = null;
+            _viewWindow.Dispose();
+            _viewWindow = null;
         }
 
         RaiseNetworkEvent(new PraiseViewOpenedMessage { Target = target });
+    }
+
+    public void ToggleRating()
+    {
+        if (_ratingWindow != null)
+        {
+            _ratingWindow.Dispose();
+            _ratingWindow = null;
+        }
+
+        RaiseNetworkEvent(new PraiseRatingOpenedMessage());
     }
 }
