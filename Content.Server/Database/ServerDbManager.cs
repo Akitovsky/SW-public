@@ -188,6 +188,7 @@ namespace Content.Server.Database
         Task DeletePlayerAchievementProgress(Guid userId, string achievementId, CancellationToken cancel = default);
 
         public Task<Painting?> GetPainting(Color[] texture, CancellationToken cancel = default);
+        public Task<bool> HasPendingPainting(Guid authorUserId, CancellationToken cancel = default);
         public Task<List<Painting>> GetPaintings(bool accepted, CancellationToken cancel = default);
         public Task AddPainting(Color[] texture, string name, string description, string author, Guid authorUserId, DateTime creationTime, bool accepted, CancellationToken cancel = default);
         public Task RemovePainting(Color[] texture, CancellationToken cancel = default);
@@ -195,6 +196,7 @@ namespace Content.Server.Database
         public Task EditPainting(Color[] texture, string name, string author, string description, CancellationToken cancel = default);
 
         public Task<Book?> GetBook(string text, CancellationToken cancel = default);
+        public Task<bool> HasPendingBook(Guid authorUserId, CancellationToken cancel = default);
         public Task<List<Book>> GetBooks(bool accepted, CancellationToken cancel = default);
         public Task AddBook(string text, string name, string description, string author, Guid authorUserId, DateTime creationTime, bool accepted, CancellationToken cancel = default);
         public Task RemoveBook(string text, CancellationToken cancel = default);
@@ -665,6 +667,12 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetPaintings(accepted, cancel));
         }
 
+        public Task<bool> HasPendingPainting(Guid authorUserId, CancellationToken cancel)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.HasPendingPainting(authorUserId, cancel));
+        }
+
         public Task AddPainting(Color[] texture, string name, string description, string author, Guid authorUserId, DateTime creationTime, bool accepted, CancellationToken cancel)
         {
             DbReadOpsMetric.Inc();
@@ -699,6 +707,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetBooks(accepted, cancel));
+        }
+
+        public Task<bool> HasPendingBook(Guid authorUserId, CancellationToken cancel)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.HasPendingBook(authorUserId, cancel));
         }
 
         public Task AddBook(string text, string name, string description, string author, Guid authorUserId, DateTime creationTime, bool accepted, CancellationToken cancel)
