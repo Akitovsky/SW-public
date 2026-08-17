@@ -1048,6 +1048,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
+                    b.Property<string>("GivenByName")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("given_by_name");
+
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasMaxLength(50)

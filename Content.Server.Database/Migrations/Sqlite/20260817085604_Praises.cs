@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     given_to = table.Column<Guid>(type: "TEXT", nullable: false),
                     given_by = table.Column<Guid>(type: "TEXT", nullable: false),
                     date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    given_by_name = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     reason = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     weight = table.Column<int>(type: "INTEGER", nullable: false)
                 },

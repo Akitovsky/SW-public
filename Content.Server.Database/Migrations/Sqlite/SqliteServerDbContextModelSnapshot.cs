@@ -989,6 +989,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("date");
 
+                    b.Property<string>("GivenByName")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("given_by_name");
+
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasMaxLength(50)

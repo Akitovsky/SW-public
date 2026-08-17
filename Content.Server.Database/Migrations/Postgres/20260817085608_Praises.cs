@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     given_to = table.Column<Guid>(type: "uuid", nullable: false),
                     given_by = table.Column<Guid>(type: "uuid", nullable: false),
                     date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    given_by_name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     reason = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     weight = table.Column<int>(type: "integer", nullable: false)
                 },
