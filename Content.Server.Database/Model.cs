@@ -635,6 +635,9 @@ namespace Content.Server.Database
         [Required, Key]
         public DateTime Date { get; set; }
 
+        [Required, MaxLength(10)]
+        public string GivenByName { get; set; } = default!;
+
         [Required, MaxLength(50)]
         public string Reason { get; set; } = default!;
 

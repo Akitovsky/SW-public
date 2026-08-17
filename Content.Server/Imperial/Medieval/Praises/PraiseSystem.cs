@@ -44,8 +44,10 @@ public sealed class PraiseSystem : EntitySystem
         _userDbDataMan.AddOnLoadPlayer(OnLoadPlayer);
         SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
         SubscribeLocalEvent<PraiseComponent, PraiseWindowMessage>(OnPraiseSent);
-        SubscribeLocalEvent<RoundEndedEvent>(OnRoundEnd);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<PraiseViewOpenedMessage>(OnPraiseViewOpened);
+        SubscribeNetworkEvent<PraiseViewDeleteMessage>(OnPraiseViewDelete);
+        SubscribeNetworkEvent<PraiseViewEditMessage>(OnPraiseViewEdit);
     }
 
     private bool CanPraise(ICommonSession user, ICommonSession target, out bool noPraises, out bool praisedRecently)
@@ -131,6 +133,7 @@ public sealed class PraiseSystem : EntitySystem
                 GivenTo = target.UserId,
                 GivenBy = user.UserId,
                 Date = DateTime.Now,
+                GivenByName = user.Name,
                 Reason = ev.Reason,
                 Weight = praise.Weight
             });
@@ -144,13 +147,13 @@ public sealed class PraiseSystem : EntitySystem
         if (_praises.ContainsKey(player.UserId))
             return;
 
-        DateTime tp = DateTime.Now + _cfgMan.GetCVar(ICCVars.PraiseCooldown);
+        DateTime tp = DateTime.Now - _cfgMan.GetCVar(ICCVars.PraiseCooldown);
 
         //collecting only the recent entries to speed up search, would do this in DB manager but that would require getting access to config manager from there to get the CD CVar value
         _praises[player.UserId] = (await _dbMan.GetPraises(player.UserId, cancel)).Where(p => p.Date > tp).ToList();
     }
 
-    private void OnRoundEnd(RoundEndedEvent ev)
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         foreach (var values in _newPraises.Values)
         {
@@ -166,7 +169,8 @@ public sealed class PraiseSystem : EntitySystem
     {
         NetUserId id = args.SenderSession.UserId;
 
-        if (msg.Target != id && !_adminMan.IsAdmin(args.SenderSession))
+        bool isAdmin = _adminMan.IsAdmin(args.SenderSession);
+        if (msg.Target != id && !isAdmin)
             return;
 
         if (!_lastPraiseViewDataRequests.ContainsKey(id))
@@ -183,9 +187,65 @@ public sealed class PraiseSystem : EntitySystem
         IEnumerable<Praise> praises = (await _dbMan.GetPraises(msg.Target)).Concat(_newPraises[msg.Target]);
         foreach (Praise praise in praises)
         {
-            records.Add(new PraiseViewRecord { Reason = praise.Reason, Date = praise.Date });
+            records.Add(new PraiseViewRecord
+            {
+                GivenBy = isAdmin ? praise.GivenBy : null,
+                GivenByName = praise.GivenByName,
+                Reason = praise.Reason,
+                Date = praise.Date,
+                Weight = praise.Weight
+            });
         }
 
-        RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = records });
+        RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = records, Admin = isAdmin }, args.SenderSession);
+    }
+
+    private void OnPraiseViewEdit(PraiseViewEditMessage ev, EntitySessionEventArgs args)
+    {
+        if (!_adminMan.IsAdmin(args.SenderSession) || ev.Record.GivenBy == null)
+            return;
+
+        List<Praise> praises = _newPraises[ev.Target];
+        foreach (Praise praise in praises)
+        {
+            if (praise.GivenBy == ev.Record.GivenBy.Value && praise.GivenTo == ev.Target && praise.Date == ev.Record.Date)
+            {
+                praise.GivenByName = ev.Record.GivenByName;
+                praise.Reason = ev.Record.Reason;
+                praise.Weight = ev.Record.Weight;
+                return;
+            }
+        }
+
+        Praise newPraise = new Praise
+        {
+            GivenTo = ev.Target,
+            GivenBy = ev.Record.GivenBy.Value,
+            Date = ev.Record.Date,
+            GivenByName = ev.Record.GivenByName,
+            Reason = ev.Record.Reason,
+            Weight = ev.Record.Weight
+        };
+
+        _dbMan.EditPraise(newPraise);
+    }
+
+    private void OnPraiseViewDelete(PraiseViewDeleteMessage ev, EntitySessionEventArgs args)
+    {
+        if (!_adminMan.IsAdmin(args.SenderSession) || ev.Record.GivenBy == null)
+            return;
+
+        List<Praise> praises = _newPraises[ev.Target];
+        for (int i = 0; i < praises.Count; i++)
+        {
+            Praise praise = praises[i];
+            if (praise.GivenBy == ev.Record.GivenBy.Value && praise.GivenTo == ev.Target && praise.Date == ev.Record.Date)
+            {
+                praises.RemoveAt(i);
+                return;
+            }
+        }
+
+        _dbMan.RemovePraise(ev.Target, ev.Record.GivenBy.Value, ev.Record.Date);
     }
 }

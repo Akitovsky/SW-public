@@ -6,7 +6,6 @@ namespace Content.Client.Imperial.Medieval.Praises;
 public sealed class PraiseSystem : EntitySystem
 {
     private PraiseViewWindow? _window;
-    private Dictionary<NetUserId, List<PraiseViewRecord>> _records = new();
 
     public override void Initialize()
     {
@@ -16,12 +15,12 @@ public sealed class PraiseSystem : EntitySystem
 
     private void OnPraiseViewMessage(PraiseViewMessage ev)
     {
-        _records[ev.Target] = ev.Records ?? new();
-
         if (_window != null)
             return;
 
-        _window = new(_records[ev.Target]);
+        _window = new(ev.Records, ev.Admin);
+        _window.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
+        _window.OnDeleteButtonPressed += record => RaiseNetworkEvent(new PraiseViewDeleteMessage { Target = ev.Target, Record = record });
         _window.OpenCentered();
     }
 

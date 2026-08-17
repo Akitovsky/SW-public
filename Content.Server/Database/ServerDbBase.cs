@@ -1215,10 +1215,29 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public async Task RemovePraise(Praise praise, CancellationToken cancel)
+        public async Task RemovePraise(Guid givenTo, Guid givenBy, DateTime date, CancellationToken cancel)
         {
             await using var db = await GetDb(cancel);
-            db.DbContext.Praises.Remove(praise);
+
+            var row = db.DbContext.Praises.Find(givenTo, givenBy, date);
+            if (row == null)
+                return;
+
+            db.DbContext.Praises.Remove(row);
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task EditPraise(Praise replacement, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+
+            var row = db.DbContext.Praises.Find(replacement.GivenTo, replacement.GivenBy, replacement.Date);
+            if (row == null)
+                return;
+
+            row.GivenByName = replacement.GivenByName;
+            row.Reason = replacement.Reason;
+            row.Weight = replacement.Weight;
             await db.DbContext.SaveChangesAsync(cancel);
         }
 

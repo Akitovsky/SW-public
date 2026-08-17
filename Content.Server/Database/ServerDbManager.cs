@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
-using Content.Server.Imperial.Medieval.Praises;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
@@ -208,7 +207,8 @@ namespace Content.Server.Database
         Task<List<Praise>> GetPraises(Guid id, CancellationToken cancel = default);
         Task AddPraise(Praise praise, CancellationToken cancel = default);
         Task AddPraises(IEnumerable<Praise> praises, CancellationToken cancel = default);
-        Task RemovePraise(Praise praise, CancellationToken cancel = default);
+        Task RemovePraise(Guid givenBy, Guid givenTo, DateTime date, CancellationToken cancel = default);
+        Task EditPraise(Praise replacement, CancellationToken cancel = default); //assuming you're not editing key members
 
         public Dictionary<string, int> GetDbLogs();
 
@@ -855,10 +855,16 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.AddPraises(praises, cancel));
         }
 
-        public Task RemovePraise(Praise praise, CancellationToken cancel = default)
+        public Task RemovePraise(Guid givenTo, Guid givenBy, DateTime date, CancellationToken cancel = default)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddPraise(praise, cancel));
+            return RunDbCommand(() => _db.RemovePraise(givenTo, givenBy, date, cancel));
+        }
+
+        public Task EditPraise(Praise replacement, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.EditPraise(replacement, cancel));
         }
 
         #endregion
