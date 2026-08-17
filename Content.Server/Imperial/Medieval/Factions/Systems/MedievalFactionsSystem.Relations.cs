@@ -60,7 +60,7 @@ public sealed partial class MedievalFactionsSystem
 
         AlternativeVerb verb = new()
         {
-            Text = "Изменить отношения",
+            Text = Loc.GetString("faction-relations-verb-change"),
             Act = () =>
             {
                 var ev = new OpenOfferFactionRelationsEvent(GetNetEntity(uid), friends.Faction, comp.Faction);
@@ -81,7 +81,7 @@ public sealed partial class MedievalFactionsSystem
 
         AlternativeVerb verb = new()
         {
-            Text = "Сделать запрос на смену отношений",
+            Text = Loc.GetString("faction-relations-verb-request"),
             Act = () =>
             {
                 var ev = new OpenFactionRelationsRequestEvent(GetNetEntity(uid), friends.Faction);
@@ -407,10 +407,10 @@ public sealed partial class MedievalFactionsSystem
 
         var dragged = pairs.Count > 1
             ? string.Join(", ", pairs.Skip(1).Select(p => Proto.Index(p.Ally).Name))
-            : "нет";
+            : "none";
 
         _adminLogger.Add(LogType.MedievalFactionRelations, LogImpact.High,
-            $"Лидер {ToPrettyString(senderUid.Value):leader} фракции {Proto.Index(declarer).Name} обьявил войну этой фракции: {Proto.Index(target).Name}. Причина: {reason}. Втянутые союзники: {dragged}");
+            $"Leader {ToPrettyString(senderUid.Value):leader} of faction {Proto.Index(declarer).Name:declarer} declared war on {Proto.Index(target).Name:target}. Reason: {reason:reason}. Allies dragged in: {dragged:allies}");
     }
 
     private void SetRelations(ProtoId<MedievalFactionPrototype> userFaction, ProtoId<MedievalFactionPrototype> targetFaction, ProtoId<FactionRelationsPrototype> relation)
@@ -448,7 +448,13 @@ public sealed partial class MedievalFactionsSystem
             if (!GetFactionMemberById(item.Key, out var target) || !_sharedPlayerManager.TryGetSessionByEntity(target.Value, out var session))
                 continue;
 
-            var announcement = $"Отношения вашей фракции с {(item.Value.Faction == userFaction ? targetFactionProto.Name : userFactionProto.Name)} изменены на {relationProto.Name}";
+            // The recipient is told about the OTHER faction, so pick whichever side is not their own.
+            var otherFaction = item.Value.Faction == userFaction ? targetFactionProto : userFactionProto;
+
+            var announcement = Loc.GetString("faction-relations-changed-announcement",
+                ("faction", otherFaction.Name),
+                ("relation", relationProto.Name));
+
             _chatMan.ChatMessageToOne(Shared.Chat.ChatChannel.Radio, announcement, announcement, EntityUid.Invalid, false, session.Channel, relationProto.Color);
 
             if (playSound)
@@ -509,15 +515,16 @@ public sealed partial class MedievalFactionsSystem
         ProtoId<MedievalFactionPrototype> targetFaction,
         ProtoId<FactionRelationsPrototype> relation)
     {
+        // Both leaders were tagged ":leader" before, which collided in the log and pushed the second one out to a "leader_2" key. They are now tagged distinctly.
         if (offeredBy != null)
         {
             _adminLogger.Add(LogType.MedievalFactionRelations, LogImpact.Medium,
-                $"лидеры фракций {ToPrettyString(offeredBy.Value):leader} и {ToPrettyString(acceptedBy):leader} изменили отношения между фракциями {Proto.Index(userFaction).Name} и {Proto.Index(targetFaction).Name} на {relation.Id}");
+                $"Faction leaders {ToPrettyString(offeredBy.Value):offeredBy} and {ToPrettyString(acceptedBy):acceptedBy} changed relations between factions {Proto.Index(userFaction).Name:userFaction} and {Proto.Index(targetFaction).Name:targetFaction} to {relation.Id:relation}");
             return;
         }
 
         _adminLogger.Add(LogType.MedievalFactionRelations, LogImpact.Medium,
-            $"лидеры фракций неизвестно и {ToPrettyString(acceptedBy):leader} изменили отношения между фракциями {Proto.Index(userFaction).Name} и {Proto.Index(targetFaction).Name} на {relation.Id}");
+            $"Faction leaders unknown and {ToPrettyString(acceptedBy):acceptedBy} changed relations between factions {Proto.Index(userFaction).Name:userFaction} and {Proto.Index(targetFaction).Name:targetFaction} to {relation.Id:relation}");
     }
 
     private void OnFactionDataContainerInit(EntityUid uid, FactionDataContainerComponent comp, MapInitEvent args)

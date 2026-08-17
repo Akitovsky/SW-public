@@ -75,15 +75,15 @@ public sealed partial class MedievalFactionsSystem : SharedMedievalFactionsSyste
 
     private void OnGetStatusIcons(EntityUid uid, MedievalFactionMemberComponent comp, ref GetStatusIconsEvent args)
     {
-        if (uid == _player.LocalEntity)// Юид это не мы
+        if (uid == _player.LocalEntity)// Never show an icon on ourselves
              return;
 
-        if (!TryComp<MedievalFactionMemberComponent>(_player.LocalEntity, out var playerFaction)) // а он вообще из фракции?
+        if (!TryComp<MedievalFactionMemberComponent>(_player.LocalEntity, out var playerFaction)) // Are we in a faction at all?
             return;
 
         if (comp.Faction != playerFaction.Faction)
         {
-            if (IsRelationEnemy(playerFaction.Faction, comp.Faction))// если он из вражеской фракции и если он бил нашу фраку
+            if (IsRelationEnemy(playerFaction.Faction, comp.Faction))// Enemy faction, and only once they have actually attacked ours
             {
                 if (!comp.AttackedFactions.Contains(playerFaction.Faction))
                     return;
