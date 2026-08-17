@@ -1080,7 +1080,8 @@
   craftTime: 10
   iconOverride: MedievalFalshionT3Silver
   stacks:
-    MedievalSilverIngot: 8
+    MedievalGold: 1
+    MedievalSilver: 7
     WoodPlank: 7
   result: WorkpieceMedievalFalshionT3Silver
 
@@ -1089,7 +1090,8 @@
   craftTime: 4
   iconOverride: MedievalDaggerT3Silver
   stacks:
-    MedievalSilverIngot: 3
+    MedievalGold: 1
+    MedievalSilver: 2
     WoodPlank: 1
   result: WorkpieceMedievalDaggerT3Silver
 
@@ -1098,7 +1100,8 @@
   craftTime: 11
   iconOverride: MedievalSpearT3Silver
   stacks:
-    MedievalSilverIngot: 14
+    MedievalGold: 1
+    MedievalSilver: 13
     WoodPlank: 8
   result: WorkpieceMedievalSpearT3Silver
 
@@ -1107,6 +1110,7 @@
   craftTime: 10
   iconOverride: MedievalSaberSilver
   stacks:
-    MedievalSilverIngot: 11
+    MedievalGold: 1
+    MedievalSilver: 10
     WoodPlank: 7
   result: WorkpieceMedievalSaberSilver

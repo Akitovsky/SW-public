@@ -1824,7 +1824,8 @@
   craftTime: 22
   iconOverride: MedievalIronClaymoreSilver
   stacks:
-    MedievalSilverIngot: 40
+    MedievalGold: 1
+    MedievalSilver: 39
     WoodPlank: 6
   result: WorkpieceMedievalIronClaymoreSilver
 

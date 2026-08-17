@@ -5726,6 +5726,11 @@
     sprite: Imperial/Medieval/Melee/silver_sword.rsi
   - type: Clothing
     sprite: Imperial/Medieval/Melee/silver_sword.rsi
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
 
 - type: entity
   name: dagger
@@ -5745,6 +5750,11 @@
     slots:
     - belt
     quickEquip: false
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
 
 - type: entity
   name: medieval spear
@@ -5756,16 +5766,11 @@
     sprite: Imperial/Medieval/Melee/silver_spear.rsi
     netsync: false
     state: spear
-  # - type: Item
-    # size: Huge
-    # sprite: Imperial/Medieval/Melee/silver_spear.rsi
-  # - type: Clothing
-    # sprite: Imperial/Medieval/Melee/silver_spear.rsi
-    # quickEquip: false
-    # slots:
-    # - back
-    # - suitStorage
-
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Piercing: 20
+    targetType: Werewolf
 
 - type: entity
   name: dagger
@@ -5787,6 +5792,11 @@
     - suitStorage
     - belt
     quickEquip: false
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
 
 - type: entity
   name: iron claymore
@@ -5805,3 +5815,9 @@
   - type: Sprite
     sprite: Imperial/Medieval/Melee/silver_claymor.rsi
     state: icon
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 25
+        Piercing: 5
+    targetType: Werewolf

@@ -1378,6 +1378,11 @@
     - FoodPlateTinCraft
     - FoodPlateMuffinTinCraft
     - FoodKebabSkewerCraft
+    - MedievalDaggerSilver
+    - MedievalFalshionSilver
+    - MedievalSpearSilver
+    - MedievalSaberSilver
+    - MedievalIronClaymoreSilver
 
 - type: entity
   parent: CP14BaseWorkbench
