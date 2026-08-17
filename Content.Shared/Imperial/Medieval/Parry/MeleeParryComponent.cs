@@ -27,6 +27,9 @@ namespace Content.Shared.MeleeParry.Components
 
         [DataField]
         public float ParryStaminaDamage = 20f;
+
+        [DataField]
+        public TimeSpan LastParryTime;
     }
 
     [RegisterComponent, NetworkedComponent]

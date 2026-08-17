@@ -987,6 +987,7 @@
     components:
     - type: WarningOnAttach
       message: medieval-warning-base
+    - type: MedievalTraveller
     - type: MedievalJobSpawn
       spawnType: Default
     - type: GiveItemObjective
@@ -1094,6 +1095,7 @@
       message: medieval-warning-base
     - type: MedievalJobSpawn
       spawnType: Default
+    - type: MedievalTraveller
     - type: GiveItemObjective
     - type: MoneyCollector
       objectivePrototype: MedievalGetMoneyObjective400800
@@ -1149,6 +1151,7 @@
       message: medieval-warning-base
     - type: MedievalJobSpawn
       spawnType: Default
+    - type: MedievalTraveller
     - type: GiveItemObjective
     - type: MoneyCollector
       objectivePrototype: MedievalGetMoneyObjective300500
@@ -2038,6 +2041,7 @@
       - MedievalActionDivineTouchBeginner
     - type: MedievalJobSpawn
       spawnType: Default
+    - type: MedievalTraveller
     - type: GiveItemObjective
     - type: MoneyCollector
       objectivePrototype: MedievalGetMoneyObjective300500
@@ -2248,6 +2252,7 @@
       spawnType: Default
     - type: MagicRuneKnowledge
     - type: GiveItemObjective
+    - type: MedievalTraveller
     - type: MoneyCollector
       objectivePrototype: MedievalGetMoneyObjective400800
   requirements:
@@ -5776,6 +5781,7 @@
   - MedievalBelt
   - MedievalTrinkets
   - MedievalRepair
+  - MedievalVillagerStash
 
 
 # MEDIEVAL Villager REGULAR Def

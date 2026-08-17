@@ -2653,9 +2653,11 @@
     - FootstepSound
     - MedievalMob
   - type: PointLight
-    color: red
-    energy: 0.6
-    radius: 1.5
+    netsync: false
+    enabled: false
+  - type: LocalLight
+    energy: 0.25
+    radius: 6
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -3628,10 +3630,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 7
-  - type: PointLight
-    color: red
-    energy: 0.03
-    radius: 1.5
   - type: NpcFactionMember
     factions:
     - Xeno
@@ -3673,6 +3671,14 @@
       #Growling: Speak
       Hissing: Speak
       #Elf: Speak
+  - type: PointLight
+    netsync: false
+    enabled: false
+  - type: LocalLight
+    energy: 0.25
+    radius: 6
+  - type: MedievalDash
+    force: 150
 
 
 - type: entity
