@@ -65,7 +65,7 @@ public sealed class TreasureSystem : EntitySystem
             var map = Spawn(board.MapPrototype);
             if (!TryComp<TreasureMapComponent>(map, out var mapComponent) || mapComponent.Marker == null)
             {
-                Del(map);
+                QueueDel(map);
                 delay = TimeSpan.FromSeconds(30);
                 continue;
             }
@@ -73,7 +73,7 @@ public sealed class TreasureSystem : EntitySystem
             if (!_storage.CanInsert(uid, map, out _, storageComp: storage) ||
                 !_storage.Insert(uid, map, out _, storageComp: storage))
             {
-                Del(map);
+                QueueDel(map);
                 delay = GetNextSpawnDelay(board);
                 continue;
             }
@@ -148,7 +148,7 @@ public sealed class TreasureSystem : EntitySystem
     private void OnTreasureMapTerminating(Entity<TreasureMapComponent> ent, ref EntityTerminatingEvent args)
     {
         if (ent.Comp.Marker is { } marker && !TerminatingOrDeleted(marker))
-            Del(marker);
+            QueueDel(marker);
     }
 
     private void OnMarkerTerminating(Entity<TreasureMarkerComponent> ent, ref EntityTerminatingEvent args)
@@ -249,7 +249,7 @@ public sealed class TreasureSystem : EntitySystem
         }
 
         Spawn("MedievalTreasureChest", coordinates);
-        Del(markerUid.Value);
+        QueueDel(markerUid.Value);
     }
 
     private bool TryGetNonEmptyTile(EntityCoordinates coordinates, out TileRef tile)
