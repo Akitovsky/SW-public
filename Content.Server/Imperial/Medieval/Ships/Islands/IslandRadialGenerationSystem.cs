@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Imperial.Medieval.Treasure;
 using Content.Shared.Imperial.Medieval.Ships.Islands;
 using Content.Shared.Light.Components;
 using Robust.Shared.ContentPack;
@@ -72,6 +73,7 @@ public sealed class IslandRadialGenerationSystem : EntitySystem
             if (_mapLoader.TryLoadGrid(mapId, placement.Path, out var island, offset: placement.Pos))
             {
                 EnsureComp<IslandComponent>(island.Value.Owner);
+                EnsureComp<TreasureIslandCandidateComponent>(island.Value.Owner);
                 RemComp<ImplicitRoofComponent>(island.Value.Owner);
             }
         }

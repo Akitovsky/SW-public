@@ -1376,6 +1376,7 @@
     resourceCount: 1
   - type: Item
     size: Large
+  - type: TreasureDigger
 
 - type: entity
   name: falshion
