@@ -23,7 +23,7 @@
   - type: Sharp
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.5
+    attackRate: 0.8
     range: 2.15
     damage:
       types:
@@ -246,7 +246,7 @@
     parryChanse: 0.45
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     clickDamageModifier: 1.28
     range: 2.4
     damage:
@@ -1739,7 +1739,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
@@ -1835,7 +1835,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.25
     damage:
       types:
@@ -3379,7 +3379,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.6
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
