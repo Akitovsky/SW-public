@@ -25,9 +25,9 @@ public sealed partial class PraiseWindow : DefaultWindow
         };
     }
 
-    public void UpdateState(PraiseWindowBoundUserInterfaceState state)
+    public void Update(PraiseWindowMessage msg)
     {
-        MessageLabel.Text = state.Message;
-        SendButton.Disabled = state.SendButtonDisabled;
+        MessageLabel.Text = msg.Message;
+        SendButton.Disabled = msg.SendButtonDisabled;
     }
 }

@@ -238,8 +238,6 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
-      enum.PraiseWindowUiKey.Key:
-        type: PraiseWindowBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto

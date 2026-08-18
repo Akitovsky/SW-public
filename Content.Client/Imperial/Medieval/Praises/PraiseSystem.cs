@@ -5,14 +5,30 @@ namespace Content.Client.Imperial.Medieval.Praises;
 
 public sealed class PraiseSystem : EntitySystem
 {
+    private PraiseWindow? _praiseWindow;
     private PraiseViewWindow? _viewWindow;
     private PraiseRatingWindow? _ratingWindow;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeNetworkEvent<PraiseWindowMessage>(OnPraiseWindowMessage);
         SubscribeNetworkEvent<PraiseViewMessage>(OnPraiseViewMessage);
         SubscribeNetworkEvent<PraiseRatingMessage>(OnPraiseRatingMessage);
+    }
+
+    private void OnPraiseWindowMessage(PraiseWindowMessage ev)
+    {
+        if (ev.Open && _praiseWindow != null)
+        {
+            _praiseWindow.Dispose();
+            _praiseWindow = null;
+        }
+
+        _praiseWindow = new();
+        _praiseWindow.OnSendButtonPressed += reason => RaiseNetworkEvent(new PraiseWindowPraiseMessage { Reason = reason });
+        _praiseWindow.Update(ev);
+        _praiseWindow.OpenCentered();
     }
 
     private void OnPraiseViewMessage(PraiseViewMessage ev)

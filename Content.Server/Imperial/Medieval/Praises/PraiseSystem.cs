@@ -29,6 +29,7 @@ public sealed class PraiseSystem : EntitySystem
     private Dictionary<NetUserId, List<Praise>> _praises = new(); //recent praises sent to each player before the current round (to check if he was praised recently)
     private Dictionary<NetUserId, List<Praise>> _newPraises = new(); //praises sent to each player during this round (to be written later)
     private Dictionary<NetUserId, int> _praiseRating = new(); //total praise weight of each player
+    private Dictionary<NetUserId, ICommonSession> _lastPraiseTarget = new(); //used by praise window
     private Dictionary<NetUserId, DateTime> _lastPraiseViewDataRequests = new(); //time of the last praise view data request made by this player (to prevent spam)
 
     private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(10); //to prevent spam
@@ -44,7 +45,7 @@ public sealed class PraiseSystem : EntitySystem
 
         SubscribeLocalEvent<PraiseComponent, PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<PraiseComponent, PraiseWindowMessage>(OnPraiseSent);
+        SubscribeNetworkEvent<PraiseWindowPraiseMessage>(OnPraiseSent);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<PraiseRatingOpenedMessage>(OnPraiseRatingOpened);
         SubscribeNetworkEvent<PraiseViewOpenedMessage>(OnPraiseViewOpened);
@@ -99,7 +100,7 @@ public sealed class PraiseSystem : EntitySystem
         return !(noPraises || praisedRecently);
     }
 
-    private PraiseWindowBoundUserInterfaceState GenerateState(ICommonSession user, ICommonSession target)
+    private PraiseWindowMessage GenerateMessage(bool open, ICommonSession user, ICommonSession target)
     {
         bool canPraise = CanPraise(user, target, out bool noPraises, out bool praisedRecently);
 
@@ -109,7 +110,7 @@ public sealed class PraiseSystem : EntitySystem
         if (praisedRecently)
             msg = Loc.GetString("praises-window-praisedrecently");
 
-        return new(msg, !canPraise);
+        return new PraiseWindowMessage { Open = open, Message = msg, SendButtonDisabled = !canPraise };
     }
 
     private void OnGetVerbs(EntityUid uid, PraiseComponent praise, ref GetVerbsEvent<ExamineVerb> args)
@@ -122,15 +123,12 @@ public sealed class PraiseSystem : EntitySystem
         {
             Act = () =>
             {
-                if (!_uiSys.TryOpenUi(userUid, PraiseWindowUiKey.Key, userUid)) //bounding UI to user so multiple players can praise the same guy simultaneously
-                    return;
-
                 if (!_playerMan.TryGetSessionByEntity(uid, out var target) ||
                     !_playerMan.TryGetSessionByEntity(userUid, out var user))
                     return;
 
-                praiseUser.LastTarget = target;
-                _uiSys.SetUiState(userUid, PraiseWindowUiKey.Key, GenerateState(user, target));
+                _lastPraiseTarget[user.UserId] = target;
+                RaiseNetworkEvent(GenerateMessage(true, user, target), user);
             },
             CloseMenu = true,
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Imperial/Medieval/date.rsi"), "date"),
@@ -138,13 +136,13 @@ public sealed class PraiseSystem : EntitySystem
         });
     }
 
-    private void OnPraiseSent(EntityUid uid, PraiseComponent praise, ref PraiseWindowMessage ev)
+    private void OnPraiseSent(PraiseWindowPraiseMessage msg, EntitySessionEventArgs args)
     {
-        ICommonSession? target = praise.LastTarget;
+        ICommonSession user = args.SenderSession;
 
-        if (ev.Reason.Length > MaxPraiseReasonLength ||
-            target == null ||
-            !_playerMan.TryGetSessionByEntity(ev.Actor, out var user))
+        if (msg.Reason.Length > MaxPraiseReasonLength ||
+            !_lastPraiseTarget.TryGetValue(user.UserId, out var target) ||
+            !TryComp<PraiseComponent>(user.AttachedEntity, out var praise))
             return;
 
         if (CanPraise(user, target, out _, out _))
@@ -156,12 +154,12 @@ public sealed class PraiseSystem : EntitySystem
                 GivenBy = user.UserId,
                 Date = DateTime.Now,
                 GivenByName = user.Name,
-                Reason = ev.Reason,
+                Reason = msg.Reason,
                 Weight = praise.Weight
             });
         }
 
-        _uiSys.SetUiState(ev.Actor, PraiseWindowUiKey.Key, GenerateState(user, target));
+        RaiseNetworkEvent(GenerateMessage(false, user, target), user);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
