@@ -104,6 +104,7 @@ examine-anchor-waves-will-not-disable = [color=orange]Якорь опущен, �
 
 examine-carthographer-table-show-speed = Текущая скорость корабля:
 examine-carthographer-table-show-rotation = Текущий поворот корабля:
+medieval-cartographer-table-coordinates = X {$x}, Y {$y}
 
 # Главное меню
 Megaphone-menu-nav-combat = Бой
