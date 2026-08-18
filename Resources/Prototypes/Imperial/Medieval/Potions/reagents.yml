@@ -545,7 +545,7 @@
   physicalDesc: ""
   showinbook: false
   evaporationSpeed: 0.3
-  absorbent: true 
+  absorbent: true
   flavor: null
   color: "#63806e"
   metabolisms:

@@ -371,7 +371,7 @@
     solution:
       reagents:
       - ReagentId: MedievalMyrmexPoison
-        Quantity: 30
+        Quantity: 15
   - type: SpawnOnDespawn
     prototype: MedievalMyrmexTrapEmpty
   - type: Sprite
@@ -677,7 +677,7 @@
     rechargeSound:
       path: /Audio/Imperial/Medieval/ant_acidrecharge.ogg
   - type: BasicEntityAmmoProvider
-    proto: BulletAcid
+    proto: MedievalMyrmexBulletAcid
     capacity: 1
     count: 1
   - type: MeleeWeapon
