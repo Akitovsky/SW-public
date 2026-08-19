@@ -315,7 +315,7 @@
         damage:
           types:
             Heat: 1
-            Poison: 3.5
+            Poison: 2
 
 - type: entity
   id: MedievalMyrmexTrapBase
@@ -367,7 +367,7 @@
     lastVisibility: 0.33
   - type: SmokeOnTrigger
     duration: 25 # Я ЕБНУТЫЙ, БЕГИТЕ
-    spreadAmount: 30
+    spreadAmount: 15
     solution:
       reagents:
       - ReagentId: MedievalMyrmexPoison
@@ -690,8 +690,7 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 5
-        Airloss: 2
+        Brute: 7
       types:
         ParryAble: 1
   - type: Gun
@@ -760,11 +759,9 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 14
-        Airloss: 3
+        Brute: 21
       types:
         ParryAble: 1
-        Bloodloss: 4
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -824,11 +821,9 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 10
-        Airloss: 2
+        Brute: 14
       types:
         ParryAble: 1
-        Bloodloss: 2
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -976,11 +971,11 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 20
-        Airloss: 3
+        Brute: 25
+        Airloss: 1
       types:
         ParryAble: 1
-        Bloodloss: 5
+        Bloodloss: 2
         Structural: 155
   - type: MobThresholds
     thresholds:
@@ -1164,8 +1159,8 @@
 - type: damageModifierSet
   id: MyrmexArmorOn
   coefficients:
-    Blunt: 0.35
-    Slash: 0.35
-    Piercing: 0.35
-    Heat: 0.35
+    Blunt: 0.60
+    Slash: 0.60
+    Piercing: 0.60
+    Heat: 0.60
 
