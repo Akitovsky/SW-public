@@ -4,5 +4,6 @@ namespace Content.Server.Imperial.Medieval.Praises;
 [RegisterComponent]
 public sealed partial class PraiseComponent : Component
 {
-    public int Weight;
+    [DataField]
+    public int Weight = 1;
 }
