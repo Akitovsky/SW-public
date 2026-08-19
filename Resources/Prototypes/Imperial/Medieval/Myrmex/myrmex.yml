@@ -677,7 +677,7 @@
     rechargeSound:
       path: /Audio/Imperial/Medieval/ant_acidrecharge.ogg
   - type: BasicEntityAmmoProvider
-    proto: BulletAcid
+    proto: MedievalMyrmexSpitterBulletAcid
     capacity: 1
     count: 1
   - type: MeleeWeapon
@@ -736,6 +736,17 @@
     passiveVisibilityRate: -0.3
     movementVisibilityRate: 0.7
   - type: MedievalUnthrowable
+
+- type: entity
+  id: MedievalMyrmexSpitterBulletAcid
+  parent: BulletAcid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Caustic: 2.0
+        Blunt: 3.0
 
 - type: entity
   name: myrmalisk
