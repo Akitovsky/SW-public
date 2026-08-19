@@ -103,10 +103,12 @@
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:
         groups:
-          Brute: 48
+          Brute: 80
+          Airloss: 10
         types:
           Structural: 600
           ParryAble: 0.25
+          Bloodloss: 10
       range: 2.5
       attackRate: 0.5
     - type: StaminaDamageOnHit
