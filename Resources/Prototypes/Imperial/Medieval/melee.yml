@@ -419,7 +419,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.2
+    attackRate: 0.8
     damage:
       types:
         Blunt: 7.5
@@ -1927,7 +1927,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -1994,7 +1994,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -3480,7 +3480,7 @@
     cPAnimationOffset: 1
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     damage:
       types:
         Blunt: 7.5
