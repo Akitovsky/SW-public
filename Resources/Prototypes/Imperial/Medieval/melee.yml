@@ -99,8 +99,8 @@
     range: 1
     damage:
       types:
-        Slash: 9
-        Caustic: 3
+        Slash: 11
+        Caustic: 1
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -156,8 +156,8 @@
     range: 1.15
     damage:
       types:
-        Slash: 16
-        Caustic: 3
+        Slash: 17.5
+        Caustic: 1.5
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -251,8 +251,8 @@
     range: 2.4
     damage:
       types:
-        Piercing: 15
-        Caustic: 4
+        Piercing: 17
+        Caustic: 2
         ParryAble: 1
     angle: 0
     animation: CP14WeaponArcThrust
@@ -422,9 +422,9 @@
     attackRate: 0.8
     damage:
       types:
-        Blunt: 7.5
-        Piercing: 6
-        Caustic: 3.5
+        Blunt: 8.5
+        Piercing: 7
+        Caustic: 1.5
         ParryAble: 1
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -4033,8 +4033,8 @@
     range: 1
     damage:
       types:
-        Slash: 6
-        Poison: 3
+        Slash: 8.5
+        Poison: 0.5
         ParryAble: 1
     soundHit:
       path: /Audio/Imperial/Medieval/ES_Knife_Stab_2_-_SFX_Producer.ogg
