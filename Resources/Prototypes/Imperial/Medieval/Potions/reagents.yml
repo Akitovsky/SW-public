@@ -1708,20 +1708,6 @@
   absorbent: true
   flavor: null
   color: "#FFC8C8"
-  reactiveEffects:
-    Acidic:
-      methods: [ Touch ]
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        ignoreResistances: false
-        damage:
-          types:
-            Caustic: 5
-            Radiation: 5
-      - !type:Emote
-        emote: Scream
-        probability: 0.3
   metabolisms:
     Poison:
       effects:

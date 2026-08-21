@@ -367,7 +367,7 @@
     lastVisibility: 0.33
   - type: SmokeOnTrigger
     duration: 25 # Я ЕБНУТЫЙ, БЕГИТЕ
-    spreadAmount: 15
+    spreadAmount: 30
     solution:
       reagents:
       - ReagentId: MedievalMyrmexPoison
@@ -677,7 +677,7 @@
     rechargeSound:
       path: /Audio/Imperial/Medieval/ant_acidrecharge.ogg
   - type: BasicEntityAmmoProvider
-    proto: MedievalMyrmexBulletAcid
+    proto: BulletAcid
     capacity: 1
     count: 1
   - type: MeleeWeapon
@@ -704,7 +704,7 @@
     thresholds:
       0: Alive
       100: Critical
-      120: Dead
+      170: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.4
     baseSprintSpeed: 2.2
@@ -759,14 +759,14 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 30
+        Brute: 22
       types:
         ParryAble: 1
   - type: MobThresholds
     thresholds:
       0: Alive
-      510: Critical # curse of 220. no. 310. no. 510.
-      650: Dead
+      310: Critical # curse of 220. no. 310.
+      450: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 1.8
@@ -821,15 +821,14 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 35
-        Airloss: 1
+        Brute: 14
       types:
         ParryAble: 1
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Critical
-      240: Dead
+      155: Critical
+      270: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 4.2
     baseSprintSpeed: 2.7
@@ -972,7 +971,7 @@
       collection: MyrmexAttack
     damage:
       groups:
-        Brute: 35
+        Brute: 28
         Airloss: 1
       types:
         ParryAble: 1
@@ -981,8 +980,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      900: Critical
-      1100: Dead
+      750: Critical
+      900: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 2.2
