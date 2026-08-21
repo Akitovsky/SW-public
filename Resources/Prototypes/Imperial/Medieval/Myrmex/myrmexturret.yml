@@ -55,7 +55,7 @@
     - type: Projectile
       damage:
         types:
-          Caustic: 4
+          Caustic: 10
     - type: Sprite
       sprite: /Textures/Imperial/Medieval/Myrmex/Structures/Turret/myrmex_acid.rsi
       layers:
