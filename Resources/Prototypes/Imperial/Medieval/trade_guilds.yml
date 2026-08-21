@@ -498,6 +498,31 @@
     reputationForBuying: 2.7
     minReputationPlace: 1
     minReputation: 10
+  - productEntity: MedievalDaggerT3Silver
+    cost: 75
+    reputationForBuying: 2.5
+    minReputationPlace: 1
+    minReputation: 10
+  - productEntity: MedievalSpearT3Silver
+    cost: 270
+    reputationForBuying: 9
+    minReputationPlace: 1
+    minReputation: 10
+  - productEntity: MedievalFalshionT3Silver
+    cost: 145
+    reputationForBuying: 5
+    minReputationPlace: 1
+    minReputation: 10
+  - productEntity: MedievalIronClaymoreSilver
+    cost: 330
+    reputationForBuying: 5
+    minReputationPlace: 1
+    minReputation: 10
+  - productEntity: MedievalSaberSilver
+    cost: 180
+    reputationForBuying: 5.3
+    minReputationPlace: 1
+    minReputation: 10
   - productEntity: MedievalDaggerT3Steel
     cost: 75
     reputationForBuying: 2.5

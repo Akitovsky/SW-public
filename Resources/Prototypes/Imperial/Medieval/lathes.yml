@@ -1039,6 +1039,8 @@
     - MedievalSteelIngot10
     - MedievalGoldOre
     - MedievalGoldOre10
+    - MedievalSilverOre
+    - MedievalSilverOre10
     - MedievalStoneBrick
     - EbonitMedieval
     - EbonitMedieval10
@@ -1377,6 +1379,11 @@
     - FoodPlateTinCraft
     - FoodPlateMuffinTinCraft
     - FoodKebabSkewerCraft
+    - MedievalDaggerSilver
+    - MedievalFalshionSilver
+    - MedievalSpearSilver
+    - MedievalSaberSilver
+    - MedievalIronClaymoreSilver
 
 - type: entity
   parent: CP14BaseWorkbench

@@ -1643,3 +1643,115 @@
   - type: Stack
     stackType: MedievalGrass
     count: 1
+
+- type: entity
+  name: MedievalIngotSilver
+  parent: BaseItem
+  id: MedievalIngotSilver
+  description: MedievalIngotSilver
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Imperial/Medieval/Materials/ingots.rsi
+    state: silver
+  - type: Tag
+    tags:
+    - RawMaterial
+    - Sheet
+    - Ingot
+    - ConstructionMaterial
+    #- Ore
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      MedievalGold: 100
+  - type: Stack
+    stackType: MedievalSilver
+    count: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 6
+  - type: Currency
+    price:
+      Revent: 30
+  - type: MedievalCurrency
+    price:
+      Revent: 30
+
+- type: entity
+  name: MedievalIngotSilver10
+  parent: MedievalIngotSilver
+  id: MedievalIngotSilver10
+  description: MedievalIngotSilver
+  components:
+  - type: Stack
+    stackType: MedievalSilver
+    count: 10
+
+- type: material
+  id: MedievalSilver
+  stackEntity: MedievalIngotSilver
+  name: materials-silver
+  unit: materials-unit-bar
+  icon: { sprite: Imperial/Medieval/Materials/ingots.rsi, state: silver }
+  color: "#d9d9d9"
+  price: 0.1
+
+- type: stack
+  id: MedievalSilver
+  name: materials-silver
+  icon: { sprite: Imperial/Medieval/Materials/ingots.rsi, state: silver }
+  spawn: MedievalIngotSilver
+  maxCount: 30
+
+- type: entity
+  name: MedievalSilverOre
+  parent: BaseItem
+  id: MedievalSilverOre
+  description: furry :)
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Imperial/Medieval/Materials/mdv.rsi
+    state: silver
+  - type: Tag
+    tags:
+    - RawMaterial
+    - Sheet
+    - MedievalSilverOre
+    - Ore
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      MedievalGoldOre: 100
+  - type: Stack
+    stackType: MedievalSilverOre
+    count: 1
+  - type: Currency
+    price:
+      Revent: 7
+  - type: MedievalCurrency
+    price:
+      Revent: 7
+
+- type: ore
+  id: OreSilverMedieval
+  oreEntity: MedievalSilverOre
+  minOreYield: 1
+  maxOreYield: 2
+
+- type: material
+  id: MedievalSilverOre
+  stackEntity: MedievalSilverOre
+  name: materials-silver-ore
+  icon: { sprite: Imperial/Medieval/Materials/mdv.rsi, state: silver }
+  color: "#d9d9d9"
+  price: 0.1
+
+- type: stack
+  id: MedievalSilverOre
+  name: materials-silver-ore
+  icon: { sprite: Imperial/Medieval/Materials/mdv.rsi, state: silver }
+  spawn: MedievalSilverOre
+  maxCount: 30
