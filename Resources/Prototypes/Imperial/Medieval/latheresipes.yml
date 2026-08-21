@@ -1648,6 +1648,15 @@
   result: MedievalHammerBlacksmith
 
 - type: CP14Recipe
+  id: MedievalBoardingHook
+  craftTime: 3
+  iconOverride: MedievalBoardingHook
+  stacks:
+    MedievalRope: 2
+    MedievalIronIngot: 2
+  result: MedievalBoardingHook
+
+- type: CP14Recipe
   id: MedievalSewingNeedle
   craftTime: 5
   iconOverride: MedievalSewingNeedle
