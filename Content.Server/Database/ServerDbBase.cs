@@ -610,6 +610,12 @@ namespace Content.Server.Database
             return paintings;
         }
 
+        public async Task<bool> HasPendingPainting(Guid authorUserId, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.Paintings.AnyAsync(p => p.AuthorUserId == authorUserId && !p.Accepted, cancel);
+        }
+
         public async Task AddPainting(Color[] texture,
             string name,
             string description,
@@ -737,6 +743,12 @@ namespace Content.Server.Database
                 .ToListAsync(cancel);
 
             return books;
+        }
+
+        public async Task<bool> HasPendingBook(Guid authorUserId, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.Books.AnyAsync(b => b.AuthorUserId == authorUserId && !b.Accepted, cancel);
         }
 
         public async Task AddBook(string text,
