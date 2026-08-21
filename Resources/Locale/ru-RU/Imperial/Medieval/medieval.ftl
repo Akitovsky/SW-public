@@ -6875,3 +6875,5 @@ ent-MedievalVillagerPresetTailor = сверток вещей портного
 ent-MedievalVillagerPresetWoodCutter = сверток вещей лесоруба
     .desc = Полезные вещи, обернутые бумагой
     .suffix = { "Средневековье" }
+job-name-legionTreasurerAssistant-medieval = Помощник казначея
+job-description-legionTreasurerAssistant-medieval = Помогайте казначею вести дела. Учитесь и перенимайте его знания.
