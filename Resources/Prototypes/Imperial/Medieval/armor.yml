@@ -3098,8 +3098,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.5
   - type: ClothingSpeedModifier
-    walkModifier: 0.93
-    sprintModifier: 0.93
+    walkModifier: 0.98
+    sprintModifier: 0.98
   - type: Item
     size: Normal
   - type: ExplosionResistance

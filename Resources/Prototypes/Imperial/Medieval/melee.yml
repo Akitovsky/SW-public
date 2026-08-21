@@ -23,7 +23,7 @@
   - type: Sharp
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.5
+    attackRate: 0.8
     range: 2.15
     damage:
       types:
@@ -99,8 +99,8 @@
     range: 1
     damage:
       types:
-        Slash: 9
-        Caustic: 3
+        Slash: 11
+        Caustic: 1
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -156,8 +156,8 @@
     range: 1.15
     damage:
       types:
-        Slash: 16
-        Caustic: 3
+        Slash: 17.5
+        Caustic: 1.5
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -246,13 +246,13 @@
     parryChanse: 0.45
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     clickDamageModifier: 1.28
     range: 2.4
     damage:
       types:
-        Piercing: 15
-        Caustic: 4
+        Piercing: 17
+        Caustic: 2
         ParryAble: 1
     angle: 0
     animation: CP14WeaponArcThrust
@@ -419,12 +419,12 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.2
+    attackRate: 0.8
     damage:
       types:
-        Blunt: 7.5
-        Piercing: 6
-        Caustic: 3.5
+        Blunt: 8.5
+        Piercing: 7
+        Caustic: 1.5
         ParryAble: 1
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -1739,7 +1739,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
@@ -1835,7 +1835,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.25
     damage:
       types:
@@ -1927,7 +1927,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -1994,7 +1994,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -3379,7 +3379,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.6
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
@@ -3480,7 +3480,7 @@
     cPAnimationOffset: 1
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     damage:
       types:
         Blunt: 7.5
@@ -4033,8 +4033,8 @@
     range: 1
     damage:
       types:
-        Slash: 6
-        Poison: 3
+        Slash: 8.5
+        Poison: 0.5
         ParryAble: 1
     soundHit:
       path: /Audio/Imperial/Medieval/ES_Knife_Stab_2_-_SFX_Producer.ogg
