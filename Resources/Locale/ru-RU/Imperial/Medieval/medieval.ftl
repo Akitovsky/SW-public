@@ -6919,3 +6919,5 @@ ent-WorkpieceMedievalFalshionT3Silver = заготовка серебряног�
     .suffix = { "Средневековье, кузница" }
 materials-silver-ore = серебряная руда
 materials-silver = серебро
+job-name-legionTreasurerAssistant-medieval = Помощник казначея
+job-description-legionTreasurerAssistant-medieval = Помогайте казначею вести дела. Учитесь и перенимайте его знания.

@@ -63,14 +63,20 @@ public abstract partial class SharedMedievalMagicSystem : EntitySystem
 
         _speedModifierSystem.RefreshMovementSpeedModifiers(uid);
 
-        if (_handsSystem.TryGetEmptyHand(args.User, out _) == false)
+        if (args.Cancelled)
         {
-            _popupSystem.PopupClient(Loc.GetString("medieval-magic-free-hand-required"), args.User);
+            RaiseLocalEvent(GetEntity(spellData.Action), new MedievalFailCastSpellEvent()
+            {
+                Action = GetEntity(spellData.Action),
+                Performer = uid
+            });
+
             return;
         }
 
-        if (args.Cancelled)
+        if (_handsSystem.TryGetEmptyHand(args.User, out _) == false)
         {
+            _popupSystem.PopupClient(Loc.GetString("medieval-magic-free-hand-required"), args.User);
             RaiseLocalEvent(GetEntity(spellData.Action), new MedievalFailCastSpellEvent()
             {
                 Action = GetEntity(spellData.Action),
@@ -103,13 +109,17 @@ public abstract partial class SharedMedievalMagicSystem : EntitySystem
 
     #region Helpers
 
-    protected bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer, EntityCoordinates target)
+    protected bool PassesSpellPrerequisites(
+        EntityUid spell,
+        EntityUid performer,
+        EntityCoordinates target
+    )
     {
+        if (_handsSystem.TryGetEmptyHand(performer, out _) == false)
+            return false;
+
         var ev = new MedievalBeforeCastSpellEvent(performer, target);
         RaiseLocalEvent(spell, ref ev);
-
-        if (_handsSystem.TryGetEmptyHand(performer, out _) == false) // TODO: Если в игре появятся магические катализаторы (посохи, палочки), что дают баффы при сотворении чар, то нужно будет добавить их в исключение
-            return false;
 
         return !ev.Cancelled;
     }
