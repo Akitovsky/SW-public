@@ -27,6 +27,7 @@ public sealed class PraiseViewMessage : EntityEventArgs
     public NetUserId Target;
     public List<PraiseViewRecord> Records = default!;
     public bool Admin;
+    public bool Spam;
 }
 
 [Serializable, NetSerializable]

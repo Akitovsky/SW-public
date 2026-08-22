@@ -8,14 +8,14 @@ public sealed class ViewPraiseRatingCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
 
-    public string Command => "viewpraise_rating";
+    public string Command => "praises_rating";
 
     public string Description => "";
 
-    public string Help => "viewpraise_rating";
+    public string Help => "";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _entMan.EntitySysManager.GetEntitySystem<PraiseSystem>().ToggleRating();
+        _entMan.EntitySysManager.GetEntitySystem<PraiseSystem>().OpenRating();
     }
 }

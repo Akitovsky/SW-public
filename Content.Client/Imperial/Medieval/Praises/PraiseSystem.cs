@@ -34,9 +34,12 @@ public sealed class PraiseSystem : EntitySystem
     private void OnPraiseViewMessage(PraiseViewMessage ev)
     {
         if (_viewWindow != null)
-            return;
+        {
+            _viewWindow.Dispose();
+            _viewWindow = null;
+        }
 
-        _viewWindow = new(ev.Records, ev.Admin);
+        _viewWindow = new(ev.Records, ev.Admin, ev.Spam);
         _viewWindow.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
         _viewWindow.OnDeleteButtonPressed += record => RaiseNetworkEvent(new PraiseViewDeleteMessage { Target = ev.Target, Record = record });
         _viewWindow.OpenCentered();
@@ -45,31 +48,27 @@ public sealed class PraiseSystem : EntitySystem
     private void OnPraiseRatingMessage(PraiseRatingMessage ev)
     {
         if (_ratingWindow != null)
-            return;
-
-        _ratingWindow = new(ev.Rating);
-        _ratingWindow.OpenCentered();
-    }
-
-    public void ToggleView(NetUserId target)
-    {
-        if (_viewWindow != null)
-        {
-            _viewWindow.Dispose();
-            _viewWindow = null;
-        }
-
-        RaiseNetworkEvent(new PraiseViewOpenedMessage { Target = target });
-    }
-
-    public void ToggleRating()
-    {
-        if (_ratingWindow != null)
         {
             _ratingWindow.Dispose();
             _ratingWindow = null;
         }
 
+        _ratingWindow = new(ev.Rating);
+        _ratingWindow.OpenCentered();
+    }
+
+    public void OpenView(NetUserId target)
+    {
+        RaiseNetworkEvent(new PraiseViewOpenedMessage { Target = target });
+    }
+
+    public void OpenRating()
+    {
         RaiseNetworkEvent(new PraiseRatingOpenedMessage());
+    }
+
+    public void SendPraise(NetUserId target, string reason, int weight)
+    {
+        RaiseNetworkEvent(new AddPraiseMessage() { Target = target, Reason = reason, Weight = weight });
     }
 }

@@ -15,9 +15,24 @@ public sealed partial class PraiseViewWindow : DefaultWindow
     public Action<PraiseViewRecord>? OnEditWeightButtonPressed;
     public Action<PraiseViewRecord>? OnDeleteButtonPressed;
 
-    public PraiseViewWindow(IEnumerable<PraiseViewRecord> praises, bool admin)
+    public PraiseViewWindow(List<PraiseViewRecord> praises, bool admin, bool spam)
     {
         RobustXamlLoader.Load(this);
+
+        if (spam)
+        {
+            RichTextLabel spamWarnLabel = new RichTextLabel
+            {
+                HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
+            };
+            spamWarnLabel.SetMarkup(Loc.GetString("praises-view-spam"));
+            MainContainer.AddChild(spamWarnLabel);
+        }
+
+        if (praises.Count == 0)
+            return;
 
         LineEdit? weightEdit = null;
         if (admin)
