@@ -74,9 +74,9 @@ public sealed class MedievalArrowsMinigameOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_eyeManager.MainViewport.Window == null) return;
-
         var window = _eyeManager.MainViewport.Window;
+        if (window == null) return;
+
         var screen = args.ScreenHandle;
         var scale = _configurationManager.GetCVar(CVars.DisplayUIScale);
         scale = scale == 0 ? 1 : scale;
