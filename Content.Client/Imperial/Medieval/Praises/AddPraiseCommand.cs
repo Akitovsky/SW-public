@@ -5,22 +5,22 @@ using Robust.Shared.Console;
 namespace Content.Client.Imperial.Medieval.Praises;
 
 [AnyCommand] //should be an admin command but server will check if user is an admin anyway so it's easier to implement it on the client
-public sealed class ViewPraisesCommand : IConsoleCommand
+public sealed class AddPraiseCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
 
-    public string Command => "praises_view";
+    public string Command => "praises_add";
 
     public string Description => "";
 
-    public string Help => "praises_view USERNAME";
+    public string Help => "praises_add USERNAME WEIGHT / REASON ... Reason may include multiple words but must be separated by '/' from the rest of the command.";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 1)
+        if (args.Length < 3)
         {
-            shell.WriteError("Command requires a single argument (target's username).");
+            shell.WriteError("Command must have atleast three arguments.");
             return;
         }
 
@@ -30,6 +30,14 @@ public sealed class ViewPraisesCommand : IConsoleCommand
             return;
         }
 
-        _entMan.EntitySysManager.GetEntitySystem<PraiseSystem>().OpenView(data.UserId);
+        if (!int.TryParse(args[1], out var weight))
+        {
+            shell.WriteError("Weight must be an integer.");
+            return;
+        }
+
+        string reason = argStr.Split('/')[1].Trim();
+        _entMan.EntitySysManager.GetEntitySystem<PraiseSystem>().SendPraise(data.UserId, reason, weight);
+        shell.WriteLine("Praise added.");
     }
 }

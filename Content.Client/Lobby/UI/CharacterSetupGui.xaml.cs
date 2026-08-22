@@ -74,7 +74,7 @@ namespace Content.Client.Lobby.UI
             AchievementsButton.OnPressed += _ => achievementController.ToggleMenu();
 
             var praiseSys = _entManager.EntitySysManager.GetEntitySystem<PraiseSystem>();
-            PraisesButton.OnPressed += _ => { if (_playerMan.LocalSession != null) praiseSys.ToggleView(_playerMan.LocalSession.UserId); };
+            PraisesButton.OnPressed += _ => { if (_playerMan.LocalSession != null) praiseSys.OpenView(_playerMan.LocalSession.UserId); };
 
             _cfg.OnValueChanged(CCVars.SeeOwnNotes, p => AdminRemarksButton.Visible = p, true);
         }

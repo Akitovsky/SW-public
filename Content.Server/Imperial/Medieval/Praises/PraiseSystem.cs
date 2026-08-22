@@ -32,7 +32,7 @@ public sealed class PraiseSystem : EntitySystem
     private Dictionary<NetUserId, ICommonSession> _lastPraiseTarget = new(); //used by praise window
     private Dictionary<NetUserId, DateTime> _lastPraiseViewDataRequests = new(); //time of the last praise view data request made by this player (to prevent spam)
 
-    private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(10); //to prevent spam
+    private readonly TimeSpan _praiseViewDataRequestCooldown = TimeSpan.FromSeconds(5); //to prevent spam
 
     //don't forget to change it in 'PraiseWindow' and 'Praise' class too
     //(I didn't want to create a separate static class for storing a single constant and putting it anywhere else would be strange)
@@ -45,8 +45,10 @@ public sealed class PraiseSystem : EntitySystem
 
         SubscribeLocalEvent<PraiseComponent, PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<PraiseComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
-        SubscribeNetworkEvent<PraiseWindowPraiseMessage>(OnPraiseSent);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+
+        SubscribeNetworkEvent<AddPraiseMessage>(OnAddPraise);
+        SubscribeNetworkEvent<PraiseWindowPraiseMessage>(OnPraiseWindowSend);
         SubscribeNetworkEvent<PraiseRatingOpenedMessage>(OnPraiseRatingOpened);
         SubscribeNetworkEvent<PraiseViewOpenedMessage>(OnPraiseViewOpened);
         SubscribeNetworkEvent<PraiseViewDeleteMessage>(OnPraiseViewDelete);
@@ -75,6 +77,12 @@ public sealed class PraiseSystem : EntitySystem
 
     private bool CanPraise(ICommonSession user, ICommonSession target, out bool noPraises, out bool praisedRecently)
     {
+        if (_adminMan.IsAdmin(user))
+        {
+            noPraises = praisedRecently = false;
+            return true;
+        }
+
         if (!_remainingPraises.ContainsKey(user.UserId))
             _remainingPraises[user.UserId] = _cfgMan.GetCVar(ICCVars.PraisesPerRound);
 
@@ -136,7 +144,28 @@ public sealed class PraiseSystem : EntitySystem
         });
     }
 
-    private void OnPraiseSent(PraiseWindowPraiseMessage msg, EntitySessionEventArgs args)
+    private void OnAddPraise(AddPraiseMessage ev, EntitySessionEventArgs args)
+    {
+        ICommonSession user = args.SenderSession;
+
+        if (!_adminMan.IsAdmin(user))
+            return;
+
+        if (!_newPraises.ContainsKey(ev.Target))
+            _newPraises[ev.Target] = new();
+
+        _newPraises[ev.Target].Add(new Praise
+        {
+            GivenTo = ev.Target,
+            GivenBy = user.UserId,
+            Date = DateTime.Now,
+            GivenByName = user.Name,
+            Reason = ev.Reason,
+            Weight = ev.Weight
+        });
+    }
+
+    private void OnPraiseWindowSend(PraiseWindowPraiseMessage msg, EntitySessionEventArgs args)
     {
         ICommonSession user = args.SenderSession;
 
@@ -207,8 +236,11 @@ public sealed class PraiseSystem : EntitySystem
         if (!_newPraises.ContainsKey(msg.Target))
             _newPraises[msg.Target] = new();
 
-        if (_lastPraiseViewDataRequests[id] > DateTime.Now - _praiseViewDataRequestCooldown)
+        if (!isAdmin && _lastPraiseViewDataRequests[id] > DateTime.Now - _praiseViewDataRequestCooldown)
+        {
+            RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = new(), Admin = false, Spam = true });
             return;
+        }
 
         _lastPraiseViewDataRequests[id] = DateTime.Now;
         List<PraiseViewRecord> records = new();
@@ -225,7 +257,7 @@ public sealed class PraiseSystem : EntitySystem
             });
         }
 
-        RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = records, Admin = isAdmin }, args.SenderSession);
+        RaiseNetworkEvent(new PraiseViewMessage { Target = msg.Target, Records = records, Admin = isAdmin, Spam = false }, args.SenderSession);
     }
 
     private void OnPraiseViewEdit(PraiseViewEditMessage ev, EntitySessionEventArgs args)
