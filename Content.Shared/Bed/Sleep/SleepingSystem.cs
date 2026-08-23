@@ -27,7 +27,6 @@ using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using BeforeOldStatusEffectAddedEvent = Content.Shared.StatusEffect.BeforeOldStatusEffectAddedEvent;
 
 namespace Content.Shared.Bed.Sleep;
 
@@ -73,7 +72,6 @@ public sealed partial class SleepingSystem : EntitySystem
 
         SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<ForcedSleepImmuneComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffectAdded);
-        SubscribeLocalEvent<ForcedSleepImmuneComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffectAdded);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
@@ -280,12 +278,6 @@ public sealed partial class SleepingSystem : EntitySystem
     private void OnBeforeStatusEffectAdded(Entity<ForcedSleepImmuneComponent> ent, ref BeforeStatusEffectAddedEvent args)
     {
         if (args.Effect == StatusEffectForcedSleeping)
-            args.Cancelled = true;
-    }
-
-    private void OnBeforeOldStatusEffectAdded(Entity<ForcedSleepImmuneComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
-    {
-        if (args.EffectKey == "ForcedSleep")
             args.Cancelled = true;
     }
 
