@@ -74,3 +74,4 @@ marking-ZveresEarsFennec = Уши фенека
 marking-ZveresMuzzleSpot = Пятно на мордочке
 marking-ZveresSideStreakSpot = Боковая полоса
 marking-SkeletonArrow = Побежденный
+marking-SkeletonDamaged = Поврежденный

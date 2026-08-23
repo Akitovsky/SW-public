@@ -74,3 +74,4 @@ marking-ZveresEarsFennec = Fennec ears
 marking-ZveresMuzzleSpot = Spot on the muzzle
 marking-ZveresSideStreakSpot = Side streak
 marking-SkeletonArrow = Defeated
+marking-SkeletonDamaged = Damaged

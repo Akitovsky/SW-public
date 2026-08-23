@@ -1005,6 +1005,16 @@
   - sprite: Imperial/Medieval/Species/Customization/Skeleton/head_top.rsi
     state: arrow
 
+- type: marking
+  id: SkeletonDamaged
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  speciesRestriction: [Skeleton]
+  sprites:
+  - sprite: Imperial/Medieval/Species/Customization/Skeleton/head_top.rsi
+    state: damaged
+
 ### HeadTop Skeleton END
 
 ### Skeleton
