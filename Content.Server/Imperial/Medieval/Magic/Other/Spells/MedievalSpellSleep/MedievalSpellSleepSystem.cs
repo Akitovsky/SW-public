@@ -1,5 +1,6 @@
 using Content.Server.Imperial.Minigames;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Imperial.Medieval.Sleep;
 using Content.Shared.Imperial.Minigames.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
