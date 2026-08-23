@@ -27,6 +27,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using BeforeOldStatusEffectAddedEvent = Content.Shared.StatusEffect.BeforeOldStatusEffectAddedEvent;
 
 namespace Content.Shared.Bed.Sleep;
 
@@ -71,6 +72,8 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, StandUpAttemptEvent>(OnStandUpAttempt);
 
         SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
+        SubscribeLocalEvent<ForcedSleepImmuneComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffectAdded);
+        SubscribeLocalEvent<ForcedSleepImmuneComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffectAdded);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
@@ -272,6 +275,18 @@ public sealed partial class SleepingSystem : EntitySystem
         // entity reset due to the status effect getting inserted
         if (!_gameTiming.ApplyingState)
             TrySleeping(args.Target);
+    }
+
+    private void OnBeforeStatusEffectAdded(Entity<ForcedSleepImmuneComponent> ent, ref BeforeStatusEffectAddedEvent args)
+    {
+        if (args.Effect == StatusEffectForcedSleeping)
+            args.Cancelled = true;
+    }
+
+    private void OnBeforeOldStatusEffectAdded(Entity<ForcedSleepImmuneComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
+    {
+        if (args.EffectKey == "ForcedSleep")
+            args.Cancelled = true;
     }
 
     private void Wake(Entity<SleepingComponent> ent)
