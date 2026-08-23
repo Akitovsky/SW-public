@@ -415,6 +415,24 @@
     MedievalGlinaFormaReady: 10
   result: MedievalIngotGold10
 
+- type: CP14Recipe
+  id: MedievalSilverOre
+  craftTime: 2
+  stacks:
+    MedievalSilverOre: 2
+    MedievalCoal: 1
+    MedievalGlinaFormaReady: 1
+  result: MedievalIngotSilver
+
+- type: CP14Recipe
+  id: MedievalSilverOre10
+  craftTime: 20
+  stacks:
+    MedievalSilverOre: 20
+    MedievalCoal: 10
+    MedievalGlinaFormaReady: 10
+  result: MedievalIngotSilver10
+
 
 
 
@@ -1648,6 +1666,15 @@
   result: MedievalHammerBlacksmith
 
 - type: CP14Recipe
+  id: MedievalBoardingHook
+  craftTime: 3
+  iconOverride: MedievalBoardingHook
+  stacks:
+    MedievalRope: 2
+    MedievalIronIngot: 2
+  result: MedievalBoardingHook
+
+- type: CP14Recipe
   id: MedievalSewingNeedle
   craftTime: 5
   iconOverride: MedievalSewingNeedle
@@ -1800,6 +1827,16 @@
     MedievalSteelIngot: 31
     WoodPlank: 6
   result: WorkpieceMedievalIronZweihanderSteel
+
+- type: CP14Recipe
+  id: MedievalIronClaymoreSilver
+  craftTime: 22
+  iconOverride: MedievalIronClaymoreSilver
+  stacks:
+    MedievalGold: 1
+    MedievalSilver: 39
+    WoodPlank: 6
+  result: WorkpieceMedievalIronClaymoreSilver
 
 - type: CP14Recipe
   id: MedievalStoneWallCraft

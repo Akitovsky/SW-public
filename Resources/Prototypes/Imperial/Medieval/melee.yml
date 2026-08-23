@@ -23,7 +23,7 @@
   - type: Sharp
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.5
+    attackRate: 0.8
     range: 2.15
     damage:
       types:
@@ -99,8 +99,8 @@
     range: 1
     damage:
       types:
-        Slash: 9
-        Caustic: 3
+        Slash: 11
+        Caustic: 1
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -156,8 +156,8 @@
     range: 1.15
     damage:
       types:
-        Slash: 16
-        Caustic: 3
+        Slash: 17.5
+        Caustic: 1.5
         ParryAble: 1
     resetOnHandSelected: false
     soundHit:
@@ -246,13 +246,13 @@
     parryChanse: 0.45
   - type: MeleeWeapon
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     clickDamageModifier: 1.28
     range: 2.4
     damage:
       types:
-        Piercing: 15
-        Caustic: 4
+        Piercing: 17
+        Caustic: 2
         ParryAble: 1
     angle: 0
     animation: CP14WeaponArcThrust
@@ -419,12 +419,12 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.2
+    attackRate: 0.8
     damage:
       types:
-        Blunt: 7.5
-        Piercing: 6
-        Caustic: 3.5
+        Blunt: 8.5
+        Piercing: 7
+        Caustic: 1.5
         ParryAble: 1
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
@@ -1739,7 +1739,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
@@ -1835,7 +1835,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.65
+    attackRate: 0.8
     range: 2.25
     damage:
       types:
@@ -1927,7 +1927,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -1994,7 +1994,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: true
@@ -3379,7 +3379,7 @@
   - type: MeleeWeapon
     clickDamageModifier: 1.28
     wideAnimationRotation: -140
-    attackRate: 0.6
+    attackRate: 0.8
     range: 2.4
     damage:
       types:
@@ -3480,7 +3480,7 @@
     cPAnimationOffset: 1
     clickDamageModifier: 1.26
     wideAnimationRotation: -140
-    attackRate: 1.1
+    attackRate: 0.8
     damage:
       types:
         Blunt: 7.5
@@ -4033,8 +4033,8 @@
     range: 1
     damage:
       types:
-        Slash: 6
-        Poison: 3
+        Slash: 8.5
+        Poison: 0.5
         ParryAble: 1
     soundHit:
       path: /Audio/Imperial/Medieval/ES_Knife_Stab_2_-_SFX_Producer.ogg
@@ -5715,3 +5715,109 @@
         Slash: 0.85
         Piercing: 0.85
         Heat: 0.85
+
+- type: entity
+  name: falshion
+  parent: MedievalFalshionT3
+  id: MedievalFalshionT3Silver
+  description: An ancient war blade.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/silver_sword.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Melee/silver_sword.rsi
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
+
+- type: entity
+  name: dagger
+  parent: MedievalDaggerT3
+  id: MedievalDaggerT3Silver
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/silver_dagger.rsi
+    size: Small
+    state: icon
+  - type: Item
+    size: Small
+    sprite: Imperial/Medieval/Melee/silver_dagger.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Melee/silver_dagger.rsi
+    slots:
+    - belt
+    quickEquip: false
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
+
+- type: entity
+  name: medieval spear
+  parent: MedievalSpearT3
+  id: MedievalSpearT3Silver
+  description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/silver_spear.rsi
+    netsync: false
+    state: spear
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Piercing: 20
+    targetType: Werewolf
+
+- type: entity
+  name: dagger
+  parent: MedievalSaber
+  id: MedievalSaberSilver
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/silver_saber.rsi
+    size: Small
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Imperial/Medieval/Melee/silver_saber.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Melee/silver_saber.rsi
+    slots:
+    - back
+    - suitStorage
+    - belt
+    quickEquip: false
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 20
+    targetType: Werewolf
+
+- type: entity
+  name: iron claymore
+  parent: MedievalIronClaymore
+  id: MedievalIronClaymoreSilver
+  description: A medieval claymore.
+  components:
+  - type: Item
+    size: Huge
+    sprite: Imperial/Medieval/Melee/silver_claymore_inhand.rsi
+  - type: Clothing
+    sprite: Imperial/Medieval/Melee/silver_claymore_inhand.rsi
+    slots:
+    - back
+    - suitStorage
+  - type: Sprite
+    sprite: Imperial/Medieval/Melee/silver_claymor.rsi
+    state: icon
+  - type: MedievalSpecialDamageDealer
+    damage:
+      types:
+        Slash: 25
+        Piercing: 5
+    targetType: Werewolf

@@ -106,6 +106,10 @@ job-name-legionTreasurer-medieval = Legion Treasurer
 
 job-description-legionTreasurer-medieval = Keeps, records, and dispenses the coin of the legion treasury.
 
+job-name-legionTreasurerAssistant-medieval = Assistant Treasurer
+
+job-description-legionTreasurerAssistant-medieval = Help the treasurer manage the affairs. Learn and adopt his knowledge.
+
 job-name-archivist-medieval = Archivist
 
 job-description-archivist-medieval = Keeps the archives safe, along with the secrets buried within them.

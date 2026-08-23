@@ -2494,6 +2494,19 @@
     sprite: Imperial/Medieval/Clothing/Armor/charmerbaron.rsi
 
 - type: entity
+  parent: MedievalClothingOuterArmorCharmerWeak
+  id: MedievalClothingOuterArmorCharmerWeakBaronSaturday
+  name: MedievalClothingOuterArmorCharmerWeakBaronSaturday
+  description: An upgraded armor with iron plates to protect against melee weapons.
+  components:
+  - type: Sprite
+    sprite: Imperial/Medieval/Clothing/Armor/charmerbaron.rsi
+  - type: Clothing
+    equipDelay: 4
+    unequipDelay: 4
+    sprite: Imperial/Medieval/Clothing/Armor/charmerbaron.rsi
+
+- type: entity
   parent: MedievalClothingOuterArmorCharmerLight
   id: MedievalClothingOuterArmorCharmerLightPurpleScar
   name: MedievalClothingOuterArmorCharmerLightPurpleScar
@@ -3098,8 +3111,8 @@
   - type: StaminaResistance
     damageCoefficient: 0.5
   - type: ClothingSpeedModifier
-    walkModifier: 0.93
-    sprintModifier: 0.93
+    walkModifier: 0.98
+    sprintModifier: 0.98
   - type: Item
     size: Normal
   - type: ExplosionResistance
