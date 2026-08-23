@@ -2,8 +2,9 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Verbs;
 using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Imperial.Medieval.IdentityManagement;
-using Content.Shared.Imperial.LocalLight;
+using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
@@ -33,19 +34,27 @@ public sealed class MedievalIdentityTest
 
         await server.WaitPost(() =>
         {
-            introducer = serverEntities.SpawnEntity("MobHuman", map.GridCoords);
-            serverEntities.RemoveComponent<LocalLightComponent>(introducer);
+            EntityUid SpawnIdentityHolder()
+            {
+                var holder = serverEntities.CreateEntityUninitialized(null, map.GridCoords);
+                serverEntities.AddComponent<IdentityComponent>(holder);
+                serverEntities.AddComponent<IdentityRequiresKnowledgeComponent>(holder);
+                serverEntities.InitializeAndStartEntity(holder, map.MapId);
+                return holder;
+            }
+
+            introducer = SpawnIdentityHolder();
             serverEntities.System<MetaDataSystem>().SetEntityName(introducer, "Introducer Name");
             serverPlayerManager.SetAttachedEntity(serverSession, introducer);
 
-            observer = serverEntities.SpawnEntity("MobHuman", map.GridCoords);
-            serverEntities.RemoveComponent<LocalLightComponent>(observer);
+            observer = SpawnIdentityHolder();
         });
         await pair.RunTicksSync(5);
 
         var clientIntroducer = client.Session!.AttachedEntity!.Value;
         var observerNet = serverEntities.GetNetEntity(observer);
         var clientObserver = clientEntities.GetEntity(observerNet);
+        var clientTestSystem = client.System<MedievalIdentityTestSystem>();
 
         await server.WaitPost(() => serverEntities.EnsureComponent<StunnedComponent>(introducer));
         await pair.RunTicksSync(5);
@@ -56,6 +65,31 @@ public sealed class MedievalIdentityTest
                 .GetLocalVerbs(clientObserver, clientIntroducer, typeof(AlternativeVerb), force: false);
             Assert.That(verbs.Any(verb => verb.Text == Loc.GetString("imperial-hm-identity-intrd")), Is.False);
         });
+
+        await client.WaitAssertion(() =>
+        {
+            clientTestSystem.PopupCount = 0;
+            var verbs = client.System<VerbSystem>()
+                .GetLocalVerbs(clientObserver, clientIntroducer, typeof(AlternativeVerb), force: true);
+            var introduce = verbs.Single(verb => verb.Text == Loc.GetString("imperial-hm-identity-intrd"));
+            client.System<VerbSystem>().ExecuteVerb(introduce, clientIntroducer, clientObserver, forced: true);
+        });
+        await pair.RunTicksSync(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var introducerComp = serverEntities.GetComponent<IdentityRequiresKnowledgeComponent>(introducer);
+            var observerComp = serverEntities.GetComponent<IdentityRequiresKnowledgeComponent>(observer);
+            Assert.That(observerComp.KnownIds, Does.Not.Contain(introducerComp.Identifier));
+        });
+        await client.WaitAssertion(() => Assert.That(clientTestSystem.PopupCount, Is.Zero));
+
+        await server.WaitPost(() => serverEntities.RemoveComponent<StunnedComponent>(introducer));
+        await pair.RunTicksSync(5);
+
+        await server.WaitPost(() =>
+            serverEntities.System<SharedTransformSystem>().SetLocalPosition(observer, new Vector2(20f, 20f)));
+        await pair.RunTicksSync(5);
 
         await client.WaitAssertion(() =>
         {
@@ -72,8 +106,10 @@ public sealed class MedievalIdentityTest
             var observerComp = serverEntities.GetComponent<IdentityRequiresKnowledgeComponent>(observer);
             Assert.That(observerComp.KnownIds, Does.Not.Contain(introducerComp.Identifier));
         });
+        await client.WaitAssertion(() => Assert.That(clientTestSystem.PopupCount, Is.Zero));
 
-        await server.WaitPost(() => serverEntities.RemoveComponent<StunnedComponent>(introducer));
+        await server.WaitPost(() =>
+            serverEntities.System<SharedTransformSystem>().SetLocalPosition(observer, Vector2.Zero));
         await pair.RunTicksSync(5);
 
         await client.WaitAssertion(() =>
@@ -100,6 +136,7 @@ public sealed class MedievalIdentityTest
                 .GetLocalVerbs(clientObserver, clientIntroducer, typeof(AlternativeVerb), force: true);
             Assert.That(verbs.Any(verb => verb.Text == Loc.GetString("imperial-hm-identity-intrd")), Is.False);
             Assert.That(Identity.Name(clientIntroducer, clientEntities, clientObserver), Is.EqualTo("Introducer Name"));
+            Assert.That(clientTestSystem.PopupCount, Is.EqualTo(1));
         });
 
         await pair.CleanReturnAsync();
@@ -124,8 +161,10 @@ public sealed class MedievalIdentityTest
         {
             EntityUid SpawnIdentityHolder(string name)
             {
-                var holder = serverEntities.SpawnEntity("MobHuman", map.GridCoords);
-                serverEntities.RemoveComponent<LocalLightComponent>(holder);
+                var holder = serverEntities.CreateEntityUninitialized(null, map.GridCoords);
+                serverEntities.AddComponent<IdentityComponent>(holder);
+                serverEntities.AddComponent<IdentityRequiresKnowledgeComponent>(holder);
+                serverEntities.InitializeAndStartEntity(holder, map.MapId);
                 serverEntities.System<MetaDataSystem>().SetEntityName(holder, name);
                 return holder;
             }
@@ -190,5 +229,15 @@ public sealed class MedievalIdentityTest
         });
 
         await pair.CleanReturnAsync();
+    }
+}
+
+public sealed class MedievalIdentityTestSystem : EntitySystem
+{
+    public int PopupCount;
+
+    public override void Initialize()
+    {
+        SubscribeNetworkEvent<PopupEntityEvent>(_ => PopupCount++);
     }
 }
