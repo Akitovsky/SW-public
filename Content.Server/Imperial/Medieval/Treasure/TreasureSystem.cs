@@ -133,13 +133,13 @@ public sealed class TreasureSystem : EntitySystem
             TerminatingOrDeleted(marker) ||
             !TryComp<TreasureMarkerComponent>(marker, out var markerComponent))
         {
-            _popup.PopupClient(Loc.GetString("treasure-map-empty"), args.User, args.User, PopupType.Small);
+            _popup.PopupEntity(Loc.GetString("treasure-map-empty"), args.User, args.User, PopupType.Small);
             return;
         }
 
         var position = markerComponent.WorldPosition;
         var message = Loc.GetString("treasure-map-coordinates", ("x", position.X), ("y", position.Y));
-        _popup.PopupClient(message, args.User, args.User, PopupType.Small);
+        _popup.PopupEntity(message, args.User, args.User, PopupType.Small);
 
         if (TryComp<ActorComponent>(args.User, out var actor))
             _chat.DispatchServerMessage(actor.PlayerSession, message);
@@ -216,7 +216,7 @@ public sealed class TreasureSystem : EntitySystem
             return;
 
         args.Handled = true;
-        _popup.PopupClient(Loc.GetString("treasure-dig-found"), args.User, args.User, PopupType.Small);
+        _popup.PopupEntity(Loc.GetString("treasure-dig-found"), args.User, args.User, PopupType.Small);
     }
 
     private void OnTreasureDigComplete(Entity<TreasureDiggerComponent> digger, ref TreasureDigDoAfterEvent args)

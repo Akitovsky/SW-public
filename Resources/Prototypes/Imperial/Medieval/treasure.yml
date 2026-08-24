@@ -53,8 +53,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Misc/quest.rsi
-    state: merccontract
+    sprite: Imperial/Medieval/Misc/treasure_map.rsi
+    state: treasure_map
   - type: Item
     size: Small
   - type: TreasureMap
@@ -73,13 +73,13 @@
   parent: MedievalCrateGeneric
   components:
   - type: Sprite
-    sprite: Imperial/Medieval/Decor/chest3.rsi
+    sprite: Imperial/Medieval/Decor/treasure_chest.rsi
     layers:
     - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
   - type: Icon
-    sprite: Imperial/Medieval/Decor/chest3.rsi
+    sprite: Imperial/Medieval/Decor/treasure_chest.rsi
     state: base
   - type: Fixtures
     fixtures:
