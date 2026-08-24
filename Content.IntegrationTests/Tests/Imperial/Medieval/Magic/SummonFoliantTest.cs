@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Imperial.Medieval.Magic;
 
 [TestFixture]
+[NonParallelizable]
 public sealed class SummonFoliantTest
 {
     [TestPrototypes]
@@ -154,6 +155,10 @@ public sealed class SummonFoliantTest
         {
             var player = playerMan.Sessions.First().AttachedEntity!.Value;
             var hands = entMan.GetComponent<HandsComponent>(player);
+
+            foreach (var held in handsSystem.EnumerateHeld((player, hands)).ToList())
+                Assert.That(handsSystem.TryDrop(player, held), Is.True);
+
             Assert.That(handsSystem.CountFreeHands((player, hands)), Is.EqualTo(hands.Count));
 
             var key = entMan.SpawnEntity("MedievalKeyWizard", map.GridCoords);
