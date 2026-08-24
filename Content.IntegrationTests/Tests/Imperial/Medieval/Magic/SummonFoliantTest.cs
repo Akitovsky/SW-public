@@ -6,6 +6,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Imperial.Medieval.Magic;
 using Content.Shared.Inventory;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -28,6 +30,15 @@ public sealed class SummonFoliantTest
   id: TestSummonFoliantProjectile
   components:
   - type: FoliantToHandTeleporter
+
+- type: entity
+  id: TestSummonFoliantNestedContainer
+  components:
+  - type: Item
+    size: Tiny
+  - type: ContainerContainer
+    containers:
+      nested: !type:Container
 ";
 
     [Test]
@@ -48,6 +59,7 @@ public sealed class SummonFoliantTest
         var containerSystem = server.System<SharedContainerSystem>();
         var inventorySystem = server.System<InventorySystem>();
         var placementSystem = server.System<MedievalSpawnInFreeSlotSystem>();
+        var storageSystem = server.System<SharedStorageSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -110,6 +122,40 @@ public sealed class SummonFoliantTest
             Assert.That(placementSystem.TryPlaceInFreeSlot(player, directlyPlacedItem), Is.True);
             Assert.That(containerSystem.TryGetContainingContainer(directlyPlacedItem, out var unchangedContainer), Is.True);
             Assert.That(unchangedContainer.Owner, Is.EqualTo(directContainer.Owner));
+
+            // An item nested inside carried storage is already safely carried and must not move.
+            var nestedContainer = entMan.SpawnEntity("TestSummonFoliantNestedContainer", map.GridCoords);
+            Assert.That(storageSystem.Insert(directContainer.Owner, nestedContainer, out _, playSound: false), Is.True);
+            Assert.That(containerSystem.TryGetContainer(nestedContainer, "nested", out var nested), Is.True);
+            var nestedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
+            Assert.That(containerSystem.Insert(nestedItem, nested), Is.True);
+
+            Assert.That(placementSystem.TryPlaceInFreeSlot(player, nestedItem), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(nestedItem, out var unchangedNested), Is.True);
+            Assert.That(unchangedNested.Owner, Is.EqualTo(nestedContainer));
+
+            // A non-item cannot be picked up or inserted into carried storage. Failure must leave it untouched.
+            var rejectedContainerOwner = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
+            var rejectedItem = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
+            Assert.That(containerSystem.TryGetContainer(rejectedContainerOwner, "pouch", out var rejectedContainer), Is.True);
+            Assert.That(containerSystem.Insert(rejectedItem, rejectedContainer), Is.True);
+
+            Assert.That(placementSystem.TryPlaceInFreeSlot(player, rejectedItem), Is.False);
+            Assert.That(rejectedContainer.Contains(rejectedItem), Is.True);
+            Assert.That(entMan.EntityExists(rejectedItem), Is.True);
+
+            // With full hands and no compatible carried storage, a normal item must also remain where it was.
+            foreach (var carried in inventorySystem.GetHandOrInventoryEntities(player).ToList())
+                entMan.RemoveComponent<StorageComponent>(carried);
+
+            var strandedContainerOwner = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
+            var strandedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
+            Assert.That(containerSystem.TryGetContainer(strandedContainerOwner, "pouch", out var strandedContainer), Is.True);
+            Assert.That(containerSystem.Insert(strandedItem, strandedContainer), Is.True);
+
+            Assert.That(placementSystem.TryPlaceInFreeSlot(player, strandedItem), Is.False);
+            Assert.That(strandedContainer.Contains(strandedItem), Is.True);
+            Assert.That(entMan.EntityExists(strandedItem), Is.True);
         });
 
         await pair.CleanReturnAsync();
