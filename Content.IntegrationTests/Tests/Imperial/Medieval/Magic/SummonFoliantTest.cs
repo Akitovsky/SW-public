@@ -4,6 +4,7 @@ using Content.Server.Imperial.Medieval.Magic.BindStoreOnEquip;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Imperial.Medieval.Magic;
+using Content.Shared.Inventory;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -44,6 +45,7 @@ public sealed class SummonFoliantTest
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var handsSystem = server.System<SharedHandsSystem>();
         var containerSystem = server.System<SharedContainerSystem>();
+        var inventorySystem = server.System<InventorySystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -76,13 +78,25 @@ public sealed class SummonFoliantTest
             entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
 
             Assert.That(handsSystem.EnumerateHeld((player, hands)).ToList(), Is.EquivalentTo(heldItems));
-            Assert.That(container.Contains(foliant), Is.True);
+            Assert.That(container.Contains(foliant), Is.False);
+            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var carriedContainer), Is.True);
+            Assert.That(inventorySystem.GetHandOrInventoryEntities(player), Does.Contain(carriedContainer.Owner));
+
+            entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
+            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var sameContainer), Is.True);
+            Assert.That(sameContainer.Owner, Is.EqualTo(carriedContainer.Owner));
+
+            Assert.That(containerSystem.Insert(foliant, container), Is.True);
 
             Assert.That(handsSystem.TryDrop(player, heldItems[0]), Is.True);
             entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
 
             Assert.That(handsSystem.IsHolding(player, foliant), Is.True);
             Assert.That(container.Contains(foliant), Is.False);
+
+            var heldWithFoliant = handsSystem.EnumerateHeld((player, hands)).ToList();
+            entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
+            Assert.That(handsSystem.EnumerateHeld((player, hands)).ToList(), Is.EquivalentTo(heldWithFoliant));
         });
 
         await pair.CleanReturnAsync();
