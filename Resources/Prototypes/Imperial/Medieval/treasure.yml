@@ -93,8 +93,6 @@
         layer:
         - LargeMobLayer
   - type: UniversalLockable
-    isRandomLock: MedievalDoorLockT1
-    chanceOfLockSpawn: 0.5
   - type: ResistLocker
     resistTime: 60
   - type: Lock

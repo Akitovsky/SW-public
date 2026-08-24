@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Imperial.Medieval.WormDigging;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Imperial.Medieval.Ships.Islands;
 using Content.Shared.Imperial.Medieval.Treasure;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -36,7 +37,6 @@ public sealed class TreasureSystem : EntitySystem
         SubscribeLocalEvent<TreasureBoardComponent, MapInitEvent>(OnBoardMapInit);
         SubscribeLocalEvent<TreasureMapComponent, MapInitEvent>(OnTreasureMapInit);
         SubscribeLocalEvent<TreasureMapComponent, UseInHandEvent>(OnTreasureMapUsed);
-        SubscribeLocalEvent<TreasureMapComponent, EntityTerminatingEvent>(OnTreasureMapTerminating);
         SubscribeLocalEvent<TreasureMarkerComponent, EntityTerminatingEvent>(OnMarkerTerminating);
         SubscribeLocalEvent<TreasureDiggerComponent, AfterInteractEvent>(OnDiggerAfterInteract,
             before: [typeof(WormDiggingSystem)]);
@@ -92,11 +92,14 @@ public sealed class TreasureSystem : EntitySystem
     private void OnTreasureMapInit(Entity<TreasureMapComponent> ent, ref MapInitEvent args)
     {
         var grids = new List<Entity<MapGridComponent>>();
-        var gridQuery = EntityQueryEnumerator<TreasureIslandCandidateComponent, MapGridComponent>();
-        while (gridQuery.MoveNext(out var gridUid, out _, out var grid))
+        var gridQuery = EntityQueryEnumerator<IslandComponent, MapGridComponent>();
+        while (gridQuery.MoveNext(out var gridUid, out var island, out var grid))
         {
-            if (_map.GetAllTiles(gridUid, grid).Any())
+            if (island.GenerationGroup == IslandGenerationGroup.High &&
+                _map.GetAllTiles(gridUid, grid).Any())
+            {
                 grids.Add((gridUid, grid));
+            }
         }
 
         if (grids.Count == 0)
@@ -143,12 +146,6 @@ public sealed class TreasureSystem : EntitySystem
 
         if (TryComp<ActorComponent>(args.User, out var actor))
             _chat.DispatchServerMessage(actor.PlayerSession, message);
-    }
-
-    private void OnTreasureMapTerminating(Entity<TreasureMapComponent> ent, ref EntityTerminatingEvent args)
-    {
-        if (ent.Comp.Marker is { } marker && !TerminatingOrDeleted(marker))
-            QueueDel(marker);
     }
 
     private void OnMarkerTerminating(Entity<TreasureMarkerComponent> ent, ref EntityTerminatingEvent args)

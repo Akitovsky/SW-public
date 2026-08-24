@@ -4,9 +4,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Imperial.Medieval.Treasure;
 
 [RegisterComponent]
-public sealed partial class TreasureIslandCandidateComponent : Component;
-
-[RegisterComponent]
 public sealed partial class TreasureBoardComponent : Component
 {
     [DataField]
