@@ -4332,6 +4332,7 @@
   id: MedievalMobAngler
   description: They're a golem.
   components:
+  - type: ForcedSleepImmune
   - type: MedievalTimedDespawn
     lifetime: 240
   - type: Sprite
