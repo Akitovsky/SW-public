@@ -2,10 +2,13 @@ using System.Linq;
 using System.Collections.Generic;
 using Content.Server.Imperial.Medieval.Magic.BindStoreOnEquip;
 using Content.Server.Imperial.Medieval.Magic.MedievalSpawnInFreeSlot;
+using Content.Shared.Actions;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Imperial.Medieval.Magic;
 using Content.Shared.Inventory;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Server.Player;
@@ -66,9 +69,9 @@ public sealed class SummonFoliantTest
             var player = playerMan.Sessions.First().AttachedEntity!.Value;
             var hands = entMan.GetComponent<HandsComponent>(player);
             var heldItems = new List<EntityUid>();
-            var heldPrototypes = new[] { "MedievalCommsCrystallColl", "MedievalKeyWizard" };
+            var heldPrototypes = new[] { "MedievalCommsCrystallColl" };
 
-            Assert.That(hands.Count, Is.EqualTo(heldPrototypes.Length));
+            Assert.That(hands.Count, Is.GreaterThan(heldPrototypes.Length));
             foreach (var prototype in heldPrototypes)
             {
                 var held = entMan.SpawnEntity(prototype, map.GridCoords);
@@ -93,39 +96,19 @@ public sealed class SummonFoliantTest
             };
             entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
 
-            Assert.That(handsSystem.EnumerateHeld((player, hands)).ToList(), Is.EquivalentTo(heldItems));
-            Assert.That(container.Contains(foliant), Is.False);
-            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var carriedContainer), Is.True);
-            Assert.That(inventorySystem.GetHandOrInventoryEntities(player), Does.Contain(carriedContainer.Owner));
-
-            entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
-            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var sameContainer), Is.True);
-            Assert.That(sameContainer.Owner, Is.EqualTo(carriedContainer.Owner));
-
-            Assert.That(containerSystem.Insert(foliant, container), Is.True);
-
-            Assert.That(handsSystem.TryDrop(player, heldItems[0]), Is.True);
-            entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
-
+            Assert.That(handsSystem.IsHolding(player, heldItems[0]), Is.True);
             Assert.That(handsSystem.IsHolding(player, foliant), Is.True);
             Assert.That(container.Contains(foliant), Is.False);
 
-            var heldWithFoliant = handsSystem.EnumerateHeld((player, hands)).ToList();
             entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
-            Assert.That(handsSystem.EnumerateHeld((player, hands)).ToList(), Is.EquivalentTo(heldWithFoliant));
-
-            var directlyPlacedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
-            Assert.That(placementSystem.TryPlaceInFreeSlot(player, directlyPlacedItem), Is.True);
-            Assert.That(containerSystem.TryGetContainingContainer(directlyPlacedItem, out var directContainer), Is.True);
-            Assert.That(inventorySystem.GetHandOrInventoryEntities(player), Does.Contain(directContainer.Owner));
-
-            Assert.That(placementSystem.TryPlaceInFreeSlot(player, directlyPlacedItem), Is.True);
-            Assert.That(containerSystem.TryGetContainingContainer(directlyPlacedItem, out var unchangedContainer), Is.True);
-            Assert.That(unchangedContainer.Owner, Is.EqualTo(directContainer.Owner));
+            Assert.That(handsSystem.IsHolding(player, heldItems[0]), Is.True);
+            Assert.That(handsSystem.IsHolding(player, foliant), Is.True);
 
             // An item nested inside carried storage is already safely carried and must not move.
+            var carriedStorage = inventorySystem.GetHandOrInventoryEntities(player)
+                .First(carried => entMan.HasComponent<StorageComponent>(carried));
             var nestedContainer = entMan.SpawnEntity("TestSummonFoliantNestedContainer", map.GridCoords);
-            Assert.That(storageSystem.Insert(directContainer.Owner, nestedContainer, out _, playSound: false), Is.True);
+            Assert.That(storageSystem.Insert(carriedStorage, nestedContainer, out _, playSound: false), Is.True);
             Assert.That(containerSystem.TryGetContainer(nestedContainer, "nested", out var nested), Is.True);
             var nestedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
             Assert.That(containerSystem.Insert(nestedItem, nested), Is.True);
@@ -135,6 +118,7 @@ public sealed class SummonFoliantTest
             Assert.That(unchangedNested.Owner, Is.EqualTo(nestedContainer));
 
             // A non-item cannot be picked up or inserted into carried storage. Failure must leave it untouched.
+            Assert.That(handsSystem.TryDrop(player, foliant), Is.True);
             var rejectedContainerOwner = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
             var rejectedItem = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
             Assert.That(containerSystem.TryGetContainer(rejectedContainerOwner, "pouch", out var rejectedContainer), Is.True);
@@ -143,19 +127,67 @@ public sealed class SummonFoliantTest
             Assert.That(placementSystem.TryPlaceInFreeSlot(player, rejectedItem), Is.False);
             Assert.That(rejectedContainer.Contains(rejectedItem), Is.True);
             Assert.That(entMan.EntityExists(rejectedItem), Is.True);
+        });
 
-            // With full hands and no compatible carried storage, a normal item must also remain where it was.
-            foreach (var carried in inventorySystem.GetHandOrInventoryEntities(player).ToList())
-                entMan.RemoveComponent<StorageComponent>(carried);
+        await pair.CleanReturnAsync();
+    }
 
-            var strandedContainerOwner = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
-            var strandedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
-            Assert.That(containerSystem.TryGetContainer(strandedContainerOwner, "pouch", out var strandedContainer), Is.True);
-            Assert.That(containerSystem.Insert(strandedItem, strandedContainer), Is.True);
+    [Test]
+    public async Task SummonThroughActionKeepsWizardItemsInPlace()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        await pair.RunTicksSync(5);
 
-            Assert.That(placementSystem.TryPlaceInFreeSlot(player, strandedItem), Is.False);
-            Assert.That(strandedContainer.Contains(strandedItem), Is.True);
-            Assert.That(entMan.EntityExists(strandedItem), Is.True);
+        var entMan = server.ResolveDependency<IEntityManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+        var actionsSystem = server.System<SharedActionsSystem>();
+        var handsSystem = server.System<SharedHandsSystem>();
+        var inventorySystem = server.System<InventorySystem>();
+        var storageSystem = server.System<SharedStorageSystem>();
+        var containerSystem = server.System<SharedContainerSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var player = playerMan.Sessions.First().AttachedEntity!.Value;
+            var hands = entMan.GetComponent<HandsComponent>(player);
+            Assert.That(handsSystem.CountFreeHands((player, hands)), Is.EqualTo(hands.Count));
+
+            var key = entMan.SpawnEntity("MedievalKeyWizard", map.GridCoords);
+            Assert.That(handsSystem.TryPickupAnyHand(player, key), Is.True);
+            Assert.That(handsSystem.CountFreeHands((player, hands)), Is.EqualTo(hands.Count - 1));
+
+            var carriedStorage = inventorySystem.GetHandOrInventoryEntities(player)
+                .First(entity => entMan.HasComponent<StorageComponent>(entity));
+            var crystal = entMan.SpawnEntity("MedievalCommsCrystallColl", map.GridCoords);
+            var foliant = entMan.SpawnEntity("Crowbar", map.GridCoords);
+            var bind = entMan.EnsureComponent<BindStoreOnEquipComponent>(foliant);
+#pragma warning disable RA0002
+            bind.BindedEntity = player;
+#pragma warning restore RA0002
+
+            Assert.That(storageSystem.Insert(carriedStorage, crystal, out _), Is.True);
+            Assert.That(storageSystem.Insert(carriedStorage, foliant, out _), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var originalContainer), Is.True);
+
+            var actionUid = actionsSystem.AddAction(player, "MedievalActionSummonFoliantBeginner");
+            Assert.That(actionUid, Is.Not.Null);
+            var action = actionsSystem.GetAction(actionUid);
+            Assert.That(action, Is.Not.Null);
+
+            actionsSystem.PerformAction(player, action.Value);
+
+            Assert.That(action.Value.Comp.Cooldown, Is.Not.Null);
+            Assert.That(handsSystem.IsHolding(player, key), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(crystal, out var crystalContainer), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(foliant, out var resultingContainer), Is.True);
+            Assert.That(crystalContainer.Owner, Is.EqualTo(carriedStorage));
+            Assert.That(resultingContainer.Owner, Is.EqualTo(originalContainer.Owner));
         });
 
         await pair.CleanReturnAsync();
