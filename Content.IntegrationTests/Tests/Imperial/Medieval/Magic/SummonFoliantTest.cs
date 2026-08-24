@@ -54,10 +54,12 @@ public sealed class SummonFoliantTest
             var player = playerMan.Sessions.First().AttachedEntity!.Value;
             var hands = entMan.GetComponent<HandsComponent>(player);
             var heldItems = new List<EntityUid>();
+            var heldPrototypes = new[] { "MedievalCommsCrystallColl", "MedievalKeyWizard" };
 
-            for (var i = 0; i < hands.Count; i++)
+            Assert.That(hands.Count, Is.EqualTo(heldPrototypes.Length));
+            foreach (var prototype in heldPrototypes)
             {
-                var held = entMan.SpawnEntity("Crowbar", map.GridCoords);
+                var held = entMan.SpawnEntity(prototype, map.GridCoords);
                 Assert.That(handsSystem.TryPickupAnyHand(player, held), Is.True);
                 heldItems.Add(held);
             }
