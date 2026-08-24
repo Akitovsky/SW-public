@@ -16,9 +16,12 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Imperial.Medieval.CCVar;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 
 namespace Content.Server.Communications
 {
@@ -35,6 +38,8 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+        [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -241,6 +246,23 @@ namespace Content.Server.Communications
                 if (!CanUse(mob, uid))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Actor);
+                    return;
+                }
+
+                if (!_playerManager.TryGetSessionByEntity(mob, out var session))
+                    return;
+
+                var requiredMinutes = _cfg.GetCVar(MedievalCCVars.MedievalTotalMinutesForHornRequired);
+                var playtimes = _playtimeManager.GetPlayTimes(session);
+                var totalPlaytime = playtimes.GetValueOrDefault(PlayTimeTrackingShared.TrackerOverall);
+
+                if (totalPlaytime.TotalMinutes < requiredMinutes)
+                {
+                    _popupSystem.PopupEntity(
+                        Loc.GetString("medieval-horn-account-too-new-popup"),
+                        uid,
+                        mob,
+                        PopupType.MediumCaution);
                     return;
                 }
 
