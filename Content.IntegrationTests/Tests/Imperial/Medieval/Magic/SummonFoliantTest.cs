@@ -78,8 +78,8 @@ public sealed class SummonFoliantTest
             }
 
             var pouch = entMan.SpawnEntity("TestSummonFoliantPouch", map.GridCoords);
-            var foliant = entMan.SpawnEntity("Crowbar", map.GridCoords);
-            var bind = entMan.EnsureComponent<BindStoreOnEquipComponent>(foliant);
+            var foliant = entMan.SpawnEntity("MedievalSpellBookBase", map.GridCoords);
+            var bind = entMan.GetComponent<BindStoreOnEquipComponent>(foliant);
 #pragma warning disable RA0002
             bind.BindedEntity = player;
 #pragma warning restore RA0002
@@ -163,8 +163,8 @@ public sealed class SummonFoliantTest
             var carriedStorage = inventorySystem.GetHandOrInventoryEntities(player)
                 .First(entity => entMan.HasComponent<StorageComponent>(entity));
             var crystal = entMan.SpawnEntity("MedievalCommsCrystallColl", map.GridCoords);
-            var foliant = entMan.SpawnEntity("Crowbar", map.GridCoords);
-            var bind = entMan.EnsureComponent<BindStoreOnEquipComponent>(foliant);
+            var foliant = entMan.SpawnEntity("MedievalSpellBookBase", map.GridCoords);
+            var bind = entMan.GetComponent<BindStoreOnEquipComponent>(foliant);
 #pragma warning disable RA0002
             bind.BindedEntity = player;
 #pragma warning restore RA0002
