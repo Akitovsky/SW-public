@@ -22,7 +22,7 @@ public sealed partial class FoliantToHandTeleporterSystem : EntitySystem
         {
             if (bindComp.BindedEntity == playerUid)
             {
-                _handsSystem.TryForcePickupAnyHand(playerUid, folliantUID);
+                _handsSystem.TryPickupAnyHand(playerUid, folliantUID);
                 break;
             }
         }
