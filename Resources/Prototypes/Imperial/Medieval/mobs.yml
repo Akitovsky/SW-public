@@ -2899,10 +2899,10 @@
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 8.5
+        Brute: 11
       types:
         ParryAble: 1
-        Radiation: 1.5
+        Radiation: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2944,10 +2944,10 @@
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 8.5
+        Brute: 11
       types:
         ParryAble: 1
-        Radiation: 1.5
+        Radiation: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2993,7 +2993,7 @@
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 13
+        Brute: 17
       types:
         ParryAble: 1
         Radiation: 3
@@ -3216,10 +3216,10 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 7
-        Piercing: 5
+        Blunt: 9
+        Piercing: 6.5
         ParryAble: 1
-        Radiation: 2
+        Radiation: 3.5
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -3277,7 +3277,7 @@
     range: 2.1
     damage:
       types:
-        Piercing: 9
+        Piercing: 12
         ParryAble: 1
   - type: MobThresholds
     thresholds:
@@ -3334,8 +3334,8 @@
     attackRate: 0.4
     damage:
       types:
-        Piercing: 9
-        Slash: 9
+        Piercing: 12
+        Slash: 12
         Structural: 2
         ParryAble: 1
     soundHit:
@@ -3396,7 +3396,7 @@
     range: 1
     damage:
       types:
-        Slash: 9.5
+        Slash: 12.5
         ParryAble: 1
     soundHit:
       path: /Audio/Imperial/Medieval/ES_Knife_Stab_2_-_SFX_Producer.ogg
