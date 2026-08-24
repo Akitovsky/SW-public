@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Content.Server.Imperial.Medieval.Magic.BindStoreOnEquip;
+using Content.Server.Imperial.Medieval.Magic.MedievalSpawnInFreeSlot;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Imperial.Medieval.Magic;
@@ -46,6 +47,7 @@ public sealed class SummonFoliantTest
         var handsSystem = server.System<SharedHandsSystem>();
         var containerSystem = server.System<SharedContainerSystem>();
         var inventorySystem = server.System<InventorySystem>();
+        var placementSystem = server.System<MedievalSpawnInFreeSlotSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -97,6 +99,15 @@ public sealed class SummonFoliantTest
             var heldWithFoliant = handsSystem.EnumerateHeld((player, hands)).ToList();
             entMan.EventBus.RaiseLocalEvent(projectile, spellEvent);
             Assert.That(handsSystem.EnumerateHeld((player, hands)).ToList(), Is.EquivalentTo(heldWithFoliant));
+
+            var directlyPlacedItem = entMan.SpawnEntity("Crowbar", map.GridCoords);
+            Assert.That(placementSystem.TryPlaceInFreeSlot(player, directlyPlacedItem), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(directlyPlacedItem, out var directContainer), Is.True);
+            Assert.That(inventorySystem.GetHandOrInventoryEntities(player), Does.Contain(directContainer.Owner));
+
+            Assert.That(placementSystem.TryPlaceInFreeSlot(player, directlyPlacedItem), Is.True);
+            Assert.That(containerSystem.TryGetContainingContainer(directlyPlacedItem, out var unchangedContainer), Is.True);
+            Assert.That(unchangedContainer.Owner, Is.EqualTo(directContainer.Owner));
         });
 
         await pair.CleanReturnAsync();

@@ -5,20 +5,20 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Imperial.Medieval.Magic.MedievalSpawnInFreeHandOrPouch;
+namespace Content.Server.Imperial.Medieval.Magic.MedievalSpawnInFreeSlot;
 
 /// <summary>
-/// Places an item in a safe carried destination without displacing other items.
+/// Places an item in a free carried slot without displacing other items.
 /// Already carried items stay in their current hand, inventory slot, or storage.
 /// </summary>
-public sealed class MedievalSpawnInFreeHandOrPouchSystem : EntitySystem
+public sealed class MedievalSpawnInFreeSlotSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
-    public bool TryPlaceInFreeHandOrPouch(EntityUid playerUid, EntityUid itemUid)
+    public bool TryPlaceInFreeSlot(EntityUid playerUid, EntityUid itemUid)
     {
         var carriedEntities = _inventorySystem.GetHandOrInventoryEntities(playerUid).ToList();
 
