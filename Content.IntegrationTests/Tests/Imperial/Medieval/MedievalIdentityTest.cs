@@ -4,6 +4,7 @@ using Content.Client.Verbs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Imperial.Medieval.IdentityManagement;
+using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
@@ -226,6 +227,64 @@ public sealed class MedievalIdentityTest
 
             Assert.That(clientObserverComp.KnownIds, Does.Contain(introducerId));
             Assert.That(Identity.Name(clientIntroducer, clientEntities, clientObserver), Is.EqualTo("Introducer Name"));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task LearnedIdentityPersistsAcrossVisualDisguises()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+
+        var entities = server.ResolveDependency<IEntityManager>();
+        var identity = server.System<Content.Server.Imperial.Medieval.IdentityManagement.MedievalIdentitySystem>();
+        var inventory = server.System<InventorySystem>();
+
+        EntityUid introducer = default;
+        EntityUid observer = default;
+        EntityUid helmet = default;
+        EntityUid apron = default;
+
+        await server.WaitPost(() =>
+        {
+            introducer = entities.SpawnEntity("MobHuman", map.GridCoords);
+            observer = entities.SpawnEntity("MobHuman", map.GridCoords);
+            entities.EnsureComponent<IdentityRequiresKnowledgeComponent>(introducer);
+            entities.EnsureComponent<IdentityRequiresKnowledgeComponent>(observer);
+            entities.System<MetaDataSystem>().SetEntityName(introducer, "Introducer Name");
+
+            helmet = entities.SpawnEntity("ClothingHeadHelmetEVA", map.GridCoords);
+            apron = entities.SpawnEntity("ClothingOuterApron", map.GridCoords);
+        });
+        await pair.RunTicksSync(5);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(identity.Introduce(introducer, observer), Is.True);
+            Assert.That(Identity.Name(introducer, entities, observer), Is.EqualTo("Introducer Name"));
+            Assert.That(inventory.TryEquip(introducer, helmet, "head"), Is.True);
+        });
+        await pair.RunTicksSync(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var introducerComp = entities.GetComponent<IdentityRequiresKnowledgeComponent>(introducer);
+            var observerComp = entities.GetComponent<IdentityRequiresKnowledgeComponent>(observer);
+
+            Assert.That(observerComp.KnownIds, Does.Contain(introducerComp.Identifier));
+            Assert.That(Identity.Name(introducer, entities, observer), Is.Not.EqualTo("Introducer Name"));
+
+            Assert.That(inventory.TryUnequip(introducer, "head", true), Is.True);
+            Assert.That(inventory.TryEquip(introducer, apron, "outerClothing"), Is.True);
+        });
+        await pair.RunTicksSync(5);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(Identity.Name(introducer, entities, observer), Is.EqualTo("Introducer Name"));
         });
 
         await pair.CleanReturnAsync();
