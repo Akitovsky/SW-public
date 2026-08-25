@@ -45,7 +45,7 @@ public sealed class MedievalArrowsMinigameOverlay : Overlay
     public Color InvalidColor = Color.FromHex("#A60000");
     public float RightPadding = 0.05f;
     public float LeftPadding = 0.05f;
-    public float VerticalPosition = 0.25f;
+    public float VerticalPosition = 0.55f;
     public float VerticalRowSpacing = 0.15f;
     public float MaxAnimationStep = 10.0f;
     public float ReversedAnimationPoint = 0.5f;
