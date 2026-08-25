@@ -3468,7 +3468,7 @@
   - type: MeleeWeapon
     animation: WeaponArcBite
     range: 1.4
-    attackRate: 0.55
+    attackRate: 0.50
     hidden: true
     angle: 0
     soundHit:
@@ -3492,7 +3492,7 @@
       95: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 3.2
+    baseSprintSpeed: 3
   - type: PointLight
     color: red
     energy: 0.1
@@ -3527,7 +3527,7 @@
       prob: 0.1
   - type: IgnoreSpiderWeb
   - type: StaminaDamageOnHit
-    damage: 17
+    damage: 10
   - type: Stealth
     minVisibility: -0.2
   - type: StealthOnMove
