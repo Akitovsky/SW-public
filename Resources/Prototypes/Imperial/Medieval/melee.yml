@@ -3413,7 +3413,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 21
+        Piercing: 25
   #- type: QualityOfItem
   #  qualityWeights:
   #    0: 0
