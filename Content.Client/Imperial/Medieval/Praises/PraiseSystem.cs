@@ -19,25 +19,19 @@ public sealed class PraiseSystem : EntitySystem
 
     private void OnPraiseWindowMessage(PraiseWindowMessage ev)
     {
-        if (ev.Open && _praiseWindow != null)
-        {
+        if (_praiseWindow != null && !_praiseWindow.Disposed)
             _praiseWindow.Dispose();
-            _praiseWindow = null;
-        }
 
         _praiseWindow = new();
         _praiseWindow.OnSendButtonPressed += reason => RaiseNetworkEvent(new PraiseWindowPraiseMessage { Reason = reason });
-        _praiseWindow.Update(ev);
         _praiseWindow.OpenCentered();
+        _praiseWindow.Update(ev);
     }
 
     private void OnPraiseViewMessage(PraiseViewMessage ev)
     {
-        if (_viewWindow != null)
-        {
+        if (_viewWindow != null && !_viewWindow.Disposed)
             _viewWindow.Dispose();
-            _viewWindow = null;
-        }
 
         _viewWindow = new(ev.Records, ev.Admin, ev.Spam);
         _viewWindow.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
@@ -47,11 +41,8 @@ public sealed class PraiseSystem : EntitySystem
 
     private void OnPraiseRatingMessage(PraiseRatingMessage ev)
     {
-        if (_ratingWindow != null)
-        {
+        if (_ratingWindow != null && !_ratingWindow.Disposed)
             _ratingWindow.Dispose();
-            _ratingWindow = null;
-        }
 
         _ratingWindow = new(ev.Rating);
         _ratingWindow.OpenCentered();
