@@ -66,6 +66,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         //imperial rus replace end @keeyn and @Ser1-1y
         // I could've done this with regex, but felt it wasn't the right idea.
         Entry(")", "chatsan-smiles"),
+        Entry("))", "chatsan-smiles-widely"),
         Entry(":)", "chatsan-smiles"),
         Entry(":]", "chatsan-smiles"),
         Entry("=)", "chatsan-smiles"),
