@@ -22139,11 +22139,11 @@
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰# Boost
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-spell-speach-boost = B̲̄́͜͟͝͡Ō̲̱̲̅͟͡Ṍ͜͜͡S̲̗͜͝T̲̱̭͜͝
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-beginner-name = Усиление
-/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-beginner-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее и слегка насыщается. Стоимость 50 маны.
+/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-beginner-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее. Стоимость 50 маны.
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-middle-name = Усиление опытный
-/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-middle-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее и слегка насыщается. Стоимость 70 маны.
+/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-middle-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее. Стоимость 70 маны.
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-senior-name = Усиление архимаг
-/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-senior-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее и слегка насыщается. Стоимость 80 маны.
+/Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-light-boost-senior-desc = Вводит в цель жидкую ману из-за чего она начинает двигаться быстрее. Стоимость 80 маны.
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰# Magic Arrow
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-spell-speach-magic-arrow = Teemɔŋ gãimlibi
 /Locale/ru-RU/Medieval/Magic/Spells/fire.ftl鎰medieval-store-spells-fire-magic-arrow-beginner-name = Магическая стрела
@@ -53818,7 +53818,7 @@
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingUniformJumpsuitShitCloth4 = одежда барда
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Старинная, как меч короля Артура
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда" }
-/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingUniformJumpsuitShitCloth5 = бордовый кафтан
+/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingUniformJumpsuitShitCloth5 = бардовый кафтан
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Старинная, как гравировка наскального периода
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда" }
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingUniformJumpsuitShitCloth6 = знатная одежда
@@ -55302,7 +55302,7 @@
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingHeadHelmetHoodShadowBlue = синий капюшон тени
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Эта одежда создана из особой теневой материи, смотрится угрожающе
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда, тень" }
-/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingHeadHelmetHoodShadowRed = бордовый капюшон тени
+/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingHeadHelmetHoodShadowRed = бардовый капюшон тени
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Эта одежда создана из особой теневой материи, смотрится угрожающе
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда, тень" }
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingHeadHelmetHoodShadowGreen = малахитовый капюшон тени
@@ -55314,7 +55314,7 @@
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingNeckCloakShadowBlue = синий плащ тени
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Эта одежда создана из особой теневой материи, смотрится угрожающе
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда, тень" }
-/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingNeckCloakShadowRed = бордовый плащ тени
+/Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingNeckCloakShadowRed = бардовый плащ тени
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .desc = Эта одежда создана из особой теневой материи, смотрится угрожающе
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰    .suffix = { "Средневековье, одежда, тень" }
 /Locale/ru-RU/Imperial/Medieval/medieval.ftl鎰ent-MedievalClothingNeckCloakShadowGreen = малахитовый плащ тени
