@@ -33,7 +33,7 @@ public sealed class PraiseSystem : EntitySystem
         if (_viewWindow != null && !_viewWindow.Disposed)
             _viewWindow.Dispose();
 
-        _viewWindow = new(ev.Records, ev.Admin, ev.Spam);
+        _viewWindow = new(ev.Records, ev.Admin, ev.Spam, false);
         _viewWindow.OnEditWeightButtonPressed += record => RaiseNetworkEvent(new PraiseViewEditMessage { Target = ev.Target, Record = record });
         _viewWindow.OnDeleteButtonPressed += record => RaiseNetworkEvent(new PraiseViewDeleteMessage { Target = ev.Target, Record = record });
         _viewWindow.OpenCentered();
@@ -50,6 +50,12 @@ public sealed class PraiseSystem : EntitySystem
 
     public void OpenView(NetUserId target)
     {
+        if (_viewWindow != null && !_viewWindow.Disposed) //please wait message
+            _viewWindow.Dispose();
+
+        _viewWindow = new(new(), false, false, true);
+        _viewWindow.OpenCentered();
+
         RaiseNetworkEvent(new PraiseViewOpenedMessage { Target = target });
     }
 
