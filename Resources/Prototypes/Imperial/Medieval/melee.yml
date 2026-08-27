@@ -1376,6 +1376,7 @@
     resourceCount: 1
   - type: Item
     size: Large
+  - type: TreasureDigger
 
 - type: entity
   name: falshion
@@ -3412,7 +3413,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 21
+        Piercing: 25
   #- type: QualityOfItem
   #  qualityWeights:
   #    0: 0
@@ -5731,6 +5732,9 @@
       types:
         Slash: 20
     targetType: Werewolf
+  - type: Meltable
+    resourceCount: 4
+    resourceName: MedievalIngotSilver
 
 - type: entity
   name: dagger
@@ -5753,8 +5757,11 @@
   - type: MedievalSpecialDamageDealer
     damage:
       types:
-        Slash: 20
+        Slash: 15
     targetType: Werewolf
+  - type: Meltable
+    resourceCount: 1
+    resourceName: MedievalIngotSilver
 
 - type: entity
   name: medieval spear
@@ -5771,6 +5778,9 @@
       types:
         Piercing: 20
     targetType: Werewolf
+  - type: Meltable
+    resourceCount: 4
+    resourceName: MedievalIngotSilver
 
 - type: entity
   name: dagger
@@ -5797,6 +5807,9 @@
       types:
         Slash: 20
     targetType: Werewolf
+  - type: Meltable
+    resourceCount: 3
+    resourceName: MedievalIngotSilver
 
 - type: entity
   name: iron claymore
@@ -5821,3 +5834,6 @@
         Slash: 25
         Piercing: 5
     targetType: Werewolf
+  - type: Meltable
+    resourceCount: 7
+    resourceName: MedievalIngotSilver
